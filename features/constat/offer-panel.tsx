@@ -1,0 +1,9 @@
+"use client";
+import {pricingCopy} from './pricing-copy';
+import {requestOffer} from './offer-request';
+import {offerNetworkCopy} from './offer-network-copy';
+import {useEffect,useState} from 'react';import {Button} from '@/components/ui/button';import {offerIds,type Offer} from './offer-model';import {policyCopy} from './policy-copy';import type {Lang} from './i18n';
+export function OfferPanel({lang}:{lang:Lang}){const c=policyCopy[lang];const n=offerNetworkCopy[lang];const [attempt,setAttempt]=useState(0);const [offer,setOffer]=useState<Offer|null>(null),[busy,setBusy]=useState(false),[loaded,setLoaded]=useState(false),[status,setStatus]=useState<'saved'|'error'|null>(null);
+useEffect(()=>{const controller=new AbortController();let active=true;setLoaded(false);setStatus(null);requestOffer(undefined,controller.signal).then(value=>{if(active){setOffer(value);setLoaded(true)}}).catch(()=>{if(active)setStatus('error')});return()=>{active=false;controller.abort()}},[attempt]);
+async function save(){if(!offer||busy)return;setBusy(true);setStatus(null);try{await requestOffer(offer);setStatus('saved')}catch{setStatus('error')}finally{setBusy(false)}}
+return <section id="offers" className="policy-panel"><h2>{c.offers}</h2><p>{c.commercial}</p><p>{n.help}</p><a className="pricing-link" href={"/pricing?lang="+lang}>{pricingCopy[lang].title}</a><div className="offer-options">{offerIds.map((id,i)=><label key={id}><input type="radio" name="offer" value={id} checked={offer===id} disabled={busy||!loaded} onChange={()=>{setOffer(id);setStatus(null)}}/>{c.plans[i]}</label>)}</div><Button disabled={!loaded||!offer||busy} onClick={()=>void save()}>{busy?'…':c.save}</Button>{status&&<p role="status">{status==='error'?n.error:c.saved}</p>}{!loaded&&status==='error'&&<Button onClick={()=>setAttempt(v=>v+1)}>{n.retry}</Button>}</section>}

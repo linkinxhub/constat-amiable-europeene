@@ -1,0 +1,14 @@
+{
+  "account": "acct_1U1xlKPe2xFsBXpt",
+  "livemode": false,
+  "prices": {
+    "fleet_extra": "price_1UI9CUPe2xFsBXpt5j2lXcNd",
+    "fleet_pro_year": "price_1UI9CTPe2xFsBXptoSp1pXZD",
+    "fleet_pro_month": "price_1UI9CSPe2xFsBXptnBX6VRMz",
+    "fleet_start_year": "price_1UI9CRPe2xFsBXptnmSdzjBH",
+    "fleet_start_month": "price_1UI9CQPe2xFsBXptDsXGbTPq",
+    "personal_extra": "price_1UI9CPPe2xFsBXptAgYhzIgw",
+    "personal_year": "price_1UI9COPe2xFsBXptTSRjhWvS",
+    "report": "price_1UI9CBPe2xFsBXptbKvHIVkH"
+  }
+}

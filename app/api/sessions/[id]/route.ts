@@ -1,0 +1,3 @@
+import {authorizedStores} from '@/server/stores';import {readSessionChanges,updateSession} from '@/server/session-service';import {json,failure,readJson,writeGuard} from '@/server/http';
+type C={params:Promise<{id:string}>};export async function GET(req:Request,{params}:C){try{const {owner,stores}=await authorizedStores();return json(await readSessionChanges(stores,owner,(await params).id,new URL(req.url).searchParams.get("since")));}catch(e){return failure(e)}}
+export async function PUT(req:Request,{params}:C){try{const {owner,stores}=await authorizedStores();writeGuard(req);return json(await updateSession(stores,owner,(await params).id,await readJson(req)));}catch(e){return failure(e)}}

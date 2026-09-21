@@ -1,0 +1,6 @@
+# Références consultées le 20 septembre 2026
+- e-constat auto / DARVA : https://play.google.com/store/apps/details?id=com.darva.econstat — fiche publique : préremplissage, photos, GPS, aide au croquis, un/deux smartphones, envoi après signature ; limites indiquées pour les dommages matériels et immatriculations françaises selon les véhicules.
+- Crashform / Assuralia : https://play.google.com/store/apps/details?id=be.assuralia.crashform — fiche publique : chargement automatique de données, déclaration électronique aux assureurs, usage sur smartphone/tablette ; indique une autorisation d'Insurance Europe pour l'usage des données du formulaire. Aucun droit équivalent établi pour Accordia.
+- Ces observations proviennent des fiches publiques, pas d'un test des applications installées. Les accords partenaires, API, langues exactes et conditions de validité doivent être vérifiés séparément.
+
+- 2026-09-21 : Service Public, « Assurance auto : remplir le constat amiable après un accident », https://www.service-public.gouv.fr/particuliers/vosdroits/F2149 . Refus : déclaration à l’assureur malgré absence de signature, plaque et témoins ; délai selon contrat (France). Aucune extrapolation d’un délai de cinq jours aux autres pays.

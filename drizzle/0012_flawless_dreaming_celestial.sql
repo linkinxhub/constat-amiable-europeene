@@ -1,0 +1,1 @@
+CREATE INDEX `reports_retention_idx` ON `reports` (`retention_until`);

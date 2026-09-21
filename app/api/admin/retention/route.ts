@@ -1,0 +1,4 @@
+import {authorizedStores} from '@/server/stores';import {isSuperAdmin} from '@/server/ai-settings';import {retentionStatus,runRetentionMaintenance} from '@/server/retention-maintenance';import {ReportError} from '@/server/report-service';import {json,failure,writeGuard} from '@/server/http';
+async function admin(){const {owner,stores}=await authorizedStores({maintenance:false});if(!await isSuperAdmin(stores.db,owner))throw new ReportError(403,'forbidden');return stores;}
+export async function GET(){try{return json(await retentionStatus(await admin()));}catch(e){return failure(e)}}
+export async function POST(req:Request){try{const stores=await admin();writeGuard(req);const result=await runRetentionMaintenance(stores,true);return json({result,status:await retentionStatus(stores)});}catch(e){return failure(e)}}

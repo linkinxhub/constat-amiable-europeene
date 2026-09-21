@@ -1,0 +1,1 @@
+ALTER TABLE `final_documents` ADD `preview_key` text;
