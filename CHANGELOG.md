@@ -290,3 +290,11 @@ Publication 0.7 confirmée : version 8, accès privé inchangé, déploiement r�
 ## Audit — 2026-09-21
 - Rapport de revue sécurité/fonctionnement/rendu, avec preuves, limites et ordre de correction.
 - Vérification TypeScript, build, 49 tests et scanner de dépendances ; aucune modification applicative.
+
+
+## Vitrine Vercel — Preview isolée — 22 septembre 2026
+- Branche `vercel-vitrine-preview` dédiée à la vitrine publique, sans modification de la plateforme métier Cloudflare/ChatGPT Sites.
+- Vitrine statique autonome ajoutée pour Vercel : fonctionnement en 5 étapes, mission, tarifs informatifs et accès Mon compte vers la plateforme Accordia existante.
+- Les cinq visuels de « Comment ça marche » sont rendus localement en HTML/CSS, sans URL d’image externe : plus de zone vide en cas de ressource distante indisponible.
+- Configuration Vercel statique ajoutée (`framework: null`) afin d’éviter le build Next/Vinext de la plateforme métier sur cette branche.
+- Objectif : Preview Vercel uniquement. Aucune promotion en production demandée dans ce lot.
