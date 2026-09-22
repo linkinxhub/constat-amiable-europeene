@@ -298,3 +298,7 @@ Publication 0.7 confirmée : version 8, accès privé inchangé, déploiement r�
 - Les cinq visuels de « Comment ça marche » sont rendus localement en HTML/CSS, sans URL d’image externe : plus de zone vide en cas de ressource distante indisponible.
 - Configuration Vercel statique ajoutée (`framework: null`) afin d’éviter le build Next/Vinext de la plateforme métier sur cette branche.
 - Objectif : Preview Vercel uniquement. Aucune promotion en production demandée dans ce lot.
+
+- Correctif de déploiement final : Vercel n’installe plus les dépendances de l’application métier sur cette branche et copie uniquement `index.html` + `styles.css` dans `dist`.
+- Preview Vercel validée : déploiement `dpl_81H6iMEtFDcJCW1vU5GwEVDj9RMa` en état READY, cible Preview (`target: null`), réponse HTTP 200 sur la page principale. Les visuels des 5 étapes sont autonomes et ne dépendent d’aucun hébergeur d’images.
+- Production inchangée ; aucune promotion effectuée.
