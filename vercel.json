@@ -1,1 +1,1 @@
-{"$schema":"https://openapi.vercel.sh/vercel.json","framework":null,"buildCommand":"mkdir -p dist && cp index.html styles.css dist/","outputDirectory":"dist","cleanUrls":true}
+{"$schema":"https://openapi.vercel.sh/vercel.json","framework":null,"installCommand":"echo static-preview-no-install","buildCommand":"mkdir -p dist && cp index.html styles.css dist/","outputDirectory":"dist","cleanUrls":true}
