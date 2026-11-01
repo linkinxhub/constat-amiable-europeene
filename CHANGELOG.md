@@ -487,3 +487,9 @@ Publication explicitement autorisée par « démarrer le développement après p
 - Une relecture pour toutes les valeurs, sources et contradictions visibles ; champs existants/incertains à choisir, application confirmée protégée contre les corrections concurrentes.
 - Annulation et reprise sans relire les succès, conservation des pièces non lues après application partielle ; aucun document source dans les annexes PDF.
 - Guide/tutoriel/limites FR/EN/DE/NL actualisés, prompt et recette documentés. TypeScript/build, 215 tests, lint ciblé sans diagnostic ; global historique 43 erreurs/61 avertissements. Caméra physique, navigateur administrateur et IA réelle non recettés. Production conservée, achats Premium fermés.
+
+## 2026-11-01 — Vérification des réserves (documentation)
+- Scans actualisés : production zéro alerte, développement une modérée Minimatch ; délai de sécurité de sept jours conservé.
+- Lint actuel recensé précisément : 43 erreurs et 61 avertissements, non corrigés par ce lot.
+- PDF fictif A/B généré en Preview ; récupération par navigateur toujours non confirmée (expiration 15 s, aucun fichier retourné).
+- Protocole à deux téléphones/comptes distincts ajouté ; essai physique et téléchargement final signé non exécutés. Aucune modification applicative, d’accès ou de production ; guide vérifié sans impact utilisateur.
