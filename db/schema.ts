@@ -21,7 +21,7 @@ export const reportVersions=sqliteTable('report_versions',{
 
 export const sharedSessions=sqliteTable('shared_sessions',{
  id:text('id').primaryKey(),ownerId:text('owner_id').notNull(),reportId:text('report_id').notNull(),
- doneA:text('done_a'),doneB:text('done_b'),participantB:text('participant_b'),inviteHash:text('invite_hash').notNull(),expiresAt:integer('expires_at').notNull(),
+ ownerSide:text('owner_side').notNull().default('A'),autoSketchRevision:integer('auto_sketch_revision').notNull().default(0),doneA:text('done_a'),doneB:text('done_b'),participantB:text('participant_b'),inviteHash:text('invite_hash').notNull(),expiresAt:integer('expires_at').notNull(),
  consentA:integer('consent_a').notNull().default(0),consentB:integer('consent_b').notNull().default(0),
  translationConsentA:integer('translation_consent_a').notNull().default(0),translationConsentB:integer('translation_consent_b').notNull().default(0),
  translationWindow:integer('translation_window').notNull().default(0),translationCalls:integer('translation_calls').notNull().default(0),
@@ -86,3 +86,8 @@ export const billingTestUses=sqliteTable('billing_test_uses',{
  id:text('id').primaryKey(),orderId:text('order_id').notNull(),kind:text('kind').notNull(),state:text('state').notNull(),
  createdAt:integer('created_at').notNull(),updatedAt:integer('updated_at').notNull()
 },t=>[index('billing_test_uses_order_state').on(t.orderId,t.state)]);
+
+// Counts only: document images and extracted values are never stored here.
+export const documentExtractionUsage=sqliteTable('document_extraction_usage',{
+ actor:text('actor').primaryKey(),window:integer('window').notNull(),calls:integer('calls').notNull()
+});

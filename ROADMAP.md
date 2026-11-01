@@ -106,3 +106,19 @@ Raccordement des crédits de test autour de la sauvegarde PDF, avec réutilisati
 ## Zones du véhicule et aide photo — cadrage, non implémenté
 État vérifié : champ Point de choc avec suggestions Avant/Arrière/Côté gauche/Côté droit et diagonales ; champ Dégâts libre. Pas de dessin interactif ni d'analyse photo remplissant ces champs.
 Prévoir pour A/B et les parcours concernés : schéma sélectionnable au doigt/clavier, saisie manuelle toujours disponible ; capture caméra ou import avec accord explicite avant transmission IA ; suggestions distinctes des valeurs confirmées, correction/rejet/acceptation par le conducteur, sans écrasement de texte ni sauvegarde/signature silencieuse. La photo d'un schéma marqué peut proposer une zone, mais pas une nature de dommage ; les photos du véhicule peuvent suggérer uniquement des dommages visibles. Le premier point de choc, les dommages cachés, l'origine/daté des marques, les circonstances et la responsabilité ne sont pas déduits d'une seule photo. Séparer point de choc et zones endommagées. Consentement, quotas/coût et compatibilité camion/remorque à intégrer explicitement. Guide/tutoriel/aides FR/EN/DE/NL et PDF à actualiser avec l'implémentation.
+
+I publié Sites 29 : 100 % du sous-lot. Administration diagnostiquée non activée : nouveau code propriétaire configuré, activation personnelle encore requise. Priorité suivante : schéma de zones et aide photo, avec validation manuelle.
+
+## 2026-10-23 — Audit avant publication
+Correctifs de traduction workerd, autosauvegarde locale, concurrence et annonces caméra préparés. Essais réels à deux appareils, mobile, qualité IA et automatisation de sauvegarde des sessions réseau restent à valider ou développer. Rapport : AUDIT_2026-10-23.md.
+
+## Saisie express par documents — 2026-10-23
+Import JPEG/PNG/WebP/PDF par conducteur, extraction IA et sélection des champs avant application. Les modifications intervenues pendant la relecture sont protégées contre l'écrasement. Consentement explicite, documents non archivés par Accordia, aucune reconnaissance faciale. Limites : 3 Mio, images 4 Mpx, 5 tentatives/heure/compte et plafond IA global partagé de 100 appels/jour. Les échecs peuvent consommer une tentative.
+Positionnement Premium affiché sur accueil, tarifs et formulaire en FR/EN/DE/NL. Achats toujours fermés : serveur refuse les comptes ordinaires (402), essai réel réservé au superadministrateur existant. Aucun droit payant ni paiement simulé. Avant ouverture commerciale : paiements réels, droits Premium vérifiés et tarif final.
+Tests synthétiques uniquement ; extraction avec documents réels et compatibilité du modèle configuré restent à vérifier. Aperçu navigateur indisponible dans cette session.
+
+## Audit de cohérence — 23 octobre 2026
+Catalogue partagé vitrine/tarifs/validation serveur et couverture documentaire commune ajoutés ; catégories remorque et preneur distinctes. Voir docs/AUDIT_SYNCHRONISATION_2026-10-23.md. Restent : recette visuelle, documents réels, quota commercial de lecture, paiements réels et pentest indépendant.
+
+## 2026-11-01 — Lot sécurité et modes
+Écrans et raccordements implémentés. Restent : recette visuelle mobile/ordinateur en Preview, parcours à deux comptes et QR physique. Production réservée à une autorisation explicite. Synchronisation GitHub sur branche dédiée pour conserver main et les anciennes sources.

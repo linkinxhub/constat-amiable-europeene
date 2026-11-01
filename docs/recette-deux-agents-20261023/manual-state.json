@@ -1,0 +1,111 @@
+{
+  "testOnly": true,
+  "productionAuth": false,
+  "providerCalled": false,
+  "report": {
+    "start": {
+      "ownerSide": "A",
+      "photoOwner": "both",
+      "autoSketch": false
+    },
+    "timeZone": "Europe/Brussels",
+    "otherVehiclesDamage": "no",
+    "otherObjectsDamage": "no",
+    "readingLanguages": [
+      "fr",
+      "nl"
+    ],
+    "id": "TEST_DUAL_MANUAL_20261023",
+    "updated": "2026-10-23T08:55:12.494Z",
+    "date": "2026-10-22",
+    "time": "17:40",
+    "place": "Parking de démonstration — CAS FICTIF",
+    "city": "Bruxelles (scénario de test)",
+    "country": "BE",
+    "injured": "no",
+    "count": "2",
+    "vehicles": [
+      {
+        "extra": {
+          "policyholderCountry": "BE",
+          "registrationCountry": "BE",
+          "insuranceFrom": "2026-01-01",
+          "insuranceUntil": "2026-12-31",
+          "driverCountry": "BE",
+          "impact": "Arrière gauche — TEST FICTIF"
+        },
+        "standardCircumstances": [
+          0
+        ],
+        "standardConfirmed": true,
+        "driver": "Camille TEST A",
+        "policyholder": "Assurance TEST A",
+        "plate": "TEST-A-001",
+        "model": "Renault Clio",
+        "insurer": "ASSURANCE-FICTIVE-A",
+        "policy": "POLICE-TEST-A",
+        "email": "",
+        "address": "Adresse entièrement fictive — test A",
+        "damage": "TEST FICTIF — rayure sur le pare-chocs arrière gauche.",
+        "observations": "TEST FICTIF — Mon véhicule A était stationné dans le parking. Le véhicule B en marche arrière a touché mon pare-chocs arrière gauche. Aucun accident réel.",
+        "circumstances": []
+      },
+      {
+        "extra": {
+          "policyholderCountry": "BE",
+          "registrationCountry": "BE",
+          "driverCountry": "BE"
+        },
+        "standardCircumstances": [
+          13
+        ],
+        "standardConfirmed": true,
+        "driver": "Bram TEST B",
+        "policyholder": "VERZEKERING TEST B",
+        "plate": "TEST-B-002",
+        "model": "Toyota Corolla",
+        "insurer": "ASSURANCE-FICTIVE-B",
+        "policy": "POLIS-TEST-B",
+        "email": "",
+        "address": "TEST FICTIF — Geen echt adres",
+        "damage": "TEST FICTIF — Kras op achterbumper rechts.",
+        "observations": "TEST FICTIF — Ik reed achteruit op een fictieve demonstratieparking en raakte de geparkeerde Renault Clio A. Geen gewonden of getuigen.",
+        "circumstances": []
+      }
+    ],
+    "witnesses": "Aucun témoin déclaré — TEST FICTIF. Aucun accident réel.",
+    "photos": [],
+    "strokes": []
+  },
+  "revision": 3,
+  "retentionUntil": 1798015851177,
+  "syncToken": "90f0ce848d8a32bb67f18a0edd4a825eedc0ed3fec8d1187008fae28e129acf3",
+  "side": "A",
+  "isOwner": true,
+  "ownerSide": "A",
+  "joined": true,
+  "progress": {
+    "A": {
+      "done": true,
+      "at": "2026-10-23T08:54:55.956Z"
+    },
+    "B": {
+      "done": true,
+      "at": "2026-10-23T08:55:12.602Z"
+    }
+  },
+  "documents": [
+    {
+      "id": "1366bfac-06ff-4439-b8ac-0dc49487dacd",
+      "revision": 3,
+      "style": "keyboard",
+      "lang": "fr",
+      "digest": "201537367b6db8718073b37b92ebaf272d2c1a7213e1b82811e18657bab7701b",
+      "createdAt": "2026-10-23T08:55:33.088Z",
+      "signedA": true,
+      "signedB": true,
+      "ready": true,
+      "translated": false
+    }
+  ]
+}

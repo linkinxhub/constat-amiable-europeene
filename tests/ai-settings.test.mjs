@@ -32,10 +32,18 @@ test('suspension at SQL commit prevents both activation and settings updates',as
 });
 test('provider test uses fixed URL, no report, safe failures and throttling',async()=>{
  const f=fixture();await activateAdmin(f.db,'A',f.code,f.env);await saveAiSettings(f.db,'A',data(),f.env);const original=globalThis.fetch;let calls=0;
- globalThis.fetch=async(url,options)=>{calls++;assert.equal(url,'https://api.openai.com/v1/models/synthetic-test-model');assert.equal(options.headers.Authorization,'Bearer '+key);assert.equal(options.body,undefined);assert.equal(options.redirect,'error');return Response.json({id:'synthetic-test-model'})};
- try{assert.deepEqual(await testAiConnection(f.db,'A',1,f.env),{ok:true,revision:1});await assert.rejects(()=>testAiConnection(f.db,'A',1,f.env),e=>e.code==='rate_limited');assert.equal(calls,1);for(const [status,code] of [[401,'provider_key'],[404,'provider_model'],[500,'provider_unavailable']]){f.sql.exec('UPDATE ai_settings SET test_after=0');globalThis.fetch=async()=>new Response(key,{status});await assert.rejects(()=>testAiConnection(f.db,'A',1,f.env),e=>e.code===code&&!e.message.includes(key));}}finally{globalThis.fetch=original;}
+ globalThis.fetch=async(url,options)=>{calls++;assert.equal(url,'https://api.openai.com/v1/models/synthetic-test-model');assert.equal(options.headers.Authorization,'Bearer '+key);assert.equal(options.body,undefined);assert.equal(options.redirect,'manual');return Response.json({id:'synthetic-test-model'})};
+ try{assert.deepEqual(await testAiConnection(f.db,'A',1,f.env),{ok:true,revision:1});await assert.rejects(()=>testAiConnection(f.db,'A',1,f.env),e=>e.code==='rate_limited');assert.equal(calls,1);for(const [status,code] of [[401,'provider_key'],[404,'provider_model'],[500,'provider_server'],[429,'provider_limit'],[400,'provider_request']]){f.sql.exec('UPDATE ai_settings SET test_after=0');globalThis.fetch=async()=>new Response(key,{status});await assert.rejects(()=>testAiConnection(f.db,'A',1,f.env),e=>e.code===code&&!e.message.includes(key));}}finally{globalThis.fetch=original;}
 });
 test('admin request body is bounded and same-origin JSON is required',async()=>{
  await assert.rejects(()=>readJson(new Request('https://site.test/api/admin/ai-settings',{method:'PUT',body:JSON.stringify({key:'x'.repeat(5000)})}),4096),e=>e.status===413);
  assert.throws(()=>writeGuard(new Request('https://site.test/api/admin/activate',{method:'POST',headers:{origin:'https://evil.test','x-accordia-request':'1','content-type':'application/json'},body:'{}'})),e=>e.status===403);
+});
+
+test('connection timeouts and network failures are distinguished without exposing exception details',async()=>{
+ const f=fixture();await activateAdmin(f.db,'A',f.code,f.env);await saveAiSettings(f.db,'A',data(),f.env);const original=globalThis.fetch;
+ try{for(const [error,code] of [[new DOMException(key,'TimeoutError'),'provider_timeout'],[new TypeError(key),'provider_network']]){
+ f.sql.exec('UPDATE ai_settings SET test_after=0');globalThis.fetch=async()=>{throw error};
+ await assert.rejects(testAiConnection(f.db,'A',1,f.env),e=>e.code===code&&!e.message.includes(key));
+ }}finally{globalThis.fetch=original}
 });

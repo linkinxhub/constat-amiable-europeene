@@ -1,17 +1,7 @@
 import {z} from 'zod';
 
-// Server-owned commercial definitions. These do not grant entitlements or open sales.
-const item=(amount:number,tax:'inclusive'|'exclusive',interval:'year'|'month'|null)=>Object.freeze({amount,currency:'eur' as const,tax,interval});
-export const billingCatalog=Object.freeze({
-  report:item(690,'inclusive',null),
-  personal_year:item(1990,'inclusive','year'),
-  personal_extra:item(490,'inclusive',null),
-  fleet_start_month:item(1900,'exclusive','month'),
-  fleet_start_year:item(19000,'exclusive','year'),
-  fleet_pro_month:item(4900,'exclusive','month'),
-  fleet_pro_year:item(49000,'exclusive','year'),
-  fleet_extra:item(390,'exclusive',null),
-});
+import {billingCatalog} from '../features/product/catalog.ts';
+export {billingCatalog} from '../features/product/catalog.ts';
 export type BillingSku=keyof typeof billingCatalog;
 const sku=z.enum(['report','personal_year','personal_extra','fleet_start_month','fleet_start_year','fleet_pro_month','fleet_pro_year','fleet_extra']);
 

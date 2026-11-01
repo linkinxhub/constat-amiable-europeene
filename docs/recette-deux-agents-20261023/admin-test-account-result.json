@@ -1,0 +1,66 @@
+{
+  "testOnly": true,
+  "scope": "isolated local Miniflare D1",
+  "productionIdentity": false,
+  "chatgptAccountCreated": false,
+  "productionAccess": false,
+  "providerCalled": false,
+  "extractionCalled": true,
+  "extractionCompleted": false,
+  "createdAt": "2026-10-23T08:56:19.583Z",
+  "account": {
+    "id": "TEST_QA_ADMIN_20261023",
+    "status": "active"
+  },
+  "ordinaryActor": "TEST_QA_ORDINARY_20261023",
+  "persistence": "/tmp/accordia-qa-admin-20261023-c490T7",
+  "actualActivationService": true,
+  "migrationsApplied": 18,
+  "admin": {
+    "isSuperAdmin": true,
+    "documentAccess": {
+      "available": true,
+      "mode": "admin_preview"
+    },
+    "settings": {
+      "revision": 0,
+      "hasKey": false,
+      "model": "",
+      "enabled": false,
+      "updatedAt": "2026-10-23T08:56:19.647Z",
+      "secureStorageReady": true
+    }
+  },
+  "ordinary": {
+    "isSuperAdmin": false,
+    "documentAccess": {
+      "available": false,
+      "mode": "premium_closed"
+    },
+    "settingsStatus": 403
+  },
+  "repeatActivation": {
+    "status": 409,
+    "code": "activation_used"
+  },
+  "extractionWithoutProviderConfiguration": {
+    "admin": {
+      "status": 503,
+      "code": "ai_unconfigured"
+    },
+    "ordinary": {
+      "status": 402,
+      "code": "premium_closed"
+    },
+    "fixture": "TEST-FICTIF-documents-A.pdf",
+    "note": "Admin gate passed; file-content validation and real OCR not reached"
+  },
+  "outboundCalls": 0,
+  "secretsWritten": false,
+  "limits": [
+    "No login credentials or ChatGPT identity created",
+    "No production changes",
+    "No provider configured or invoked",
+    "No real document extraction tested"
+  ]
+}

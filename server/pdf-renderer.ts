@@ -1,3 +1,4 @@
+import {pdfTextLines} from './pdf-text.ts';
 import {policyCopy} from '../features/constat/policy-copy.ts';
 import {translatedReport,type Translation} from '../features/constat/translation-model.ts';
 import {translationCopy} from '../features/constat/translation-copy.ts';
@@ -14,6 +15,7 @@ import type {Sketch} from '../features/constat/sketch-model.ts';
 import {standardCircumstances,extraFields,type FinalStyle} from '../features/constat/final-model.ts';
 import {finalCopy,extraLabels} from '../features/constat/final-copy.ts';
 import {dictionaries,type Lang} from '../features/constat/i18n.ts';
+export const PDF_RENDERER_VERSION='accordia-multilingual-v2';
 export type Signature={data:string,kind:'drawn'|'imported',at:string,by:string};
 export type PdfMaterial={unilateral?:{side:"A"|"B",reason:string},translation?:Translation,report:Report,revision:number,style:FinalStyle,lang:Lang,digest:string,createdAt:string,sketch:Sketch|null,signatures?:[Signature|null,Signature|null]};
 const bytes=(s:string)=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
@@ -21,13 +23,13 @@ export async function renderPdf(m:PdfMaterial){
  if(m.unilateral&&m.signatures?.some(Boolean))throw new Error('unilateral_cannot_use_signatures');
  const doc=await PDFDocument.create();doc.registerFontkit(fontkit);const font=await doc.embedFont(bytes(regular),{subset:true}),bold=await doc.embedFont(StandardFonts.HelveticaBold),writing=m.style==='keyboard'?font:await doc.embedFont(bytes(hand),{subset:true});
  const ink=m.style==='blue-pen'?rgb(.08,.22,.65):rgb(.08,.10,.14),line=rgb(.54,.59,.65),navy=rgb(.08,.16,.26),cyan=rgb(.03,.62,.76),gold=rgb(.91,.70,.17),t=dictionaries[m.lang],c=finalCopy[m.lang];
- doc.setKeywords(['accordia-reference-v1']);doc.setTitle('Accordia - '+c.document);doc.setAuthor('Accordia');doc.setSubject(c.disclaimer);doc.setCreationDate(new Date(m.createdAt));doc.setModificationDate(new Date(m.createdAt));
+ doc.setKeywords(['accordia-reference-v1',PDF_RENDERER_VERSION]);doc.setTitle('Accordia - '+c.document);doc.setAuthor('Accordia');doc.setSubject(c.disclaimer);doc.setCreationDate(new Date(m.createdAt));doc.setModificationDate(new Date(m.createdAt));
  const W=595.28,H=841.89;let page=doc.addPage([W,H]);
  function chosen(text:string,f:PDFFont){const available=new Set(f.getCharacterSet());return [...text].every(ch=>available.has(ch.codePointAt(0)!))?f:font;}
  function clean(s:string){return s.replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f]/g,'').replace(/\t/g,' ');}
  function tx(s:string,x:number,top:number,size=8,f=font,color=navy,p=page){s=clean(s);p.drawText(s,{x,y:H-top-size,size,font:chosen(s,f),color});}
  function rect(x:number,top:number,w:number,h:number,fill=rgb(1,1,1),p=page){p.drawRectangle({x,y:H-top-h,width:w,height:h,color:fill,borderColor:line,borderWidth:.55});}
- function lines(s:string,max:number,size:number,f:PDFFont){const output:string[]=[];for(const paragraph of clean(s).split('\n')){let current='';for(const word of paragraph.split(/(\s+)/)){if(chosen(current+word,f).widthOfTextAtSize(current+word,size)<=max){current+=word;continue;}if(current.trim()){output.push(current.trimEnd());current='';}for(const ch of word.trimStart()){if(chosen(current+ch,f).widthOfTextAtSize(current+ch,size)>max&&current){output.push(current);current='';}current+=ch;}}output.push(current.trimEnd());}return output;}
+ function lines(s:string,max:number,size:number,f:PDFFont){return pdfTextLines(s,max,text=>chosen(text,f).widthOfTextAtSize(text,size));}
  function wrapped(s:string,x:number,top:number,width:number,size=8,f=font,maxLines=99,color=navy,p=page){const ls=lines(s,width,size,f);ls.slice(0,maxLines).forEach((l,i)=>tx(i===maxLines-1&&ls.length>maxLines?l.slice(0,-2)+' *':l,x,top+i*(size+2),size,f,color,p));return ls.length*(size+2);}
  function title(s:string,x:number,top:number,w:number,fill=rgb(.93,.95,.97)){rect(x,top,w,17,fill);wrapped(s,x+5,top+3,w-10,7.5,bold,1);}
  function box(s:string,x:number,top:number,w:number,h:number,fill=rgb(1,1,1)){rect(x,top,w,h,fill);title(s,x,top,w,fill);}
@@ -68,7 +70,7 @@ export async function renderPdf(m:PdfMaterial){
  r=m.report;
  page=doc.addPage([W,H]);let y=60;tx(c.annex,24,25,16,bold);
  function newPage(){page=doc.addPage([W,H]);tx(c.annex,24,25,13,bold);y=58;}
- function entry(label:string,v:string){if(y>760)newPage();wrapped(label,24,y,547,9,bold,3);y+=15;for(const l of lines(v||c.missing,535,10,writing)){if(y>782)newPage();tx(l,30,y,10,writing,ink);y+=13;}y+=9;}
+ function entry(label:string,v:string){const labels=lines(label,547,9,bold);if(y+labels.length*11+17>782)newPage();for(const l of labels){if(y>782)newPage();tx(l,24,y,9,bold);y+=11;}y+=4;for(const l of lines(v||c.missing,535,10,writing)){if(y>782)newPage();tx(l,30,y,10,writing,ink);y+=13;}y+=9;}
  if(m.unilateral){entry(policyCopy[m.lang].unsigned,m.unilateral.side);entry(policyCopy[m.lang].reason,m.unilateral.reason);entry(policyCopy[m.lang].refusal,policyCopy[m.lang].steps);}
  entry(t.date+' / '+t.time,r.date+' '+r.time+' · '+eventZone(r));entry(t.place,fullPlace(r));entry(t.country,r.country);entry(c.thirdVehicles,r.otherVehiclesDamage==='yes'?t.yes:r.otherVehiclesDamage==='no'?t.no:c.missing);entry(c.thirdObjects,r.otherObjectsDamage==='yes'?t.yes:r.otherObjectsDamage==='no'?t.no:c.missing);entry('5. '+t.witnesses,r.witnesses);if(r.confirmedLocation)entry(repairCopy[m.lang].gps,`${r.confirmedLocation.latitude}, ${r.confirmedLocation.longitude} | ${r.confirmedLocation.confirmedAt}`);if(r.location)entry('GPS',`${r.location.latitude}, ${r.location.longitude} | ± ${r.location.accuracy} m | ${r.location.capturedAt}`);
  for(const i of [0,1] as const){entry(t.vehicle+' '+(i===0?'A':'B'),r.vehicles[i].plate);const v=r.vehicles[i];for(const k of ['driver','policyholder','plate','model','insurer','policy','email','address','damage','observations'] as const)entry(t[k],v[k]);for(const k of extraFields)if(v.extra?.[k])entry(extraLabels[m.lang][k],v.extra?.[k]||'');entry(c.standard,(v.standardCircumstances||[]).map(k=>(k+1)+'. '+standardCircumstances[m.lang][k]).join('\n'));if(v.circumstances.length)entry(c.legacy,v.circumstances.map(k=>t.circumstances[k]).join('\n'));}
@@ -95,8 +97,9 @@ export async function stampPdf(source:Uint8Array,signatures:[Signature,Signature
  if(!reference){p.drawRectangle({x:24,y:H-70,width:547,height:13,color:rgb(1,1,1)});p.drawText(c.ready,{x:24,y:H-67,size:7.2,font});}
  const v3=doc.getKeywords()?.includes('accordia-layout-v3');for(const [i,sig]of signatures.entries()){if(reference){const sx=595.28/1085,sy=H/1536,im=await doc.embedPng(sig.data),scale=Math.min(140*sx/im.width,45*sy/im.height);p.drawImage(im,{x:(i===0?391:570)*sx,y:H-1490*sy,width:im.width*scale,height:im.height*scale});continue;}const x=v3?205+i*94:24+i*273.5;const im=await doc.embedPng(sig.data),scale=Math.min((v3?84:240)/im.width,(v3?40:30)/im.height);p.drawRectangle({x:v3?x:x+1,y:H-813,width:v3?86:271,height:v3?58:36,color:rgb(1,1,1)});p.drawImage(im,{x:v3?x:x+15,y:H-(v3?800:809),width:im.width*scale,height:im.height*scale});}
  if(reference){p.drawRectangle({x:390*595.28/1085,y:H-1518*H/1536,width:330,height:10,color:rgb(1,1,1)});p.drawText(c.ready,{x:400*595.28/1085,y:H-1514*H/1536,size:6,font});}
- const audit=doc.addPage([595.28,H]);audit.drawText('Accordia - '+c.signature,{x:24,y:H-48,size:18,font});let y=88;
- const block=(text:string,size=10)=>{let line='';for(const char of text){if(font.widthOfTextAtSize(line+char,size)>540){audit.drawText(line,{x:24,y:H-y,size,font});y+=16;line='';}line+=char;}audit.drawText(line,{x:24,y:H-y,size,font});y+=24;};
+ let audit=doc.addPage([595.28,H]),y=88;
+ const auditTitle=()=>audit.drawText('Accordia - '+c.signature,{x:24,y:H-48,size:18,font});auditTitle();
+ const block=(text:string,size=10)=>{for(const line of pdfTextLines(text,540,s=>font.widthOfTextAtSize(s,size))){if(y>782){audit=doc.addPage([595.28,H]);auditTitle();y=88;}audit.drawText(line,{x:24,y:H-y,size,font});y+=16;}y+=8;};
  block(c.reference+': '+digest,8);block(c.note);if(localNotice)block(localNotice);for(const [i,sig]of signatures.entries()){y+=18;block((i===0?'A':'B')+' - '+c.signedAt+': '+sig.at);block(sig.kind==='drawn'?c.draw:c.upload);block(c.consent,9);}
  for(const [i,page]of doc.getPages().entries()){if(reference&&i===0)continue;page.drawRectangle({x:534,y:H-830,width:45,height:15,color:rgb(1,1,1)});page.drawText(`${i+1} / ${doc.getPageCount()}`,{x:542,y:H-825,size:6,font});}
  return doc.save();

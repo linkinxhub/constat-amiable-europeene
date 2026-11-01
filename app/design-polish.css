@@ -1,0 +1,86 @@
+/* Shared visual language for the showcase and all working surfaces.
+   Screen-only: preserve the established printed report layout. */
+@media screen {
+ :root{--primary:#1557c0;--ring:#1557c0;--accent:#edf4ff;--accent-foreground:#153a70}
+ .landing{--blue:#1557c0}
+ .workspace,.session-page,.account-page,.pricing-page{line-height:1.55}
+ .page-heading{padding-left:0;padding-right:0}
+ .form-panel,.account-card,.pricing-card{box-shadow:0 8px 28px #102e5610;border-color:#d3dfed}
+ .form-panel{border-radius:18px}
+ [data-slot=button]{border-radius:10px;white-space:normal;overflow-wrap:anywhere;line-height:1.4;height:auto;min-height:44px;max-width:100%;padding-top:10px;padding-bottom:10px;transition:background-color .16s,border-color .16s,box-shadow .16s}
+ [data-slot=button][data-size^=icon]{min-width:44px;padding:10px}
+ [data-slot=button][data-variant=default]{box-shadow:0 3px 9px #1557c022}
+ [data-slot=button][data-variant=outline]:not([aria-pressed=true]){background:#fff;border-color:#acbfd8;color:#173b69}
+ [data-slot=button][data-variant=outline]:not([aria-pressed=true]):hover:not(:disabled){background:#edf4ff;border-color:#1557c0}
+ [data-slot=button]:disabled{opacity:.55;box-shadow:none;cursor:not-allowed}
+ :is(button,a,summary,input,select,textarea):focus-visible{outline:3px solid #1557c0;outline-offset:3px}
+ .field>span,.field>label>span,.field legend{font-weight:650;color:#203b60}
+ .field :is(input:not([type=checkbox]):not([type=radio]),select,textarea){width:100%;background:#f8fafd;border:1px solid #aabed6;border-radius:10px;min-height:48px;padding:11px 13px;color:#142d4f;font-size:16px;line-height:1.5;transition:border-color .16s,box-shadow .16s,background-color .16s}
+ .field select{padding-right:36px}
+ .field :is(input,textarea)::placeholder{color:#667a92}
+ .field[data-filled=true] :is(input,select,textarea){background:#fff;border-color:#7296c4}
+ .field:focus-within>span,.field:focus-within>label>span{color:#1557c0}
+ .field :is(input,select,textarea):focus-visible{outline:2px solid #1557c0;outline-offset:2px;box-shadow:0 0 0 5px #1557c012;background:#fff}
+ .field :is(input,select,textarea):disabled{background:#edf0f5;color:#63758b;cursor:not-allowed}
+ .field-mode{font-size:14px;min-height:44px}
+ .field-grid{column-gap:24px}
+ .choices{flex-wrap:wrap}
+ .choices button{flex:1 1 100px}
+ .choices button[aria-pressed=true]{background:#e7f0ff;border:2px solid #1557c0;color:#123f84}
+ .simple-details>summary{min-height:52px;padding:17px 20px}
+ .simple-details[open]>summary{border-bottom:1px solid #dce6f2;background:#f5f8fd;border-radius:12px 12px 0 0}
+ .simple-details>summary small{color:#4a607b}
+ #share-options{border:1px solid #86aee2;box-shadow:0 3px 14px #1557c00a;scroll-margin-top:120px}
+ #share-options>summary{color:#123e7d;background:#eef5ff;border-radius:12px}
+ .entry-toolbar a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 16px;border:1px solid #a7bedc;border-radius:10px;background:#fff;text-decoration:none}
+ .entry-mode{border-radius:14px}
+ .simple-next{background:#edf5ff;border-left:4px solid #1557c0;border-radius:12px}
+ .simple-next strong{color:#153f78}
+ .steps{padding:18px 10px;background:#fff;border:1px solid #dce6f2;border-radius:16px;gap:6px}
+ .steps button{min-width:0;min-height:74px;border-radius:10px;padding:4px}
+ .steps button:hover{background:#f1f6ff}
+ .steps button:after{top:21px}
+ .steps strong{display:block;font-size:14px;line-height:1.35;overflow-wrap:anywhere}
+ .steps .active strong{font-weight:750;white-space:normal}
+ .steps .active span{background:#1557c0;border-color:#1557c0;box-shadow:0 0 0 4px #e5efff}
+ .vehicle-panel h3 b{flex-shrink:0}
+ .vehicle-panel>h3{padding-bottom:14px;border-bottom:2px solid #dbe8fa}
+ .vehicle-panel.v1>h3{border-bottom-color:#f1d7ac}
+ .form-actions{gap:12px;padding-top:22px}
+ .form-actions button{height:auto;min-height:48px}
+ .document-import{border-style:dashed;border-color:#a8bad6;background:#fcfdff}
+ .premium-badge{background:#e8edff;color:#263f8c;font-weight:700}
+ .document-proposal{padding:16px 12px;border-radius:8px}
+ .document-proposal:has(input:checked){background:#eef5ff}
+ .document-proposal input,.session-choice input{accent-color:#1557c0;flex-shrink:0}
+ .document-promo{border-block:1px solid #d6e4f5}
+ .document-promo a{border:1px solid #9bb8de;border-radius:10px;padding:10px 18px;background:#fff;text-decoration:none;font-weight:700}
+ .languages button{min-height:40px;min-width:40px}
+ .session-header{flex-wrap:wrap;gap:16px}
+ .session-actions{gap:10px;border-radius:12px;padding:12px}
+ .session-actions button{flex:1 1 140px}
+ .account-nav{background:#1557c0;color:#fff;border-color:#1557c0}.account-nav:hover{background:#10479e;color:#fff}
+ .cloud-list article{flex-wrap:wrap}
+ .cloud-list article>div{flex-basis:160px}
+ .helper .save-panel{border-style:solid}
+ @media(max-width:767px){
+  .workspace{padding-left:14px;padding-right:14px}
+  .form-panel{padding:20px 16px}
+  .steps{padding:12px 5px;gap:2px}
+  .steps button{padding:3px 1px;gap:9px}
+  .steps strong,.steps .active strong{display:block;font-size:11px;white-space:normal;line-height:1.35}
+  .steps button:after{top:22px}
+  .form-actions{flex-wrap:wrap}
+  .form-actions button{min-width:0;flex:1 1 120px;padding-inline:14px}
+  .entry-toolbar{gap:8px}
+  .entry-toolbar>a,.entry-toolbar>button{flex:1 1 180px}
+  .simple-details>summary{padding:15px}
+  .field-grid{column-gap:16px}
+  .topbar{gap:8px}
+  .languages button{width:40px}
+ }
+ @media(prefers-reduced-motion:reduce){[data-slot=button],.field :is(input,select,textarea){transition:none}}
+ @media(max-width:380px){.topbar .languages{width:100%;justify-content:space-between}.steps strong{font-size:10px}.session-actions button{flex-basis:100%}}
+}
+
+@media screen{.document-coverage ul{list-style:disc;padding-left:22px;margin:12px 0}.document-coverage li{margin:8px 0}.document-coverage p{line-height:1.6;margin:12px 0}.landing-plan>p:not(.plan-price){margin-bottom:16px;line-height:1.55}.plan-availability{font-size:14px;color:#465c78}.featured .plan-availability{color:#d3e3f7}.landing-plan>a{gap:14px;overflow-wrap:anywhere}.landing-plan>a svg{flex-shrink:0}}

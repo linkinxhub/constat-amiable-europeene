@@ -7,3 +7,12 @@ Repères : features/constat/usage-guide.tsx et les dictionnaires/composants de g
 Critère de livraison : vérifier les explications contre les commandes réelles en Preview, les quatre langues et la lisibilité mobile ; consigner les sections actualisées et les vérifications dans STATUS.md et CHANGELOG.md. Pour un changement purement interne, consigner « guide vérifié, aucun impact utilisateur » avec la raison, sans inventer de modification pédagogique. Toute limite de validation doit être déclarée. La publication demeure soumise à l’autorisation explicite du propriétaire.
 
 Le guide des conducteurs exclut les instructions et fonctions réservées à l’administration (demande du propriétaire). Maintenir les fonctions administratives réelles séparément.
+
+## Cohérence vitrine / SaaS — règle permanente
+Toute nouvelle information produit doit être synchronisée dans le même lot entre vitrine, tarifs, compte, formulaire, aide et tutoriel FR/EN/DE/NL. Réutiliser les sources communes : features/product/catalog.ts pour les montants (validation serveur conservée), pricing-copy.ts pour les offres, document-model.ts et document-copy.ts pour les pièces ; DocumentCoverage pour leur périmètre public. Ne jamais afficher une capacité prévue comme active. Les données personnelles des dossiers ne doivent jamais alimenter la vitrine. Exécuter tests/product-consistency.test.mjs après modification des offres/pièces et contrôler les règles métier ; actualiser le rapport d'audit et consigner les vérifications non réalisées.
+
+Questionnaire : utiliser questionnaire-model.ts pour la chronologie et questionnaire-copy.ts/QuestionnaireInfo pour les informations communes. Tout ajout de champ au constat doit être évalué dans le questionnaire, le formulaire complet, les trois parcours et les quatre langues. Préserver la séparation conducteur/preneur, les droits A/B, les sauvegardes et les validations finales. Le compteur du questionnaire ne constitue pas une complétude ni une validation.
+
+Choix de saisie : maintenir entry-mode-copy.ts et EntryMode communs aux trois parcours. Le statut Premium doit provenir du serveur ; ne pas transformer Bientôt disponible en achat ou essai sans droit réel.
+
+Présentation : conserver experience-copy.ts comme source commune FR/EN/DE/NL ; les préférences de rubriques sont de l'affichage, jamais une suppression de données. La page Rejoindre ne doit accepter que l'origine du site et un token dans le fragment, sans contourner les contrôles serveur. La pause des animations doit rester accessible même lorsque les détails sont repliés.

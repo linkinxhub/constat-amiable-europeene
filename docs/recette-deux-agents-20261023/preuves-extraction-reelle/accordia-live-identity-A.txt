@@ -1,0 +1,41 @@
+Saisie express — Premium · A
+
+Chaque conducteur choisit son mode. Vous pouvez en changer sans effacer les données du constat. Seules les propositions que vous appliquez sont conservées ; une analyse ou une proposition non appliquée est abandonnée en fermant cette fenêtre.
+
+Saisie express par documents · A Premium
+
+Moins de recopie : importez vos documents, vérifiez les propositions et remplissez votre fiche.
+
+Quelles pièces utiliser ?
+
+Essai administrateur : les appels réels sont facturés au projet OpenAI configuré. Aucun paiement client activé.
+
+Un fichier à la fois : PDF, JPEG, PNG ou WebP, 3 Mio maximum. Images : 4 millions de pixels maximum. Importez chaque pièce séparément.
+
+Type de document
+Certificat d’immatriculation du véhicule
+Carte d’identité / passeport du conducteur
+Permis de conduire
+Attestation d’assurance / carte internationale
+Certificat d’immatriculation de la remorque
+Identité du preneur d’assurance
+Document à lire · A
+
+Cette fonction n’archive pas la pièce dans Accordia. Le fournisseur la traite selon sa politique ; store:false ne garantit pas une rétention nulle. Masquez les informations inutiles. Les valeurs appliquées suivent la sauvegarde habituelle du constat.
+
+J’autorise l’envoi de cette pièce à OpenAI pour préremplir cette fiche. Elle me concerne ou je suis autorisé à la transmettre.
+Lire le document avec l’IA
+Vérifier les propositions · A
+Nom du conducteur
+Actuel: —
+Proposé: TEST A
+Prénom du conducteur
+Actuel: —
+Proposé: Camille
+Pays du conducteur
+Actuel: —
+Proposé: BE
+J’ai relu les valeurs sélectionnées et leur destinataire.
+Insérer les valeurs sélectionnées
+Continuer avec le questionnaire
+Close

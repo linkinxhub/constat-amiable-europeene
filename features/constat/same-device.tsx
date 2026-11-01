@@ -1,4 +1,9 @@
 'use client';
+import {SaveStatus} from './save-status';
+import {EntryMode} from './entry-mode';
+import {Questionnaire} from './questionnaire';
+import {questionnaireCopy} from './questionnaire-copy';
+
 import {retentionDeadline} from './retention';
 import {RefusalPanel} from './refusal-panel';
 import {policyCopy} from './policy-copy';
@@ -28,7 +33,7 @@ import type {Signature} from '../../server/pdf-renderer';
 type History={id:string,reportId:string,url:string,label:string,pdf:Blob,title:string,createdAt:string,expiresAt:number,saved?:boolean};
 type Prepared={key:string,bytes:Uint8Array,url:string,digest:string,lang:Lang,version:number};
 export function SameDevice({report,lang,onChange,onBack,onSave,active,saved}:{report:Report,lang:Lang,onSave:()=>Promise<boolean>,active:boolean,saved:boolean,onChange:(r:Report)=>void,onBack:()=>void}){
- const [side,setSide]=useState<0|1>(0),[style,setStyle]=useState<FinalStyle>('keyboard'),[pdfLang,setPdfLang]=useState<Lang>(lang);
+ const [guided,setGuided]=useState(true);const [side,setSide]=useState<0|1>(report.start?.ownerSide==='B'?1:0),[style,setStyle]=useState<FinalStyle>('keyboard'),[pdfLang,setPdfLang]=useState<Lang>(lang);
  const [completed,setCompleted]=useState<[string,string]>(['','']),[review,setReview]=useState(false),[busy,setBusy]=useState(false),[message,setMessage]=useState('');
  const [prepared,setPrepared]=useState<Prepared|null>(null),[history,setHistory]=useState<History[]>([]);
  const [signatures,setSignatures]=useState<[Signature|null,Signature|null]>([null,null]),[signature,setSignature]=useState(''),[kind,setKind]=useState<'drawn'|'imported'>('drawn'),[consent,setConsent]=useState(false),[viewed,setViewed]=useState(false);
@@ -42,7 +47,7 @@ export function SameDevice({report,lang,onChange,onBack,onSave,active,saved}:{re
  useEffect(()=>{setPrepared(null);setSignatures([null,null]);setSignature('');setConsent(false);setViewed(false);setReview(false);setMessage('');setStoreConsent('')},[key]);
  
  useEffect(()=>{setSignature('');setConsent(false);setViewed(false)},[side]);
- useEffect(()=>{setCompleted(['','']);setSide(0)},[report.id]);
+ useEffect(()=>{setCompleted(['','']);setSide(current.current.start?.ownerSide==='B'?1:0)},[report.id]);
  useEffect(()=>{if(!history.some(h=>!h.saved)&&!(signatures.some(Boolean)&&!signatures.every(Boolean)))return;const warn=(e:BeforeUnloadEvent)=>{e.preventDefault();e.returnValue=''};window.addEventListener('beforeunload',warn);return()=>window.removeEventListener('beforeunload',warn)},[history,signatures]);
  const keys=useMemo(()=>[deviceCompletionKey(report,0),deviceCompletionKey(report,1)],[report]),done=keys.map((k,i)=>completed[i]===k);
  useEffect(()=>{setCompleted(previous=>{const a=previous[0]===keys[0]?previous[0]:'',b=previous[1]===keys[1]?previous[1]:'';return a===previous[0]&&b===previous[1]?previous:[a,b]})},[report]);
@@ -62,11 +67,11 @@ export function SameDevice({report,lang,onChange,onBack,onSave,active,saved}:{re
   <RefusalPanel report={report} lang={language} side={side===0?'A':'B'}/><h2 ref={heading} tabIndex={-1}>{c.title}</h2><p>{c.hint}</p><p className="notice">{dc.notice}</p>
   <div className="device-actions"><Button type="button" variant="outline" disabled={busy} onClick={onBack}>{c.back}</Button><Button type="button" variant="outline" disabled={busy} onClick={()=>void save()}>{c.save}</Button></div>
   <details><summary>{dictionaries[language].guide}</summary><UsageGuide lang={language}/></details>
-  <p role="status">{saved?c.saved:progressCopy[language].unsaved}</p><p>{c.handoff} <strong>{side===0?'A':'B'}</strong></p>
+  <SaveStatus lang={language} saved={saved} dirty={!saved}/><p>{c.handoff} <strong>{side===0?'A':'B'}</strong></p>
   <div className="device-actions" role="group" aria-label={c.title}>{([0,1] as const).map(i=><Button type="button" key={i} disabled={busy} variant="outline" aria-pressed={side===i} onClick={()=>setSide(i)}>{i===0?'A':'B'} · {signatures[i]?'✓ '+f.signature:done[i]?c.done:c.pending}</Button>)}</div>
   <label className="field"><span>{t.lang} · {side===0?'A':'B'}</span><NativeSelect value={language} disabled={busy} onChange={e=>{const readingLanguages=[...report.readingLanguages] as Report['readingLanguages'];readingLanguages[side]=e.target.value as Lang;onChange({...report,readingLanguages})}}>{(['fr','en','de','nl'] as const).map(l=><NativeSelectOption key={l} value={l}>{l.toUpperCase()}</NativeSelectOption>)}</NativeSelect></label>
   <div className="device-actions"><Button type="button" variant="outline" disabled={busy} onClick={()=>setReview(false)}>{c.edit}</Button>{prepared&&<Button type="button" disabled={busy} onClick={()=>setReview(true)}>{c.review}</Button>}</div>
-  {!review&&<fieldset disabled={busy}><VehicleForm value={report.vehicles[side]} index={side} t={t} onChange={editVehicle}/><FormDetails value={report.vehicles[side]} lang={language} onChange={editVehicle}/><TextField label={t.observations} value={report.vehicles[side].observations} onChange={observations=>editVehicle({...report.vehicles[side],observations})}/><Evidence key={side} r={report} t={t} side={side===0?'A':'B'} change={r=>onChange(r)}/><Button type="button" disabled={!ownReady()} onClick={()=>{setCompleted(d=>side===0?[keys[0],d[1]]:[d[0],keys[1]]);if(side===0)setSide(1)}}>{c.finish}</Button></fieldset>}
+  {!review&&<fieldset disabled={busy}><EntryMode key={'entry-'+report.id+side} report={report} side={side} lang={language} guided={guided} disabled={busy} onChange={onChange} onGuided={()=>setGuided(true)} onClassic={()=>setGuided(false)}/>{guided?<Questionnaire key={'questions-'+report.id+side} report={report} lang={language} side={side} common={side===0} onChange={onChange} onDone={()=>setGuided(false)}/>:<><VehicleForm importScope={report.id} value={report.vehicles[side]} index={side} t={t} onChange={editVehicle}/><FormDetails value={report.vehicles[side]} lang={language} onChange={editVehicle}/><TextField label={t.observations} value={report.vehicles[side].observations} onChange={observations=>editVehicle({...report.vehicles[side],observations})}/><Evidence key={'evidence-'+report.id+side} r={report} t={t} side={side===0?'A':'B'} change={r=>onChange(r)}/><Button type="button" disabled={!ownReady()} onClick={()=>{setCompleted(d=>side===0?[keys[0],d[1]]:[d[0],keys[1]]);if(side===0)setSide(1)}}>{c.finish}</Button></>}</fieldset>}
   <p>{c.correction}</p><CompletenessPanel final r={report} lang={language} onGo={(n,vehicle)=>{if(n===0)onBack();else {if(vehicle!==undefined)setSide(vehicle===0?0:1);setReview(false);heading.current?.scrollIntoView({behavior:'smooth'})}}}/>
   {!ready&&<p className="notice">{c.missing}</p>}
   <div className="final-styles" role="group" aria-label={f.format}>{styles.map(s=><Button type="button" key={s} variant="outline" disabled={busy} aria-pressed={style===s} onClick={()=>setStyle(s)}>{s==='keyboard'?f.keyboard:s==='blue-pen'?f.blue:f.black}</Button>)}</div>

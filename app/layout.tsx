@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "./design-polish.css";
+import "./experience.css";
+import "./product-ui.css";
 
 export const metadata: Metadata = {
   title: "Accordia — Constat européen",
-  description: "Préparez votre dossier automobile en français, anglais, allemand et néerlandais.",
-  other: {
-    "codex-preview": "development",
-  },
+  description: "Préparez votre constat européen à deux, dans la langue de chacun, avec photos, relecture et PDF.",
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",

@@ -23,3 +23,14 @@ test('lookup validates coordinates before any request',async()=>{
  await assert.rejects(lookupAddress(NaN,0,'fr',new AbortController().signal),/invalid_coordinates/);
  await assert.rejects(lookupAddress(91,0,'fr',new AbortController().signal),/invalid_coordinates/);
 });
+test('GPS country maps supported ISO codes and preserves manual corrections',()=>{
+ for(const code of ['BE','FR','DE','NL','ES','IT']){
+  const address=parseAddress({features:[{properties:{street:'Route',city:'Commune',countrycode:code.toLowerCase()}}]});
+  assert.equal(address.country,code==='IT'?'OTHER':code);
+ }
+ const r={...fresh(),country:'BE',location:{latitude:1,longitude:2,accuracy:10,capturedAt:'2026-10-23T01:00:00.000Z'}};
+ const before={place:r.place,city:r.city||'',country:'BE'};
+ assert.equal(mergeAddress(r,{place:'Rue',city:'Paris',country:'FR'},r.location.capturedAt,before).country,'FR');
+ assert.equal(mergeAddress({...r,country:'DE'},{place:'Rue',city:'Paris',country:'FR'},r.location.capturedAt,before).country,'DE');
+ assert.equal(mergeAddress(r,{place:'Rue',city:'Paris'},r.location.capturedAt,before).country,'BE');
+});

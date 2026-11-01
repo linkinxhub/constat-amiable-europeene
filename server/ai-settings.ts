@@ -43,9 +43,11 @@ export async function testAiConnection(db:D1Database,actor:string,revision:numbe
  const row=await requireAdmin(db,actor);if(row.revision!==revision)throw new ReportError(409,'conflict');if(!row.encrypted_key||!row.model)throw new ReportError(400,'key_required');
  const now=Date.now();const lock=await db.prepare("UPDATE ai_settings SET test_after=? WHERE id='platform' AND admin_id=? AND revision=? AND test_after<=? AND NOT EXISTS(SELECT 1 FROM accounts WHERE id=? AND status!='active')").bind(now+10000,actor,revision,now,actor).run();if(lock.meta.changes!==1)throw new ReportError(429,'rate_limited');
  const key=await unseal(row.encrypted_key,env);
- let response:Response;try{response=await fetch('https://api.openai.com/v1/models/'+encodeURIComponent(row.model),{headers:{Authorization:'Bearer '+key},redirect:'error',signal:AbortSignal.timeout(10000)});}catch{throw new ReportError(502,'provider_unavailable');}
+ // workerd supports manual/follow only. Reject non-2xx below without following redirects.
+ let response:Response;try{response=await fetch('https://api.openai.com/v1/models/'+encodeURIComponent(row.model),{headers:{Authorization:'Bearer '+key},redirect:'manual',signal:AbortSignal.timeout(10000)});}catch(error){const code=error instanceof Error&&(error.name==='TimeoutError'||error.name==='AbortError')?'provider_timeout':'provider_network';console.warn('Accordia OpenAI connection check failed',code);throw new ReportError(502,code);}
  // Never expose an upstream error body, which may contain credential/account details.
- await response.body?.cancel();
- if(response.status===401)throw new ReportError(400,'provider_key');if(response.status===403||response.status===404)throw new ReportError(400,'provider_model');if(!response.ok)throw new ReportError(502,'provider_unavailable');
+ await response.body?.cancel().catch(()=>{});
+ if(!response.ok)console.warn('Accordia OpenAI connection check HTTP status',response.status);
+ if(response.status===401)throw new ReportError(400,'provider_key');if(response.status===403||response.status===404)throw new ReportError(400,'provider_model');if(response.status===429)throw new ReportError(502,'provider_limit');if(response.status>=500)throw new ReportError(502,'provider_server');if(!response.ok)throw new ReportError(502,'provider_request');
  const latest=await requireAdmin(db,actor);if(latest.revision!==revision)throw new ReportError(409,'conflict');return {ok:true,revision};
 }

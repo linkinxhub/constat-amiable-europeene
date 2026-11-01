@@ -96,3 +96,29 @@ La route dédiée /api/billing/test/sketch applique les gardes administrateur et
 
 ## 0.22I — Crédit de traduction après cache
 prepareTestTranslation valide le corps strict puis utilise withPdfLock/prepareUnlocked. La réservation withTestCredit est placée après la recherche du PDF compatible. Le contexte interne donne une identité de génération au digest ; translationCommit ajoute la garde de réservation et le règlement succeeded au batch de référence PDF. Le crédit et la sortie partagent donc un commit atomique. La route de test hérite des gardes administrateur/configuration ; aucune route ordinaire ne reçoit le contexte test.
+
+## 2026-10-23 — Correctifs avant publication
+`save-queue.ts` sérialise les écritures IndexedDB ; Workspace sauvegarde les instantanés modifiés, confirme uniquement l’instantané encore actif et reprend le pointeur de brouillon sessionStorage. `cloudDirty` ne dépend pas du succès local. Réponses de croquis bornées en streaming ; redirections fournisseur non suivies pour croquis/traduction. Création et renouvellement de session conditionnés atomiquement. Tests de traduction sur le Worker compilé.
+
+## Saisie express par documents — 2026-10-23
+Import JPEG/PNG/WebP/PDF par conducteur, extraction IA et sélection des champs avant application. Les modifications intervenues pendant la relecture sont protégées contre l'écrasement. Consentement explicite, documents non archivés par Accordia, aucune reconnaissance faciale. Limites : 3 Mio, images 4 Mpx, 5 tentatives/heure/compte et plafond IA global partagé de 100 appels/jour. Les échecs peuvent consommer une tentative.
+Positionnement Premium affiché sur accueil, tarifs et formulaire en FR/EN/DE/NL. Achats toujours fermés : serveur refuse les comptes ordinaires (402), essai réel réservé au superadministrateur existant. Aucun droit payant ni paiement simulé. Avant ouverture commerciale : paiements réels, droits Premium vérifiés et tarif final.
+Tests synthétiques uniquement ; extraction avec documents réels et compatibilité du modèle configuré restent à vérifier. Aperçu navigateur indisponible dans cette session.
+
+## Audit transversal et synchronisation — 23 octobre 2026
+Rapport : docs/AUDIT_SYNCHRONISATION_2026-10-23.md. Référence Sites 42 ; restauration before-sync-audit-20261023.
+Offres vitrine dérivées de pricingCopy ; montants principaux partagés avec validation serveur via features/product/catalog.ts. Couverture documentaire commune dans formulaire, tarifs, compte/offres, vitrine, guide et tutoriel. Ajout des types remorque et identité du preneur avec champs distincts. États réseau/chargement/annulation/délai IA corrigés, libellés vitrine localisés, consentements clarifiés, règle permanente de synchronisation dans AGENTS.md.
+Aucun droit commercial accordé, aucun achat ouvert, aucune donnée privée publiée. Validation : TypeScript, build Sites, 160 tests de la suite complète et un contrôle supplémentaire des pages compilées réussis (161 au total), zéro échec. Sept pages/rendus HTTP contrôlés : accueil, constat, compte, tarifs FR/EN/DE/NL. Recette visuelle et vraie lecture fournisseur non réalisées. L'audit n'est pas une certification exhaustive.
+
+## Questionnaire guidé
+questionnaire-model.ts construit des pages stables selon count/side/common ; groupes de compléments partagés avec detail-groups.ts. Questionnaire est un éditeur contrôlé du Report existant, utilise les mêmes callbacks et composants (GPS, circonstances, import documentaire). Aucun stockage parallèle, schéma ni migration. Composant commun QuestionnaireInfo pour les surfaces publiques et d’aide. Les permissions serveur restent autoritaires.
+
+## Présentation et navigation 2026-10-23
+experience-copy.ts centralise la nouvelle présentation ; FlowSteps et SaveStatus séparent phase et enregistrement. join-model.ts valide une navigation locale et ne donne aucun droit. /join rejoint l'API d'invitation existante via /session/id#invite ; token gardé dans le fragment. questionnairePages conserve son comportement exhaustif lorsqu'aucune sélection n'est fournie, et accepte des sélections conditionnelles d'affichage côté client sans changement de schéma Report. Aucune donnée personnelle copiée dans ces préférences.
+
+## Présentation commune des offres — 23 octobre 2026
+
+features/product/presentation-copy, site-header, plan-cards et offer-options centralisent textes FR/EN/DE/NL, navigation et cartes d’offres. pricing-copy continue de dériver les montants de product/catalog, également consommé par la validation serveur ; aucune attribution de droit depuis ces composants. offer-options respecte les quatre identifiants historiques et regroupe les flottes en une préférence. Le CSS product-ui est limité à l’écran. Home/Join acceptent une langue explicite validée ; les liens la conservent. Une reprise de dossier conserve ses propres langues enregistrées.
+
+## 2026-11-01 — Démarrage sécurité/appareils
+SafetyGate enveloppe Workspace et SessionClient ; acquittement en mémoire par identifiant, jamais écrit au dossier ou envoyé comme preuve. Les enfants restent montés et masqués pendant la relecture des consignes pour préserver l’état des formulaires et PDF. ParticipationModePicker route vers SameDevice, CloudPanel ou le formulaire ; participation-model conserve les valeurs et distingue personnes/véhicules. start.participationMode est facultatif dans le schéma Zod, sans migration SQL. QuestionnaireInfo et le premier tableau animé du tutoriel partagent onboarding-copy FR/EN/DE/NL. Les API continuent de vérifier identités, appartenances, côtés, révisions et consentements ; aucun contournement par le choix UI.

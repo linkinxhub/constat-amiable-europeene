@@ -1,0 +1,47 @@
+{
+  "purpose": "Recette documentaire uniquement - données entièrement fictives",
+  "notActualExtraction": true,
+  "note": "Valeurs attendues par kind, sans confiance inventée. Aucun appel fournisseur réalisé. Les champs absents ne doivent pas être inférés.",
+  "actors": {
+    "A": {
+      "vehicle": {
+        "plate": "TEST-A-001",
+        "model": "Renault Clio",
+        "registrationCountry": "BE"
+      },
+      "identity": {
+        "driver": "Camille TEST A",
+        "driverCountry": "BE"
+      },
+      "insurance": {
+        "insurer": "ASSURANCE-FICTIVE-A",
+        "policy": "POLICE-TEST-A",
+        "policyholder": "Assurance TEST A",
+        "policyholderCountry": "BE",
+        "insuranceFrom": "2026-01-01",
+        "insuranceUntil": "2026-12-31",
+        "plate": "TEST-A-001"
+      }
+    },
+    "B": {
+      "vehicle": {
+        "plate": "TEST-B-002",
+        "model": "Toyota Corolla",
+        "registrationCountry": "BE"
+      },
+      "identity": {
+        "driver": "Bram TEST B",
+        "driverCountry": "BE"
+      },
+      "insurance": {
+        "insurer": "ASSURANCE-FICTIVE-B",
+        "policy": "POLIS-TEST-B",
+        "policyholder": "VERZEKERING TEST B",
+        "policyholderCountry": "BE",
+        "insuranceFrom": "2026-01-01",
+        "insuranceUntil": "2026-12-31",
+        "plate": "TEST-B-002"
+      }
+    }
+  }
+}

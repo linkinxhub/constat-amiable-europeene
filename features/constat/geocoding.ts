@@ -1,7 +1,7 @@
 import type {Report} from './model.ts';
 
 export const cityLabel={fr:'Ville / commune',en:'City / municipality',de:'Stadt / Gemeinde',nl:'Stad / gemeente'};
-export type AddressResult={place:string;city:string};
+export type AddressResult={place:string;city:string;country?:Report['country']};
 export function parseAddress(data:unknown):AddressResult {
  const p=(data as {features?:{properties?:Record<string,unknown>}[]})?.features?.[0]?.properties;
  if(!p)throw new Error('address_unavailable');
@@ -11,14 +11,17 @@ export function parseAddress(data:unknown):AddressResult {
  const name=text('name');
  const place=[...new Set([name!==city?name:'',street].filter(Boolean))].join(' · ');
  if(!place&&!city)throw new Error('address_unavailable');
- return {place,city};
+ const code=text('countrycode').toUpperCase();
+ const country=code?(['BE','FR','DE','NL','ES'].includes(code)?code as Report['country']:'OTHER'):undefined;
+ return {place,city,...(country?{country}:{})};
 }
 
 // Never replace edits made while GPS/address requests were in flight.
 export function mergeAddress(current:Report,address:AddressResult,capturedAt:string,before:AddressResult):Report {
  if(current.location?.capturedAt!==capturedAt)return current;
  return {...current,place:current.place===before.place&&address.place?address.place:current.place,
- city:(current.city||'')===before.city&&address.city?address.city:current.city};
+ city:(current.city||'')===before.city&&address.city?address.city:current.city,
+ country:current.country===before.country&&address.country?address.country:current.country};
 }
 export function fullPlace(r:Pick<Report,'place'|'city'>){return [r.place,r.city].filter(Boolean).join(' · ');}
 

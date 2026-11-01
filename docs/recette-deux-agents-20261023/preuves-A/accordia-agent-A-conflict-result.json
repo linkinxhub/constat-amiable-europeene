@@ -1,0 +1,8 @@
+{
+  "ok": false,
+  "error": {
+    "status": 500,
+    "code": "document_conflict"
+  },
+  "at": "2026-10-23T08:58:24.537Z"
+}

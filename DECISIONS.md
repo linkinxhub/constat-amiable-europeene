@@ -107,3 +107,15 @@ Raccorder d'abord le croquis via une route de test administrative fermée par d�
 
 ## 0.22I et demande de repérage visuel
 Poursuite du raccordement du PDF traduit validée par « Ok continuer ». Nouveau lot préparé et testé localement, sans nouvelle publication de production dans ce tour. Préserver le cache gratuit et les droits ordinaires. La question jointe sur l'image est traitée par vérification du formulaire et cadrage, sans annoncer une fonction IA/photo qui n'est pas implémentée.
+
+## 2026-10-23 — Propriété distincte de la lettre du conducteur
+La création du dossier ne détermine plus la lettre A. `owner_side` fixe la lettre choisie et le participant invité reçoit l'autre. La colonne historique `participant_b` désigne toujours l'invité en base, même s'il est A ; elle n'est pas renommée pour préserver les gardes et historiques. Les faits communs restent proposés par A. L'automatisation IA est bornée à une tentative par révision et conserve les consentements et validations humaines. Voir docs/PARTICIPANT_START.md.
+
+## Synchronisation des informations produit
+Une source commune pour les montants et offres, une liste commune pour les pièces. Aucune synchronisation de données personnelles vers la vitrine. Une identité du preneur ou une remorque ne doit pas modifier les champs du conducteur ou du véhicule tracteur. Les dix générations commerciales annoncées concernent croquis/traductions ; quota commercial des pièces à définir avant vente.
+
+## Questionnaire gratuit
+La réduction de la charge de saisie est incluse dans le socle gratuit : aucune requête IA ni coût fournisseur ajouté. L’extraction documentaire conserve sa barrière serveur Premium. Une description FR/EN/DE/NL réutilisée évite les divergences vitrine/tarifs/compte/aide ; toutes les fonctions futures doivent être raccordées et vérifiées, sans prétendre à une synchronisation automatique de code.
+
+## 2026-11-01 — Personnes et véhicules distincts
+Le choix solo ne force ni un seul véhicule ni un rôle A. Les signatures personnelles restent dans les parcours préexistants ; aucun accord attribué à un absent. Les cartes rejoignent des fonctions réelles et ne créent aucun compte. La confirmation de sécurité n’est pas conservée comme déclaration et ne vaut pas réponse sur les blessés. Illustrations originales CSS, sans réutilisation des visuels ou marque de référence. Consignes générales sans distance nationale universelle ; priorité à l’absence d’exposition au danger. Référence consultée : Police fédérale, « Panne, accident, comment sécuriser les lieux ? » (26/11/2024), https://www.police.be/5998/fr/actualites/securite-routiere-panne-accident-comment-securiser-les-lieux .
