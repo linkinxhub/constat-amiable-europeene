@@ -144,3 +144,7 @@ synthesis-model/service/review/copy et migration additive 0018 : historique D1 b
 
 ## 2026-11-01 — QR d’accès sur le constat
 pdf-access fixe l’origine canonique et valide strictement le UUID de session. final-service transmet onlineSessionId au moteur v4 ; reference-page masque la zone entière puis pdf-access-qr dessine les modules QR et une annotation URI. Aucun jeton, donnée déclarative ou hôte de requête dans le QR. Les octets historiques et le tamponnage restent compatibles.
+
+
+## 2026-11-01 — Réparation du partage mobile
+pending-invitation centralise validation 32..100 caractères (borne serveur), stockage session JSON par identifiant, expiration locale 24h et migration du cache historique brut. Fragment conservé avant adhésion ; ni query de connexion ni localStorage pour le jeton. InvitationRecovery valide origin/path/hash avant de mémoriser en session. SessionClient distingue not_found attendu avant adhésion, vérifie d’abord l’accès lors du clic Rejoindre puis POST seulement si nécessaire ; confirmation GET nettoie l’invitation, langue éventuellement sauvegardée ensuite. Verrou client contre actions concurrentes, annulation de partage sans fausse erreur, copie manuelle si Clipboard indisponible. Contrôles serveur, invitations à usage unique, rôles A/B et expiration inchangés.

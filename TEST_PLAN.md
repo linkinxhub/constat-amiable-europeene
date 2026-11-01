@@ -310,3 +310,7 @@ Tests synthesis et synthesis-ui : schéma strict/borné, quatre langues, absence
 
 ## 2026-11-01 — QR d’accès sur le constat
 QR : URL fixe, refus des URL externes/chemins/tokens/identifiants invalides ; matrice PDF 4 langues × local/session, annotation cliquable, source inchangée et version moteur. Rendu et décodage logiciel à taille de page ; permissions session existantes retestées par suite. Scan caméra/téléphone physique non exécuté.
+
+
+## 2026-11-01 — Réparation du partage mobile
+Huit nouveaux scénarios invitation-recovery/session-invitation-ui : restauration après connexion sans fragment, expiration/cache malformé/stockage bloqué, contrôle origine/dossier/query/token dupliqué/trop long, vrais handlers du formulaire dans quatre langues, vrai SessionClient sans nettoyage prématuré ni jeton dans URL auth, réponse POST perdue sans rejeu, refresh not_found explicatif, stockage navigateur interdit, copie manuelle. Harnais ancien Join adapté aux nouvelles dépendances réelles. Preview : page réelle de session fictive, lien incomplet refusé, récupération locale puis rechargement conservé, largeur 375 px dans FR/EN/DE/NL (clientWidth=scrollWidth=375). Aucune adhésion serveur réelle, connexion fournisseur ou téléphone physique exécuté dans cette recette. Page QA temporaire retirée avant build final.

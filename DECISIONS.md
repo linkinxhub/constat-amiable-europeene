@@ -139,3 +139,7 @@ Deux étapes serveur, sans ajouter le texte dérivé au constat signé. Synthès
 
 ## 2026-11-01 — QR d’accès sur le constat
 Le QR ouvre le dossier courant, pas un document immuable ni une invitation. Authentification et appartenance A/B conservées par la page session et ses API. Local/appareil commun ouvrent le compte avec mention hors ligne : aucun faux accès cloud. Origine canonique identique au site Sites actuel ; actualiser cette constante lors d’un changement de domaine. Aucun retrait des PDF signés existants.
+
+
+## 2026-11-01 — Réparation du partage mobile
+Ne pas exposer publiquement existence, propriétaire ou état d’une invitation pour améliorer l’erreur : not_found reste opaque côté serveur. Le client affiche une aide d’accès plutôt que Action impossible. Pas d’adhésion automatique ; le destinataire confirme personnellement. Un retour de connexion qui ne transmet jamais le fragment à l’application ne peut pas être reconstruit : proposer rouvrir le message et coller le lien complet. Changement de navigateur/onglet n’est pas une synchronisation de sessionStorage. Un compte ne peut occuper les deux places. Récupération de réponse POST perdue par lecture d’appartenance, aucun assouplissement de validation.

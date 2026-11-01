@@ -526,3 +526,11 @@ Publication explicitement autorisée, état natif succeeded confirmé. Source pu
 QR vectoriel cliquable en haut à droite à la place du code-barres : dossier partagé sécurisé ou accès compte pour un dossier local hors ligne. Aucun nouveau droit. Aide commune quatre langues et moteur PDF v4 ; originaux et PDF existants conservés.
 
 Validation du lot QR : 239 tests réussis, TS/build validés, lint 0 erreur/54 avertissements ; QR réellement décodé par logiciel et rendu vérifié. Scan physique à confirmer. Source sauvegardée sans publication production.
+
+
+## 2026-11-01 — Réparation du partage entre téléphones
+- Invitation conservée à travers la connexion, récupération explicite du lien manquant et messages d’accès utiles ; aucun token ajouté aux paramètres d’authentification.
+- Reprise après réponse d’adhésion perdue, expiration locale et nettoyage après confirmation, contrôles serveur inchangés.
+- Copie manuelle, annulation de partage et actions concurrentes traitées ; écran mobile/guide quatre langues vérifiés sur données fictives. Publication non incluse, essai à deux téléphones réels encore nécessaire.
+
+Validation finale partage : TypeScript/build et 247 tests réussis, lint 0 erreur/54 avertissements historiques. Dépendances inchangées. Preview et tests contrôlés ne constituent pas une recette de connexion sur deux téléphones réels.

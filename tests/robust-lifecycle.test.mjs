@@ -1,3 +1,5 @@
+import * as pendingInvitation from '../features/constat/pending-invitation.ts';
+import {sharingCopy} from '../features/constat/sharing-copy.ts';
 import {experienceCopy} from '../features/constat/experience-copy.ts';
 import test from 'node:test';import assert from 'node:assert/strict';
 import {componentHarness} from './lifecycle-harness.mjs';
@@ -36,7 +38,7 @@ test('shared-device completion never resurrects after editing and reverting fact
 test('Join restores a stored language after hydration while an explicit URL language wins; invalid storage remains safe',()=>{
  const original={document:globalThis.document,localStorage:globalThis.localStorage};
  globalThis.document={documentElement:{lang:''}};
- const joinModules={'./browser-ready':{useBrowserReady:()=>true},'./experience-copy':{experienceCopy},'./join-model':{invitationPath:()=>''},'../product/site-header':{SiteHeader:'SiteHeader',SiteFooter:'SiteFooter'}};
+ const joinModules={'./pending-invitation':pendingInvitation,'./sharing-copy':{sharingCopy},'./browser-ready':{useBrowserReady:()=>true},'./experience-copy':{experienceCopy},'./join-model':{invitationPath:()=>''},'../product/site-header':{SiteHeader:'SiteHeader',SiteFooter:'SiteFooter'}};
  try{for(const [stored,explicit,expected] of [['en',undefined,'en'],['de','fr','fr'],['unsupported',undefined,'fr'],[null,undefined,'fr']]){
   globalThis.localStorage={getItem(){return stored}};
   const h=componentHarness('features/constat/join-panel.tsx','JoinPanel',joinModules);

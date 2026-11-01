@@ -136,3 +136,7 @@ Synthèse avant croquis développée. Restent : qualité réelle des sorties et 
 
 ## 2026-11-01 — QR d’accès sur le constat
 QR d’accès en ligne ajouté aux nouveaux exports ; ouverture réservée aux comptes autorisés. Scan caméra physique à confirmer, domaine personnalisé à configurer séparément si souhaité. Production inchangée sans autorisation explicite.
+
+
+## 2026-11-01 — Réparation du partage mobile
+Partage mobile renforcé : invitation conservée, champ de récupération et erreurs utiles. À recetter après publication autorisée sur deux téléphones avec comptes différents et messagerie/connexion réelles. Production v59 conservée, nouvelle version de développement préparée sans publication.

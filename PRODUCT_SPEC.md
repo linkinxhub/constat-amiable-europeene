@@ -161,3 +161,7 @@ Synthèse textuelle IA séparée avant tout nouveau croquis en session partagée
 
 ## 2026-11-01 — QR d’accès sur le constat
 Les nouveaux PDF remplacent le code-barres de référence par un QR vectoriel cliquable : session partagée protégée si disponible, sinon compte Accordia explicitement distingué du brouillon local. Aucun droit ni invitation transmis.
+
+
+## 2026-11-01 — Réparation du partage mobile
+Rejoindre une session conserve son invitation jusqu’à confirmation d’appartenance serveur. Récupération explicite du lien complet du même site/dossier, instructions de deux comptes et erreurs distinctes. Aucun accord automatique ni privilège supplémentaire.
