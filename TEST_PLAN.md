@@ -1,3 +1,7 @@
+## 2 novembre 2026 — Scanner d’invitation QR
+
+Tests qr-camera, qr-join et qr-scanner-ui : QR réel décodé, origines/fragments contrôlés, arrêt et annulation tardive, erreurs caméra, absence de demande au montage, formulaire réellement rempli sans navigation avant confirmation, quatre langues. Aperçu HTTP : message indisponible et lien invalide refusé ; mobile 375 px sans débordement. Recette restante sur HTTPS avec caméra physique Android/iPhone : permission acceptée/refusée, QR à différentes distances, écran sombre, arrêt et arrière-plan, lien rempli puis connexion B.
+
 ## 2 novembre 2026 — Correction de la saisie depuis la relecture
 
 Tests review-entry.test.mjs : quatre langues, cible A/B et lecture seule, aucun changement des données lors de navigation. session-invitation-ui.test.mjs : ouverture du formulaire complet propre et refus de cible étrangère. robust-lifecycle.test.mjs : confirmations appareil commun non ressuscitées. Aperçu bureau : compteur 24→23 après saisie fictive conservée ; iframe 375 px, largeur utile 360, sans débordement, focus du premier champ complémentaire. Recette physique A/B à exécuter selon docs/ORDRE_TRAVAIL_EXPLOITATION_2026-11-02.md, non revendiquée par ces tests.

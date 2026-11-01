@@ -1,3 +1,7 @@
+## 2 novembre 2026 — Scan local des invitations
+
+Décodage jsqr chargé au clic, sans CDN ni transfert des images. Le scan remplit le champ et requiert ensuite la confirmation du formulaire. La validation invitationPath reste commune au collage et au scan. Aucun nouveau droit, pas de QR PDF accepté comme invitation. Arrêt caméra à la réussite, au retrait et en arrière-plan ; lien collé de secours maintenu.
+
 ## 2 novembre 2026 — Complétion et documents historiques
 
 - Corriger les compléments depuis un raccourci vers le formulaire existant, sans dupliquer la saisie ou les validations en relecture.

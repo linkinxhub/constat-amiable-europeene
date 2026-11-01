@@ -38,7 +38,7 @@ test('shared-device completion never resurrects after editing and reverting fact
 test('Join restores a stored language after hydration while an explicit URL language wins; invalid storage remains safe',()=>{
  const original={document:globalThis.document,localStorage:globalThis.localStorage};
  globalThis.document={documentElement:{lang:''}};
- const joinModules={'./pending-invitation':pendingInvitation,'./sharing-copy':{sharingCopy},'./browser-ready':{useBrowserReady:()=>true},'./experience-copy':{experienceCopy},'./join-model':{invitationPath:()=>''},'../product/site-header':{SiteHeader:'SiteHeader',SiteFooter:'SiteFooter'}};
+ const joinModules={'./qr-scanner':{QrScanner:'QrScanner'},'./pending-invitation':pendingInvitation,'./sharing-copy':{sharingCopy},'./browser-ready':{useBrowserReady:()=>true},'./experience-copy':{experienceCopy},'./join-model':{invitationPath:()=>''},'../product/site-header':{SiteHeader:'SiteHeader',SiteFooter:'SiteFooter'}};
  try{for(const [stored,explicit,expected] of [['en',undefined,'en'],['de','fr','fr'],['unsupported',undefined,'fr'],[null,undefined,'fr']]){
   globalThis.localStorage={getItem(){return stored}};
   const h=componentHarness('features/constat/join-panel.tsx','JoinPanel',joinModules);

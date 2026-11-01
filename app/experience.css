@@ -8,3 +8,5 @@
 }
 
 @media screen{.damage-suggestions{margin:10px 0}.damage-suggestions summary{cursor:pointer;color:#175cd3}.damage-suggestions p{font-size:.9rem;margin:12px 0}.damage-suggestions>div{display:flex;flex-wrap:wrap;gap:8px}.damage-suggestions button{white-space:normal;min-height:44px;height:auto;padding:8px 12px;max-width:100%}.field>label{display:grid;gap:8px}}
+
+.qr-scanner{margin:24px 0;padding:16px;border:1px solid var(--experience-border);border-radius:12px}.qr-scanner button{min-height:48px;margin:0 8px 12px 0;white-space:normal}.qr-scanner video{width:100%;max-height:360px;object-fit:cover;border-radius:8px;background:#102333}.qr-scanner video[hidden]{display:none}.qr-scanner p{overflow-wrap:anywhere}
