@@ -7,6 +7,13 @@ Chaque téléphone se connecte séparément avec son propre compte. Ne jamais ut
 
 Adresse du site actuellement publié : https://accordia-constat.adil-btp.chatgpt.site . La version 56 est publiée ; les correctifs de la version 58 sont sauvegardés mais non publiés. Un test de la version publiée ne valide pas automatiquement les correctifs de la version sauvegardée. La Preview terminal.local est une QA interne, pas une adresse à ouvrir sur les téléphones physiques. Une nouvelle publication exige l’autorisation explicite du propriétaire ; aucun déploiement n’est effectué dans ce lot.
 
+## Dossier partagé réellement préparé
+Une session de recette a été créée par l’interface normale dans le compte A déjà connecté, sur la version 56 actuellement publiée. La situation commune et les deux fiches TEST FICTIF ont été enregistrées ; leur présence a été vérifiée dans « Relire le dossier complet » après ouverture de la session serveur, révision 1. Le conducteur B n’a pas encore rejoint et aucune fin de partie ni signature personnelle n’a été confirmée.
+
+Le lien privé de la session est remis au propriétaire dans la conversation, pas enregistré dans ce dépôt. Depuis le téléphone A, ouvrir ce lien avec le compte propriétaire. Si le QR n’apparaît pas sur ce nouveau navigateur, cliquer « Inviter l’autre conducteur » pour générer un nouveau lien/QR. Sur le téléphone B, scanner ce QR et se connecter au second compte autorisé. L’invitation est à usage unique et valable 24 heures ; la génération d’une nouvelle invitation invalide la précédente. Aucun jeton d’invitation n’est copié dans GitHub.
+
+Les fiches sont préremplies mais restent à relire/compléter personnellement, notamment les circonstances et les confirmations. La création depuis le navigateur connecté prouve le fonctionnement du compte A et de la sauvegarde/session serveur ; elle ne prouve pas une recette sur téléphone physique ni l’identité du second compte. La conservation du dossier suit la politique normale affichée ; seuls les jetons d’invitation ont une durée de 24 h.
+
 ## Données fictives prêtes à recopier
 Ce jeu n’est pas un sinistre réel ni une preuve d’assurance. Conserver TEST FICTIF dans les noms et observations. Aucune personne réelle, assurance réelle ou plaque réelle n’est utilisée. L’option d’analyse IA n’est pas nécessaire et ne doit pas être présentée comme activée pour ces comptes ordinaires.
 

@@ -507,4 +507,6 @@ Durcissement complémentaire du même lot : état du client remonté par identif
 - Retient les deux comptes ChatGPT existants déjà autorisés, au choix du propriétaire ; aucun nouveau compte, secret, droit ou accès créé.
 - Fournit un jeu de données fictives A/B et une feuille de recette pour deux téléphones, sans prétendre les essais physiques réalisés.
 - Prépare le workflow qualité/sécurité de PR, actions épinglées et audits bloquants sans masquer l’alerte de développement connue ; aucune publication ni protection de branche automatique.
-- YAML vérifié, 18 tests ciblés réussis ; code applicatif inchangé. Guide vérifié sans impact utilisateur. L’exécution distante GitHub reste à constater après synchronisation.
+- YAML vérifié, 18 tests ciblés réussis ; code applicatif inchangé. Guide vérifié sans impact utilisateur. Première exécution distante vérifiée : installation, 223 tests et contrôles de qualité réussis ; audit production sans alerte ; audit complet en échec sur l’alerte modérée Minimatch.
+
+Session serveur TEST FICTIF réellement créée dans le compte A connecté, deux fiches sauvegardées et relues, B en attente. Aucun jeton d’invitation stocké dans le dépôt ; essai sur deux téléphones et signatures encore non exécutés.
