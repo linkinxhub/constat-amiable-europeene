@@ -122,3 +122,6 @@ Catalogue partagé vitrine/tarifs/validation serveur et couverture documentaire 
 
 ## 2026-11-01 — Lot sécurité et modes
 Écrans et raccordements implémentés. Restent : recette visuelle mobile/ordinateur en Preview, parcours à deux comptes et QR physique. Production réservée à une autorisation explicite. Synchronisation GitHub sur branche dédiée pour conserver main et les anciennes sources.
+
+## 2026-11-01 — Lecture photo par lot
+Parcours multi-pièces et relecture groupée développé sur l’API existante. Restent la recette caméra sur téléphone physique, les pièces réelles autorisées et le modèle fournisseur configuré, puis les droits/paiements Premium réels avant ouverture commerciale. Publication de ce lot séparée de son développement ; version 56 reste la référence production.

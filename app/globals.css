@@ -312,3 +312,6 @@ body{font-family:Arial,Helvetica,sans-serif;background:#f7f9fc;color:#101e3c;fon
 @media screen{.review-empty-original{display:none}.review-empty-controls{padding:12px 14px;background:#f6f9fc;border:1px solid #d5e3e9;border-radius:10px;margin:12px 0 24px}.review-empty-controls summary{cursor:pointer;font-size:14px;color:#536079}.review-empty-controls[open]>dl{margin-top:16px}}
 
 @media screen{.questionnaire fieldset[aria-invalid=true]{border:1px solid #b42318;padding:12px;border-radius:10px;scroll-margin-top:150px}.questionnaire [role=alert]{scroll-margin-top:150px}}
+
+/* Document photos: readable on small screens, without affecting printed reports. */
+.document-queue{padding-left:24px;display:grid;gap:16px}.document-queue li{min-width:0;padding:12px;border:1px solid #dce5f0;border-radius:12px;overflow-wrap:anywhere}.document-queue .field{margin:10px 0}.document-proposal>div{width:100%;min-width:0}.document-proposals select,.document-queue select{min-height:48px;max-width:100%;font-size:16px}.document-proposal p{overflow-wrap:anywhere}.document-import input[type=checkbox]{min-width:20px;min-height:20px}
