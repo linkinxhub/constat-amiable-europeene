@@ -27,3 +27,10 @@ test('same-device A can complete common facts, B stays in their own questionnair
 test('safety instructions and modes are complete in four languages',()=>{
  for(const lang of ['fr','en','de','nl']){assert.deepEqual(Object.keys(onboardingCopy[lang]),Object.keys(onboardingCopy.fr));for(const value of Object.values(onboardingCopy[lang]))assert.ok(value.trim());assert.ok(onboardingCopy[lang].emergency.includes('112'));assert.ok(onboardingCopy[lang].guide.includes(onboardingCopy[lang].safe));}
 });
+
+// Reject attacker-sized collections before collecting one error per element.
+test('oversized report collections are rejected with bounded diagnostics',()=>{
+ for(const [field,values] of [['photos',Array(20000).fill(null)],['strokes',Array(20000).fill(null)]]){
+  const parsed=schema.safeParse({...fresh(),[field]:values});assert.equal(parsed.success,false);assert.equal(parsed.error.issues.length,1);assert.equal(parsed.error.issues[0].code,'too_big');assert.deepEqual(parsed.error.issues[0].path,[field]);
+ }
+});
