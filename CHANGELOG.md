@@ -510,3 +510,6 @@ Durcissement complémentaire du même lot : état du client remonté par identif
 - YAML vérifié, 18 tests ciblés réussis ; code applicatif inchangé. Guide vérifié sans impact utilisateur. Première exécution distante vérifiée : installation, 223 tests et contrôles de qualité réussis ; audit production sans alerte ; audit complet en échec sur l’alerte modérée Minimatch.
 
 Session serveur TEST FICTIF réellement créée dans le compte A connecté, deux fiches sauvegardées et relues, B en attente. Aucun jeton d’invitation stocké dans le dépôt ; essai sur deux téléphones et signatures encore non exécutés.
+
+## 2026-11-01 — Version 59 publiée
+Publication explicitement autorisée, état natif succeeded confirmé. Source publiée cdc153abb5c2374ee50b3c0d429acc01f512e180, audience et accès conservés. Les lots photo, robustesse et CI préparés sont désormais dans la version de production ; le workflow GitHub était déjà poussé. Aucun nouvel envoi assureur, paiement, compte ou droit. Contrôles précédents conservés comme preuves, aucune nouvelle suite revendiquée pour l’opération d’hébergement. Réserves inchangées : 54 avertissements, une modérée de développement et recette physique/téléchargement final à confirmer.
