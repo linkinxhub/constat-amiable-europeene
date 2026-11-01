@@ -1,3 +1,7 @@
+## 2026-11-01 — Audit transversal de la version 62 et de la relecture
+
+Rapport : docs/AUDIT_V62_RELECTURE_2026-11-01.md. Code applicatif identique à la version 62 ; 247 tests réussis, TypeScript/build réussis, lint 0 erreur/54 avertissements. Audit production 0 alerte ; ensemble 1 modérée Minimatch GHSA-g3hv-75wg-m249 ; CI GitHub rouge sur ce dernier audit (run 41334656520), contrôles applicatifs et production réussis. Bloc « Compléments non renseignés » reproduit en aperçu : 24 libellés/0 contrôle éditable ; chemin Modifier · Véhicules puis groupe complémentaire fonctionnel. Navigation de modification partagée non ciblée et cache traduit précédant le digest moteur documentés. Priorités, critères de correction, limites A/B physiques, IA réelle, téléchargement et exploitation consignés. Aucune correction applicative ni publication ; production v62 conservée. Guide vérifié, aucun impact utilisateur. Point de restauration audit-v62-before-20261101.
+
 ## 2026-10-23 — Audit transversal du document et des parcours
 
 Rapport AUDIT_COMPLET_DOCUMENTS_CROQUIS_2026-10-23.md ajouté : cinq écarts priorisés, preuves, critères de correction et limites de recette. 186/186 tests, typage/build réussis ; scan production0, développement1 high braces. PDF joint relu/rendu et 14 valeurs attendues vérifiées ; aucun changement du document ouvert ni du code applicatif. Guide vérifié, aucun impact utilisateur. Aucune publication ou correction fonctionnelle revendiquée.
