@@ -128,3 +128,7 @@ Parcours multi-pièces et relecture groupée développé sur l’API existante. 
 
 ## 2026-11-01 — Robustesse, priorités issues de l’audit
 Rapport docs/AUDIT_ROBUSTESSE_2026-11-01.md : 43 erreurs lint traitées, flux JSON bornés/UTF-8 strict, invalidations et reprise préférences/brouillons fiabilisées, vérification séquentielle locale. Restent 54 avertissements, une alerte Minimatch de développement et la recette physique A/B avec fichier final réellement ouvert. Priorités suivantes : CI distante et correctif compatible à éligibilité ; test de restauration, rétention indépendante et supervision ; vraie qualité OCR multilingue ; paiements/droits Premium réels ; mesures mobiles et pentest. Aucun pourcentage global de sécurité ou de préparation commerciale revendiqué.
+
+
+## 2026-11-01 — Synthèse IA avant croquis
+Synthèse avant croquis développée. Restent : qualité réelle des sorties et de leurs traductions dans chaque langue, relecture avec deux comptes/téléphones, éventuelle présentation multilingue simultanée de la même proposition (actuellement une langue affichée par proposition). Nouvelle version sauvegardée sans publication ; production v59 conservée selon AGENTS.md.

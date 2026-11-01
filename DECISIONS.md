@@ -131,3 +131,7 @@ Réutiliser le serveur réel et ses autorisations plutôt qu’ouvrir une second
 
 ## 2026-11-01 — Audit de robustesse
 Corriger les 43 erreurs lint sans désactiver de règle, avec remises à zéro conditionnelles de l’état et références après commit ; pas de timers destinés à cacher les setters. Borner readJson à 60 s et refuser les encodages UTF-8 invalides, avant écriture métier. Préserver la politique de sept jours et signaler l’alerte Minimatch de développement tant qu’un correctif compatible n’est pas éligible/testé. Ajouter une commande de vérification séquentielle ; ne pas présenter cela comme une CI distante activée. Production conservée, aucun nouvel accord de publication dans la demande de ce lot. Référence before-robustness-audit-20261101.
+
+
+## 2026-11-01 — Synthèse IA avant croquis
+Deux étapes serveur, sans ajouter le texte dérivé au constat signé. Synthèse générée dans la langue de lecture de la personne qui lance la demande ; langue affichée, pas de traduction silencieuse par destinataire. Nouvelle proposition invalide les anciens accords associés ; une validation retirée bloque un nouveau PDF utilisant ce croquis mais ne détruit aucun PDF existant. Ancien croquis sans summary_id compatible, toute nouvelle génération exige la synthèse. Tentative auto distincte par étape/version ; nouvelle tentative manuelle explicite après erreur. Aucun appel réel au fournisseur dans la recette.

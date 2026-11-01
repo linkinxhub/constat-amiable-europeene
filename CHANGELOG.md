@@ -513,3 +513,10 @@ Session serveur TEST FICTIF réellement créée dans le compte A connecté, deux
 
 ## 2026-11-01 — Version 59 publiée
 Publication explicitement autorisée, état natif succeeded confirmé. Source publiée cdc153abb5c2374ee50b3c0d429acc01f512e180, audience et accès conservés. Les lots photo, robustesse et CI préparés sont désormais dans la version de production ; le workflow GitHub était déjà poussé. Aucun nouvel envoi assureur, paiement, compte ou droit. Contrôles précédents conservés comme preuves, aucune nouvelle suite revendiquée pour l’opération d’hébergement. Réserves inchangées : 54 avertissements, une modérée de développement et recette physique/téléchargement final à confirmer.
+
+
+## 2026-11-01 — Synthèse IA avant croquis
+- Nouvelle relecture en cinq rubriques, double consentement distinct et validation personnelle A/B avant les nouveaux croquis ; textes originaux et PDF historiques conservés.
+- Migration additive 0018, historique limité/purge, verrou et budgets partagés, gardes serveur sur révision/dernière proposition/validation et commit PDF. Deux étapes automatiques avec attente humaine entre elles.
+- Interface et guide commun FR/EN/DE/NL, consignes de correction, langue affichée et limites/coûts expliqués. Synthèse non ajoutée au texte signé/PDF ; local/appareil commun restent manuels.
+- TS/build et 237 tests réussis, lint 0 erreur/54 avertissements ; audit production sans alerte, modérée de développement connue conservée. Preview fictive quatre langues/mobile, fournisseur réel et deux téléphones non recettés. Développement sauvegardé sans nouvelle publication ; production v59 conservée.

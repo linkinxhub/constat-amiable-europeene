@@ -22,6 +22,7 @@ export const reportVersions=sqliteTable('report_versions',{
 export const sharedSessions=sqliteTable('shared_sessions',{
  id:text('id').primaryKey(),ownerId:text('owner_id').notNull(),reportId:text('report_id').notNull(),
  ownerSide:text('owner_side').notNull().default('A'),autoSketchRevision:integer('auto_sketch_revision').notNull().default(0),doneA:text('done_a'),doneB:text('done_b'),participantB:text('participant_b'),inviteHash:text('invite_hash').notNull(),expiresAt:integer('expires_at').notNull(),
+ summaryConsentA:integer('summary_consent_a').notNull().default(0),summaryConsentB:integer('summary_consent_b').notNull().default(0),autoSummaryRevision:integer('auto_summary_revision').notNull().default(0),
  consentA:integer('consent_a').notNull().default(0),consentB:integer('consent_b').notNull().default(0),
  translationConsentA:integer('translation_consent_a').notNull().default(0),translationConsentB:integer('translation_consent_b').notNull().default(0),
  translationWindow:integer('translation_window').notNull().default(0),translationCalls:integer('translation_calls').notNull().default(0),
@@ -31,7 +32,7 @@ export const sharedSessions=sqliteTable('shared_sessions',{
 },t=>[uniqueIndex('sessions_owner_report_idx').on(t.ownerId,t.reportId),index('sessions_participant_b_idx').on(t.participantB)]);
 
 export const sketchProposals=sqliteTable('sketch_proposals',{
- sessionId:text('session_id').primaryKey(),sourceRevision:integer('source_revision').notNull(),objectKey:text('object_key').notNull(),
+ summaryId:text('summary_id'),sessionId:text('session_id').primaryKey(),sourceRevision:integer('source_revision').notNull(),objectKey:text('object_key').notNull(),
  approvedA:integer('approved_a').notNull().default(0),approvedB:integer('approved_b').notNull().default(0)
 });
 
@@ -91,3 +92,10 @@ export const billingTestUses=sqliteTable('billing_test_uses',{
 export const documentExtractionUsage=sqliteTable('document_extraction_usage',{
  actor:text('actor').primaryKey(),window:integer('window').notNull(),calls:integer('calls').notNull()
 });
+
+// Bounded derived proposals, separate from original declarations and signed documents.
+export const synthesisProposals=sqliteTable('synthesis_proposals',{
+ sequence:integer('sequence').primaryKey({autoIncrement:true}),id:text('id').notNull().unique(),
+ sessionId:text('session_id').notNull(),sourceRevision:integer('source_revision').notNull(),content:text('content').notNull(),
+ approvedA:integer('approved_a').notNull().default(0),approvedB:integer('approved_b').notNull().default(0)
+},t=>[index('synthesis_session_sequence').on(t.sessionId,t.sequence)]);

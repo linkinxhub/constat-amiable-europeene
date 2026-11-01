@@ -1,3 +1,4 @@
+import {approvedSummary} from './approved-synthesis-fixture.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createRequire} from 'node:module';
@@ -20,6 +21,7 @@ async function fixture(){
  await writeReport(stores,'A',report.id,{report,expectedRevision:0});
  const session=await createSession(stores,'A',report.id);await joinSession(stores,'B',session.id,session.token);
  for(const actor of ['A','B'])await sketchAction(stores,actor,session.id,{action:'consent',revision:1},{});
+ await approvedSummary(stores,session.id,1);
  const order=randomUUID();
  await db.prepare("INSERT INTO billing_test_orders(id,owner_id,report_id,locale,created_at) VALUES (?,'A',?,'fr',?)").bind(order,report.id,Date.now()).run();
  await db.prepare("INSERT INTO billing_test_grants(order_id,state,credits,expires_at,created_at) VALUES (?,'granted',10,?,?)").bind(order,Date.now()+3600000,Date.now()).run();

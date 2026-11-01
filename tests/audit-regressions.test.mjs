@@ -1,3 +1,4 @@
+import {approvedSummary} from './approved-synthesis-fixture.mjs';
 import {reportSize} from '../features/constat/report-size.ts';
 import {confirmedSession} from './confirmed-session.mjs';
 import test from 'node:test';import assert from 'node:assert/strict';
@@ -50,11 +51,11 @@ test('recovery of an expired reservation fences a delayed upload and removes its
  const f=fixture(),r=pdfFixture();await writeReport(f.stores,'A',r.id,{report:r,expectedRevision:0});let release,started;const gate=new Promise(r=>release=r),ready=new Promise(r=>started=r);f.putHook(async()=>{started();await gate});const pending=writeReport(f.stores,'A',r.id,{report:r,expectedRevision:1});await ready;f.sql.exec("UPDATE storage_objects SET expires_at=0 WHERE state='pending'");await recoverStorage(f.stores,'A');release();await assert.rejects(()=>pending,e=>e.code==='conflict');assert.equal(f.objects.size,1);assert.equal(used(f),actual(f));assert.equal((await readReport(f.stores,'A',r.id)).revision,1);
 });
 test('AI generation is serialized and cannot commit after a revision change or suspension',async()=>{
- const f=await shared();await sketchAction(f.stores,'A',f.s.id,{action:'consent',revision:1},{});await sketchAction(f.stores,'B',f.s.id,{action:'consent',revision:1},{});
+ const f=await shared();await approvedSummary(f.stores,f.s.id,1);await sketchAction(f.stores,'A',f.s.id,{action:'consent',revision:1},{});await sketchAction(f.stores,'B',f.s.id,{action:'consent',revision:1},{});
  const original=globalThis.fetch;let release,started;const gate=new Promise(r=>release=r),ready=new Promise(r=>started=r);globalThis.fetch=async()=>{started();await gate;return Response.json({status:'completed',output:[{content:[{type:'output_text',text:JSON.stringify({roads:[],vehicles:[],uncertainties:['Synthetic test']})}]}]})};
  const cfg={OPENAI_API_KEY:'test-only',OPENAI_SKETCH_MODEL:'test-only'};
  try{const generation=sketchAction(f.stores,'A',f.s.id,{action:'generate',revision:1},cfg);await ready;await assert.rejects(()=>sketchAction(f.stores,'B',f.s.id,{action:'generate',revision:1},cfg),e=>e.code==='conflict');await updateSession(f.stores,'A',f.s.id,{report:{...f.r,place:'New place'},expectedRevision:1});release();await assert.rejects(()=>generation,e=>e.code==='conflict');assert.equal(f.sql.prepare('SELECT count(*) AS n FROM sketch_proposals').get().n,0);assert.equal(f.sql.prepare('SELECT ai_lock_until FROM shared_sessions').get().ai_lock_until,0);assert.equal(used(f),actual(f));
- f.reset();await sketchAction(f.stores,'A',f.s.id,{action:'consent',revision:2},{});await sketchAction(f.stores,'B',f.s.id,{action:'consent',revision:2},{});f.putHook(k=>{if(k.startsWith('sketches/'))f.sql.exec("UPDATE accounts SET status='suspended' WHERE id='B'")});await assert.rejects(()=>sketchAction(f.stores,'B',f.s.id,{action:'generate',revision:2},cfg),e=>e.code==='conflict');assert.equal(f.sql.prepare('SELECT count(*) AS n FROM sketch_proposals').get().n,0);
+ f.reset();await approvedSummary(f.stores,f.s.id,2);await sketchAction(f.stores,'A',f.s.id,{action:'consent',revision:2},{});await sketchAction(f.stores,'B',f.s.id,{action:'consent',revision:2},{});f.putHook(k=>{if(k.startsWith('sketches/'))f.sql.exec("UPDATE accounts SET status='suspended' WHERE id='B'")});await assert.rejects(()=>sketchAction(f.stores,'B',f.s.id,{action:'generate',revision:2},cfg),e=>e.code==='conflict');assert.equal(f.sql.prepare('SELECT count(*) AS n FROM sketch_proposals').get().n,0);
  }finally{globalThis.fetch=original;release();}
 });
 test('consent and approval verify participant status at the SQL commit',async()=>{
@@ -94,7 +95,7 @@ test('cleanup handles ten expired operations per batch and preserves another own
  const second=await recoverStorage(f.stores,'A');assert.equal(second.more,false);assert.equal(second.processed,2);assert.ok(f.objects.has('other-owner'));assert.equal(f.sql.prepare("SELECT count(*) AS n FROM report_versions WHERE owner_id='A'").get().n,1);
 });
 test('global limit also prevents sketch provider calls and releases its session lock',async()=>{
- const f=await shared();await sketchAction(f.stores,'A',f.s.id,{action:'consent',revision:1},{});await sketchAction(f.stores,'B',f.s.id,{action:'consent',revision:1},{});
+ const f=await shared();await approvedSummary(f.stores,f.s.id,1);await sketchAction(f.stores,'A',f.s.id,{action:'consent',revision:1},{});await sketchAction(f.stores,'B',f.s.id,{action:'consent',revision:1},{});
  f.sql.prepare('INSERT INTO ai_daily_usage(day,calls,sketches,translations) VALUES (?,100,40,60)').run(new Date().toISOString().slice(0,10));const oldFetch=globalThis.fetch;let calls=0;globalThis.fetch=async()=>{calls++;throw new Error('must not call')};
  try{await assert.rejects(()=>sketchAction(f.stores,'A',f.s.id,{action:'generate',revision:1},{OPENAI_API_KEY:'synthetic-test',OPENAI_SKETCH_MODEL:'synthetic-test'}),e=>e.code==='ai_daily_limit');assert.equal(calls,0);assert.equal(f.sql.prepare('SELECT ai_lock_until FROM shared_sessions').get().ai_lock_until,0);}finally{globalThis.fetch=oldFetch;}
 });

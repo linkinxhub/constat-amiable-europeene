@@ -1,3 +1,4 @@
+import {approvedSummary} from './approved-synthesis-fixture.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createRequire} from 'node:module';
@@ -22,7 +23,7 @@ test('creator B invites A; immutable roles, isolated languages/sections, common 
  const merged=await updateSession(stores,'creator',s.id,{report:input,expectedRevision:2});assert.equal(merged.report.vehicles[0].driver,'A legitimate');assert.equal(merged.report.vehicles[1].driver,'B legitimate');assert.equal(merged.report.place,'Shared facts from A');assert.deepEqual(merged.report.readingLanguages,['nl','en']);
  await sketchAction(stores,'creator',s.id,{action:'consent',revision:3},{});assert.equal((await sketchState(stores,'guest',s.id,{})).consents.consent_b,3);
 }));
-async function ready(stores,r,s){await joinSession(stores,'guest',s.id,s.token);r=(await readSession(stores,'creator',s.id)).report;for(const side of ['A','B']){const stamp=JSON.stringify({hash:await participantHash(r,side),at:new Date().toISOString()});await stores.db.prepare(`UPDATE shared_sessions SET done_${side.toLowerCase()}=? WHERE id=?`).bind(stamp,s.id).run()}for(const actor of ['creator','guest'])await sketchAction(stores,actor,s.id,{action:'consent',revision:1},{})}
+async function ready(stores,r,s){await joinSession(stores,'guest',s.id,s.token);r=(await readSession(stores,'creator',s.id)).report;for(const side of ['A','B']){const stamp=JSON.stringify({hash:await participantHash(r,side),at:new Date().toISOString()});await stores.db.prepare(`UPDATE shared_sessions SET done_${side.toLowerCase()}=? WHERE id=?`).bind(stamp,s.id).run()}await approvedSummary(stores,s.id,1);for(const actor of ['creator','guest'])await sketchAction(stores,actor,s.id,{action:'consent',revision:1},{})}
 test('automatic sketch requires both completions/consents and is at most once per revision, including reload',()=>fixture(async(stores,r,s)=>{
  let calls=0;const old=globalThis.fetch;globalThis.fetch=async()=>{calls++;return new Response(JSON.stringify({status:'completed',output:[{content:[{type:'output_text',text:JSON.stringify({roads:[],vehicles:[],uncertainties:['Synthetic evidence']})}]}]}))};try{
  await assert.rejects(sketchAction(stores,'creator',s.id,{action:'auto',revision:1},config),e=>e.code==='incomplete');assert.equal(calls,0);await ready(stores,r,s);await assert.rejects(sketchAction(stores,'guest',s.id,{action:'auto',revision:1},config),e=>e.code==='forbidden');
