@@ -16,9 +16,9 @@ import type {Sketch} from '../features/constat/sketch-model.ts';
 import {standardCircumstances,extraFields,type FinalStyle} from '../features/constat/final-model.ts';
 import {finalCopy,extraLabels} from '../features/constat/final-copy.ts';
 import {dictionaries,type Lang} from '../features/constat/i18n.ts';
-export const PDF_RENDERER_VERSION='accordia-multilingual-v3';
+export const PDF_RENDERER_VERSION='accordia-multilingual-v4';
 export type Signature={data:string,kind:'drawn'|'imported',at:string,by:string};
-export type PdfMaterial={unilateral?:{side:"A"|"B",reason:string},translation?:Translation,report:Report,revision:number,style:FinalStyle,lang:Lang,digest:string,createdAt:string,sketch:Sketch|null,signatures?:[Signature|null,Signature|null]};
+export type PdfMaterial={onlineSessionId?:string,unilateral?:{side:"A"|"B",reason:string},translation?:Translation,report:Report,revision:number,style:FinalStyle,lang:Lang,digest:string,createdAt:string,sketch:Sketch|null,signatures?:[Signature|null,Signature|null]};
 const bytes=(s:string)=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
 export async function renderPdf(m:PdfMaterial){
  if(!m.unilateral)m={...m,report:reportForDocument(m.report)};

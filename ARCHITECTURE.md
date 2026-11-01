@@ -140,3 +140,7 @@ La page /session/[id] attribue aussi key=id au client de session pour réinitial
 
 ## 2026-11-01 — Synthèse IA avant croquis
 synthesis-model/service/review/copy et migration additive 0018 : historique D1 borné à 20, consents et tentative automatique propres, référence summary_id du croquis. Verrou ai_lock et 3 appels/heure/session partagés ; plafond global existant 100/jour, catégorie technique sketches incluant les synthèses. OpenAI Responses store:false, texte de sketchEvidence uniquement ; pas de photo pour la synthèse. Contrôles de forme et langue, gardes révision/comptes/consentements/fin de saisie au commit. Dernière synthèse approuvée vérifiée à la génération, approbation et persistance PDF ; purge avec le dossier. Schéma Sketch et PDF historiques inchangés.
+
+
+## 2026-11-01 — QR d’accès sur le constat
+pdf-access fixe l’origine canonique et valide strictement le UUID de session. final-service transmet onlineSessionId au moteur v4 ; reference-page masque la zone entière puis pdf-access-qr dessine les modules QR et une annotation URI. Aucun jeton, donnée déclarative ou hôte de requête dans le QR. Les octets historiques et le tamponnage restent compatibles.

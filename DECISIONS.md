@@ -135,3 +135,7 @@ Corriger les 43 erreurs lint sans désactiver de règle, avec remises à zéro c
 
 ## 2026-11-01 — Synthèse IA avant croquis
 Deux étapes serveur, sans ajouter le texte dérivé au constat signé. Synthèse générée dans la langue de lecture de la personne qui lance la demande ; langue affichée, pas de traduction silencieuse par destinataire. Nouvelle proposition invalide les anciens accords associés ; une validation retirée bloque un nouveau PDF utilisant ce croquis mais ne détruit aucun PDF existant. Ancien croquis sans summary_id compatible, toute nouvelle génération exige la synthèse. Tentative auto distincte par étape/version ; nouvelle tentative manuelle explicite après erreur. Aucun appel réel au fournisseur dans la recette.
+
+
+## 2026-11-01 — QR d’accès sur le constat
+Le QR ouvre le dossier courant, pas un document immuable ni une invitation. Authentification et appartenance A/B conservées par la page session et ses API. Local/appareil commun ouvrent le compte avec mention hors ligne : aucun faux accès cloud. Origine canonique identique au site Sites actuel ; actualiser cette constante lors d’un changement de domaine. Aucun retrait des PDF signés existants.

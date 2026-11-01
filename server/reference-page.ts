@@ -1,3 +1,4 @@
+import {drawPdfAccessQr} from './pdf-access-qr.ts';
 import {rgb,type PDFDocument,type PDFFont} from 'pdf-lib';
 import {referenceImage} from './reference-image.ts';
 import type {PdfMaterial} from './pdf-renderer.ts';
@@ -5,6 +6,7 @@ import {fullPlace} from '../features/constat/geocoding.ts';
 export async function referencePage(doc:PDFDocument,m:PdfMaterial,font:PDFFont){
  const W=595.28,H=841.89,sx=W/1085,sy=H/1536,page=doc.insertPage(0,[W,H]);if(!m.translation)doc.removePage(1);
  const image=await doc.embedJpg(Uint8Array.from(atob(referenceImage),c=>c.charCodeAt(0)));page.drawImage(image,{x:0,y:0,width:W,height:H});
+ drawPdfAccessQr(doc,page,font,m.onlineSessionId,m.lang);
  const color=m.style==='blue-pen'?rgb(.05,.18,.65):rgb(.05,.05,.05);const overflow:string[]=[];
  function fill(value:string|undefined,x:number,y:number,width:number,height=19,label=''){
   if(!value)return;const text=value.replace(/\s+/g,' ').trim();let size=8;

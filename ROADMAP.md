@@ -132,3 +132,7 @@ Rapport docs/AUDIT_ROBUSTESSE_2026-11-01.md : 43 erreurs lint traitées, flux JS
 
 ## 2026-11-01 — Synthèse IA avant croquis
 Synthèse avant croquis développée. Restent : qualité réelle des sorties et de leurs traductions dans chaque langue, relecture avec deux comptes/téléphones, éventuelle présentation multilingue simultanée de la même proposition (actuellement une langue affichée par proposition). Nouvelle version sauvegardée sans publication ; production v59 conservée selon AGENTS.md.
+
+
+## 2026-11-01 — QR d’accès sur le constat
+QR d’accès en ligne ajouté aux nouveaux exports ; ouverture réservée aux comptes autorisés. Scan caméra physique à confirmer, domaine personnalisé à configurer séparément si souhaité. Production inchangée sans autorisation explicite.

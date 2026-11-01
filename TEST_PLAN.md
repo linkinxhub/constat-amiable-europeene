@@ -306,3 +306,7 @@ Complément constaté : première exécution GitHub 41321009732 sur b97d5fe, ins
 
 ## 2026-11-01 — Synthèse IA avant croquis
 Tests synthesis et synthesis-ui : schéma strict/borné, quatre langues, absence de noms dans les champs structurés transmis, double consentement distinct, fin A/B, rôles, refus, révisions et dernière proposition, verrou, suspension au commit, réponse tardive, plafonds heure/jour/historique, tentative auto unique même après échec, purge. Pipeline réel synthèse → croquis → PDF avec fournisseur contrôlé ; retrait de validation avant et pendant commit PDF ; ancien PDF conservé. Fixtures de synthèse explicitement approuvée pour les tests centrés sur croquis/crédits, aucun bypass livré. Composants réels testés sous hooks contrôlés. Preview temporaire du composant réel : validation/retrait, cinq rubriques, FR/EN/DE/NL et iframe 375 px (zone utile/scrollWidth 360/360), texte sans espaces long. Routes QA retirées avant build final ; pas de service simulé livré. Aucun fournisseur réel, téléphone physique ou seconde authentification recetté.
+
+
+## 2026-11-01 — QR d’accès sur le constat
+QR : URL fixe, refus des URL externes/chemins/tokens/identifiants invalides ; matrice PDF 4 langues × local/session, annotation cliquable, source inchangée et version moteur. Rendu et décodage logiciel à taille de page ; permissions session existantes retestées par suite. Scan caméra/téléphone physique non exécuté.

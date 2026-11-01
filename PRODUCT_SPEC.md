@@ -157,3 +157,7 @@ Saisie Express étendue à une file locale de cinq pièces maximum, prise de pho
 
 ## 2026-11-01 — Synthèse IA avant croquis
 Synthèse textuelle IA séparée avant tout nouveau croquis en session partagée. Déclarations A/B, accords explicites, désaccords et informations manquantes ; aucune déduction de responsabilité. Double consentement distinct puis double validation personnelle, révision exacte et dernière proposition. Correction dans les fiches originales, jamais par écrasement automatique. Texte non ajouté aux PDF signés ; anciens croquis/PDF conservés.
+
+
+## 2026-11-01 — QR d’accès sur le constat
+Les nouveaux PDF remplacent le code-barres de référence par un QR vectoriel cliquable : session partagée protégée si disponible, sinon compte Accordia explicitement distingué du brouillon local. Aucun droit ni invitation transmis.

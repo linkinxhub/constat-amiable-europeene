@@ -520,3 +520,9 @@ Publication explicitement autorisée, état natif succeeded confirmé. Source pu
 - Migration additive 0018, historique limité/purge, verrou et budgets partagés, gardes serveur sur révision/dernière proposition/validation et commit PDF. Deux étapes automatiques avec attente humaine entre elles.
 - Interface et guide commun FR/EN/DE/NL, consignes de correction, langue affichée et limites/coûts expliqués. Synthèse non ajoutée au texte signé/PDF ; local/appareil commun restent manuels.
 - TS/build et 237 tests réussis, lint 0 erreur/54 avertissements ; audit production sans alerte, modérée de développement connue conservée. Preview fictive quatre langues/mobile, fournisseur réel et deux téléphones non recettés. Développement sauvegardé sans nouvelle publication ; production v59 conservée.
+
+
+## 2026-11-01 — QR d’accès sur le constat
+QR vectoriel cliquable en haut à droite à la place du code-barres : dossier partagé sécurisé ou accès compte pour un dossier local hors ligne. Aucun nouveau droit. Aide commune quatre langues et moteur PDF v4 ; originaux et PDF existants conservés.
+
+Validation du lot QR : 239 tests réussis, TS/build validés, lint 0 erreur/54 avertissements ; QR réellement décodé par logiciel et rendu vérifié. Scan physique à confirmer. Source sauvegardée sans publication production.
