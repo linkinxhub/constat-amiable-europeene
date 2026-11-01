@@ -1,3 +1,7 @@
+## État courant — version 65 et parcours documentaire en aperçu
+
+Production : v65, scanner QR publié. Nouveau lot documents d’abord testé en aperçu : choix visible et questionnaire limité aux informations restantes après validation. Voir docs/PARCOURS_DOCUMENTS_ET_OFFRE_2026-11-02.md. Paiements et accès documentaire ordinaire restent fermés jusqu’à droits/quota/facturation réels ; aucun lancement commercial annoncé.
+
 ## Priorité courante — exploitation, 2 novembre 2026
 
 Ordre détaillé, critères et dépendances : [ORDRE_TRAVAIL_EXPLOITATION_2026-11-02.md](docs/ORDRE_TRAVAIL_EXPLOITATION_2026-11-02.md). Saisie/relecture et navigation développées en aperçu ; information de réutilisation PDF ajoutée. Ensuite : dépendances/CI, recette réelle A/B, accès et qualité documentaire, exploitation/sauvegardes, paiements, acceptation terrain. Aucun état « prêt à 100 % » revendiqué. Production v63 préservée jusqu’à autorisation de publication du nouveau lot.

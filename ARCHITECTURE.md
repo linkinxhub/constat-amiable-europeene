@@ -1,3 +1,7 @@
+## Parcours documentaire — aperçu du 2 novembre 2026
+
+ReviewedEntry contient un instantané Vehicle en mémoire React, scoped par reportId/side. EntryMode le transmet au parent seulement après application et action Continuer. Questionnaire utilise document-first-model pour afficher les champs manquants/modifiés et garder les faits manuels ; aucun schéma persistant ou endpoint changé. Les contrôles serveur de fin et de droits demeurent autoritaires.
+
 ## Navigation de correction — aperçu du 2 novembre 2026
 
 review-navigation.ts partage la signature ReviewEdit et cible le véhicule/la rubrique après sortie de relecture. Le focus et l’ouverture des groupes agissent uniquement sur la présentation DOM ; aucun rapport, droit ou état de signature n’y est écrit. Les composants Workspace/SessionClient/SameDevice gardent leurs handlers de modification et contrôles existants. Les explications FR/EN/DE/NL proviennent de review-entry-copy.ts. Aucun changement de schéma/API.

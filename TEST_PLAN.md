@@ -1,3 +1,7 @@
+## 2 novembre 2026 — Documents d’abord
+
+Tests document-first, document-first-ui et document-first-questionnaire : dossier/côté isolés, valeurs vides/modifiées/invalides visibles, faits manuels conservés, données immuables à la navigation, entrée visible, garde ordinaire, instantané uniquement après application et Continuer, réaffichage dans le vrai Questionnaire FR/EN/DE/NL. Recette fournisseur/pièces réelles et appareils physiques non exécutée.
+
 ## 2 novembre 2026 — Scanner d’invitation QR
 
 Tests qr-camera, qr-join et qr-scanner-ui : QR réel décodé, origines/fragments contrôlés, arrêt et annulation tardive, erreurs caméra, absence de demande au montage, formulaire réellement rempli sans navigation avant confirmation, quatre langues. Aperçu HTTP : message indisponible et lien invalide refusé ; mobile 375 px sans débordement. Recette restante sur HTTPS avec caméra physique Android/iPhone : permission acceptée/refusée, QR à différentes distances, écran sombre, arrêt et arrière-plan, lien rempli puis connexion B.
