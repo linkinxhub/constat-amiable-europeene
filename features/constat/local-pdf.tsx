@@ -1,4 +1,6 @@
 'use client';
+import {missingFields} from './completeness';
+import {quickFlowCopy} from './quick-flow-copy';
 import {FlowSteps} from './flow-steps';
 import {usageCopy} from './usage-guide';
 import {useEffect,useRef,useState} from 'react';
@@ -12,7 +14,7 @@ export function LocalPdf({report,lang,style,onStyle,onEdit}:{report:Report,lang:
  const [busy,setBusy]=useState(false),[url,setUrl]=useState(''),[error,setError]=useState(false);
  const mounted=useRef(true);useEffect(()=>{mounted.current=true;return()=>{mounted.current=false}},[]);
  const latest=useRef({report,lang,style});latest.current={report,lang,style};
- const c=finalCopy[lang],labels={keyboard:c.keyboard,'blue-pen':c.blue,'black-pen':c.black};
+ const incomplete=missingFields(report).length>0;const c=finalCopy[lang],labels={keyboard:c.keyboard,'blue-pen':c.blue,'black-pen':c.black};
  useEffect(()=>{setUrl('');setError(false)},[report,lang,style]);
  useEffect(()=>()=>{if(url)URL.revokeObjectURL(url)},[url]);
  async function generate(){
@@ -24,5 +26,5 @@ export function LocalPdf({report,lang,style,onStyle,onEdit}:{report:Report,lang:
    if(mounted.current&&latest.current.report===snapshot.report&&latest.current.lang===snapshot.lang&&latest.current.style===snapshot.style)setUrl(URL.createObjectURL(new Blob([new Uint8Array(data)],{type:'application/pdf'})));
   }catch{setError(true)}finally{setBusy(false)}
  }
- return <section className="final-panel no-print"><FlowSteps lang={lang} phase={4}/><h2>{c.format}</h2><Button type="button" variant="outline" onClick={onEdit}>{usageCopy[lang][1]}</Button><p>{({fr:"Votre modèle fourni est en français ; la langue choisie s’applique aux annexes.",en:"Your supplied template is French; the selected language applies to annexes.",de:"Ihre Vorlage ist französisch; die gewählte Sprache gilt für Anlagen.",nl:"Uw sjabloon is Frans; de gekozen taal geldt voor bijlagen."})[lang]}</p><p>{c.unsigned} · {c.full}</p><div className="final-styles" role="group" aria-label={c.format}>{styles.map(s=><Button type="button" key={s} variant="outline" disabled={busy} className={'style-card '+s} aria-pressed={style===s} onClick={()=>onStyle(s)}><span>Aa</span>{labels[s]}</Button>)}</div><p>{c.language}: {lang.toUpperCase()}</p><Button type="button" disabled={busy||report.injured==='yes'} onClick={()=>void generate()}>{busy?'…':c.prepare}</Button>{url&&<p><a className="pdf-link" href={url} target="_blank" rel="noopener">{c.preview}</a> <a className="pdf-link" href={url} download={'Accordia-'+style+'-'+lang+'.pdf'}>PDF ↓</a></p>}{error&&<p role="alert">{c.error}</p>}</section>
+ return <section className="final-panel no-print"><FlowSteps lang={lang} phase={4}/><h2>{c.format}</h2><Button type="button" variant="outline" onClick={onEdit}>{usageCopy[lang][1]}</Button><p>{({fr:"Votre modèle fourni est en français ; la langue choisie s’applique aux annexes.",en:"Your supplied template is French; the selected language applies to annexes.",de:"Ihre Vorlage ist französisch; die gewählte Sprache gilt für Anlagen.",nl:"Uw sjabloon is Frans; de gekozen taal geldt voor bijlagen."})[lang]}</p><p role="status" className={incomplete?'notice':'quick-completion'}>{incomplete?quickFlowCopy[lang].incomplete:quickFlowCopy[lang].ready}</p><p>{c.unsigned} · {c.full}</p><div className="final-styles" role="group" aria-label={c.format}>{styles.map(s=><Button type="button" key={s} variant="outline" disabled={busy} className={'style-card '+s} aria-pressed={style===s} onClick={()=>onStyle(s)}><span>Aa</span>{labels[s]}</Button>)}</div><p>{c.language}: {lang.toUpperCase()}</p><Button type="button" disabled={busy||report.injured==='yes'} onClick={()=>void generate()}>{busy?'…':c.prepare}</Button>{url&&<p><a className="pdf-link" href={url} target="_blank" rel="noopener">{c.preview}</a> <a className="pdf-link" href={url} download={'Accordia-'+(incomplete?'INCOMPLETE-':'')+style+'-'+lang+'.pdf'}>PDF ↓</a></p>}{error&&<p role="alert">{c.error}</p>}</section>
 }

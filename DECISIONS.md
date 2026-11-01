@@ -122,3 +122,6 @@ Le choix solo ne force ni un seul véhicule ni un rôle A. Les signatures person
 
 ## 2026-11-01 — Correctifs de sécurité des dépendances
 Accepter la migration Zod 4.6.6 pour corriger le risque de diagnostics non bornés, avec tests de schéma/anciens dossiers et suite métier. Version déclarée et override harmonisés ; lockfile figé. Conserver le délai de sept jours pour Minimatch 11.0.1 (27/10/2026 22:26 UTC) et documenter l’alerte modérée de développement ; pas d’override majeur forcé avant examen de compatibilité. L’audit ne justifie ni masquer les 46 diagnostics lint historiques ni refactoriser globalement les parcours. Publication non incluse dans « pousser ».
+
+## 2026-11-01 — Rapidité sans suppression ni fausse validation
+Ne pas redemander la même fiche après fin guidée ; utiliser les confirmations réelles et les gardes serveur existantes. Une progression de position ne vaut pas dossier valide. Replier les détails vides à l’écran, conserver les données et l’impression. Distinguer un conducteur seul de deux véhicules, mais exclure la fiche inactive B de tout nouvel export explicitement à un véhicule, JSON inclus ; ne pas effacer le brouillon ni modifier un PDF existant. Les PDF complets conservent les annexes, sans promesse d’une page unique. Publication de ce lot autorisée explicitement, audience inchangée.
