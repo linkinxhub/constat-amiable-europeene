@@ -534,3 +534,7 @@ Validation du lot QR : 239 tests réussis, TS/build validés, lint 0 erreur/54 a
 - Copie manuelle, annulation de partage et actions concurrentes traitées ; écran mobile/guide quatre langues vérifiés sur données fictives. Publication non incluse, essai à deux téléphones réels encore nécessaire.
 
 Validation finale partage : TypeScript/build et 247 tests réussis, lint 0 erreur/54 avertissements historiques. Dépendances inchangées. Preview et tests contrôlés ne constituent pas une recette de connexion sur deux téléphones réels.
+
+
+## 2026-11-01 — Version 62 publiée
+Publication explicitement autorisée, déploiement appgdep_6ae77ebfd11c819185a6213dd8ccc8dc succeeded confirmé. Inclut synthèse IA validée, QR PDF et correction du partage ; audience/access conservés. Source publiée 80231de17bfc2a44dc490a6f47eed0560a1e1bb8. Tests antérieurs 247/0, TS/build et lint 0 erreur/54 avertissements, sans réexécution revendiquée pour l’hébergement. Recette à deux téléphones réels et limites fournisseur/téléchargement restent ouvertes.
