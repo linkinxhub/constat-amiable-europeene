@@ -13,7 +13,8 @@ export const documentCopy={
 };
 export function LocalDocuments({lang,reportId,refresh=0}:{lang:Lang,reportId?:string,refresh?:number}){
  const [rows,setRows]=useState<LocalDocument[]>([]),[error,setError]=useState(false),[opened,setOpened]=useState<{id:string,url:string}|null>(null);const c=documentCopy[lang],request=useRef(0);
- useEffect(()=>{let active=true;setRows([]);setOpened(null);setError(false);listLocalDocuments(reportId).then(r=>{if(active)setRows(r)}).catch(()=>{if(active)setError(true)});return()=>{active=false;request.current++}},[reportId,refresh]);
+ const scope=(reportId||'all')+'|'+refresh;const [previousScope,setPreviousScope]=useState(scope);if(previousScope!==scope){setPreviousScope(scope);setRows([]);setOpened(null);setError(false)}
+ useEffect(()=>{let active=true;listLocalDocuments(reportId).then(r=>{if(active)setRows(r)}).catch(()=>{if(active)setError(true)});return()=>{active=false;request.current++}},[reportId,refresh]);
  useEffect(()=>()=>{if(opened)URL.revokeObjectURL(opened.url)},[opened]);
  async function open(id:string){const token=++request.current;try{const pdf=await readLocalDocument(id);if(token===request.current)setOpened({id,url:URL.createObjectURL(pdf)})}catch{if(token===request.current)setError(true)}}
  return <section><h3>{c.title}</h3><p>{policyCopy[lang].retention}</p>{!rows.length&&!error&&<p>{c.empty}</p>}{rows.map(r=><article key={r.id}><p>{r.title} · {r.label} · {new Date(r.createdAt).toLocaleString(lang)}</p><p className="notice">{policyCopy[lang].expiry} {new Date(r.expiresAt||retentionDeadline(r.createdAt)).toLocaleDateString(lang)}</p>{opened?.id===r.id?<><a className="pdf-link" href={opened.url} target="_blank" rel="noopener">{c.open}</a> <a className="pdf-link" href={opened.url} download={`Accordia-${r.id}.pdf`}>PDF ↓</a></>:<Button type="button" variant="outline" onClick={()=>void open(r.id)}>{c.open}</Button>}</article>)}{error&&<p role="alert">{c.error}</p>}</section>

@@ -493,3 +493,12 @@ Publication explicitement autorisée par « démarrer le développement après p
 - Lint actuel recensé précisément : 43 erreurs et 61 avertissements, non corrigés par ce lot.
 - PDF fictif A/B généré en Preview ; récupération par navigateur toujours non confirmée (expiration 15 s, aucun fichier retourné).
 - Protocole à deux téléphones/comptes distincts ajouté ; essai physique et téléchargement final signé non exécutés. Aucune modification applicative, d’accès ou de production ; guide vérifié sans impact utilisateur.
+
+## 2026-11-01 — Robustesse applicative (préparé, non publié)
+- Corrige les 43 erreurs ESLint sans changer les règles ; références après commit et invalidations d’état avant affichage, préférences hydratées et brouillons préservés.
+- Borne la lecture JSON à 60 s, refuse l’UTF-8 invalide et évite d’attendre une annulation de flux bloquée ; types API/D1 précisés, liens internes concernés corrigés.
+- Accueil/Rejoindre reprennent la préférence mémorisée quand le lien ne fournit pas de langue ; priorité de la langue explicite conservée.
+- Ajoute pnpm verify pour TS/lint/build/tests séquentiels et huit régressions. Validation : 223 tests, build/TS et lint 0 erreur/54 avertissements. Production : audit zéro vulnérabilité ; une modérée de développement reste bloquée par délai/compatibilité documentés.
+- Rapport AUDIT_ROBUSTESSE_2026-11-01.md avec preuves, réserves et priorités. Aucune migration, suppression, modification de droits, paiement ni nouvelle publication de production.
+
+Durcissement complémentaire du même lot : état du client remonté par identifiant de session à la navigation entre dossiers ; aucune fuite intercompte prétendue reproduite.

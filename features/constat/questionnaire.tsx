@@ -1,7 +1,8 @@
 'use client';
+import {useBrowserReady} from './browser-ready';
 import {quickFlowCopy} from './quick-flow-copy';
 import {damageSuggestions} from './damage-suggestions';
-import {useEffect,useRef,useState} from 'react';
+import {useLayoutEffect,useEffect,useRef,useState} from 'react';
 import {experienceCopy} from './experience-copy';
 import {FlowSteps} from './flow-steps';
 import {DocumentImport} from './document-import';
@@ -27,10 +28,10 @@ export function Questionnaire({report,lang,onChange,onDone,side,common=true,sess
  const pages=questionnairePages(report.count,side,common,selections),[pageId,setPageId]=useState(pages[0].id);
  const [showIssues,setShowIssues]=useState(false),[cursorLoaded,setCursorLoaded]=useState(false);
  const cursorKey='accordia-questionnaire:'+report.id+':'+(side??'all')+':'+common;
- useEffect(()=>{try{const raw=sessionStorage.getItem(cursorKey+':options');const restored={...populatedOptions(report),...safeOptions(raw?JSON.parse(raw):null)};setSelections(restored);setPageId(questionnaireCursor(questionnairePages(report.count,side,common,restored),sessionStorage.getItem(cursorKey)))}catch{};setCursorLoaded(true)},[cursorKey]);
+ const browserReady=useBrowserReady(),[restoredKey,setRestoredKey]=useState('');if(browserReady&&restoredKey!==cursorKey){setRestoredKey(cursorKey);try{const raw=sessionStorage.getItem(cursorKey+':options');const restored={...populatedOptions(report),...safeOptions(raw?JSON.parse(raw):null)};setSelections(restored);setPageId(questionnaireCursor(questionnairePages(report.count,side,common,restored),sessionStorage.getItem(cursorKey)))}catch{};setCursorLoaded(true)}
  useEffect(()=>{if(cursorLoaded)try{sessionStorage.setItem(cursorKey,pageId);sessionStorage.setItem(cursorKey+':options',JSON.stringify(selections))}catch{}},[cursorKey,pageId,cursorLoaded,selections]);
  const index=Math.max(0,pages.findIndex(p=>p.id===pageId)),p=pages[index];
- const heading=useRef<HTMLHeadingElement>(null),current=useRef(report);current.current=report;
+ const heading=useRef<HTMLHeadingElement>(null),current=useRef(report);useLayoutEffect(()=>{current.current=report},[report]);
  useEffect(()=>{heading.current?.focus()},[p.id]);
  const patch=(v:Partial<Report>)=>onChange({...current.current,...v});
  const vehicle=report.vehicles[p.side??0];

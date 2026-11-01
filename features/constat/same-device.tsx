@@ -3,21 +3,18 @@ import {quickFlowCopy} from './quick-flow-copy';
 import {SaveStatus} from './save-status';
 import {EntryMode} from './entry-mode';
 import {Questionnaire} from './questionnaire';
-import {questionnaireCopy} from './questionnaire-copy';
 
 import {retentionDeadline} from './retention';
 import {RefusalPanel} from './refusal-panel';
-import {policyCopy} from './policy-copy';
 import {sha256} from '@noble/hashes/sha2.js';
 import {bytesToHex} from '@noble/hashes/utils.js';
-import {useEffect,useMemo,useRef,useState} from 'react';
+import {useLayoutEffect,useEffect,useMemo,useRef,useState} from 'react';
 import {Button} from '@/components/ui/button';
 import {Checkbox} from '@/components/ui/checkbox';
 import {NativeSelect,NativeSelectOption} from '@/components/ui/native-select';
 import {dictionaries,type Lang} from './i18n';
 import {complete,type Report} from './model';
 import {reportContentKey,deviceCompletionKey,deviceSideReady} from './same-device-model';
-import {progressCopy} from './progress-copy';
 import {deviceCopy} from './device-copy';
 import {finalCopy} from './final-copy';
 import {styles,type FinalStyle} from './final-model';
@@ -40,18 +37,18 @@ export function SameDevice({report,lang,onChange,onBack,onSave,active,saved}:{re
  const [signatures,setSignatures]=useState<[Signature|null,Signature|null]>([null,null]),[signature,setSignature]=useState(''),[kind,setKind]=useState<'drawn'|'imported'>('drawn'),[consent,setConsent]=useState(false),[viewed,setViewed]=useState(false);
  const language=report.readingLanguages[side],t=dictionaries[language],c=deviceCopy[language],f=finalCopy[language];
  const [storeConsent,setStoreConsent]=useState(''),[stored,setStored]=useState(0);const dc=documentCopy[language];
- const key=useMemo(()=>reportContentKey(report)+'|'+style+'|'+pdfLang,[report,style,pdfLang]),latest=useRef(key);latest.current=key;const current=useRef(report);current.current=report;
+ const key=useMemo(()=>reportContentKey(report)+'|'+style+'|'+pdfLang,[report,style,pdfLang]),latest=useRef(key);useLayoutEffect(()=>{latest.current=key},[key]);const current=useRef(report);useLayoutEffect(()=>{current.current=report},[report]);
  const heading=useRef<HTMLHeadingElement>(null);
  useEffect(()=>{if(heading.current?.getClientRects().length){heading.current.scrollIntoView({behavior:'smooth',block:'start'});heading.current.focus({preventScroll:true})}},[side,review]);
  const alive=useRef(true),urls=useRef<string[]>([]),version=useRef(0);
  useEffect(()=>{alive.current=true;return()=>{alive.current=false;urls.current.forEach(URL.revokeObjectURL)}},[]);
- useEffect(()=>{setPrepared(null);setSignatures([null,null]);setSignature('');setConsent(false);setViewed(false);setReview(false);setMessage('');setStoreConsent('')},[key]);
+ const [previousKey,setPreviousKey]=useState(key);if(previousKey!==key){setPreviousKey(key);setPrepared(null);setSignatures([null,null]);setSignature('');setConsent(false);setViewed(false);setReview(false);setMessage('');setStoreConsent('')}
  
- useEffect(()=>{setSignature('');setConsent(false);setViewed(false)},[side]);
- useEffect(()=>{setCompleted(['','']);setSide(current.current.start?.ownerSide==='B'?1:0)},[report.id]);
+ const [previousSide,setPreviousSide]=useState(side);if(previousSide!==side){setPreviousSide(side);setSignature('');setConsent(false);setViewed(false)}
+ const [previousReportId,setPreviousReportId]=useState(report.id);if(previousReportId!==report.id){setPreviousReportId(report.id);setCompleted(['','']);setSide(report.start?.ownerSide==='B'?1:0)}
  useEffect(()=>{if(!history.some(h=>!h.saved)&&!(signatures.some(Boolean)&&!signatures.every(Boolean)))return;const warn=(e:BeforeUnloadEvent)=>{e.preventDefault();e.returnValue=''};window.addEventListener('beforeunload',warn);return()=>window.removeEventListener('beforeunload',warn)},[history,signatures]);
  const keys=useMemo(()=>[deviceCompletionKey(report,0),deviceCompletionKey(report,1)],[report]),done=keys.map((k,i)=>completed[i]===k);
- useEffect(()=>{setCompleted(previous=>{const a=previous[0]===keys[0]?previous[0]:'',b=previous[1]===keys[1]?previous[1]:'';return a===previous[0]&&b===previous[1]?previous:[a,b]})},[report]);
+ const [previousReport,setPreviousReport]=useState(report);if(previousReport!==report){setPreviousReport(report);setCompleted(previous=>{const a=previous[0]===keys[0]?previous[0]:'',b=previous[1]===keys[1]?previous[1]:'';return a===previous[0]&&b===previous[1]?previous:[a,b]})}
  const ready=report.count==='2'&&complete(report)&&!!report.otherObjectsDamage&&!!report.otherVehiclesDamage&&report.vehicles.every(v=>v.standardConfirmed&&(v.standardCircumstances?.length||v.observations.trim()));
  function ownReady(){return deviceSideReady(report,side)}
  function finishPart(){if(busy||!ownReady()){setMessage(c.missing);return;}setCompleted(d=>side===0?[keys[0],d[1]]:[d[0],keys[1]]);if(side===0)setSide(1);else requestAnimationFrame(()=>document.getElementById('device-document')?.scrollIntoView({behavior:'smooth'}));}

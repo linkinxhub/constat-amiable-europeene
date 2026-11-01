@@ -125,3 +125,6 @@ Catalogue partagé vitrine/tarifs/validation serveur et couverture documentaire 
 
 ## 2026-11-01 — Lecture photo par lot
 Parcours multi-pièces et relecture groupée développé sur l’API existante. Restent la recette caméra sur téléphone physique, les pièces réelles autorisées et le modèle fournisseur configuré, puis les droits/paiements Premium réels avant ouverture commerciale. Publication de ce lot séparée de son développement ; version 56 reste la référence production.
+
+## 2026-11-01 — Robustesse, priorités issues de l’audit
+Rapport docs/AUDIT_ROBUSTESSE_2026-11-01.md : 43 erreurs lint traitées, flux JSON bornés/UTF-8 strict, invalidations et reprise préférences/brouillons fiabilisées, vérification séquentielle locale. Restent 54 avertissements, une alerte Minimatch de développement et la recette physique A/B avec fichier final réellement ouvert. Priorités suivantes : CI distante et correctif compatible à éligibilité ; test de restauration, rétention indépendante et supervision ; vraie qualité OCR multilingue ; paiements/droits Premium réels ; mesures mobiles et pentest. Aucun pourcentage global de sécurité ou de préparation commerciale revendiqué.

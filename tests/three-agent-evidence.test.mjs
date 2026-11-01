@@ -17,6 +17,7 @@ function harness(importer,onChange){
   useState(value){const i=cursor++;if(!(i in slots))slots[i]=value;return [slots[i],v=>{slots[i]=typeof v==='function'?v(slots[i]):v;}];},
   useEffect(fn,deps){const i=cursor++,old=slots[i];if(!old||deps.some((v,j)=>v!==old.deps[j])){slots[i]={deps,cleanup:old?.cleanup};effects.push(()=>{slots[i].cleanup?.();slots[i].cleanup=fn();});}}
  };
+ hooks.useLayoutEffect=hooks.useEffect;
  const jsx=(type,props,key)=>({type,props,key});
  const modules={'./quick-flow-copy':{quickFlowCopy},react:hooks,'react/jsx-runtime':{jsx,jsxs:jsx,Fragment:'Fragment'},'lucide-react':{Camera:'Camera',Undo2:'Undo2'},'@/components/ui/button':{Button:'Button'},'@/components/ui/input':{Input:'Input'},'./photo-import':{importPhoto:importer,mergeImportedPhotos},'./repair-copy':{repairCopy},'./i18n':{dictionaries}};
  const js=ts.transpileModule(readFileSync(new URL('../features/constat/evidence.tsx',import.meta.url),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.ReactJSX}}).outputText;
