@@ -1,3 +1,9 @@
+## 2 novembre 2026 — Complétion et documents historiques
+
+- Corriger les compléments depuis un raccourci vers le formulaire existant, sans dupliquer la saisie ou les validations en relecture.
+- Préserver le cache gratuit et les anciens PDF traduits ; expliquer la réutilisation et la régénération explicite plutôt que déclencher silencieusement un appel IA. Identification automatique de la version du moteur des anciens documents reste un lot séparé.
+- Les lots d’exploitation suivent docs/ORDRE_TRAVAIL_EXPLOITATION_2026-11-02.md ; les recettes physiques, paiements réels et validation assureur ne sont pas remplacés par des tests locaux.
+
 # Décisions
 - 2026-09-20 : Accordia est un nom provisoire ; concept original, aucune affiliation DARVA.
 - Commencer par une application web responsive et l'API commune ensuite ; aucun APK promis au lot 1.

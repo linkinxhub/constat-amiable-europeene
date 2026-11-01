@@ -1,3 +1,7 @@
+## Priorité courante — exploitation, 2 novembre 2026
+
+Ordre détaillé, critères et dépendances : [ORDRE_TRAVAIL_EXPLOITATION_2026-11-02.md](docs/ORDRE_TRAVAIL_EXPLOITATION_2026-11-02.md). Saisie/relecture et navigation développées en aperçu ; information de réutilisation PDF ajoutée. Ensuite : dépendances/CI, recette réelle A/B, accès et qualité documentaire, exploitation/sauvegardes, paiements, acceptation terrain. Aucun état « prêt à 100 % » revendiqué. Production v63 préservée jusqu’à autorisation de publication du nouveau lot.
+
 # Roadmap Accordia — état au 21 septembre 2026
 
 ## Implémenté, vérifié localement

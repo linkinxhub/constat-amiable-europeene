@@ -14,7 +14,7 @@ import {complete} from '../features/constat/model.ts';
 import {styles} from '../features/constat/final-model.ts';
 import {missingFields} from '../features/constat/completeness.ts';
 const tick=()=>new Promise(resolve=>setImmediate(resolve));
-const base={'./quick-flow-copy':{quickFlowCopy},'./final-copy':{finalCopy},'./flow-steps':{FlowSteps:'FlowSteps'},'./usage-guide':{usageCopy:{fr:['','edit']},UsageGuide:'UsageGuide'},'./final-model':{styles},'./completeness':{missingFields}};
+const base={'./review-navigation':{focusReviewEditor(){}},'./quick-flow-copy':{quickFlowCopy},'./final-copy':{finalCopy},'./flow-steps':{FlowSteps:'FlowSteps'},'./usage-guide':{usageCopy:{fr:['','edit']},UsageGuide:'UsageGuide'},'./final-model':{styles},'./completeness':{missingFields}};
 const button=(h,label)=>h.nodes(n=>n.type==='Button'&&n.props.children===label)[0];
 test('local PDF rejects a generation that finishes after source data changed, and invalidates its previous link immediately',async()=>{
  let resolve,generated=0;const pending=new Promise(r=>resolve=r),original=URL.createObjectURL;URL.createObjectURL=()=>{generated++;return 'blob:TEST-FICTIF'};

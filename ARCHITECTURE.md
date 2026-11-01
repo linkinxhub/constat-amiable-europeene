@@ -1,3 +1,7 @@
+## Navigation de correction — aperçu du 2 novembre 2026
+
+review-navigation.ts partage la signature ReviewEdit et cible le véhicule/la rubrique après sortie de relecture. Le focus et l’ouverture des groupes agissent uniquement sur la présentation DOM ; aucun rapport, droit ou état de signature n’y est écrit. Les composants Workspace/SessionClient/SameDevice gardent leurs handlers de modification et contrôles existants. Les explications FR/EN/DE/NL proviennent de review-entry-copy.ts. Aucun changement de schéma/API.
+
 # Architecture
 React 19 + TypeScript + Vinext/Vite, pnpm, primitives Shadcn disponibles. Lot 1 : interface client isolée sous features/constat ; dictionnaire typé ; schéma Zod ; IndexedDB pour brouillons sur action explicite ; photos locales ; impression navigateur. Aucun backend métier ni identité applicative activés dans ce lot. Le serveur sert uniquement l'application ; aucun accident n'est transmis. Limitation : stockage local non chiffré, à utiliser avec données de test pour cette version. API/stockage serveur sécurisés et app mobile suivent dans le lot 2+. Sources conservées dans le dépôt du projet, Site enregistré mais non déployé en production.
 

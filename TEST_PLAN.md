@@ -1,3 +1,7 @@
+## 2 novembre 2026 — Correction de la saisie depuis la relecture
+
+Tests review-entry.test.mjs : quatre langues, cible A/B et lecture seule, aucun changement des données lors de navigation. session-invitation-ui.test.mjs : ouverture du formulaire complet propre et refus de cible étrangère. robust-lifecycle.test.mjs : confirmations appareil commun non ressuscitées. Aperçu bureau : compteur 24→23 après saisie fictive conservée ; iframe 375 px, largeur utile 360, sans débordement, focus du premier champ complémentaire. Recette physique A/B à exécuter selon docs/ORDRE_TRAVAIL_EXPLOITATION_2026-11-02.md, non revendiquée par ces tests.
+
 # Plan de test
 
 ## Recette concrète du 23 octobre 2026

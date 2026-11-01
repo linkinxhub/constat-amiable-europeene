@@ -35,3 +35,16 @@ test('owner copy failure offers manual selection instead of a generic error',asy
  const f=setup();f.s.setItem('accordia-share-'+id,'https://accordia.example/session/'+id+'#invite='+token);globalThis.fetch=async()=>Response.json({...data,side:'A',isOwner:true,joined:false});const h=componentHarness('features/constat/session-client.tsx','default',modules);
  try{h.render(props);await tick();h.render(props);button(h,sessionCopy.fr.copy).props.onClick();await tick();h.render(props);assert.ok(h.nodes(n=>n.props.role==='alert'&&n.props.children===sharingCopy.fr.copyFail).length);const input=h.nodes(n=>n.type==='Input'&&n.props.value?.includes('#invite='))[0];let selected=false;input.props.onFocus({currentTarget:{select(){selected=true}}});assert.ok(selected)}finally{h.unmount();f.restore()}
 });
+
+test('review correction opens the complete editor for the own side and rejects another vehicle target',async()=>{
+ const f=setup(),targets=[];const previous=modules['./review-navigation'];modules['./review-navigation']={focusReviewEditor:(...args)=>targets.push(args)};
+ globalThis.location.hash='';globalThis.fetch=async()=>Response.json(data);
+ const h=componentHarness('features/constat/session-client.tsx','default',modules);
+ try{
+  h.render({...props,account:true});await tick();h.render({...props,account:true});
+  button(h,sessionCopy.fr.review).props.onClick();h.render({...props,account:true});
+  const review=h.nodes(n=>n.type==='Review')[0];assert.ok(review);const own=data.side==='A'?0:1,other=1-own;
+  review.props.onEdit(1,other,true);h.render({...props,account:true});assert.equal(targets.length,0);assert.equal(h.nodes(n=>n.type==='Review').length,1);
+  review.props.onEdit(1,own,true);h.render({...props,account:true});assert.deepEqual(targets,[[1,own,true]]);assert.equal(h.nodes(n=>n.type==='Review').length,0);assert.equal(h.nodes(n=>n.type==='FormDetails').length,1);assert.equal(h.nodes(n=>n.type==='Questionnaire').length,0);
+ }finally{h.unmount();modules['./review-navigation']=previous;f.restore()}
+});
