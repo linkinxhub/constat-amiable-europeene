@@ -696,3 +696,10 @@ Guide, tutoriel et aide contextuelle FR/EN/DE/NL synchronisés via story-narrati
 
 Synchronisation du miroir GitHub préparée avec contrôle d’égalité d’arbre et mise à jour protégée par SHA attendu ; résultat final natif fourni dans le compte rendu. Réserves ouvertes : sauvegarde/restauration productive et ordonnanceur, rétention indépendante, deux téléphones réels, téléchargement final et fournisseur OCR réel. Aucune publication dans ce lot ; production v77 conservée.
 
+
+## 2026-11-02 — Publication autorisée v78
+
+Instruction explicite « Publier ». Version 78 publiée avec succès le 2 novembre à 15:55:34 Europe/Amsterdam (14:55:34 UTC). Déploiement appgdep_6ae8a447b760819194d5fcfc65a82474, statut succeeded, environnement révision 3. Source 42aa7218f119eefdc75652d63e1270b31c2a0fd0, archive sha256:12fb9b5b9b8095ca6fdb29db19b90f26991cd4bfeaf727048ed599634e827b09 vérifiée avant déploiement. Audience custom et deux visiteurs externes conservés. URL https://accordia-constat.adil-btp.chatgpt.site .
+
+Inclut les corrections du Master audit et la piste française enregistrée. Validation préalable : 294 tests, TypeScript/build réussis, lint 0 erreur/54 avertissements ; pas de nouvelle suite revendiquée pour cette publication. Miroir GitHub cd1d18457f20244cc80e7eaf2dafa9d094658b8c, arbre identique 022161ec9d347a540a609a2758236f86e1e4eb5c. Alerte de développement et réserves opérationnelles/mobile maintenues. Guide quatre langues déjà livré. Présente note documentaire uniquement, sans nouvelle modification applicative ni second déploiement.
+
