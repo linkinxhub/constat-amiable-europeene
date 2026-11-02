@@ -1,3 +1,7 @@
+## 2 novembre 2026 — Guide illustré et animé
+
+Test guide-visuals : sources réelles des instructions FR/EN/DE/NL, trois fiches, trois figures, aucun mouvement au montage, lancement explicite, pause en arrière-plan, respect du mouvement réduit et nettoyage des écouteurs. Aperçu bureau et mobile 375 px : sujets, pause et illustration lisibles, pas de débordement. Illustrations non fonctionnelles et explicitement pédagogiques ; aucune caméra ni API déclenchée.
+
 ## 2 novembre 2026 — Documents d’abord
 
 Tests document-first, document-first-ui et document-first-questionnaire : dossier/côté isolés, valeurs vides/modifiées/invalides visibles, faits manuels conservés, données immuables à la navigation, entrée visible, garde ordinaire, instantané uniquement après application et Continuer, réaffichage dans le vrai Questionnaire FR/EN/DE/NL. Recette fournisseur/pièces réelles et appareils physiques non exécutée.
