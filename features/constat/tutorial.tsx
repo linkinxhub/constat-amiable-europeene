@@ -1,4 +1,5 @@
 'use client';
+import {landingRefreshCopy} from '../marketing/landing-refresh-copy';
 import {vehicleKindCopy} from './vehicle-kind-copy';
 import {saveChoiceCopy} from './save-choice-copy';
 import type {ParticipationMode} from './participation-model';
@@ -71,7 +72,7 @@ export function Tutorial({lang,illustrated=true,mode}:{lang:Lang;illustrated?:bo
  <div className="tutorial-layout"><nav className="tutorial-steps" aria-label={c.title}>{c.steps.map((title,i)=><button type="button" key={title} aria-current={step===i?'step':undefined} onClick={()=>go(i)}><span>{i+1}</span>{title}</button>)}</nav><div className="tutorial-detail">
  <div className="tutorial-scene" key={`${path}-${step}`} aria-hidden="true"><div className="tutorial-card"><Icon size={38}/><span className="tutorial-control-example">{scenes[step][0]}</span><div className="tutorial-lines"><i/><i/><i/></div></div><ArrowRight className="tutorial-arrow"/><div className="tutorial-card tutorial-result">{step===2?<Users size={38}/>:step===5?<Download size={38}/>:<CheckCircle2 size={38}/>}<strong>{scenes[step][1]}</strong>{step===4&&<span className="tutorial-inks"><i/><i/><i/></span>}</div></div>
  <div aria-live={playing?'off':'polite'} aria-atomic="true"><h3>{step+1}. {c.steps[step]}</h3><p><strong>{commands[step]}</strong></p><p>{text}</p>{step===4&&<p><strong>{policyCopy[lang].refusal}</strong> — {policyCopy[lang].steps}</p>}{step===5&&<><p>{policyCopy[lang].retention}</p><p>{pricingCopy[lang].guide}</p><p>{offerNetworkCopy[lang].help}</p><a className="pricing-link" href={"/pricing?lang="+lang}>{pricingCopy[lang].title}</a></>}</div>
- {step===0&&<details><summary>{c.steps[0]}</summary><p>{vehicleKindCopy[lang].guide}</p><p>{qrScanCopy[lang].guide}</p><p>{documentFirstCopy[lang].guide}</p><p>{reviewEntryCopy[lang].guide}</p></details>}<div className="tutorial-controls"><Button type="button" variant="outline" disabled={step===0} onClick={()=>go(step-1)}>{c.prev}</Button><span>{step+1} / 6</span><Button type="button" onClick={()=>go(step===5?0:step+1)}>{step===5?c.end:c.next}</Button></div>
+ {step===0&&<details><summary>{c.steps[0]}</summary><p>{landingRefreshCopy[lang].guide}</p><p>{vehicleKindCopy[lang].guide}</p><p>{qrScanCopy[lang].guide}</p><p>{documentFirstCopy[lang].guide}</p><p>{reviewEntryCopy[lang].guide}</p></details>}<div className="tutorial-controls"><Button type="button" variant="outline" disabled={step===0} onClick={()=>go(step-1)}>{c.prev}</Button><span>{step+1} / 6</span><Button type="button" onClick={()=>go(step===5?0:step+1)}>{step===5?c.end:c.next}</Button></div>
  <Button type="button" variant="ghost" aria-pressed={playing} onClick={()=>{if(!playing&&step===5)setStep(0);setPlaying(!playing)}}>{playing?<Pause size={16}/>:<Play size={16}/>} {playing?c.pause:c.play}</Button>{reduced&&<p className="muted">{c.motion}</p>}
  </div></div></section></>
 }

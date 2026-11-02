@@ -3,6 +3,7 @@ import "./globals.css";
 import "./design-polish.css";
 import "./experience.css";
 import "./product-ui.css";
+import "./marketing-refresh.css";
 
 export const metadata: Metadata = {
   title: "Accordia — Constat européen",

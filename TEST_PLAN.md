@@ -1,3 +1,7 @@
+## 2026-11-02 — Vitrine enrichie
+
+landing-refresh.test.mjs vérifie les composants réels LandingPaths et Landing dans les quatre langues : comparaison consultative des trois modes, intitulés et prérequis partagés, lien vers vrai formulaire sans mode présélectionné caché, liens Rejoindre/Guide avec langue, conservation des rubriques, ouverture effective du volet démonstration, fermeture du menu après navigation. product-consistency conservé pour catalogue/documentation. Recette visuelle bureau/mobile à reprendre : preview géré ne devient pas sain ; aucune capture récente ni validation responsive revendiquée. Contrôler au minimum 360/375/768/1440 px, les quatre langues, menu/clavier/focus, bascules des trois parcours, démo, FAQ, sections, liens, mouvement réduit et contraste avant publication.
+
 ## 2026-11-02 — Profils de véhicule
 
 vehicle-kind.test.mjs : matrice 6×6 des types A/B, schema legacy/enum invalide, plaque remorque manquante et B inactif, page guidée isolée par participant/non sautée par OCR, absence de doublon et compteur des compléments applicables, conservation après changement/import, composant réel FR/EN/DE/NL et PDF rendu réel dans quatre langues. collaboration.test.mjs étendu : type et remorque d’A protégés de B, type de B protégé d’A, persistance réelle D1/R2. Tests de relecture/document-first adaptés à la première page Type de véhicule, navigation précédente et conservation des données vérifiées. PDF_ACCESS garde son contrôle de QR et vise la nouvelle version moteur.
