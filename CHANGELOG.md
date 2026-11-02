@@ -1,3 +1,9 @@
+## 2026-11-02 — Publication autorisée v79
+
+Instruction explicite « Publier ». Version 79 publiée avec succès le 2 novembre à 16:45:01 Europe/Amsterdam (15:45:01 UTC), déploiement appgdep_6ae8afdbb6048191a7480e7641de6c59 succeeded, environnement révision 3. Source 16359ae495b5beee9252054a2052e4b32242df17 ; archive sha256:ab6aa32b176fc04126bf1b3c7edf71e3181d6f609d5f53393846e47433dfda4e vérifiée avant publication, incluant migration additive feedback 0019. URL https://accordia-constat.adil-btp.chatgpt.site . Accès custom/deux visiteurs conservés.
+
+Feedback avec images vitrine/plateforme désormais publié. Source applicative synchronisée GitHub 06557f1fad9973df879e9250b105ecd7393b667c, arbre identique 915ef9dee0f5ea23a3b223a903da2500f45892c8. Validation préalable 302 tests, TypeScript/build réussis, lint 0 erreur/54 avertissements ; pas de nouvelle suite revendiquée pour ce déploiement. Envoi connecté et consultation administrative sur site hébergé restent à confirmer. Réserves historiques de dépendance de développement, sauvegarde/rétention et recette mobile maintenues. Mise à jour documentaire uniquement, sans nouvelle fonction ni second déploiement.
+
 ## 2026-11-02 — Feedback avec images, préparation sans publication
 
 Base synchronisée 836ba5a, production v78, restauration before-feedback-20261102. Ajout du feedback commun vitrine/menu plateforme/bas de page, en onglet séparé. Connexion requise, catégorie/message 10–4 000 caractères et 3 images facultatives, aperçu/retrait. JPEG/PNG/WebP jusqu’à 10 Mio avant optimisation navigateur, 1280 px et 180 Kio au plus par pièce ; serveur JPEG/PNG décodés et bornés. Images et texte privés dans feedback D1, migration additive 0019_old_swarm et métadonnées générées. Aucune donnée de constat jointe automatiquement. Pas d’envoi aux assureurs, notification email ou nouveau rôle.
