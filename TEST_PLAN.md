@@ -1,3 +1,8 @@
+## 2026-11-02 — Profils de véhicule
+
+vehicle-kind.test.mjs : matrice 6×6 des types A/B, schema legacy/enum invalide, plaque remorque manquante et B inactif, page guidée isolée par participant/non sautée par OCR, absence de doublon et compteur des compléments applicables, conservation après changement/import, composant réel FR/EN/DE/NL et PDF rendu réel dans quatre langues. collaboration.test.mjs étendu : type et remorque d’A protégés de B, type de B protégé d’A, persistance réelle D1/R2. Tests de relecture/document-first adaptés à la première page Type de véhicule, navigation précédente et conservation des données vérifiées. PDF_ACCESS garde son contrôle de QR et vise la nouvelle version moteur.
+Preview : A camion/attelage puis changement de type sans effacement, B voiture indépendant, DAF proposé ; mobile quatre langues sans débordement. Première page française et annexe PDF fictives rendues en images et inspectées. Deux téléphones physiques/SIWC réel restent à confirmer.
+
 ## 2 novembre 2026 — Guide contextualisé et dépannage
 
 Tests guide-context : trois modes et quatre langues, trois étapes rapides, statut Premium fermé, changement de consultation, dépannage QR réservé à deux téléphones, captures adaptées et sans lien de dossier. Test guide-visuals conservé : pause et mouvement réduit. Recette mobile 375 px sur onglet propre : guide rapide, bascule vers deux téléphones, dépannage, captures chargées sans erreur applicative. Captures FR explicitement annoncées, annotations quatre langues.

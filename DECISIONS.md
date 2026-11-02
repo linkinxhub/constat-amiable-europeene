@@ -1,3 +1,7 @@
+## 2026-11-02 — Type explicite et remorque conservée
+
+Type facultatif dans les anciens JSON pour préserver leur ouverture et leur validation. Choix proposé au début de chaque fiche ; aucune inférence OCR ni catégorie de permis automatique. Pour un attelage explicitement choisi, la plaque de remorque devient nécessaire à la complétude. Changer de type ne supprime aucune information ; avertissement et correction manuelle pour les anciennes valeurs. Champs de remorque présents une seule fois dans la saisie adaptée, compléments vides non applicables exclus du compteur de relecture. Pas de troisième conducteur créé. Première page du modèle reste française, annexes localisées et version moteur distincte.
+
 ## 2026-11-02 — Compte facultatif pour la saisie locale
 
 Conserver la saisie locale sans compte au niveau application, avec autosauvegarde et statut explicite. Ne jamais imposer une connexion tardive pour accéder au PDF local prévu. Enregistrement en ligne et session à deux téléphones restent authentifiés ; transfert du brouillon sur demande explicite. Avant connexion depuis le formulaire, vérifier la sauvegarde et le repère de reprise dans le même navigateur/onglet ; en cas d’échec rester sur place. Les autorisations d’hébergement existantes restent indépendantes et inchangées. PDF/signatures appareil commun se conservent séparément du brouillon de compte.

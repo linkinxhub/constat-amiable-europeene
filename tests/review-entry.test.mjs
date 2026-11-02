@@ -1,3 +1,5 @@
+import {applicableVehicleExtras} from '../features/constat/vehicle-kind.ts';
+import {vehicleKindCopy} from '../features/constat/vehicle-kind-copy.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {componentHarness} from './lifecycle-harness.mjs';
@@ -11,7 +13,7 @@ import {repairCopy} from '../features/constat/repair-copy.ts';
 import {eventZone} from '../features/constat/event-time.ts';
 import {finalCopy,extraLabels} from '../features/constat/final-copy.ts';
 import {extraFields,standardCircumstances} from '../features/constat/final-model.ts';
-const deps={'./review-entry-copy':{reviewEntryCopy},'./quick-flow-copy':{quickFlowCopy},'./flow-steps':{FlowSteps:'FlowSteps'},'./experience-copy':{experienceCopy},'./geocoding':{cityLabel},'./repair-copy':{repairCopy},'./event-time':{eventZone},'./i18n':{dictionaries},'./final-copy':{finalCopy,extraLabels},'./final-model':{extraFields,standardCircumstances},'./evidence':{SketchView:'SketchView'}};
+const deps={'./vehicle-kind':{applicableVehicleExtras},'./vehicle-kind-copy':{vehicleKindCopy},'./review-entry-copy':{reviewEntryCopy},'./quick-flow-copy':{quickFlowCopy},'./flow-steps':{FlowSteps:'FlowSteps'},'./experience-copy':{experienceCopy},'./geocoding':{cityLabel},'./repair-copy':{repairCopy},'./event-time':{eventZone},'./i18n':{dictionaries},'./final-copy':{finalCopy,extraLabels},'./final-model':{extraFields,standardCircumstances},'./evidence':{SketchView:'SketchView'}};
 test('review completion opens only the permitted vehicle and never mutates data in every language',()=>{
  for(const lang of ['fr','en','de','nl'])for(const side of [undefined,0,1]){
   const r=pdfFixture();for(const v of r.vehicles)v.extra={impact:'TEST'};const before=JSON.stringify(r),calls=[];

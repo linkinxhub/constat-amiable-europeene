@@ -1,3 +1,4 @@
+import {vehicleKindCopy} from '../features/constat/vehicle-kind-copy.ts';
 import {reportForDocument} from '../features/constat/document-scope.ts';
 import {pdfTextLines} from './pdf-text.ts';
 import {policyCopy} from '../features/constat/policy-copy.ts';
@@ -16,7 +17,7 @@ import type {Sketch} from '../features/constat/sketch-model.ts';
 import {standardCircumstances,extraFields,type FinalStyle} from '../features/constat/final-model.ts';
 import {finalCopy,extraLabels} from '../features/constat/final-copy.ts';
 import {dictionaries,type Lang} from '../features/constat/i18n.ts';
-export const PDF_RENDERER_VERSION='accordia-multilingual-v4';
+export const PDF_RENDERER_VERSION='accordia-multilingual-v5-vehicle-kind';
 export type Signature={data:string,kind:'drawn'|'imported',at:string,by:string};
 export type PdfMaterial={onlineSessionId?:string,unilateral?:{side:"A"|"B",reason:string},translation?:Translation,report:Report,revision:number,style:FinalStyle,lang:Lang,digest:string,createdAt:string,sketch:Sketch|null,signatures?:[Signature|null,Signature|null]};
 const bytes=(s:string)=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
@@ -48,7 +49,7 @@ export async function renderPdf(m:PdfMaterial){
  const join=(...parts:(string|undefined)[])=>parts.filter(Boolean).join(' · '),l=extraLabels[m.lang];
  box('6. '+t.policyholder,x,183,w,69,fill);
  [[t.policyholder,v.policyholder],[l.policyholderFirstName,e.policyholderFirstName],[t.address,e.policyholderAddress],[l.policyholderPostcode,join(e.policyholderPostcode,e.policyholderCountry)],[l.policyholderPhone,e.policyholderPhone]].forEach(([k,v],j)=>row(k||'',v,204+j*9));
- box('7. '+t.vehicle,x,252,w,62,fill);
+ box('7. '+t.vehicle+(v.kind?' · '+vehicleKindCopy[m.lang].pdfTypes[v.kind]:''),x,252,w,62,fill);
  [[t.model,v.model],[t.plate,join(v.plate,e.registrationCountry)],[l.trailerPlate,e.trailerPlate],[l.trailerCountry,e.trailerCountry]].forEach(([k,v],j)=>row(k||'',v,274+j*9));
  box('8. '+t.insurer,x,314,w,111,fill);
  [[t.insurer,v.insurer],[t.policy,v.policy],[l.greenCard,e.greenCard],[l.insuranceFrom,e.insuranceFrom],[l.insuranceUntil,e.insuranceUntil],[l.agency,e.agency],[l.agencyAddress,e.agencyAddress],[l.agencyPhone,e.agencyPhone],[l.comprehensive,e.comprehensive]].forEach(([k,v],j)=>row(k||'',v,336+j*9.4));
@@ -75,7 +76,7 @@ export async function renderPdf(m:PdfMaterial){
  function entry(label:string,v:string){const labels=lines(label,547,9,bold);if(y+labels.length*11+17>782)newPage();for(const l of labels){if(y>782)newPage();tx(l,24,y,9,bold);y+=11;}y+=4;for(const l of lines(v||c.missing,535,10,writing)){if(y>782)newPage();tx(l,30,y,10,writing,ink);y+=13;}y+=9;}
  if(m.unilateral){entry(policyCopy[m.lang].unsigned,m.unilateral.side);entry(policyCopy[m.lang].reason,m.unilateral.reason);entry(policyCopy[m.lang].refusal,policyCopy[m.lang].steps);}
  entry(t.date+' / '+t.time,r.date+' '+r.time+' · '+eventZone(r));entry(t.place,fullPlace(r));entry(t.country,r.country);entry(c.thirdVehicles,r.otherVehiclesDamage==='yes'?t.yes:r.otherVehiclesDamage==='no'?t.no:c.missing);entry(c.thirdObjects,r.otherObjectsDamage==='yes'?t.yes:r.otherObjectsDamage==='no'?t.no:c.missing);entry('5. '+t.witnesses,r.witnesses);if(r.confirmedLocation)entry(repairCopy[m.lang].gps,`${r.confirmedLocation.latitude}, ${r.confirmedLocation.longitude} | ${r.confirmedLocation.confirmedAt}`);if(r.location)entry('GPS',`${r.location.latitude}, ${r.location.longitude} | ± ${r.location.accuracy} m | ${r.location.capturedAt}`);
- for(const i of (r.count==='1'?[0]:[0,1]) as (0|1)[]){entry(t.vehicle+' '+(i===0?'A':'B'),r.vehicles[i].plate);const v=r.vehicles[i];for(const k of ['driver','policyholder','plate','model','insurer','policy','email','address','damage','observations'] as const)entry(t[k],v[k]);for(const k of extraFields)if(v.extra?.[k])entry(extraLabels[m.lang][k],v.extra?.[k]||'');entry(c.standard,(v.standardCircumstances||[]).map(k=>(k+1)+'. '+standardCircumstances[m.lang][k]).join('\n'));if(v.circumstances.length)entry(c.legacy,v.circumstances.map(k=>t.circumstances[k]).join('\n'));}
+ for(const i of (r.count==='1'?[0]:[0,1]) as (0|1)[]){entry(t.vehicle+' '+(i===0?'A':'B'),r.vehicles[i].plate);const v=r.vehicles[i];if(v.kind)entry(vehicleKindCopy[m.lang].title,vehicleKindCopy[m.lang].types[v.kind]);for(const k of ['driver','policyholder','plate','model','insurer','policy','email','address','damage','observations'] as const)entry(t[k],v[k]);for(const k of extraFields)if(v.extra?.[k])entry(extraLabels[m.lang][k],v.extra?.[k]||'');entry(c.standard,(v.standardCircumstances||[]).map(k=>(k+1)+'. '+standardCircumstances[m.lang][k]).join('\n'));if(v.circumstances.length)entry(c.legacy,v.circumstances.map(k=>t.circumstances[k]).join('\n'));}
  if(m.translation){entry(translationCopy[m.lang].pdfNotice,translationCopy[m.lang].review);for(const i of [0,1] as const){const translated=translatedReport(r,m.translation).vehicles[i];entry(t.vehicle+' '+(i===0?'A':'B')+' — '+t.damage,translated.damage);entry(t.vehicle+' '+(i===0?'A':'B')+' — '+t.observations,translated.observations);entry(t.vehicle+' '+(i===0?'A':'B')+' — '+extraLabels[m.lang].impact,translated.extra?.impact||'');}}
  if(m.sketch?.uncertainties.length)entry('IA',m.sketch.uncertainties.join('\n'));
  entry(c.reference,m.digest);entry(c.note,c.correction);

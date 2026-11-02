@@ -1,3 +1,7 @@
+## 2026-11-02 — Type de véhicule A/B, en aperçu
+
+Choix indépendant voiture, utilitaire, camion sans remorque, camion avec remorque/semi-remorque, voiture/utilitaire avec remorque ou autre. Questionnaire et formulaire orientent vers véhicule moteur et immatriculation de remorque. Plaque de remorque requise pour un type avec remorque, pays optionnel. Aucun permis/assurance inféré, aucune donnée supprimée par changement de type. Compatibilité des anciens dossiers sans type ; la remorque ne compte pas comme un conducteur. Type repris dans relecture et PDF. Critères : indépendance A/B, règles serveur de complétude, persistance/OCR sans perte, quatre langues et mobile. Non publié.
+
 ## Compléter depuis la relecture — développé en aperçu, 2 novembre 2026
 
 Le bloc des compléments vides propose « Compléter ces informations » pour la fiche éditable et explique que son compteur ne compte pas les obligations manquantes. Le formulaire complet ouvre les groupes et place le focus sur un champ. En session partagée, la fiche étrangère reste en lecture seule. Après correction, sauvegarde/confirmations et signatures suivent les règles existantes ; aucun PDF historique modifié. Non publié dans ce lot.

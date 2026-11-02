@@ -1,3 +1,7 @@
+## 2026-11-02 — Vehicle.kind et profils de saisie
+
+Enum facultatif dans le JSON de Vehicle, validé par le schéma commun ; pas de colonne ni migration SQL. vehicle-kind.ts centralise attelage, validation et champs applicables ; VehicleKindFields partagé par formulaire et questionnaire. vehicle-kind-copy.ts porte les six libellés et guides FR/EN/DE/NL. Les données de remorque restent dans Vehicle.extra, indépendantes du type et conservées après modification. Le serveur continue de sélectionner uniquement la fiche du participant autorisé. vehiclesValid/missingFields servent aussi les états de progression et finalMissingFields côté serveur. Type repris dans reference-page et annexes ; version PDF v5-vehicle-kind invalide les réutilisations de moteur sans modifier les documents historiques.
+
 ## Parcours documentaire — aperçu du 2 novembre 2026
 
 ReviewedEntry contient un instantané Vehicle en mémoire React, scoped par reportId/side. EntryMode le transmet au parent seulement après application et action Continuer. Questionnaire utilise document-first-model pour afficher les champs manquants/modifiés et garder les faits manuels ; aucun schéma persistant ou endpoint changé. Les contrôles serveur de fin et de droits demeurent autoritaires.

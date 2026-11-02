@@ -14,7 +14,7 @@ test('each new first-page PDF has a clickable QR to the correct route without mu
   const report=pdfFixture(),before=JSON.stringify(report),bytes=await renderPdf({report,lang,style:'keyboard',revision:1,digest:'QR-FICTIF',createdAt:'2026-11-01T12:00:00Z',sketch:null,onlineSessionId:session});assert.equal(JSON.stringify(report),before);
   const doc=await PDFDocument.load(bytes),annots=doc.getPage(0).node.lookup(PDFName.of('Annots'),PDFArray);assert.ok(annots);let found=false;
   for(let i=0;i<annots.size();i++){const a=annots.lookup(i,PDFDict),action=a.lookupMaybe(PDFName.of('A'),PDFDict);if(action?.get(PDFName.of('S'))?.toString()==='/URI'){assert.equal(action.lookup(PDFName.of('URI'),PDFString).decodeText(),pdfAccess(session,lang).url);found=true}}
-  assert.ok(found);assert.match(doc.getKeywords(),/accordia-multilingual-v4/);assert.ok(doc.getPageCount()>1);
+  assert.ok(found);assert.match(doc.getKeywords(),/accordia-multilingual-v5-vehicle-kind/);assert.ok(doc.getPageCount()>1);
  }
- assert.equal(PDF_RENDERER_VERSION,'accordia-multilingual-v4');
+ assert.equal(PDF_RENDERER_VERSION,'accordia-multilingual-v5-vehicle-kind');
 });
