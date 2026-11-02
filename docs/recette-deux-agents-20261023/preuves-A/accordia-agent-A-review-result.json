@@ -1,0 +1,28 @@
+{
+  "ok": true,
+  "result": {
+    "testOnly": true,
+    "notAnExtraction": true,
+    "vehicle": {
+      "driver": "Camille TEST A",
+      "policyholder": "Assurance TEST A",
+      "plate": "TEST-A-001",
+      "model": "Renault Clio",
+      "insurer": "ASSURANCE-FICTIVE-A",
+      "policy": "POLICE-TEST-A",
+      "email": "",
+      "address": "",
+      "damage": "",
+      "observations": "",
+      "circumstances": [],
+      "extra": {
+        "registrationCountry": "BE",
+        "driverCountry": "BE",
+        "policyholderCountry": "BE",
+        "insuranceFrom": "2026-01-01",
+        "insuranceUntil": "2026-12-31"
+      }
+    }
+  },
+  "at": "2026-10-23T08:58:24.265Z"
+}

@@ -1,3 +1,5 @@
+import {vehicleKindCopy} from '../features/constat/vehicle-kind-copy.ts';
+import {drawPdfAccessQr} from './pdf-access-qr.ts';
 import {rgb,type PDFDocument,type PDFFont} from 'pdf-lib';
 import {referenceImage} from './reference-image.ts';
 import type {PdfMaterial} from './pdf-renderer.ts';
@@ -5,6 +7,7 @@ import {fullPlace} from '../features/constat/geocoding.ts';
 export async function referencePage(doc:PDFDocument,m:PdfMaterial,font:PDFFont){
  const W=595.28,H=841.89,sx=W/1085,sy=H/1536,page=doc.insertPage(0,[W,H]);if(!m.translation)doc.removePage(1);
  const image=await doc.embedJpg(Uint8Array.from(atob(referenceImage),c=>c.charCodeAt(0)));page.drawImage(image,{x:0,y:0,width:W,height:H});
+ drawPdfAccessQr(doc,page,font,m.onlineSessionId,m.lang);
  const color=m.style==='blue-pen'?rgb(.05,.18,.65):rgb(.05,.05,.05);const overflow:string[]=[];
  function fill(value:string|undefined,x:number,y:number,width:number,height=19,label=''){
   if(!value)return;const text=value.replace(/\s+/g,' ').trim();let size=8;
@@ -22,6 +25,7 @@ export async function referencePage(doc:PDFDocument,m:PdfMaterial,font:PDFFont){
  fill(r.witnesses,405,136,640,46,'Témoins');
  for(const i of [0,1] as const){const dx=i===0?0:665,v=r.vehicles[i],e=v.extra||{};
  fill(v.policyholder,84+dx,264,300,19,'Assuré');fill(e.policyholderFirstName,94+dx,287,290);fill(e.policyholderAddress,96+dx,310,288);fill(e.policyholderPostcode,122+dx,333,79);fill(e.policyholderCountry,240+dx,333,142);fill(e.policyholderPhone,124+dx,356,259);
+ if(v.kind)fill(vehicleKindCopy.fr.pdfTypes[v.kind],135+dx,389,249,18,'Type de véhicule');
  fill(v.model,45+dx,449,162);fill(v.plate,45+dx,490,162);fill(e.registrationCountry,45+dx,530,162);fill(e.trailerPlate,226+dx,490,158);fill(e.trailerCountry,226+dx,530,158);
  fill(v.insurer,82+dx,588,300);fill(v.policy,130+dx,610,254);fill(e.greenCard,142+dx,632,242);fill(e.insuranceFrom,174+dx,674,95);fill(e.insuranceUntil,302+dx,674,82);fill(e.agency,84+dx,717,300);fill(e.agencyAddress,106+dx,739,277,37);fill(e.agencyPhone,120+dx,781,264);
  if(/^(oui|yes|ja)$/i.test(e.comprehensive||''))check(310+dx,822);else if(/^(non|no|nee|nein)$/i.test(e.comprehensive||''))check(201+dx,822);else fill(e.comprehensive,75+dx,806,110);

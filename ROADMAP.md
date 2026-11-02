@@ -1,3 +1,15 @@
+## État vérifié — après v74, recette en aperçu du 2 novembre
+
+Production v74. Lot en aperçu : réponses rapides préservées, reduced-motion respecté aux erreurs, guides des choix repliés cohérents FR/EN/DE/NL. 283 tests réussis, dont restauration chiffrée D1/R2 isolée avec historique, droits A/B et PDF signé de test identiques. Parcours solo réel jusqu’à génération et reprise après rechargement confirmés. Téléchargement navigateur non validé (délais des deux méthodes), pas de recette physique à deux comptes ni OCR fournisseur. Pas de sauvegarde/restauration productive ou ordonnanceur de purge mis en place ; accès d’infrastructure requis. Achats Premium fermés. Les entrées historiques ci-dessous décrivent les lots à leur date, et non l’état actuel de publication.
+
+## État courant — version 65 et parcours documentaire en aperçu
+
+Production : v65, scanner QR publié. Nouveau lot documents d’abord testé en aperçu : choix visible et questionnaire limité aux informations restantes après validation. Voir docs/PARCOURS_DOCUMENTS_ET_OFFRE_2026-11-02.md. Paiements et accès documentaire ordinaire restent fermés jusqu’à droits/quota/facturation réels ; aucun lancement commercial annoncé.
+
+## Priorité courante — exploitation, 2 novembre 2026
+
+Ordre détaillé, critères et dépendances : [ORDRE_TRAVAIL_EXPLOITATION_2026-11-02.md](docs/ORDRE_TRAVAIL_EXPLOITATION_2026-11-02.md). Saisie/relecture et navigation développées en aperçu ; information de réutilisation PDF ajoutée. Ensuite : dépendances/CI, recette réelle A/B, accès et qualité documentaire, exploitation/sauvegardes, paiements, acceptation terrain. Aucun état « prêt à 100 % » revendiqué. Production v63 préservée jusqu’à autorisation de publication du nouveau lot.
+
 # Roadmap Accordia — état au 21 septembre 2026
 
 ## Implémenté, vérifié localement
@@ -106,3 +118,37 @@ Raccordement des crédits de test autour de la sauvegarde PDF, avec réutilisati
 ## Zones du véhicule et aide photo — cadrage, non implémenté
 État vérifié : champ Point de choc avec suggestions Avant/Arrière/Côté gauche/Côté droit et diagonales ; champ Dégâts libre. Pas de dessin interactif ni d'analyse photo remplissant ces champs.
 Prévoir pour A/B et les parcours concernés : schéma sélectionnable au doigt/clavier, saisie manuelle toujours disponible ; capture caméra ou import avec accord explicite avant transmission IA ; suggestions distinctes des valeurs confirmées, correction/rejet/acceptation par le conducteur, sans écrasement de texte ni sauvegarde/signature silencieuse. La photo d'un schéma marqué peut proposer une zone, mais pas une nature de dommage ; les photos du véhicule peuvent suggérer uniquement des dommages visibles. Le premier point de choc, les dommages cachés, l'origine/daté des marques, les circonstances et la responsabilité ne sont pas déduits d'une seule photo. Séparer point de choc et zones endommagées. Consentement, quotas/coût et compatibilité camion/remorque à intégrer explicitement. Guide/tutoriel/aides FR/EN/DE/NL et PDF à actualiser avec l'implémentation.
+
+I publié Sites 29 : 100 % du sous-lot. Administration diagnostiquée non activée : nouveau code propriétaire configuré, activation personnelle encore requise. Priorité suivante : schéma de zones et aide photo, avec validation manuelle.
+
+## 2026-10-23 — Audit avant publication
+Correctifs de traduction workerd, autosauvegarde locale, concurrence et annonces caméra préparés. Essais réels à deux appareils, mobile, qualité IA et automatisation de sauvegarde des sessions réseau restent à valider ou développer. Rapport : AUDIT_2026-10-23.md.
+
+## Saisie express par documents — 2026-10-23
+Import JPEG/PNG/WebP/PDF par conducteur, extraction IA et sélection des champs avant application. Les modifications intervenues pendant la relecture sont protégées contre l'écrasement. Consentement explicite, documents non archivés par Accordia, aucune reconnaissance faciale. Limites : 3 Mio, images 4 Mpx, 5 tentatives/heure/compte et plafond IA global partagé de 100 appels/jour. Les échecs peuvent consommer une tentative.
+Positionnement Premium affiché sur accueil, tarifs et formulaire en FR/EN/DE/NL. Achats toujours fermés : serveur refuse les comptes ordinaires (402), essai réel réservé au superadministrateur existant. Aucun droit payant ni paiement simulé. Avant ouverture commerciale : paiements réels, droits Premium vérifiés et tarif final.
+Tests synthétiques uniquement ; extraction avec documents réels et compatibilité du modèle configuré restent à vérifier. Aperçu navigateur indisponible dans cette session.
+
+## Audit de cohérence — 23 octobre 2026
+Catalogue partagé vitrine/tarifs/validation serveur et couverture documentaire commune ajoutés ; catégories remorque et preneur distinctes. Voir docs/AUDIT_SYNCHRONISATION_2026-10-23.md. Restent : recette visuelle, documents réels, quota commercial de lecture, paiements réels et pentest indépendant.
+
+## 2026-11-01 — Lot sécurité et modes
+Écrans et raccordements implémentés. Restent : recette visuelle mobile/ordinateur en Preview, parcours à deux comptes et QR physique. Production réservée à une autorisation explicite. Synchronisation GitHub sur branche dédiée pour conserver main et les anciennes sources.
+
+## 2026-11-01 — Lecture photo par lot
+Parcours multi-pièces et relecture groupée développé sur l’API existante. Restent la recette caméra sur téléphone physique, les pièces réelles autorisées et le modèle fournisseur configuré, puis les droits/paiements Premium réels avant ouverture commerciale. Publication de ce lot séparée de son développement ; version 56 reste la référence production.
+
+## 2026-11-01 — Robustesse, priorités issues de l’audit
+Rapport docs/AUDIT_ROBUSTESSE_2026-11-01.md : 43 erreurs lint traitées, flux JSON bornés/UTF-8 strict, invalidations et reprise préférences/brouillons fiabilisées, vérification séquentielle locale. Restent 54 avertissements, une alerte Minimatch de développement et la recette physique A/B avec fichier final réellement ouvert. Priorités suivantes : CI distante et correctif compatible à éligibilité ; test de restauration, rétention indépendante et supervision ; vraie qualité OCR multilingue ; paiements/droits Premium réels ; mesures mobiles et pentest. Aucun pourcentage global de sécurité ou de préparation commerciale revendiqué.
+
+
+## 2026-11-01 — Synthèse IA avant croquis
+Synthèse avant croquis développée. Restent : qualité réelle des sorties et de leurs traductions dans chaque langue, relecture avec deux comptes/téléphones, éventuelle présentation multilingue simultanée de la même proposition (actuellement une langue affichée par proposition). Nouvelle version sauvegardée sans publication ; production v59 conservée selon AGENTS.md.
+
+
+## 2026-11-01 — QR d’accès sur le constat
+QR d’accès en ligne ajouté aux nouveaux exports ; ouverture réservée aux comptes autorisés. Scan caméra physique à confirmer, domaine personnalisé à configurer séparément si souhaité. Production inchangée sans autorisation explicite.
+
+
+## 2026-11-01 — Réparation du partage mobile
+Partage mobile renforcé : invitation conservée, champ de récupération et erreurs utiles. À recetter après publication autorisée sur deux téléphones avec comptes différents et messagerie/connexion réelles. Production v59 conservée, nouvelle version de développement préparée sans publication.

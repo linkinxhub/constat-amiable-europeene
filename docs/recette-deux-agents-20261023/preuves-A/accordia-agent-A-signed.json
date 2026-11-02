@@ -1,0 +1,16 @@
+{
+  "ok": true,
+  "result": {
+    "id": "1366bfac-06ff-4439-b8ac-0dc49487dacd",
+    "revision": 3,
+    "style": "keyboard",
+    "lang": "fr",
+    "digest": "201537367b6db8718073b37b92ebaf272d2c1a7213e1b82811e18657bab7701b",
+    "createdAt": "2026-10-23T08:55:33.088Z",
+    "signedA": true,
+    "signedB": true,
+    "ready": true,
+    "translated": false
+  },
+  "at": "2026-10-23T08:57:41.526Z"
+}

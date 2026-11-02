@@ -1,3 +1,21 @@
+## 2026-11-02 — Type explicite et remorque conservée
+
+Type facultatif dans les anciens JSON pour préserver leur ouverture et leur validation. Choix proposé au début de chaque fiche ; aucune inférence OCR ni catégorie de permis automatique. Pour un attelage explicitement choisi, la plaque de remorque devient nécessaire à la complétude. Changer de type ne supprime aucune information ; avertissement et correction manuelle pour les anciennes valeurs. Champs de remorque présents une seule fois dans la saisie adaptée, compléments vides non applicables exclus du compteur de relecture. Pas de troisième conducteur créé. Première page du modèle reste française, annexes localisées et version moteur distincte.
+
+## 2026-11-02 — Compte facultatif pour la saisie locale
+
+Conserver la saisie locale sans compte au niveau application, avec autosauvegarde et statut explicite. Ne jamais imposer une connexion tardive pour accéder au PDF local prévu. Enregistrement en ligne et session à deux téléphones restent authentifiés ; transfert du brouillon sur demande explicite. Avant connexion depuis le formulaire, vérifier la sauvegarde et le repère de reprise dans le même navigateur/onglet ; en cas d’échec rester sur place. Les autorisations d’hébergement existantes restent indépendantes et inchangées. PDF/signatures appareil commun se conservent séparément du brouillon de compte.
+
+## 2 novembre 2026 — Scan local des invitations
+
+Décodage jsqr chargé au clic, sans CDN ni transfert des images. Le scan remplit le champ et requiert ensuite la confirmation du formulaire. La validation invitationPath reste commune au collage et au scan. Aucun nouveau droit, pas de QR PDF accepté comme invitation. Arrêt caméra à la réussite, au retrait et en arrière-plan ; lien collé de secours maintenu.
+
+## 2 novembre 2026 — Complétion et documents historiques
+
+- Corriger les compléments depuis un raccourci vers le formulaire existant, sans dupliquer la saisie ou les validations en relecture.
+- Préserver le cache gratuit et les anciens PDF traduits ; expliquer la réutilisation et la régénération explicite plutôt que déclencher silencieusement un appel IA. Identification automatique de la version du moteur des anciens documents reste un lot séparé.
+- Les lots d’exploitation suivent docs/ORDRE_TRAVAIL_EXPLOITATION_2026-11-02.md ; les recettes physiques, paiements réels et validation assureur ne sont pas remplacés par des tests locaux.
+
 # Décisions
 - 2026-09-20 : Accordia est un nom provisoire ; concept original, aucune affiliation DARVA.
 - Commencer par une application web responsive et l'API commune ensuite ; aucun APK promis au lot 1.
@@ -107,3 +125,51 @@ Raccorder d'abord le croquis via une route de test administrative fermée par d�
 
 ## 0.22I et demande de repérage visuel
 Poursuite du raccordement du PDF traduit validée par « Ok continuer ». Nouveau lot préparé et testé localement, sans nouvelle publication de production dans ce tour. Préserver le cache gratuit et les droits ordinaires. La question jointe sur l'image est traitée par vérification du formulaire et cadrage, sans annoncer une fonction IA/photo qui n'est pas implémentée.
+
+## 2026-10-23 — Propriété distincte de la lettre du conducteur
+La création du dossier ne détermine plus la lettre A. `owner_side` fixe la lettre choisie et le participant invité reçoit l'autre. La colonne historique `participant_b` désigne toujours l'invité en base, même s'il est A ; elle n'est pas renommée pour préserver les gardes et historiques. Les faits communs restent proposés par A. L'automatisation IA est bornée à une tentative par révision et conserve les consentements et validations humaines. Voir docs/PARTICIPANT_START.md.
+
+## Synchronisation des informations produit
+Une source commune pour les montants et offres, une liste commune pour les pièces. Aucune synchronisation de données personnelles vers la vitrine. Une identité du preneur ou une remorque ne doit pas modifier les champs du conducteur ou du véhicule tracteur. Les dix générations commerciales annoncées concernent croquis/traductions ; quota commercial des pièces à définir avant vente.
+
+## Questionnaire gratuit
+La réduction de la charge de saisie est incluse dans le socle gratuit : aucune requête IA ni coût fournisseur ajouté. L’extraction documentaire conserve sa barrière serveur Premium. Une description FR/EN/DE/NL réutilisée évite les divergences vitrine/tarifs/compte/aide ; toutes les fonctions futures doivent être raccordées et vérifiées, sans prétendre à une synchronisation automatique de code.
+
+## 2026-11-01 — Personnes et véhicules distincts
+Le choix solo ne force ni un seul véhicule ni un rôle A. Les signatures personnelles restent dans les parcours préexistants ; aucun accord attribué à un absent. Les cartes rejoignent des fonctions réelles et ne créent aucun compte. La confirmation de sécurité n’est pas conservée comme déclaration et ne vaut pas réponse sur les blessés. Illustrations originales CSS, sans réutilisation des visuels ou marque de référence. Consignes générales sans distance nationale universelle ; priorité à l’absence d’exposition au danger. Référence consultée : Police fédérale, « Panne, accident, comment sécuriser les lieux ? » (26/11/2024), https://www.police.be/5998/fr/actualites/securite-routiere-panne-accident-comment-securiser-les-lieux .
+
+## 2026-11-01 — Correctifs de sécurité des dépendances
+Accepter la migration Zod 4.6.6 pour corriger le risque de diagnostics non bornés, avec tests de schéma/anciens dossiers et suite métier. Version déclarée et override harmonisés ; lockfile figé. Conserver le délai de sept jours pour Minimatch 11.0.1 (27/10/2026 22:26 UTC) et documenter l’alerte modérée de développement ; pas d’override majeur forcé avant examen de compatibilité. L’audit ne justifie ni masquer les 46 diagnostics lint historiques ni refactoriser globalement les parcours. Publication non incluse dans « pousser ».
+
+## 2026-11-01 — Rapidité sans suppression ni fausse validation
+Ne pas redemander la même fiche après fin guidée ; utiliser les confirmations réelles et les gardes serveur existantes. Une progression de position ne vaut pas dossier valide. Replier les détails vides à l’écran, conserver les données et l’impression. Distinguer un conducteur seul de deux véhicules, mais exclure la fiche inactive B de tout nouvel export explicitement à un véhicule, JSON inclus ; ne pas effacer le brouillon ni modifier un PDF existant. Les PDF complets conservent les annexes, sans promesse d’une page unique. Publication de ce lot autorisée explicitement, audience inchangée.
+
+## 2026-11-01 — Préremplissage depuis plusieurs photos
+Réutiliser le serveur réel et ses autorisations plutôt qu’ouvrir une seconde intégration. Envoi séquentiel, cinq pièces locales maximum, consentement du lot mais autorisation/quota serveur par pièce. Arrêt au premier échec pour maîtriser les appels ; la reprise saute les succès. Type choisi explicitement pour prévenir la confusion conducteur/preneur/titulaire ; pas d’identification faciale, extraction de signature ou de numéro national. Relecture groupée obligatoire ; jamais d’application silencieuse, de responsabilité déduite ou de signature automatique. Préserver l’essai administrateur existant et ne pas simuler un droit Premium client. Demande actuelle autorise le développement, pas une nouvelle publication production. Point de restauration before-document-photo-batch-20261101.
+
+## 2026-11-01 — Audit de robustesse
+Corriger les 43 erreurs lint sans désactiver de règle, avec remises à zéro conditionnelles de l’état et références après commit ; pas de timers destinés à cacher les setters. Borner readJson à 60 s et refuser les encodages UTF-8 invalides, avant écriture métier. Préserver la politique de sept jours et signaler l’alerte Minimatch de développement tant qu’un correctif compatible n’est pas éligible/testé. Ajouter une commande de vérification séquentielle ; ne pas présenter cela comme une CI distante activée. Production conservée, aucun nouvel accord de publication dans la demande de ce lot. Référence before-robustness-audit-20261101.
+
+
+## 2026-11-01 — Synthèse IA avant croquis
+Deux étapes serveur, sans ajouter le texte dérivé au constat signé. Synthèse générée dans la langue de lecture de la personne qui lance la demande ; langue affichée, pas de traduction silencieuse par destinataire. Nouvelle proposition invalide les anciens accords associés ; une validation retirée bloque un nouveau PDF utilisant ce croquis mais ne détruit aucun PDF existant. Ancien croquis sans summary_id compatible, toute nouvelle génération exige la synthèse. Tentative auto distincte par étape/version ; nouvelle tentative manuelle explicite après erreur. Aucun appel réel au fournisseur dans la recette.
+
+
+## 2026-11-01 — QR d’accès sur le constat
+Le QR ouvre le dossier courant, pas un document immuable ni une invitation. Authentification et appartenance A/B conservées par la page session et ses API. Local/appareil commun ouvrent le compte avec mention hors ligne : aucun faux accès cloud. Origine canonique identique au site Sites actuel ; actualiser cette constante lors d’un changement de domaine. Aucun retrait des PDF signés existants.
+
+
+## 2026-11-01 — Réparation du partage mobile
+Ne pas exposer publiquement existence, propriétaire ou état d’une invitation pour améliorer l’erreur : not_found reste opaque côté serveur. Le client affiche une aide d’accès plutôt que Action impossible. Pas d’adhésion automatique ; le destinataire confirme personnellement. Un retour de connexion qui ne transmet jamais le fragment à l’application ne peut pas être reconstruit : proposer rouvrir le message et coller le lien complet. Changement de navigateur/onglet n’est pas une synchronisation de sessionStorage. Un compte ne peut occuper les deux places. Récupération de réponse POST perdue par lecture d’appartenance, aucun assouplissement de validation.
+
+## 2026-11-02 — Priorité aux questions, conservation des contradictions
+Replier les options locales facultatives, conserver leur accès et le statut global de sauvegarde ; laisser le groupe ouvert pour deux téléphones. Vérifier les droits Express à la demande. Une contradiction explicite véhicule/remorque bloque la finalisation sans effacement automatique : l’utilisateur corrige lui-même. Types historiques absents et Autre restent compatibles.
+
+## 2026-11-02 — Recette et réponses rapprochées
+Actualiser la référence locale du Questionnaire avant onChange pour préserver deux mises à jour indépendantes entre deux rendus, sans modifier les validations ou les données du parent. Respecter la préférence de mouvement réduit pour atteindre une erreur. La restauration chiffrée Miniflare est une preuve isolée, pas un engagement RTO/RPO ni une sauvegarde hébergeur. Garder le téléchargement et les deux comptes physiques explicitement non validés tant que les preuves réelles manquent.
+
+## 2026-11-02 — Une scène native sans vidéo tierce
+SVG/CSS et horloge bornée de 15 s : pas de média lourd ni de requête externe. Lecture après visibilité de 60 % de l’illustration, pause si hors écran/onglet masqué ou commande globale, version statique avec reduced-motion. Conserver le premier CTA sur mobile et les fonctions/photo existantes. Le récit est illustratif et sans attribution de responsabilité.
+
+## Feedback avec images — 2026-11-02
+Feedback en onglet séparé pour ne pas quitter une saisie en cours. Compte requis ; aucune capture automatique ni notification email. Stocker uniquement les images optimisées relues, dans un JSON D1 borné et séparé des dossiers. Pas de nouveau rôle. Aucune conservation automatique ou reprise après fermeture annoncée. Voir docs/FEEDBACK_2026-11-02.md.

@@ -1,3 +1,15 @@
+## 2026-11-02 — Vehicle.kind et profils de saisie
+
+Enum facultatif dans le JSON de Vehicle, validé par le schéma commun ; pas de colonne ni migration SQL. vehicle-kind.ts centralise attelage, validation et champs applicables ; VehicleKindFields partagé par formulaire et questionnaire. vehicle-kind-copy.ts porte les six libellés et guides FR/EN/DE/NL. Les données de remorque restent dans Vehicle.extra, indépendantes du type et conservées après modification. Le serveur continue de sélectionner uniquement la fiche du participant autorisé. vehiclesValid/missingFields servent aussi les états de progression et finalMissingFields côté serveur. Type repris dans reference-page et annexes ; version PDF v5-vehicle-kind invalide les réutilisations de moteur sans modifier les documents historiques.
+
+## Parcours documentaire — aperçu du 2 novembre 2026
+
+ReviewedEntry contient un instantané Vehicle en mémoire React, scoped par reportId/side. EntryMode le transmet au parent seulement après application et action Continuer. Questionnaire utilise document-first-model pour afficher les champs manquants/modifiés et garder les faits manuels ; aucun schéma persistant ou endpoint changé. Les contrôles serveur de fin et de droits demeurent autoritaires.
+
+## Navigation de correction — aperçu du 2 novembre 2026
+
+review-navigation.ts partage la signature ReviewEdit et cible le véhicule/la rubrique après sortie de relecture. Le focus et l’ouverture des groupes agissent uniquement sur la présentation DOM ; aucun rapport, droit ou état de signature n’y est écrit. Les composants Workspace/SessionClient/SameDevice gardent leurs handlers de modification et contrôles existants. Les explications FR/EN/DE/NL proviennent de review-entry-copy.ts. Aucun changement de schéma/API.
+
 # Architecture
 React 19 + TypeScript + Vinext/Vite, pnpm, primitives Shadcn disponibles. Lot 1 : interface client isolée sous features/constat ; dictionnaire typé ; schéma Zod ; IndexedDB pour brouillons sur action explicite ; photos locales ; impression navigateur. Aucun backend métier ni identité applicative activés dans ce lot. Le serveur sert uniquement l'application ; aucun accident n'est transmis. Limitation : stockage local non chiffré, à utiliser avec données de test pour cette version. API/stockage serveur sécurisés et app mobile suivent dans le lot 2+. Sources conservées dans le dépôt du projet, Site enregistré mais non déployé en production.
 
@@ -96,3 +108,58 @@ La route dédiée /api/billing/test/sketch applique les gardes administrateur et
 
 ## 0.22I — Crédit de traduction après cache
 prepareTestTranslation valide le corps strict puis utilise withPdfLock/prepareUnlocked. La réservation withTestCredit est placée après la recherche du PDF compatible. Le contexte interne donne une identité de génération au digest ; translationCommit ajoute la garde de réservation et le règlement succeeded au batch de référence PDF. Le crédit et la sortie partagent donc un commit atomique. La route de test hérite des gardes administrateur/configuration ; aucune route ordinaire ne reçoit le contexte test.
+
+## 2026-10-23 — Correctifs avant publication
+`save-queue.ts` sérialise les écritures IndexedDB ; Workspace sauvegarde les instantanés modifiés, confirme uniquement l’instantané encore actif et reprend le pointeur de brouillon sessionStorage. `cloudDirty` ne dépend pas du succès local. Réponses de croquis bornées en streaming ; redirections fournisseur non suivies pour croquis/traduction. Création et renouvellement de session conditionnés atomiquement. Tests de traduction sur le Worker compilé.
+
+## Saisie express par documents — 2026-10-23
+Import JPEG/PNG/WebP/PDF par conducteur, extraction IA et sélection des champs avant application. Les modifications intervenues pendant la relecture sont protégées contre l'écrasement. Consentement explicite, documents non archivés par Accordia, aucune reconnaissance faciale. Limites : 3 Mio, images 4 Mpx, 5 tentatives/heure/compte et plafond IA global partagé de 100 appels/jour. Les échecs peuvent consommer une tentative.
+Positionnement Premium affiché sur accueil, tarifs et formulaire en FR/EN/DE/NL. Achats toujours fermés : serveur refuse les comptes ordinaires (402), essai réel réservé au superadministrateur existant. Aucun droit payant ni paiement simulé. Avant ouverture commerciale : paiements réels, droits Premium vérifiés et tarif final.
+Tests synthétiques uniquement ; extraction avec documents réels et compatibilité du modèle configuré restent à vérifier. Aperçu navigateur indisponible dans cette session.
+
+## Audit transversal et synchronisation — 23 octobre 2026
+Rapport : docs/AUDIT_SYNCHRONISATION_2026-10-23.md. Référence Sites 42 ; restauration before-sync-audit-20261023.
+Offres vitrine dérivées de pricingCopy ; montants principaux partagés avec validation serveur via features/product/catalog.ts. Couverture documentaire commune dans formulaire, tarifs, compte/offres, vitrine, guide et tutoriel. Ajout des types remorque et identité du preneur avec champs distincts. États réseau/chargement/annulation/délai IA corrigés, libellés vitrine localisés, consentements clarifiés, règle permanente de synchronisation dans AGENTS.md.
+Aucun droit commercial accordé, aucun achat ouvert, aucune donnée privée publiée. Validation : TypeScript, build Sites, 160 tests de la suite complète et un contrôle supplémentaire des pages compilées réussis (161 au total), zéro échec. Sept pages/rendus HTTP contrôlés : accueil, constat, compte, tarifs FR/EN/DE/NL. Recette visuelle et vraie lecture fournisseur non réalisées. L'audit n'est pas une certification exhaustive.
+
+## Questionnaire guidé
+questionnaire-model.ts construit des pages stables selon count/side/common ; groupes de compléments partagés avec detail-groups.ts. Questionnaire est un éditeur contrôlé du Report existant, utilise les mêmes callbacks et composants (GPS, circonstances, import documentaire). Aucun stockage parallèle, schéma ni migration. Composant commun QuestionnaireInfo pour les surfaces publiques et d’aide. Les permissions serveur restent autoritaires.
+
+## Présentation et navigation 2026-10-23
+experience-copy.ts centralise la nouvelle présentation ; FlowSteps et SaveStatus séparent phase et enregistrement. join-model.ts valide une navigation locale et ne donne aucun droit. /join rejoint l'API d'invitation existante via /session/id#invite ; token gardé dans le fragment. questionnairePages conserve son comportement exhaustif lorsqu'aucune sélection n'est fournie, et accepte des sélections conditionnelles d'affichage côté client sans changement de schéma Report. Aucune donnée personnelle copiée dans ces préférences.
+
+## Présentation commune des offres — 23 octobre 2026
+
+features/product/presentation-copy, site-header, plan-cards et offer-options centralisent textes FR/EN/DE/NL, navigation et cartes d’offres. pricing-copy continue de dériver les montants de product/catalog, également consommé par la validation serveur ; aucune attribution de droit depuis ces composants. offer-options respecte les quatre identifiants historiques et regroupe les flottes en une préférence. Le CSS product-ui est limité à l’écran. Home/Join acceptent une langue explicite validée ; les liens la conservent. Une reprise de dossier conserve ses propres langues enregistrées.
+
+## 2026-11-01 — Démarrage sécurité/appareils
+SafetyGate enveloppe Workspace et SessionClient ; acquittement en mémoire par identifiant, jamais écrit au dossier ou envoyé comme preuve. Les enfants restent montés et masqués pendant la relecture des consignes pour préserver l’état des formulaires et PDF. ParticipationModePicker route vers SameDevice, CloudPanel ou le formulaire ; participation-model conserve les valeurs et distingue personnes/véhicules. start.participationMode est facultatif dans le schéma Zod, sans migration SQL. QuestionnaireInfo et le premier tableau animé du tutoriel partagent onboarding-copy FR/EN/DE/NL. Les API continuent de vérifier identités, appartenances, côtés, révisions et consentements ; aucun contournement par le choix UI.
+
+## 2026-11-01 — Audit de sécurité
+Schémas applicatifs désormais exécutés avec Zod 4.6.6, import public inchangé ; six tests onboarding et suite métier vérifient anciens dossiers et rejet borné des collections excessives. Correctifs transitifs fast-uri/Undici/Satori via les overrides existants, sans nouvelle intégration ni migration SQL. Le lien d’invitation solo ouvre le choix de mode avant toute action réseau ; autorisations serveur inchangées. Profil local managed-linux remis en place via le helper Sites ; cet état ignoré n’entre pas dans le code publié.
+
+## 2026-11-01 — Fin guidée et périmètre documentaire
+quick-flow-copy centralise titres courts/aides FR/EN/DE/NL. Questionnaire porte la position et le focus des erreurs ; onDone reste spécifique au parcours. Workspace ouvre la relecture ; SameDevice utilise deviceSideReady et les empreintes ; SessionClient attend persist(true) et la fin serveur sans modification concurrente. Les compléments vides de Review sont repliés à l’écran seulement. reportForDocument est une projection non destructive pour count=1, appliquée au moteur PDF avant dessin et pièces jointes ; exclut B et ses photos attribuées, sans modifier le rapport de stockage. Déclarations unilatérales explicites conservées. Version du moteur v3, compatible avec le tamponnage des anciens octets. Pas de migration SQL.
+
+## 2026-11-01 — File de pièces photographiées
+DocumentImport conserve une file de File en mémoire et appelle /api/document-extraction successivement, par pièce et avec son type explicite. Aucun endpoint batch, migration ou stockage additionnel. document-photo.ts prépare les photos côté navigateur : sources 20 Mio/40 Mpx maximum, réencodage JPEG sans métadonnées EXIF, grand côté 2 000 px, envoi ≤3 Mio ; PDF inchangé ≤3 Mio. Annulation FileReader/Image et fetch ; chaque appel serveur conserve les gardes, quotas, modèle configuré et liste de champs existants. document-batch.ts regroupe uniquement les valeurs strictement identiques et garde leurs sources ; une contradiction/lecture incertaine/valeur existante n’est pas présélectionnée. applyDocumentFields protège toujours l’instantané de début contre les modifications concurrentes. Le composant ignore les réponses après annulation/démontage ; les consommateurs existants sont identifiés par dossier/partie. Aucun document brut ajouté aux photos de dégâts ou au PDF. document-photo-copy.ts centralise limites et guide FR/EN/DE/NL via document-copy.ts pour les surfaces existantes.
+
+## 2026-11-01 — Cycles de vie et corps HTTP bornés
+Invalidations locales conditionnées aux changements de source/partie pendant le rendu, références des opérations asynchrones actualisées après commit (layout effect), restauration des préférences après hydratation via browser-ready/useSyncExternalStore. Reprise du brouillon attend cette initialisation ; langue explicitement fournie dans l’URL prioritaire, préférence locale sinon sur accueil/Rejoindre. Aucune donnée ni signature historique supprimée. readJson : délai 60 s, annulation de flux non bloquante et UTF-8 strict ; plafonds et contrôles métier conservés. API session renvoie un objet Zod Record<string,unknown> avant lecture de métadonnées ; résultats D1 typés. pnpm verify impose TS → lint → build → tests, sans concurrence build/tests ; audit de dépendances séparé. Aucun changement SQL ni droit commercial.
+
+La page /session/[id] attribue aussi key=id au client de session pour réinitialiser ses états privés en cas de navigation entre dossiers, sans changement des autorisations serveur.
+
+
+## 2026-11-01 — Synthèse IA avant croquis
+synthesis-model/service/review/copy et migration additive 0018 : historique D1 borné à 20, consents et tentative automatique propres, référence summary_id du croquis. Verrou ai_lock et 3 appels/heure/session partagés ; plafond global existant 100/jour, catégorie technique sketches incluant les synthèses. OpenAI Responses store:false, texte de sketchEvidence uniquement ; pas de photo pour la synthèse. Contrôles de forme et langue, gardes révision/comptes/consentements/fin de saisie au commit. Dernière synthèse approuvée vérifiée à la génération, approbation et persistance PDF ; purge avec le dossier. Schéma Sketch et PDF historiques inchangés.
+
+
+## 2026-11-01 — QR d’accès sur le constat
+pdf-access fixe l’origine canonique et valide strictement le UUID de session. final-service transmet onlineSessionId au moteur v4 ; reference-page masque la zone entière puis pdf-access-qr dessine les modules QR et une annotation URI. Aucun jeton, donnée déclarative ou hôte de requête dans le QR. Les octets historiques et le tamponnage restent compatibles.
+
+
+## 2026-11-01 — Réparation du partage mobile
+pending-invitation centralise validation 32..100 caractères (borne serveur), stockage session JSON par identifiant, expiration locale 24h et migration du cache historique brut. Fragment conservé avant adhésion ; ni query de connexion ni localStorage pour le jeton. InvitationRecovery valide origin/path/hash avant de mémoriser en session. SessionClient distingue not_found attendu avant adhésion, vérifie d’abord l’accès lors du clic Rejoindre puis POST seulement si nécessaire ; confirmation GET nettoie l’invitation, langue éventuellement sauvegardée ensuite. Verrou client contre actions concurrentes, annulation de partage sans fausse erreur, copie manuelle si Clipboard indisponible. Contrôles serveur, invitations à usage unique, rôles A/B et expiration inchangés.
+
+## Feedback avec images — 2026-11-02
+Routes /api/feedback POST et /api/admin/feedback GET/PATCH, validation stricte et identité serveur. Table feedback D1 additive via migration 0019_old_swarm.sql ; lignes privées, images réencodées au plus 180 Kio chacune, requête 800 000 octets. Quota atomique 5/24 h et 50 ouverts ; UUID/empreinte pour idempotence. Aucun lien avec constats, PDF, facturation ou IA. Voir docs/FEEDBACK_2026-11-02.md.

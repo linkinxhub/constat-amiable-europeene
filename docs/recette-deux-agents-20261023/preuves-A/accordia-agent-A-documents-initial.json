@@ -1,0 +1,73 @@
+{
+  "ok": true,
+  "result": {
+    "report": {
+      "start": {
+        "ownerSide": "A",
+        "photoOwner": "both",
+        "autoSketch": false
+      },
+      "readingLanguages": [
+        "fr",
+        "nl"
+      ],
+      "id": "TEST_DUAL_DOCUMENTS_20261023",
+      "updated": "2026-10-23T08:50:51.323Z",
+      "date": "",
+      "time": "",
+      "place": "",
+      "country": "BE",
+      "injured": "",
+      "count": "2",
+      "vehicles": [
+        {
+          "driver": "",
+          "policyholder": "",
+          "plate": "",
+          "model": "",
+          "insurer": "",
+          "policy": "",
+          "email": "",
+          "address": "",
+          "damage": "",
+          "observations": "",
+          "circumstances": []
+        },
+        {
+          "driver": "",
+          "policyholder": "",
+          "plate": "",
+          "model": "",
+          "insurer": "",
+          "policy": "",
+          "email": "",
+          "address": "",
+          "damage": "",
+          "observations": "",
+          "circumstances": []
+        }
+      ],
+      "witnesses": "",
+      "photos": [],
+      "strokes": []
+    },
+    "revision": 1,
+    "retentionUntil": 1798015851323,
+    "syncToken": "be0c783737c10b85d54b205f49018b1485b9d49170e23b302ac4acb9b0f7dbfd",
+    "side": "A",
+    "isOwner": true,
+    "ownerSide": "A",
+    "joined": true,
+    "progress": {
+      "A": {
+        "done": false,
+        "at": null
+      },
+      "B": {
+        "done": false,
+        "at": null
+      }
+    }
+  },
+  "at": "2026-10-23T08:58:13.143Z"
+}

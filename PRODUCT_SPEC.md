@@ -1,3 +1,11 @@
+## 2026-11-02 — Type de véhicule A/B, en aperçu
+
+Choix indépendant voiture, utilitaire, camion sans remorque, camion avec remorque/semi-remorque, voiture/utilitaire avec remorque ou autre. Questionnaire et formulaire orientent vers véhicule moteur et immatriculation de remorque. Plaque de remorque requise pour un type avec remorque, pays optionnel. Aucun permis/assurance inféré, aucune donnée supprimée par changement de type. Compatibilité des anciens dossiers sans type ; la remorque ne compte pas comme un conducteur. Type repris dans relecture et PDF. Critères : indépendance A/B, règles serveur de complétude, persistance/OCR sans perte, quatre langues et mobile. Non publié.
+
+## Compléter depuis la relecture — développé en aperçu, 2 novembre 2026
+
+Le bloc des compléments vides propose « Compléter ces informations » pour la fiche éditable et explique que son compteur ne compte pas les obligations manquantes. Le formulaire complet ouvre les groupes et place le focus sur un champ. En session partagée, la fiche étrangère reste en lecture seule. Après correction, sauvegarde/confirmations et signatures suivent les règles existantes ; aucun PDF historique modifié. Non publié dans ce lot.
+
 # Accordia — Spécification produit
 
 ## Vision
@@ -118,3 +126,59 @@ Crédits test partagés entre croquis et traduction. Réservation avant traiteme
 
 ## Demande complémentaire — schéma de zones, caméra et aide IA
 L'image fournie montre un repérage avant/arrière/gauche/droite. Ces directions existent actuellement comme suggestions textuelles du point de choc ; la sélection graphique et l'analyse des dégâts par photo ne sont pas réalisées. Cible : sélection manuelle sur schéma, photo caméra/import et suggestions IA soumises à confirmation, champs manuels conservés. Distinguer zone visible abîmée et premier point de choc déclaré. Une croix sur le schéma ne suffit pas à générer une description de dégâts matériels ; seuls les dommages visibles sur des photos exploitables peuvent faire l'objet de suggestions prudentes. Aucun remplacement automatique des déclarations, choix de circonstances, conclusion de responsabilité ou validation des signatures.
+
+## 2026-10-23 — Sauvegarde locale automatique
+Le formulaire local et le mode sur appareil commun enregistrent les saisies et photos dans IndexedDB. Le dernier brouillon confirmé reprend dans le même onglet. Les boutons manuels restent disponibles ; signatures/PDF restent séparés. Dans une session réseau, les enregistrements restent explicites. Le statut local est séparé des modifications non envoyées au compte. Voir AUDIT_2026-10-23.md pour les limites.
+
+## Saisie express par documents — 2026-10-23
+Import JPEG/PNG/WebP/PDF par conducteur, extraction IA et sélection des champs avant application. Les modifications intervenues pendant la relecture sont protégées contre l'écrasement. Consentement explicite, documents non archivés par Accordia, aucune reconnaissance faciale. Limites : 3 Mio, images 4 Mpx, 5 tentatives/heure/compte et plafond IA global partagé de 100 appels/jour. Les échecs peuvent consommer une tentative.
+Positionnement Premium affiché sur accueil, tarifs et formulaire en FR/EN/DE/NL. Achats toujours fermés : serveur refuse les comptes ordinaires (402), essai réel réservé au superadministrateur existant. Aucun droit payant ni paiement simulé. Avant ouverture commerciale : paiements réels, droits Premium vérifiés et tarif final.
+Tests synthétiques uniquement ; extraction avec documents réels et compatibilité du modèle configuré restent à vérifier. Aperçu navigateur indisponible dans cette session.
+
+## Audit transversal et synchronisation — 23 octobre 2026
+Rapport : docs/AUDIT_SYNCHRONISATION_2026-10-23.md. Référence Sites 42 ; restauration before-sync-audit-20261023.
+Offres vitrine dérivées de pricingCopy ; montants principaux partagés avec validation serveur via features/product/catalog.ts. Couverture documentaire commune dans formulaire, tarifs, compte/offres, vitrine, guide et tutoriel. Ajout des types remorque et identité du preneur avec champs distincts. États réseau/chargement/annulation/délai IA corrigés, libellés vitrine localisés, consentements clarifiés, règle permanente de synchronisation dans AGENTS.md.
+Aucun droit commercial accordé, aucun achat ouvert, aucune donnée privée publiée. Validation : TypeScript, build Sites, 160 tests de la suite complète et un contrôle supplémentaire des pages compilées réussis (161 au total), zéro échec. Sept pages/rendus HTTP contrôlés : accueil, constat, compte, tarifs FR/EN/DE/NL. Recette visuelle et vraie lecture fournisseur non réalisées. L'audit n'est pas une certification exhaustive.
+
+## Questionnaire guidé gratuit — 23 octobre 2026
+Option de saisie progressive sur le même constat, sans IA ni nouveau droit payant. Local : sécurité/date/lieu/dommages communs, fiches A/B selon nombre de véhicules, compléments, circonstances, témoins, puis parcours photos/relecture existant. Session partagée : fiche propre et faits communs seulement pour A. Appareil commun : fiche du conducteur choisi. Retour au formulaire complet sans effacer les réponses ; validation, sauvegarde réseau et signature restent explicites selon le parcours. Champs non connus peuvent être complétés à la relecture, sans valeurs inventées. Import IA Premium conservé, achats fermés.
+
+## 2026-10-23 — Choix du mode de saisie
+Deux cartes après rôle/langue dans le formulaire principal : saisie guidée gratuite par défaut, saisie express Premium. Lien secondaire vers le formulaire complet. Composant commun EntryMode dans session partagée et appareil commun ; Express cible uniquement le conducteur choisi. Accès vérifié via API existante, interface fermée par défaut, chargement/erreur/réessai explicites ; serveur Premium et autorisations inchangés.
+Administrateur : import réel dans une fenêtre dédiée, relecture/application des propositions, puis retour au questionnaire du même constat. Comptes ordinaires : Bientôt disponible, aucun achat simulé. Réponses appliquées préservées ; fermeture abandonne analyse/propositions non appliquées, mention explicite. Description commune FR/EN/DE/NL ajoutée à QuestionnaireInfo, donc vitrine/tarifs/compte/guide/tutoriel synchronisés.
+Fichiers : entry-mode (composant, modèle, traductions), workspace/session-client/same-device, document-import, questionnaire-info, styles, tests. Aucun schéma, migration ni changement de quota. Version préparée non publiée ; recette navigateur/mobile et extraction fournisseur réelle non effectuées. Synchronisation GitHub non rétablie.
+
+## 2026-10-23 — Présentation et parcours simplifiés
+Rapport docs/EXPERIENCE_2026-10-23.md. Accueil Commencer/Rejoindre, trois étapes, modes guidé/Express, exemple A/B, confiance/FAQ, détails secondaires repliés sans supprimer de fonction ; animations conservées avec pause accessible. Nouvelle page /join contrôlant les invitations locales, langue conservée, autorisations serveur inchangées.
+Rôle/langue visibles, réglages photos/IA repliables avant création ; questionnaire conditionnel (19 rubriques sans compléments pour deux véhicules), préférences d'affichage sans destruction de réponses ; cinq phases, liens de correction/relecture et statuts local/session clarifiés. Explications communes FR/EN/DE/NL diffusées dans vitrine/tarifs/compte/guide/tutoriel. Styles écran uniquement, impression conservée.
+Pas de migration, de suppression, de fournisseur simulé ni d'achat activé. Préparé sans publication. Contrôles visuels/mobile, vrais comptes/QR et synchronisation GitHub encore ouverts.
+
+## 2026-11-01 — Sécurité et modes par participant/appareil
+Avant saisie locale ou ouverture d’une session : consignes de sécurité, lien 112 et bouton « Je suis en sécurité ». Confirmation personnelle en mémoire, demandée pour un nouveau dossier et après rechargement ; ne renseigne pas le champ blessés et n’est ni signature ni consentement serveur. Retour aux consignes disponible. Trois cartes : 2 conducteurs/1 smartphone (parcours appareil commun), 2 conducteurs/2 smartphones (invitation sécurisée existante), 1 conducteur/1 smartphone (formulaire local non signé). Un conducteur seul peut déclarer deux véhicules. Choix enregistré avec le brouillon ; données A/B, photos et langues conservées lors du changement. Ancien brouillon sans choix compatible. A renseigne les faits communs dans le questionnaire sur appareil commun. Aucun nouveau droit, paiement ni intégration fournisseur.
+
+## 2026-11-01 — Fin de saisie guidée simplifiée
+Questionnaire à titres courts et progression de position, réglages repliables, champs/groupes en erreur accessibles. Fin solo ouvre la relecture et le PDF, photos/croquis séparés facultatifs. Sur appareil commun la fin confirme réellement la partie avec prérequis A communs et passe à B ; en session elle doit être enregistrée et confirmée par le serveur avant relecture. Récapitulatif écran compact, données et impression intégrales préservées. Une déclaration explicite à un véhicule exclut B et ses photos attribuées de l’export sans effacer le brouillon. Aperçus incomplets clairement signalés ; signatures et droits existants conservés.
+
+## 2026-11-01 — Photographier les papiers, relecture groupée
+Saisie Express étendue à une file locale de cinq pièces maximum, prise de photo ou import JPEG/PNG/WebP/PDF. Type explicite pour chaque pièce, recto/verso séparés, conducteur et preneur distincts. Photos jusqu’à 20 Mio adaptées localement avant envoi (grand côté 2 000 px, maximum 3 Mio) ; PDF 3 Mio. Une pièce égale une analyse existante. Relecture unique avec sources, propositions contradictoires et incertaines non présélectionnées, champs existants protégés. Aucun champ appliqué sans confirmation ; application atomique refuse les corrections concurrentes. Arrêt au premier échec, résultats réussis conservés, reprise explicite sans relecture des succès ; après application partielle, pièces non lues conservées. Pièces brutes/propositions non appliquées en mémoire uniquement, jamais annexées au PDF. Faits de l’accident et signatures personnels, jamais inventés. Accès essai administrateur inchangé, achats Premium toujours fermés. Aucun nouveau droit commercial ni production autorisée pour ce lot.
+
+
+## 2026-11-01 — Synthèse IA avant croquis
+Synthèse textuelle IA séparée avant tout nouveau croquis en session partagée. Déclarations A/B, accords explicites, désaccords et informations manquantes ; aucune déduction de responsabilité. Double consentement distinct puis double validation personnelle, révision exacte et dernière proposition. Correction dans les fiches originales, jamais par écrasement automatique. Texte non ajouté aux PDF signés ; anciens croquis/PDF conservés.
+
+
+## 2026-11-01 — QR d’accès sur le constat
+Les nouveaux PDF remplacent le code-barres de référence par un QR vectoriel cliquable : session partagée protégée si disponible, sinon compte Accordia explicitement distingué du brouillon local. Aucun droit ni invitation transmis.
+
+
+## 2026-11-01 — Réparation du partage mobile
+Rejoindre une session conserve son invitation jusqu’à confirmation d’appartenance serveur. Récupération explicite du lien complet du même site/dossier, instructions de deux comptes et erreurs distinctes. Aucun accord automatique ni privilège supplémentaire.
+
+## Confort de saisie — 2026-11-02
+Le questionnaire arrive après les volets repliables de sauvegarde et « Rôle, documents et options » ; ce dernier reste ouvert pour deux téléphones. La vérification des droits Express commence lorsque le choix de saisie est ouvert. Voiture, utilitaire ou camion sans remorque ne peuvent être finalisés avec plaque/pays de remorque : corriger la configuration sans suppression automatique. Guide et tutoriel partagent les explications FR/EN/DE/NL.
+
+## Vitrine — scène illustrative, 2 novembre 2026
+Illustration discrète d’un accrochage sans constat papier, puis recours à Accordia. Lecture unique à visibilité effective de l’art, pause/replay et reduced-motion. CTA réel permanent, pas de démonstration d’extraction ni promesse d’acceptation assureur. Quatre langues ; guide et tutoriel synchronisés. Photo et schéma précédents restent consultables.
+
+## Feedback avec images — 2026-11-02
+Feedback distinct du constat : accès vitrine/menu plateforme/bas de page, connexion, type/message et 3 images optimisées, aperçu/retrait, référence de succès, conservation en mémoire sur erreur. FR/EN/DE/NL. Consultation paginée et statut réservé au super-administrateur existant. Voir docs/FEEDBACK_2026-11-02.md.

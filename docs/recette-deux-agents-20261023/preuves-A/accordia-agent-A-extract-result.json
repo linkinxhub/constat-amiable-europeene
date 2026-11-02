@@ -1,0 +1,8 @@
+{
+  "ok": false,
+  "error": {
+    "status": 402,
+    "code": "premium_closed"
+  },
+  "at": "2026-10-23T08:58:13.356Z"
+}

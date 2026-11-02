@@ -1,0 +1,42 @@
+    - generic: Saisie sauvegardée sur cet appareil
+  - heading "A Véhicule A" [level=3]:
+  - textbox "Nom du conducteur": TEST A
+  - textbox "Nom du preneur d’assurance": Assurance TEST A
+  - textbox "Immatriculation": TEST-A-001
+  - textbox "Marque et modèle": Renault Clio
+  - textbox "Assureur": ASSURANCE-FICTIVE-A
+  - textbox "Numéro de police": POLICE-TEST-A
+  - textbox "E-mail (facultatif)"
+  - textbox "Adresse (facultatif)"
+  - textbox "Dégâts apparents"
+  - generic "Le titulaire de l’assurance 1 / 5 champs renseignés":
+    - generic: 1 / 5 champs renseignés
+  - generic "Le conducteur et son permis 2 / 8 champs renseignés":
+    - generic: 2 / 8 champs renseignés
+  - generic "L’assurance et l’agence 2 / 7 champs renseignés":
+    - generic: 2 / 7 champs renseignés
+  - generic "Le véhicule et la remorque 1 / 3 champs renseignés":
+    - generic: 1 / 3 champs renseignés
+  - generic "Le point de choc 0 / 1 champs renseignés":
+    - generic: 0 / 1 champs renseignés
+  - heading "B Véhicule B" [level=3]:
+  - textbox "Nom du conducteur"
+  - textbox "Nom du preneur d’assurance": VERZEKERING TEST B
+  - textbox "Immatriculation": TEST-B-002
+  - textbox "Marque et modèle": Toyota Corolla
+  - textbox "Assureur": ASSURANCE-FICTIVE-B
+  - textbox "Numéro de police": POLIS-TEST-B
+  - textbox "E-mail (facultatif)"
+  - textbox "Adresse (facultatif)"
+  - textbox "Dégâts apparents"
+  - generic "Le titulaire de l’assurance 1 / 5 champs renseignés":
+    - generic: 1 / 5 champs renseignés
+  - generic "Le conducteur et son permis 0 / 8 champs renseignés":
+    - generic: 0 / 8 champs renseignés
+  - generic "L’assurance et l’agence 2 / 7 champs renseignés":
+    - generic: 2 / 7 champs renseignés
+  - generic "Le véhicule et la remorque 1 / 3 champs renseignés":
+    - generic: 1 / 3 champs renseignés
+  - generic "Le point de choc 0 / 1 champs renseignés":
+    - generic: 0 / 1 champs renseignés
+    - paragraph: Saisie sauvegardée sur cet appareil

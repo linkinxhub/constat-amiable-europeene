@@ -12,6 +12,7 @@ export async function purgeExpired(stores:Stores,now=Date.now()){
  stores.db.prepare("UPDATE storage_objects SET state='cleanup' WHERE object_key IN (SELECT object_key FROM retention_objects WHERE owner_id=? AND report_id=?)").bind(o,id),
  stores.db.prepare('DELETE FROM final_documents WHERE session_id IN (SELECT id FROM shared_sessions WHERE owner_id=? AND report_id=?)').bind(o,id),
  stores.db.prepare('DELETE FROM sketch_proposals WHERE session_id IN (SELECT id FROM shared_sessions WHERE owner_id=? AND report_id=?)').bind(o,id),
+ stores.db.prepare('DELETE FROM synthesis_proposals WHERE session_id IN (SELECT id FROM shared_sessions WHERE owner_id=? AND report_id=?)').bind(o,id),
  stores.db.prepare('DELETE FROM shared_sessions WHERE owner_id=? AND report_id=?').bind(o,id),
  stores.db.prepare('DELETE FROM report_versions WHERE owner_id=? AND report_id=?').bind(o,id),
  stores.db.prepare('DELETE FROM reports WHERE owner_id=? AND id=? AND retention_until<=?').bind(o,id,now)
