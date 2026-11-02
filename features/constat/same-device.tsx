@@ -69,7 +69,7 @@ export function SameDevice({report,lang,onChange,onBack,onSave,active,saved}:{re
  return <section className="form-panel same-device" lang={language}>
   <RefusalPanel report={report} lang={language} side={side===0?'A':'B'}/><h2 ref={heading} tabIndex={-1}>{c.title}</h2><p>{c.hint}</p><p className="notice">{dc.notice}</p>
   <div className="device-actions"><Button type="button" variant="outline" disabled={busy} onClick={onBack}>{c.back}</Button><Button type="button" variant="outline" disabled={busy} onClick={()=>void save()}>{c.save}</Button></div>
-  <details><summary>{dictionaries[language].guide}</summary><UsageGuide lang={language}/></details>
+  <details><summary>{dictionaries[language].guide}</summary><UsageGuide lang={language} mode="same-device"/></details>
   <SaveStatus lang={language} saved={saved} dirty={!saved}/><p>{c.handoff} <strong>{side===0?'A':'B'}</strong></p>
   <div className="device-actions" role="group" aria-label={c.title}>{([0,1] as const).map(i=><Button type="button" key={i} disabled={busy} variant="outline" aria-pressed={side===i} onClick={()=>setSide(i)}>{i===0?'A':'B'} · {signatures[i]?'✓ '+f.signature:done[i]?c.done:c.pending}</Button>)}</div>
   <label className="field"><span>{t.lang} · {side===0?'A':'B'}</span><NativeSelect value={language} disabled={busy} onChange={e=>{const readingLanguages=[...report.readingLanguages] as Report['readingLanguages'];readingLanguages[side]=e.target.value as Lang;onChange({...report,readingLanguages})}}>{(['fr','en','de','nl'] as const).map(l=><NativeSelectOption key={l} value={l}>{l.toUpperCase()}</NativeSelectOption>)}</NativeSelect></label>

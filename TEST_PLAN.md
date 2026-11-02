@@ -1,3 +1,7 @@
+## 2 novembre 2026 — Guide contextualisé et dépannage
+
+Tests guide-context : trois modes et quatre langues, trois étapes rapides, statut Premium fermé, changement de consultation, dépannage QR réservé à deux téléphones, captures adaptées et sans lien de dossier. Test guide-visuals conservé : pause et mouvement réduit. Recette mobile 375 px sur onglet propre : guide rapide, bascule vers deux téléphones, dépannage, captures chargées sans erreur applicative. Captures FR explicitement annoncées, annotations quatre langues.
+
 ## 2 novembre 2026 — Guide illustré et animé
 
 Test guide-visuals : sources réelles des instructions FR/EN/DE/NL, trois fiches, trois figures, aucun mouvement au montage, lancement explicite, pause en arrière-plan, respect du mouvement réduit et nettoyage des écouteurs. Aperçu bureau et mobile 375 px : sujets, pause et illustration lisibles, pas de débordement. Illustrations non fonctionnelles et explicitement pédagogiques ; aucune caméra ni API déclenchée.
