@@ -173,3 +173,9 @@ Les nouveaux PDF remplacent le code-barres de référence par un QR vectoriel cl
 
 ## 2026-11-01 — Réparation du partage mobile
 Rejoindre une session conserve son invitation jusqu’à confirmation d’appartenance serveur. Récupération explicite du lien complet du même site/dossier, instructions de deux comptes et erreurs distinctes. Aucun accord automatique ni privilège supplémentaire.
+
+## Confort de saisie — 2026-11-02
+Le questionnaire arrive après les volets repliables de sauvegarde et « Rôle, documents et options » ; ce dernier reste ouvert pour deux téléphones. La vérification des droits Express commence lorsque le choix de saisie est ouvert. Voiture, utilitaire ou camion sans remorque ne peuvent être finalisés avec plaque/pays de remorque : corriger la configuration sans suppression automatique. Guide et tutoriel partagent les explications FR/EN/DE/NL.
+
+## Vitrine — scène illustrative, 2 novembre 2026
+Illustration discrète d’un accrochage sans constat papier, puis recours à Accordia. Lecture unique à visibilité effective de l’art, pause/replay et reduced-motion. CTA réel permanent, pas de démonstration d’extraction ni promesse d’acceptation assureur. Quatre langues ; guide et tutoriel synchronisés. Photo et schéma précédents restent consultables.

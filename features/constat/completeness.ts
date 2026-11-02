@@ -1,8 +1,8 @@
-import {vehicleKindValid} from './vehicle-kind.ts';
+import {vehicleKindIssue} from './vehicle-kind.ts';
 import {eventInstant} from './event-time.ts';
 import {z} from 'zod';
 import type {Report} from './model';
-export type MissingField={step:number;field:'trailerPlate'|'dateProblem'|'place'|'injured'|'count'|'driver'|'policyholder'|'plate'|'model'|'insurer'|'policy'|'email'|'explain'|'thirdVehicles'|'thirdObjects'|'confirmStandard';vehicle?:number};
+export type MissingField={step:number;field:'vehicleConfiguration'|'trailerPlate'|'dateProblem'|'place'|'injured'|'count'|'driver'|'policyholder'|'plate'|'model'|'insurer'|'policy'|'email'|'explain'|'thirdVehicles'|'thirdObjects'|'confirmStandard';vehicle?:number};
 export function validDateTime(r:Pick<Report,'date'|'time'> & Partial<Pick<Report,'country'|'timeZone'>>,now=Date.now()){const instant=eventInstant(r);return Number.isFinite(instant)&&instant<=now;}
 export function missingFields(r:Report):MissingField[]{
  const fields:MissingField[]=[];
@@ -12,7 +12,7 @@ export function missingFields(r:Report):MissingField[]{
  if(!r.count)fields.push({step:0,field:'count'});
  for(let i=0;i<Number(r.count);i++){
   const v=r.vehicles[i];
-  if(!vehicleKindValid(v))fields.push({step:1,field:'trailerPlate',vehicle:i});
+  const kindIssue=vehicleKindIssue(v);if(kindIssue)fields.push({step:1,field:kindIssue,vehicle:i});
   for(const field of ['driver','policyholder','plate','model','insurer','policy'] as const)if(!v[field].trim())fields.push({step:1,field,vehicle:i});
   if(v.email&&!z.string().email().safeParse(v.email).success)fields.push({step:1,field:'email',vehicle:i});
   if((!v.circumstances.length&&!(v.standardConfirmed&&v.standardCircumstances?.length)&&!v.observations.trim())||(v.circumstances.includes(7)&&!v.observations.trim()))fields.push({step:2,field:'explain',vehicle:i});

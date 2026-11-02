@@ -1,4 +1,4 @@
-import {vehicleKindValid} from './vehicle-kind.ts';
+import {vehicleKindIssue} from './vehicle-kind.ts';
 import {validDateTime} from './completeness.ts';
 import {z} from 'zod';
 import type {Report,Vehicle} from './model.ts';
@@ -23,7 +23,7 @@ export function questionnaireCursor(pages:QuestionPage[],saved:string|null){retu
 
 // Reuse report rules; optional details never become compulsory here.
 export function questionnaireIssues(report:Report,page:QuestionPage,chooseCount=true):string[]{
- if(page.kind==='vehicleType')return vehicleKindValid(report.vehicles[page.side!])?[]:['trailerPlate'];
+ if(page.kind==='vehicleType'){const issue=vehicleKindIssue(report.vehicles[page.side!]);return issue?[issue]:[];}
  if(page.kind==='safety')return [...(report.injured!=='no'?['injured']:[]),...(chooseCount&&!report.count?['count']:[])];
  if(page.kind==='time')return validDateTime(report)?[]:['date','time'];
  if(page.kind==='place')return report.place.trim().length>=3?[]:['place'];

@@ -119,3 +119,6 @@ Une sonde artificielle appelant prepareDraftSignIn avec un identifiant vide éch
 ## Livrables et état final
 
 Rapport présent, script de sondes locales, STATUS et CHANGELOG actualisés. Aucun endpoint, champ, droit, dépendance, comportement du guide ou donnée utilisateur modifié. Guide vérifié, aucun impact utilisateur : audit et consignation uniquement. Les modifications de documentation n’exigent pas de nouvelle publication du site. Production v71 conservée.
+
+## Suivi du 2 novembre — correction en développement
+V71-02 est corrigé dans le lot de confort post-v72 : conflit type/remorque refusé par la complétude, les parcours A/B et la finalisation serveur, valeurs conservées. Matrice de non-régression dans tests/comfort.test.mjs ; scripts/audit-v71-probes.mjs attend désormais le rejet. La photographie historique de l’audit ci-dessus reste valable à sa date. Correction non publiée dans ce lot.

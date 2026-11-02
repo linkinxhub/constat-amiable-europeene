@@ -1,3 +1,7 @@
+## État vérifié — après v74, recette en aperçu du 2 novembre
+
+Production v74. Lot en aperçu : réponses rapides préservées, reduced-motion respecté aux erreurs, guides des choix repliés cohérents FR/EN/DE/NL. 283 tests réussis, dont restauration chiffrée D1/R2 isolée avec historique, droits A/B et PDF signé de test identiques. Parcours solo réel jusqu’à génération et reprise après rechargement confirmés. Téléchargement navigateur non validé (délais des deux méthodes), pas de recette physique à deux comptes ni OCR fournisseur. Pas de sauvegarde/restauration productive ou ordonnanceur de purge mis en place ; accès d’infrastructure requis. Achats Premium fermés. Les entrées historiques ci-dessous décrivent les lots à leur date, et non l’état actuel de publication.
+
 ## État courant — version 65 et parcours documentaire en aperçu
 
 Production : v65, scanner QR publié. Nouveau lot documents d’abord testé en aperçu : choix visible et questionnaire limité aux informations restantes après validation. Voir docs/PARCOURS_DOCUMENTS_ET_OFFRE_2026-11-02.md. Paiements et accès documentaire ordinaire restent fermés jusqu’à droits/quota/facturation réels ; aucun lancement commercial annoncé.

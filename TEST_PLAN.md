@@ -343,3 +343,20 @@ QR : URL fixe, refus des URL externes/chemins/tokens/identifiants invalides ; ma
 
 ## 2026-11-01 — Réparation du partage mobile
 Huit nouveaux scénarios invitation-recovery/session-invitation-ui : restauration après connexion sans fragment, expiration/cache malformé/stockage bloqué, contrôle origine/dossier/query/token dupliqué/trop long, vrais handlers du formulaire dans quatre langues, vrai SessionClient sans nettoyage prématuré ni jeton dans URL auth, réponse POST perdue sans rejeu, refresh not_found explicatif, stockage navigateur interdit, copie manuelle. Harnais ancien Join adapté aux nouvelles dépendances réelles. Preview : page réelle de session fictive, lien incomplet refusé, récupération locale puis rechargement conservé, largeur 375 px dans FR/EN/DE/NL (clientWidth=scrollWidth=375). Aucune adhésion serveur réelle, connexion fournisseur ou téléphone physique exécuté dans cette recette. Page QA temporaire retirée avant build final.
+
+## Confort — 2026-11-02
+279 tests : tests/comfort.test.mjs vérifie tous les chemins de complétude face aux conflits remorque, conservation des valeurs, compatibilité historique et ouverture/fermeture du contrôle d’accès Express en quatre langues. Recette mobile réelle : erreur des champs obligatoires, progression solo, sauvegarde locale, options repliées accessibles. Les essais physiques à deux comptes et le téléchargement final restent requis.
+
+## Première utilisation — 2026-11-02
+Test du composant Questionnaire : repère dans les quatre langues, disparition au clic, préférence persistante au remontage, stockage refusé sans blocage ni mutation des données. Preview : focus au titre courant après fermeture et largeur mobile sans débordement.
+
+## Recette exploitation — 2026-11-02
+Tests document-first-questionnaire : deux réponses avant rendu ne doivent jamais se remplacer ; focus d’erreur respecte reduced-motion. tests/recovery-exercise.test.mjs rejoue un instantané chiffré cohérent D1/R2 dans une deuxième instance isolée : tous les objets/tables, historique, droits A/B et refus du tiers, PDF signé identique et altération refusée. Aucun test physique ni sauvegarde de production revendiqué. Recette navigateur solo jusqu’à génération PDF, rechargement/récupération, correction en relecture ; téléchargement réel bloqué par délais du navigateur de test.
+
+## Scène vitrine — 2026-11-02
+accident-story.test.mjs : composant réel FR/EN/DE/NL, phases, lecture unique, pause/reprise, hors écran/arrière-plan, pause globale, replay, reduced-motion et libération des ressources. landing-refresh conservé : guide, invitations, compte, démo/menu et comparaison ne régressent pas. Preview desktop et 360/375/768 : lisibilité, CTA réel toujours disponible et seuil de visibilité sur l’art. Pas de mesure de conversion ou de certification d’accessibilité.
+
+## Narration — 2026-11-02
+Tests du contrôleur réel : quatre langues, fin de phrase, pause/reprise au début de phrase, arrêt et callbacks tardifs, erreur sans relance automatique, voix locale et timeout. Test navigateur : clic d’écoute et erreur native de secours confirmés, pas de qualité audio ni lecture réussie revendiquées. Le fichier vocal enregistré nécessite le choix de connexion fournisseur.
+
+Master v77 corrigé : tests/master-fixes.test.mjs, questionnaire A/B avec saisies et import avant rendu, seuil 0/1/59/60 %, pause après démarrage, fichier vocal différé et repères, erreurs/événements tardifs. 294 tests réussis ; recette réelle deux téléphones et téléchargement toujours ouverte.

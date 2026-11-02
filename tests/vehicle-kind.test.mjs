@@ -1,13 +1,14 @@
 import test from 'node:test';import assert from 'node:assert/strict';
 import {PDFDocument,PDFPage} from 'pdf-lib';
 import {fresh,schema,vehiclesValid} from '../features/constat/model.ts';
-import {vehicleKinds,hasTrailer,vehicleKindValid,visibleVehicleExtras,applicableVehicleExtras} from '../features/constat/vehicle-kind.ts';
+import {vehicleKinds,hasTrailer,vehicleKindValid,vehicleKindIssue,visibleVehicleExtras,applicableVehicleExtras} from '../features/constat/vehicle-kind.ts';
 import {vehicleKindCopy} from '../features/constat/vehicle-kind-copy.ts';
 import {questionnairePages,questionnaireIssues} from '../features/constat/questionnaire-model.ts';
 import {missingFields,finalMissingFields} from '../features/constat/completeness.ts';
 import {remainingDocumentPages} from '../features/constat/document-first-model.ts';
 import {applyDocumentFields} from '../features/constat/document-model.ts';
 import {fieldPresets} from '../features/constat/presets.ts';
+import {comfortCopy} from '../features/constat/comfort-copy.ts';
 import {componentHarness} from './lifecycle-harness.mjs';
 import {pdfFixture} from './pdf-fixture.mjs';
 import {renderPdf} from '../server/pdf-renderer.ts';
@@ -21,7 +22,7 @@ test('guided type page is own-side only, is never skipped by OCR, and selected t
  const r=pdfFixture();r.vehicles[1].kind='truck-trailer';r.vehicles[1].extra.trailerPlate='TEST-REMORQUE';const reviewed={reportId:r.id,side:1,vehicle:structuredClone(r.vehicles[1])};const pages=remainingDocumentPages(questionnairePages('2',1,false),r,reviewed);assert.equal(pages[0].kind,'vehicleType');assert.ok(pages.every(p=>p.side===1));assert.deepEqual(visibleVehicleExtras(r.vehicles[1],['registrationCountry','trailerPlate','trailerCountry']),['registrationCountry']);assert.equal(vehicleKindValid(r.vehicles[1]),true);assert.deepEqual(applicableVehicleExtras({...r.vehicles[0],kind:'car'},['trailerPlate','driverPhone']),['driverPhone']);assert.deepEqual(applicableVehicleExtras({...r.vehicles[0],kind:'car',extra:{trailerPlate:'KEEP'}},['trailerPlate','driverPhone']),['trailerPlate','driverPhone']);assert.ok(fieldPresets('model','fr','truck').some(p=>p.value==='DAF'));assert.ok(!fieldPresets('model','fr','truck').some(p=>p.value==='BMW'));
 });
 test('real vehicle selector retains prior values and presents trailer fields only when applicable, in four languages',()=>{
- for(const lang of ['fr','en','de','nl'])for(const kind of vehicleKinds){let v={...fresh().vehicles[0],kind};const h=componentHarness('features/constat/vehicle-kind-fields.tsx','VehicleKindFields',{'./vehicle-kind':{vehicleKinds,hasTrailer,trailerRecorded:x=>!!(x.extra?.trailerPlate?.trim()||x.extra?.trailerCountry?.trim())},'./vehicle-kind-copy':{vehicleKindCopy},'@/components/ui/native-select':{NativeSelect:'NativeSelect',NativeSelectOption:'NativeSelectOption'},'@/components/ui/input':{Input:'Input'}}),props=()=>({value:v,lang,onChange:n=>v=n});h.render(props());assert.equal(h.nodes(n=>n.type==='Input').length,hasTrailer(v)?2:0);if(hasTrailer(v)){h.nodes(n=>n.type==='Input')[0].props.onChange({target:{value:'TEST-KEEP'}});h.render(props());h.nodes(n=>n.type==='NativeSelect')[0].props.onChange({target:{value:'car'}});h.render(props());assert.equal(v.extra.trailerPlate,'TEST-KEEP');assert.equal(h.nodes(n=>n.type==='Input').length,2);}h.unmount();}
+ for(const lang of ['fr','en','de','nl'])for(const kind of vehicleKinds){let v={...fresh().vehicles[0],kind};const h=componentHarness('features/constat/vehicle-kind-fields.tsx','VehicleKindFields',{'./comfort-copy':{comfortCopy},'./vehicle-kind':{vehicleKindIssue,vehicleKinds,hasTrailer,trailerRecorded:x=>!!(x.extra?.trailerPlate?.trim()||x.extra?.trailerCountry?.trim())},'./vehicle-kind-copy':{vehicleKindCopy},'@/components/ui/native-select':{NativeSelect:'NativeSelect',NativeSelectOption:'NativeSelectOption'},'@/components/ui/input':{Input:'Input'}}),props=()=>({value:v,lang,onChange:n=>v=n});h.render(props());assert.equal(h.nodes(n=>n.type==='Input').length,hasTrailer(v)?2:0);if(hasTrailer(v)){h.nodes(n=>n.type==='Input')[0].props.onChange({target:{value:'TEST-KEEP'}});h.render(props());h.nodes(n=>n.type==='NativeSelect')[0].props.onChange({target:{value:'car'}});h.render(props());assert.equal(v.extra.trailerPlate,'TEST-KEEP');assert.equal(h.nodes(n=>n.type==='Input').length,2);}h.unmount();}
 });
 test('real PDF renders A/B types and trailer details, retains originals, and fits short type headers in four languages',async()=>{
  const original=PDFPage.prototype.drawText;let texts=[];PDFPage.prototype.drawText=function(s,o){texts.push(s);return original.call(this,s,o)};

@@ -1,0 +1,39 @@
+/* Screen-only comfort adjustments. Historical PDF/print layouts are unchanged. */
+@media screen{
+ .workspace,.session-page,.device-page{line-height:1.65}
+ .workspace :is(input:not([type=checkbox]):not([type=radio]),select,textarea),.session-page :is(input:not([type=checkbox]):not([type=radio]),select,textarea),.public-page :is(input:not([type=checkbox]):not([type=radio]),select,textarea){font-size:16px}
+ .workspace .field :is(input,select),.session-page .field :is(input,select){min-height:46px}
+ .workspace .field textarea,.session-page .field textarea{min-height:112px;resize:vertical;line-height:1.65}
+ .workspace :is(button,a,summary,input,select,textarea):focus-visible,.session-page :is(button,a,summary,input,select,textarea):focus-visible{outline:3px solid #0c897c;outline-offset:3px}
+ .workspace .field-grid,.session-page .field-grid{column-gap:22px;row-gap:18px}
+ .workspace .participation-current{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 16px;margin:12px 0;background:#f4f8fa;border-color:#dae4e8;border-radius:12px}
+ .workspace .participation-current p{margin:0;line-height:1.55;font-size:14px}.workspace .participation-current button{flex-shrink:0;min-height:44px;white-space:normal}
+ .workspace .compact-save{background:#fff;border-color:#d4e0e6;border-radius:12px;padding:0;margin:12px 0}
+ .workspace .compact-save>.save-choice-options>summary{padding:14px 17px;min-height:48px;font-size:14px;font-weight:650;color:#294b5d;cursor:pointer;line-height:1.6}
+ .workspace .save-choice-content{padding:0 17px 17px;border-top:1px solid #e3ebef}.workspace .save-choice-content p{font-size:14px}.workspace .compact-save>p[role]{margin:0;padding:12px 17px;border-top:1px solid #e3ebef}
+ .workspace .entry-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:8px 16px;margin:10px 0}.workspace .entry-toolbar :is(button,a){font-size:13px;min-height:44px;line-height:1.5;white-space:normal}
+ .workspace .entry-preferences,.session-page .entry-preferences{border:1px solid #d9e3e9;border-radius:12px;background:#fff;margin:10px 0}.workspace .entry-preferences>summary,.session-page .entry-preferences>summary{cursor:pointer;padding:14px 16px;min-height:48px;font-size:14px;line-height:1.6;color:#315064}
+ .workspace .entry-preferences[open],.session-page .entry-preferences[open]{padding-bottom:16px}.workspace .entry-preferences>h2,.session-page .entry-preferences>h2{margin:12px 16px;font-size:20px}.workspace .entry-preferences>.entry-mode-cards,.session-page .entry-preferences>.entry-mode-cards{margin:0 16px}
+ .questionnaire h2{line-height:1.35;letter-spacing:-.02em}.questionnaire .field>label>span{line-height:1.5}.questionnaire .form-actions{gap:12px;margin-top:24px;padding-top:14px;border-top:1px solid #e0e8ee}.questionnaire .form-actions button{height:auto;min-height:48px;padding:12px 18px;white-space:normal;line-height:1.5}
+ .vehicle-kind-error{padding:14px 16px;border:1px solid #e6b2aa;border-radius:10px;background:#fff5f1;font-size:14px;line-height:1.7;margin:12px 0}
+ .public-page :is(.join-panel,.account-card,.policy-panel) p{line-height:1.75}
+}
+@media screen and (max-width:760px){
+ .workspace .page-heading{margin-top:16px;margin-bottom:20px}.workspace .page-heading h1{font-size:clamp(26px,7.5vw,34px);line-height:1.2;letter-spacing:-.025em}.workspace .page-heading>p{font-size:14px;line-height:1.6}
+ .workspace .participation-current{gap:10px;padding:11px 12px}.workspace .participation-current p{font-size:12px}.workspace .participation-current button{font-size:12px;padding:9px 12px;max-width:118px}
+ .workspace .entry-toolbar{gap:4px 12px}.workspace .entry-toolbar :is(button,a){font-size:12px;padding:8px 0}
+ .workspace .form-panel{padding:20px 16px}.workspace .save-status{font-size:11px;line-height:1.6;padding:9px 12px;gap:4px 12px;flex-wrap:wrap}
+ .workspace .entry-preferences>summary,.session-page .entry-preferences>summary{font-size:13px;padding:12px 14px}.questionnaire .form-actions button{flex:1;min-width:0;padding:11px 12px;font-size:14px}
+ .workspace .compact-save>.save-choice-options>summary{font-size:13px;padding:12px 14px}.workspace .save-choice-content{padding:0 14px 14px}.workspace .save-choice-content button{width:100%}
+}
+@media(prefers-reduced-motion:reduce){.workspace *,.session-page *,.public-page *{scroll-behavior:auto!important;transition:none!important}}
+@media screen{
+ .workspace .entry-options{margin:12px 0 18px;border:1px solid #d4e0e6;border-radius:12px;background:#fff}.workspace .entry-options>summary{min-height:48px;padding:12px 17px;font-weight:650;font-size:14px;line-height:1.6;color:#294b5d;cursor:pointer}.workspace .entry-options-content{padding:0 16px 12px;border-top:1px solid #e3ebef}
+ .workspace .entry-mode:has(>.entry-preferences),.session-page .entry-mode:has(>.entry-preferences){padding:0;border:0;background:transparent;box-shadow:none;margin:8px 0}
+}
+
+@media screen{
+ .first-use-focus{padding:16px 18px;margin:0 0 22px;border:1px solid #8ac5ba;border-left:4px solid #157c70;border-radius:12px;background:#eef8f5;color:#173f48;line-height:1.65}
+ .first-use-focus strong{display:block;font-size:16px}.first-use-focus p{margin:8px 0 12px;font-size:14px}.first-use-focus button{min-height:44px;white-space:normal}
+ .questionnaire:has(.first-use-focus)>h2{padding:12px;border-left:4px solid #157c70;background:#f1f9f6;border-radius:8px;scroll-margin-top:140px}
+}

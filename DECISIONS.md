@@ -161,3 +161,12 @@ Le QR ouvre le dossier courant, pas un document immuable ni une invitation. Auth
 
 ## 2026-11-01 — Réparation du partage mobile
 Ne pas exposer publiquement existence, propriétaire ou état d’une invitation pour améliorer l’erreur : not_found reste opaque côté serveur. Le client affiche une aide d’accès plutôt que Action impossible. Pas d’adhésion automatique ; le destinataire confirme personnellement. Un retour de connexion qui ne transmet jamais le fragment à l’application ne peut pas être reconstruit : proposer rouvrir le message et coller le lien complet. Changement de navigateur/onglet n’est pas une synchronisation de sessionStorage. Un compte ne peut occuper les deux places. Récupération de réponse POST perdue par lecture d’appartenance, aucun assouplissement de validation.
+
+## 2026-11-02 — Priorité aux questions, conservation des contradictions
+Replier les options locales facultatives, conserver leur accès et le statut global de sauvegarde ; laisser le groupe ouvert pour deux téléphones. Vérifier les droits Express à la demande. Une contradiction explicite véhicule/remorque bloque la finalisation sans effacement automatique : l’utilisateur corrige lui-même. Types historiques absents et Autre restent compatibles.
+
+## 2026-11-02 — Recette et réponses rapprochées
+Actualiser la référence locale du Questionnaire avant onChange pour préserver deux mises à jour indépendantes entre deux rendus, sans modifier les validations ou les données du parent. Respecter la préférence de mouvement réduit pour atteindre une erreur. La restauration chiffrée Miniflare est une preuve isolée, pas un engagement RTO/RPO ni une sauvegarde hébergeur. Garder le téléchargement et les deux comptes physiques explicitement non validés tant que les preuves réelles manquent.
+
+## 2026-11-02 — Une scène native sans vidéo tierce
+SVG/CSS et horloge bornée de 15 s : pas de média lourd ni de requête externe. Lecture après visibilité de 60 % de l’illustration, pause si hors écran/onglet masqué ou commande globale, version statique avec reduced-motion. Conserver le premier CTA sur mobile et les fonctions/photo existantes. Le récit est illustratif et sans attribution de responsabilité.
