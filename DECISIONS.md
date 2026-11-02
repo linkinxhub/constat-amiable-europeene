@@ -1,3 +1,7 @@
+## 2026-11-02 — Compte facultatif pour la saisie locale
+
+Conserver la saisie locale sans compte au niveau application, avec autosauvegarde et statut explicite. Ne jamais imposer une connexion tardive pour accéder au PDF local prévu. Enregistrement en ligne et session à deux téléphones restent authentifiés ; transfert du brouillon sur demande explicite. Avant connexion depuis le formulaire, vérifier la sauvegarde et le repère de reprise dans le même navigateur/onglet ; en cas d’échec rester sur place. Les autorisations d’hébergement existantes restent indépendantes et inchangées. PDF/signatures appareil commun se conservent séparément du brouillon de compte.
+
 ## 2 novembre 2026 — Scan local des invitations
 
 Décodage jsqr chargé au clic, sans CDN ni transfert des images. Le scan remplit le champ et requiert ensuite la confirmation du formulaire. La validation invitationPath reste commune au collage et au scan. Aucun nouveau droit, pas de QR PDF accepté comme invitation. Arrêt caméra à la réussite, au retrait et en arrière-plan ; lien collé de secours maintenu.

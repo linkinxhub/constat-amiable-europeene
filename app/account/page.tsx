@@ -1,3 +1,4 @@
+import {saveChoiceCopy} from '@/features/constat/save-choice-copy';
 import {SiteHeader,SiteFooter} from '@/features/product/site-header';
 import {PlanCards} from '@/features/product/plan-cards';
 import {presentationCopy} from '@/features/product/presentation-copy';
@@ -18,7 +19,7 @@ export default async function Account({searchParams}:{searchParams:Promise<{lang
  return <main className="account-page public-page" lang={lang}>
   <SiteHeader lang={lang} active="account"/>
   <div className="site-content">
-   <header className="site-page-heading"><span className="site-eyebrow">Accordia · {p.account}</span><h1>{c.account}</h1><p>{c.accountText}</p></header>
+   <header className="site-page-heading"><span className="site-eyebrow">Accordia · {p.account}</span><h1>{c.account}</h1><p>{c.accountText}</p><p className="notice">{saveChoiceCopy[lang].local} {saveChoiceCopy[lang].hint}</p></header>
    {user?<>
     <section className="account-card account-reports"><strong className="account-name">{user.displayName}</strong><h2>{entryCopy[lang].dossiers}</h2><SharedList lang={lang}/><a className="site-action site-action-secondary" href={"/constat?lang="+lang+"#share-options"}>{entryCopy[lang].resume}</a></section>
     <OfferPanel lang={lang}/>
