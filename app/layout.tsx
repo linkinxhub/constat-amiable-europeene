@@ -1,3 +1,6 @@
+import {Suspense} from 'react';
+import {FeedbackEntry} from '@/features/feedback/entry';
+import './feedback.css';
 import type { Metadata } from "next";
 import "./globals.css";
 import "./design-polish.css";
@@ -23,7 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr">
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">{children}<Suspense fallback={null}><FeedbackEntry/></Suspense></body>
     </html>
   );
 }

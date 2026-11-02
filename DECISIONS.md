@@ -170,3 +170,6 @@ Actualiser la référence locale du Questionnaire avant onChange pour préserver
 
 ## 2026-11-02 — Une scène native sans vidéo tierce
 SVG/CSS et horloge bornée de 15 s : pas de média lourd ni de requête externe. Lecture après visibilité de 60 % de l’illustration, pause si hors écran/onglet masqué ou commande globale, version statique avec reduced-motion. Conserver le premier CTA sur mobile et les fonctions/photo existantes. Le récit est illustratif et sans attribution de responsabilité.
+
+## Feedback avec images — 2026-11-02
+Feedback en onglet séparé pour ne pas quitter une saisie en cours. Compte requis ; aucune capture automatique ni notification email. Stocker uniquement les images optimisées relues, dans un JSON D1 borné et séparé des dossiers. Pas de nouveau rôle. Aucune conservation automatique ou reprise après fermeture annoncée. Voir docs/FEEDBACK_2026-11-02.md.

@@ -179,3 +179,6 @@ Le questionnaire arrive après les volets repliables de sauvegarde et « Rôle, 
 
 ## Vitrine — scène illustrative, 2 novembre 2026
 Illustration discrète d’un accrochage sans constat papier, puis recours à Accordia. Lecture unique à visibilité effective de l’art, pause/replay et reduced-motion. CTA réel permanent, pas de démonstration d’extraction ni promesse d’acceptation assureur. Quatre langues ; guide et tutoriel synchronisés. Photo et schéma précédents restent consultables.
+
+## Feedback avec images — 2026-11-02
+Feedback distinct du constat : accès vitrine/menu plateforme/bas de page, connexion, type/message et 3 images optimisées, aperçu/retrait, référence de succès, conservation en mémoire sur erreur. FR/EN/DE/NL. Consultation paginée et statut réservé au super-administrateur existant. Voir docs/FEEDBACK_2026-11-02.md.

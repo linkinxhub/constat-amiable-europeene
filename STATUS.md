@@ -703,3 +703,14 @@ Instruction explicite « Publier ». Version 78 publiée avec succès le 2 novem
 
 Inclut les corrections du Master audit et la piste française enregistrée. Validation préalable : 294 tests, TypeScript/build réussis, lint 0 erreur/54 avertissements ; pas de nouvelle suite revendiquée pour cette publication. Miroir GitHub cd1d18457f20244cc80e7eaf2dafa9d094658b8c, arbre identique 022161ec9d347a540a609a2758236f86e1e4eb5c. Alerte de développement et réserves opérationnelles/mobile maintenues. Guide quatre langues déjà livré. Présente note documentaire uniquement, sans nouvelle modification applicative ni second déploiement.
 
+
+## 2026-11-02 — Feedback avec images, préparation sans publication
+
+Base synchronisée 836ba5a, production v78, restauration before-feedback-20261102. Ajout du feedback commun vitrine/menu plateforme/bas de page, en onglet séparé. Connexion requise, catégorie/message 10–4 000 caractères et 3 images facultatives, aperçu/retrait. JPEG/PNG/WebP jusqu’à 10 Mio avant optimisation navigateur, 1280 px et 180 Kio au plus par pièce ; serveur JPEG/PNG décodés et bornés. Images et texte privés dans feedback D1, migration additive 0019_old_swarm et métadonnées générées. Aucune donnée de constat jointe automatiquement. Pas d’envoi aux assureurs, notification email ou nouveau rôle.
+
+API stricte, identité et compte actif serveur, protections d’origine, quota atomique 5/24 h et 50 ouverts ; UUID/empreinte contre doublons après réponse perdue. Administration existante : lecture paginée 100, images, traité/rouvrir, super-administrateur vérifié sur chaque opération. Guide/tutoriel/aides FR/EN/DE/NL synchronisés via feedback/copy.ts. Routes et fixtures QA supprimées avant build final.
+
+Validation finale : TypeScript/build réussis, 302 tests/0 échec, lint 0 erreur/54 avertissements historiques. Huit nouveaux tests couvrent image réelle, faux formats/taille, compte bloqué/droits, quota concurrent, idempotence, conservation/retry du formulaire quatre langues, UUID compatible HTTP Preview et pagination. Worker compilé : trois nouvelles méthodes refusent l’accès anonyme avec réponses privées. Preview : image fictive ajoutée, aperçu/retrait ; refus sans connexion conserve texte et image ; 360/375/768/1280 sans débordement, quatre langues à 360. Compatibilité randomUUID corrigée après reproduction. Persistance/administration testées sur SQLite isolé avec vraies migrations et services ; envoi connecté et administration dans le navigateur hébergé non revendiqués.
+
+Dépendances inchangées ; pas de nouvel audit revendiqué, alerte modérée de développement connue et réserves sauvegarde/rétention/mobile restent ouvertes. Nouvelle table incluse par le package Sites ; activation lors de la prochaine publication autorisée. Aucun effacement automatique ni reprise après fermeture annoncé. Lot sauvegardé/synchronisé sans déploiement ; production v78 et audience custom/deux visiteurs conservées. Détails : docs/FEEDBACK_2026-11-02.md.
+

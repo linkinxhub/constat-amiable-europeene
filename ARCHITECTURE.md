@@ -160,3 +160,6 @@ pdf-access fixe l’origine canonique et valide strictement le UUID de session. 
 
 ## 2026-11-01 — Réparation du partage mobile
 pending-invitation centralise validation 32..100 caractères (borne serveur), stockage session JSON par identifiant, expiration locale 24h et migration du cache historique brut. Fragment conservé avant adhésion ; ni query de connexion ni localStorage pour le jeton. InvitationRecovery valide origin/path/hash avant de mémoriser en session. SessionClient distingue not_found attendu avant adhésion, vérifie d’abord l’accès lors du clic Rejoindre puis POST seulement si nécessaire ; confirmation GET nettoie l’invitation, langue éventuellement sauvegardée ensuite. Verrou client contre actions concurrentes, annulation de partage sans fausse erreur, copie manuelle si Clipboard indisponible. Contrôles serveur, invitations à usage unique, rôles A/B et expiration inchangés.
+
+## Feedback avec images — 2026-11-02
+Routes /api/feedback POST et /api/admin/feedback GET/PATCH, validation stricte et identité serveur. Table feedback D1 additive via migration 0019_old_swarm.sql ; lignes privées, images réencodées au plus 180 Kio chacune, requête 800 000 octets. Quota atomique 5/24 h et 50 ouverts ; UUID/empreinte pour idempotence. Aucun lien avec constats, PDF, facturation ou IA. Voir docs/FEEDBACK_2026-11-02.md.

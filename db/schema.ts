@@ -99,3 +99,7 @@ export const synthesisProposals=sqliteTable('synthesis_proposals',{
  sessionId:text('session_id').notNull(),sourceRevision:integer('source_revision').notNull(),content:text('content').notNull(),
  approvedA:integer('approved_a').notNull().default(0),approvedB:integer('approved_b').notNull().default(0)
 },t=>[index('synthesis_session_sequence').on(t.sessionId,t.sequence)]);
+
+export const feedback=sqliteTable('feedback',{
+ id:text('id').primaryKey(),ownerId:text('owner_id').notNull(),category:text('category').notNull(),message:text('message').notNull(),lang:text('lang').notNull(),source:text('source').notNull(),images:text('images').notNull(),digest:text('digest').notNull(),createdAt:integer('created_at').notNull(),resolved:integer('resolved').notNull().default(0)
+},t=>[index('feedback_owner_created').on(t.ownerId,t.createdAt),index('feedback_inbox').on(t.resolved,t.createdAt)]);
