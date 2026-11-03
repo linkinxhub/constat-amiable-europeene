@@ -71,3 +71,25 @@ Uri restartAccordiaSignIn(Uri original) {
     'return_to': relative.toString(),
   });
 }
+
+bool isAuthenticationDestination(Uri uri) =>
+    uri.scheme == 'https' &&
+    uri.port == 443 &&
+    uri.userInfo.isEmpty &&
+    (isTrustedAuthentication(uri) ||
+        const {
+          'accounts.google.com',
+          'login.microsoftonline.com',
+          'login.live.com',
+          'appleid.apple.com',
+        }.contains(uri.host));
+
+/// Never move an OAuth transaction into a different browser's cookie jar.
+/// Start the actual site sign-in flow there instead, without copied state/code.
+Uri externalBrowserDestination(Uri requested, Uri original) {
+  if (!canOpenOutside(requested))
+    throw ArgumentError('Unsupported external link');
+  return isAuthenticationDestination(requested)
+      ? restartAccordiaSignIn(original)
+      : requested;
+}

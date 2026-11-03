@@ -1,4 +1,7 @@
 import 'dart:io';
+import 'dart:convert';
+
+import 'package:accordia_mobile/platform/policy.dart';
 
 import 'package:accordia_mobile/reports/copy.dart';
 import 'package:accordia_mobile/reports/store.dart';
@@ -171,6 +174,66 @@ void main() {
       await tester.pumpAndSettle();
       expect(preferences.value.sound, true);
       expect(chime.plays, 0);
+      expect(tester.takeException(), isNull);
+    },
+  );
+  testWidgets(
+    'explicit browser fallback keeps later connected routes in the browser and can be reset',
+    (tester) async {
+      tester.view.physicalSize = const Size(375, 850);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      final config = Config(), opened = <Uri>[], views = <Uri>[];
+      final data = jsonDecode(
+        File('assets/copy/constat.json').readAsStringSync(),
+      ) as Map<String, dynamic>;
+      await tester.pumpWidget(
+        AccordiaApp(
+          repository: ConfigRepository(source: config, cache: config),
+          preferences: Preferences(),
+          initialPreferences: const AppPreferences(),
+          sound: StartupSound(ChimeRecorder()),
+          drafts: UnavailableDraftStore(),
+          reportData: data,
+          openWebsite: (uri) async {
+            opened.add(uri);
+            return true;
+          },
+          platformBuilder: (uri, copy, outside) {
+            views.add(uri);
+            return Scaffold(
+              appBar: AppBar(title: const Text('Embedded test page')),
+              body: TextButton(
+                onPressed: () async {
+                  await outside(restartAccordiaSignIn(uri));
+                },
+                child: const Text('Choose secure browser'),
+              ),
+            );
+          },
+        ),
+      );
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Commencer mon constat'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Choose secure browser'));
+      await tester.pumpAndSettle();
+      expect(opened.last.path, '/signin-with-chatgpt');
+      await tester.tap(find.byType(BackButton));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byIcon(Icons.person_outline));
+      await tester.pumpAndSettle();
+      expect(opened.last.path, '/account');
+      expect(views.every((uri) => uri.path == '/constat'), true);
+      await tester.tap(find.byTooltip('Réglages'));
+      await tester.pumpAndSettle();
+      expect(find.textContaining('Mode de secours choisi'), findsOneWidget);
+      await tester.tap(find.text('Réessayer la WebView'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byIcon(Icons.person_outline));
+      await tester.pumpAndSettle();
+      expect(views.any((uri) => uri.path == '/account'), true);
       expect(tester.takeException(), isNull);
     },
   );

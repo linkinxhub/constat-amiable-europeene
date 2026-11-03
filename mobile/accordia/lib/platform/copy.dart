@@ -6,12 +6,17 @@ class PlatformCopy {
   String t(String key) {
     final copy = values[language]!;
     return key == 'help'
-        ? '${copy[key]}\n\n${copy['loginRetry']} : ${copy['authHelp']}'
+        ? '${copy[key]}\n\n${copy['loginRetry']} : ${copy['authHelp']}\n\n${copy['browserAuthHelp']}'
         : copy[key]!;
   }
 
   static const values = {
     HorizonLanguage.fr: {
+      "browserAuthTitle": "Connexion dans le navigateur sécurisé",
+      "browserAuthHelp": "Une nouvelle connexion démarrera depuis Accordia dans le navigateur intégré, ou le navigateur externe si nécessaire. Continuez-y les services connectés pour cette session : la connexion n’est pas transférée à la WebView. Pour une invitation, rouvrez ensuite le lien complet avec son QR ou son message. Les stockages locaux restent séparés.",
+      "browserMode": "Mode de secours choisi pour cette session : services connectés dans le navigateur sécurisé. Cela ne confirme pas que vous êtes connecté. Fermer le navigateur revient à Accordia. Les brouillons de la WebView ne sont pas transférés.",
+      "retryWebview": "Réessayer la WebView",
+
       "loginRetry": "Recommencer la connexion",
       "authHelp": "La session de connexion peut avoir été interrompue. Recommencez depuis Accordia avec votre méthode de connexion habituelle. Enregistrez votre saisie avant de continuer. Les brouillons ne sont pas effacés.",
       "sessionReady": "L’accès à Accordia est disponible. Enregistrez toute saisie avant de recharger cette page.",
@@ -47,6 +52,11 @@ class PlatformCopy {
       'linkHint': 'https://…/session/…#invite=…',
     },
     HorizonLanguage.en: {
+      "browserAuthTitle": "Sign in using the secure browser",
+      "browserAuthHelp": "A fresh sign-in starts from Accordia in the integrated browser, or an external browser if needed. Connected services continue there for this session; sign-in is not transferred to the WebView. For an invitation, reopen the full QR or message link afterwards. Local storage remains separate.",
+      "browserMode": "Fallback selected for this session: connected services use the secure browser. This does not confirm sign-in. Closing it returns to Accordia. WebView drafts are not transferred.",
+      "retryWebview": "Try the WebView again",
+
       "loginRetry": "Restart sign-in",
       "authHelp": "The sign-in session may have been interrupted. Restart from Accordia using your usual sign-in method. Save entries before continuing. Drafts are not cleared.",
       "sessionReady": "Accordia access is available. Save any entries before reloading this page.",
@@ -84,6 +94,11 @@ class PlatformCopy {
       'linkHint': 'https://…/session/…#invite=…',
     },
     HorizonLanguage.de: {
+      "browserAuthTitle": "Im sicheren Browser anmelden",
+      "browserAuthHelp": "Eine neue Anmeldung startet von Accordia im integrierten, falls nötig externen Browser. Online-Dienste bleiben für diese Sitzung dort; die Anmeldung wird nicht zur WebView übertragen. Einladungslink danach vollständig per QR oder Nachricht erneut öffnen. Lokale Speicher bleiben getrennt.",
+      "browserMode": "Ausweichmodus gewählt: Online-Dienste im sicheren Browser für diese Sitzung. Dies bestätigt keine Anmeldung. Schließen führt zu Accordia zurück. WebView-Entwürfe werden nicht übertragen.",
+      "retryWebview": "WebView erneut versuchen",
+
       "loginRetry": "Anmeldung neu starten",
       "authHelp": "Die Anmeldung wurde möglicherweise unterbrochen. Starten Sie in Accordia mit Ihrer üblichen Methode neu. Eingaben vorher speichern. Entwürfe werden nicht gelöscht.",
       "sessionReady":
@@ -120,6 +135,11 @@ class PlatformCopy {
       'linkHint': 'https://…/session/…#invite=…',
     },
     HorizonLanguage.nl: {
+      "browserAuthTitle": "Aanmelden in de beveiligde browser",
+      "browserAuthHelp": "Een nieuwe aanmelding begint vanuit Accordia in de geïntegreerde browser, of indien nodig extern. Online diensten blijven daar voor deze sessie; aanmelden wordt niet naar de WebView overgedragen. Open daarna de volledige uitnodigingslink via QR of bericht opnieuw. Lokale opslag blijft apart.",
+      "browserMode": "Noodmodus gekozen: online diensten in de beveiligde browser voor deze sessie. Dit bevestigt geen aanmelding. Sluiten keert terug naar Accordia. WebView-concepten worden niet overgedragen.",
+      "retryWebview": "WebView opnieuw proberen",
+
       "loginRetry": "Aanmelden opnieuw starten",
       "authHelp": "De aanmeldsessie kan onderbroken zijn. Begin opnieuw vanuit Accordia met uw gebruikelijke aanmeldmethode. Sla invoer vooraf op. Concepten worden niet gewist.",
       "sessionReady": "Toegang tot Accordia is beschikbaar. Sla invoer op voordat u deze pagina herlaadt.",

@@ -1,3 +1,30 @@
+## 3 novembre 2026 — Authentification navigateur au bon point d’entrée (0.3.2+5)
+
+Nouvelle capture propriétaire : l’erreur client_id_not_found_in_session est dans
+Chrome, pas dans la WebView. Le correctif 0.3.1 ne suffisait donc pas pour ce chemin.
+Défaut client constaté : _external transmettait la transaction fournisseur telle
+quelle à un autre moteur. Cause exacte côté OpenAI toujours non confirmée.
+
+Les destinations connues de connexion ouvrent désormais /signin-with-chatgpt sur
+Accordia avec return_to borné : state/code/client_id et invitation ne sont pas
+recopiés depuis le fournisseur. Navigateur intégré sécurisé préféré (Custom Tabs
+Android), navigateur externe si indisponible, après confirmation explicite.
+Après choix de ce secours, les prochaines routes connectées de la session app
+utilisent ce même contexte navigateur. Réglages > Réessayer la WebView rétablit le
+mode initial. Le choix du mode ne constitue pas une connexion réussie ; aucun
+cookie transféré et aucune réimportation de session dans la WebView annoncée.
+
+41 tests Flutter réussis, analyse sans diagnostic, formatage conforme. Tests :
+destinations auth/ordinaires, absence d’export state/code/token, Custom Tabs et
+repli externe, refus de schémas dangereux, mode de session et retour WebView.
+Native guide FR/EN/DE/NL actualisé ; guide web inchangé car aucun parcours backend
+modifié. Documentation/fichiers : docs/mobile/BROWSER_AUTH_BOUNDARY.md. Compilation
+Android distante à constater. Retest utilisateur de connexion toujours requis.
+Aucun site publié, donnée effacée, rôle/abonnement/audience modifié. Les stockages
+natif/WebView/navigateur restent distincts. Nouveau package debug séparé pour
+conserver les anciennes installations. iOS et retour authentifié à la WebView non
+qualifiés ; ce dernier exige une intégration d’identité mobile adaptée au backend.
+
 ## 3 novembre 2026 — Correction du contexte de connexion WebView (0.3.1+4)
 
 Signalement client_id_not_found_in_session pendant la connexion. Métadonnées Sites :

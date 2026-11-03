@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-feature android:name="android.hardware.camera" android:required="false"/>
     <application
-        android:label="Accordia Connexion (test)"
+        android:label="Accordia Accès (test)"
         android:usesCleartextTraffic="false"
         android:allowBackup="false"
         android:fullBackupContent="false"
@@ -45,6 +45,7 @@
 
          In particular, this is used by the Flutter engine in io.flutter.plugin.text.ProcessTextPlugin. -->
     <queries>
+        <intent><action android:name="android.support.customtabs.action.CustomTabsService"/></intent>
         <intent>
             <action android:name="android.intent.action.PROCESS_TEXT"/>
             <data android:mimeType="text/plain"/>

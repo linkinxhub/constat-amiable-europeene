@@ -4,7 +4,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:url_launcher/url_launcher.dart';
+
+import 'app/site_browser.dart';
 
 import 'app/app.dart';
 import 'app/preferences.dart';
@@ -54,8 +55,7 @@ Future<void> main() async {
       sound: StartupSound(AssetChime()),
       drafts: drafts,
       reportData: reportData,
-      openWebsite: (uri) =>
-          launchUrl(uri, mode: LaunchMode.externalApplication),
+      openWebsite: openSiteBrowser,
     ),
   );
 }

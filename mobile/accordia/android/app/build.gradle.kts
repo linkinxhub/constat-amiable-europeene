@@ -31,7 +31,7 @@ android {
 
     buildTypes {
         debug {
-            applicationIdSuffix = ".webauthpreview"
+            applicationIdSuffix = ".browserauthpreview"
         }
         release {
             // TODO: Add your own signing config for the release build.

@@ -50,6 +50,7 @@ class _AccordiaAppState extends State<AccordiaApp> with WidgetsBindingObserver {
   late AppPreferences _preferences;
   bool _opening = false;
   bool _reportActive = false;
+  bool _browserSessionSelected = false;
   @override
   void initState() {
     super.initState();
@@ -143,8 +144,30 @@ class _AccordiaAppState extends State<AccordiaApp> with WidgetsBindingObserver {
     }
   }
 
+  Future<bool> _openPlatformOutside(Uri uri) async {
+    final opened = await widget.openWebsite(uri);
+    if (opened &&
+        isAccordia(uri) &&
+        uri.path == '/signin-with-chatgpt' &&
+        mounted) {
+      // A selected browser mode is not evidence of successful authentication.
+      setState(() => _browserSessionSelected = true);
+    }
+    return opened;
+  }
+
   Future<void> _platform(BuildContext context, Uri uri) async {
     if (_reportActive || !isAccordia(uri)) return;
+    if (_browserSessionSelected) {
+      final opened = await widget.openWebsite(uri);
+      if (!opened && context.mounted)
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(PlatformCopy(_preferences.language).t('unsupported')),
+          ),
+        );
+      return;
+    }
     setState(() => _reportActive = true);
     final copy = PlatformCopy(_preferences.language);
     try {
@@ -152,11 +175,11 @@ class _AccordiaAppState extends State<AccordiaApp> with WidgetsBindingObserver {
         context,
         MaterialPageRoute<void>(
           builder: (_) =>
-              widget.platformBuilder?.call(uri, copy, widget.openWebsite) ??
+              widget.platformBuilder?.call(uri, copy, _openPlatformOutside) ??
               AccordiaPlatformPage(
                 uri: uri,
                 copy: copy,
-                openOutside: widget.openWebsite,
+                openOutside: _openPlatformOutside,
                 onPresentation: (data) async {
                   await widget.repository.stageFromWebView(data);
                 },
@@ -378,6 +401,18 @@ class _AccordiaAppState extends State<AccordiaApp> with WidgetsBindingObserver {
                 },
               ),
               const Divider(),
+              if (_browserSessionSelected) ...[
+                Text(PlatformCopy(_preferences.language).t('browserMode')),
+                TextButton(
+                  onPressed: () {
+                    setState(() => _browserSessionSelected = false);
+                    Navigator.pop(sheet);
+                  },
+                  child: Text(
+                    PlatformCopy(_preferences.language).t('retryWebview'),
+                  ),
+                ),
+              ],
               Text(PlatformCopy(_preferences.language).t('scope')),
               const SizedBox(height: 16),
               OutlinedButton(

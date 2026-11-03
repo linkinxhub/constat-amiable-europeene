@@ -1,5 +1,5 @@
 name: accordia_mobile
-version: 0.3.1+4
+version: 0.3.2+5
 publish_to: none
 description: Socle de configuration de l’application mobile Accordia.
 environment:

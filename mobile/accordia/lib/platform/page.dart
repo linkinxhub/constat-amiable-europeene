@@ -147,8 +147,14 @@ class _AccordiaPlatformPageState extends State<AccordiaPlatformPage>
     }
     _externalBusy = true;
     try {
-      if (await _confirm('outside', 'outsideHelp', 'continue')) {
-        if (!await widget.openOutside(uri)) _message('unsupported');
+      final authentication = isAuthenticationDestination(uri);
+      final destination = externalBrowserDestination(uri, widget.uri);
+      if (await _confirm(
+        authentication ? 'browserAuthTitle' : 'outside',
+        authentication ? 'browserAuthHelp' : 'outsideHelp',
+        'continue',
+      )) {
+        if (!await widget.openOutside(destination)) _message('unsupported');
       }
     } catch (_) {
       _message('unsupported');

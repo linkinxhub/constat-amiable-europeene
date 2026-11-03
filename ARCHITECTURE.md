@@ -1,3 +1,12 @@
+## 3 novembre 2026 — Secours auth dans un contexte navigateur unique
+
+Après échec confirmé à l’écran dans Chrome, les sorties vers un fournisseur de
+connexion repartent de l’entrée SIWC d’Accordia dans le navigateur sécurisé intégré.
+Le choix conserve les routes connectées dans ce contexte pour la session de l’app ;
+retour WebView explicite dans Réglages. Aucune identité/cookie réimporté, aucun droit
+accordé par le client. Horizon/WebView par défaut conservés, stockages distincts.
+Voir docs/mobile/BROWSER_AUTH_BOUNDARY.md ; résolution téléphone à confirmer.
+
 ## 3 novembre 2026 — Horizon et plateforme embarquée
 
 Accueil/réglages/splash et préparation hors ligne Flutter conservés ; les parcours
