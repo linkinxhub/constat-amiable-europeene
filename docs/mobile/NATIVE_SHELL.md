@@ -1,3 +1,19 @@
+## Build Android réussi — preuve du 3 novembre 2026
+
+GitHub Actions 41610058395 terminé success : formatage, analyse, 21 tests et
+compilation APK debug réussis ; artefact 13218732438. Source GitHub
+b0fa483db352040b4ab4c8efcbdad9336dc2cd13, source canonique 7a5180f.
+Sous-arbre mobile/accordia identique des deux côtés :
+66263e381856eae968658ed447b26f07cbc9f51e.
+APK livré : Accordia-Android-test.apk, 82 785 282 octets ; SHA-256
+e6624b5a504ca332b0125d2bb9f255429735ceff45043a2aaeebd10009cf1e6e.
+Archive téléchargée et CRC contrôlés. apksigner verify : signature v2 valide ;
+aapt : nom Accordia, be.adilbtp.accordia, version 0.1.0 (1), minSDK 24, target 36.
+Permissions fusionnées : INTERNET et permission privée du récepteur AndroidX ;
+pas de caméra, localisation ou microphone natifs. Aucun lancement sur téléphone
+physique ni validation iOS revendiqué. Le build local reste historiquement échoué
+pour le réseau Java, le build CI réussi le remplace comme preuve de compilation.
+
 # Accordia — application de test native, 3 novembre 2026
 
 ## Référence et périmètre
