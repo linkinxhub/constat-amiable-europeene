@@ -1,3 +1,24 @@
+## 3 novembre 2026 — Horizon et plateforme embarquée
+
+Accueil/réglages/splash et préparation hors ligne Flutter conservés ; les parcours
+connectés utilisent la plateforme réelle dans une WebView. Scan/collage conservent
+l’invitation, serveur autoritaire pour droits A/B. Cookies dans le moteur, JSON de
+présentation seul transmis au dépôt natif, application à frontière sûre. Stockages
+natifs/web distincts, aucune migration implicite. Détails et preuves de build :
+docs/mobile/HORIZON_WEBVIEW.md. Connexion matérielle et iOS non qualifiés.
+
+## 2026-11-03 — Application native de test
+
+Point d’entrée, plateformes, réglages/audio et pont navigateur explicite : docs/mobile/NATIVE_SHELL.md. Parcours entièrement natif à raccorder ; aucun contournement d’identité Sites.
+
+## 2026-11-03 — Configuration native et vérification Flutter
+
+Transport/cache/bootstrap et 17 tests Flutter réels : voir docs/mobile/CONFIG_SYNC.md. Aucun déploiement ni authentification native contournée.
+
+## 2026-11-03 — Configuration mobile administrable
+
+Présentation mobile versionnée : migration additive 0020, journal append-only, CAS et garde administrateur au commit ; API et section /admin. Voir docs/mobile/LOT_02_ADMIN.md. Aucun transport Flutter ni changement de l’identité Sites.
+
 ## 2026-11-02 — Vehicle.kind et profils de saisie
 
 Enum facultatif dans le JSON de Vehicle, validé par le schéma commun ; pas de colonne ni migration SQL. vehicle-kind.ts centralise attelage, validation et champs applicables ; VehicleKindFields partagé par formulaire et questionnaire. vehicle-kind-copy.ts porte les six libellés et guides FR/EN/DE/NL. Les données de remorque restent dans Vehicle.extra, indépendantes du type et conservées après modification. Le serveur continue de sélectionner uniquement la fiche du participant autorisé. vehiclesValid/missingFields servent aussi les états de progression et finalMissingFields côté serveur. Type repris dans reference-page et annexes ; version PDF v5-vehicle-kind invalide les réutilisations de moteur sans modifier les documents historiques.
@@ -163,3 +184,10 @@ pending-invitation centralise validation 32..100 caractères (borne serveur), st
 
 ## Feedback avec images — 2026-11-02
 Routes /api/feedback POST et /api/admin/feedback GET/PATCH, validation stricte et identité serveur. Table feedback D1 additive via migration 0019_old_swarm.sql ; lignes privées, images réencodées au plus 180 Kio chacune, requête 800 000 octets. Quota atomique 5/24 h et 50 ouverts ; UUID/empreinte pour idempotence. Aucun lien avec constats, PDF, facturation ou IA. Voir docs/FEEDBACK_2026-11-02.md.
+
+## Présentation 57 secondes — 2026-11-02
+AccidentStory calcule huit repères sémantiques depuis frenchNarration.cues ; quatre compositions visuelles et détails du téléphone suivent les séquences. Horloge silencieuse et média utilisent les mêmes repères. Piste v2 versionnée, v1 conservée ; pauses et reduced-motion préservés.
+
+
+## Partage de la présentation — 2026-11-02
+StoryVideoShare est isolé sous features/marketing/story-video-actions.tsx ; story-video-share.ts porte le chemin constant, chargement borné/annulable et Web Share fichiers. MP4 statique dans public/video, aucun nouveau endpoint, schéma, droit, quota commercial ou secret. Fichier chargé au seul clic de préparation ; script Python hors runtime extrait les illustrations existantes et utilise la piste v2.

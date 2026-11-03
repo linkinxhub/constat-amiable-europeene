@@ -25,7 +25,12 @@ SHA-256 dans tool/prepare_android_plugins.py ; exécution/idempotence et refus d
 source inconnue vérifiés. Étape CI ajoutée. Seconde compilation 41628666085 échouée sur le SDK 37 requis
 par permission_handler_android 14.1.1. Verrouillage permission_handler 12.0.1 /
 Android 13.0.1 (compileSdk 35 vérifié), app SDK 36 conservée. Nouvelle analyse et
-35 tests rejoués avec les dépendances compatibles ; nouvelle CI à constater.
+35 tests rejoués avec les dépendances compatibles. CI finale 41630467727 réussie :
+analyse, formatage, 35 tests, build et artefact 13228821531. APK 0.3.0+3 ARM64,
+signature debug v2 vérifiée, package be.adilbtp.accordia.webpreview, 117 463 393 octets.
+SHA-256 dfab5d9f003d88ca5210520a21c85294452c43bbd65dc05d28a813ac076b5c46.
+ZIP CRC/empreinte GitHub conformes, sous-arbre mobile identique
+030c7805d0dcae53e7e71ab44b450fa5abf61415. APK mis à disposition ; anciens APK conservés.
 Aucun nouveau build iOS ni recette caméra/GPS/PDF/connexion sur téléphone réel.
 Accès Sites custom conservé ; requête anonyme à /constat renvoie 401, connexion
 réelle nécessaire et compatibilité de l’authentification intégrée non validée.

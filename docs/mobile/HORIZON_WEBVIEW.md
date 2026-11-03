@@ -103,7 +103,7 @@ isolé, invitation à usage unique, droits, conflits, reprise d’adhésion, ré
 du fragment et copie manuelle. Le double de surface dans le test widget ne remplace
 pas la WebView dans l’application. XML/plist parsés. Pas de test navigateur hébergé
 connecté ni téléphone, ni test réel scanner/caméra/GPS/fichier/PDF, ni build iOS.
-Build Android distant et livraison à renseigner après résultat natif.
+Build Android et livraison prouvés dans la section finale ci-dessous.
 
 Recette indispensable : deux téléphones/comptes réellement autorisés ; ouverture
 /connexion, partage A→B et scan, fiche propre éditable/étrangère verrouillée,
@@ -135,3 +135,28 @@ Flutter/AGP courant. permission_handler est verrouillé à 12.0.1, moteur Androi
 13.0.1 (compileSdk 35 vérifié dans la source téléchargée). API caméra/position
 inchangée et SDK/target de l’app conservés. Aucun saut d’AGP/SDK ni suppression de
 permission pour contourner l’erreur ; lockfile résolu et analyse/tests rejoués.
+
+## Livraison Android vérifiée — 3 novembre 2026
+
+CI [41630467727](https://github.com/linkinxhub/constat-amiable-europeene/actions/runs/41630467727)
+réussie : préparation de compatibilité, formatage, analyse, 35 tests, APK et artefact.
+Source canonique cd27a8a ; GitHub 7f80412a8d24a6ad93942008edddc1bf55965a07.
+Sous-arbre mobile identique `030c7805d0dcae53e7e71ab44b450fa5abf61415` vérifié.
+Artefact 13228821531 ; ZIP CRC valide, SHA-256 conforme à GitHub :
+`a6efe69be302e1cf7ae9f9681d0f6612dcffb3c4e74e140b023770dbe4b22890`.
+
+APK Accordia-Horizon-WebView-test.apk : 117 463 393 octets, SHA-256
+`dfab5d9f003d88ca5210520a21c85294452c43bbd65dc05d28a813ac076b5c46`.
+apksigner : signature debug v2 vérifiée, un signataire. aapt : package
+be.adilbtp.accordia.webpreview, version 0.3.0 code 3, SDK min 24 / cible 36,
+libellé Accordia Horizon (test), activité be.adilbtp.accordia.MainActivity.
+Moteur Flutter présent uniquement pour arm64-v8a ; les bibliothèques transitoires
+contiennent aussi d’autres ABI mais cet APK est destiné aux téléphones ARM64.
+
+Fichier mis à disposition avec sauvegarde réussie et métadonnées appliquées :
+libfile_f0d66fa70f648191901ecd6ebef1ea31. Anciens APK conservés séparément.
+Code/source/documentation synchronisés sur feat/horizon-webview-20261103.
+Aucun déploiement du site, changement d’audience ni migration de données.
+Pause/reprise native explicitement limitée à Android, WKWebView gère son cycle iOS.
+La compilation est prouvée ; installation physique, connexion, scan/caméra/GPS,
+pièces/PDF et session à deux téléphones restent à valider. iOS non compilé.
