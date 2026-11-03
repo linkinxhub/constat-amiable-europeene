@@ -27,3 +27,10 @@ test('real administrative form preserves failed edits and prevents publishing un
   assert.equal(JSON.parse(calls.at(-1).init.body).action,'draft');h.unmount();
  }}finally{globalThis.fetch=oldFetch}
 });
+test('Horizon is the new default without invalidating previously saved design IDs',async()=>{
+ assert.equal(mobileDefaults.designId,'horizon');
+ for(const designId of ['horizon','signature','minimal','premium'])assert.equal(mobilePresentationSchema.safeParse({...mobileDefaults,designId}).success,true);
+ const {db}=fixture();await saveMobileSettings(db,'admin',{...draft(),config:{...mobileDefaults,designId:'signature'}});
+ await saveMobileSettings(db,'admin',{action:'publish',expectedRevision:1,sourceRevision:1});
+ assert.equal((await readPublishedMobile(db)).designId,'signature');
+});

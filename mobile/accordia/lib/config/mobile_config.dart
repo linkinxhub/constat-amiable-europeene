@@ -1,7 +1,7 @@
 /// Public presentation only. Never contains tokens, roles or entitlement grants.
 class MobileConfig {
   const MobileConfig({required this.revision, required this.title,
-    required this.primaryColor, this.designId = 'signature', required this.introEnabled,
+    required this.primaryColor, this.designId = 'horizon', required this.introEnabled,
     required this.introDurationMs, required this.soundDefault});
 
   final int revision;
@@ -20,7 +20,7 @@ class MobileConfig {
     if (json['schemaVersion'] != 1) {
       throw const FormatException('Unsupported configuration schema');
     }
-    final design = json['designId'] ?? 'signature';
+    final design = json['designId'] ?? 'horizon';
     final revision = json['revision'];
     final title = json['title'];
     final color = json['primaryColor'];
@@ -28,7 +28,7 @@ class MobileConfig {
     final duration = json['introDurationMs'];
     final sound = json['soundDefault'];
     if (revision is! int || revision < 0 ||
-        !['signature', 'minimal', 'premium'].contains(design) ||
+        !['horizon', 'signature', 'minimal', 'premium'].contains(design) ||
         title is! String || title.trim().isEmpty || title.length > 80 ||
         color is! String || !RegExp(r'^#[0-9a-fA-F]{6}$').hasMatch(color) ||
         intro is! bool || duration is! int || duration < 0 || duration > 1500 ||
