@@ -19,7 +19,13 @@ destinations auth/ordinaires, absence d’export state/code/token, Custom Tabs e
 repli externe, refus de schémas dangereux, mode de session et retour WebView.
 Native guide FR/EN/DE/NL actualisé ; guide web inchangé car aucun parcours backend
 modifié. Documentation/fichiers : docs/mobile/BROWSER_AUTH_BOUNDARY.md. Compilation
-Android distante à constater. Retest utilisateur de connexion toujours requis.
+Android distante réussie : CI 41653761108, 41 tests/analyse/formatage/build/artefact
+validés. APK 0.3.2+5, signature debug v2 et métadonnées vérifiées, query CustomTabs
+présente. APK 117 480 993 octets, SHA-256
+607c44037f299ab2e8e3e029365404d301b167d0a79a49b3fd282893409c009d ; CRC et
+empreinte GitHub de l’archive conformes. Sous-arbre mobile identique
+d9e43f6ef891079d9371cf37144dda8643c3bac8. APK mis à disposition, anciens conservés.
+Retest utilisateur de connexion toujours requis.
 Aucun site publié, donnée effacée, rôle/abonnement/audience modifié. Les stockages
 natif/WebView/navigateur restent distincts. Nouveau package debug séparé pour
 conserver les anciennes installations. iOS et retour authentifié à la WebView non

@@ -42,8 +42,8 @@ d’un mauvais mot de passe ou client OpenAI supprimé n’est revendiquée.
 
 Le navigateur recommence tout le parcours depuis Accordia et reçoit sa propre
 session de connexion. Après le choix du secours, compte, dossiers et liens scannés
-s’ouvrent dans ce même navigateur. La fenêtre intégrée se ferme pour revenir à
-Horizon. Les deux comptes doivent conserver leur droit d’accès au site privé et
+s’ouvrent dans ce même navigateur. Fermer le navigateur revient à l’application ; fermer ensuite l’écran
+WebView sous-jacent par sa commande Accueil permet de retrouver Horizon. Les deux comptes doivent conserver leur droit d’accès au site privé et
 leurs invitations réelles ; le serveur valide l’adhésion et les droits A/B.
 
 Le fragment #invite ne va pas dans la connexion OAuth. Pour B, rouvrir après la
@@ -79,7 +79,7 @@ synchrone pour éviter une attente d’asset d’une ancienne zone FakeAsync ; c
 pas un changement de stockage de production. Aucun test de connexion réel à un
 compte utilisateur ni d’adhésion distante n’est revendiqué.
 
-Compilation Android et livraison à renseigner après exécution distante. Recette
+Compilation et livraison vérifiées dans la section finale ci-dessous. Recette
 nécessaire : login depuis le secours sur le téléphone, accès compte/dossiers dans
 le même navigateur, fermeture vers Horizon puis reprise, invitation complète B et
 droits séparés, essai Réessayer la WebView et conservation des données. iOS non
@@ -91,3 +91,28 @@ https://developer.android.com/develop/ui/views/layout/webapps/overview-of-androi
 (API et visibilité CustomTabsService) ;
 https://help.openai.com/en/articles/7426629-why-cant-i-log-in-to-chatgpt ;
 code source verrouillé url_launcher 6.3.3 et app/chatgpt-auth.ts.
+
+## Compilation et livraison vérifiées
+
+CI [41653761108](https://github.com/linkinxhub/constat-amiable-europeene/actions/runs/41653761108)
+réussie : formatage, analyse, 41 tests, préparation Android, APK et artefact
+13238484991. Source canonique 8f9b9e3 ; GitHub
+66ca31f9356832fbc41838e72cf3416317b46784. Sous-arbre mobile identique
+`d9e43f6ef891079d9371cf37144dda8643c3bac8`, vérifié par les arbres Git.
+Archive CRC valide ; SHA-256 égal au digest GitHub :
+`753769e841a210a5290d8aae6cc8f143d5f5c62a0b994fba5b75724c85160d0d`.
+
+APK Accordia-Acces-test.apk, 117 480 993 octets, SHA-256
+`607c44037f299ab2e8e3e029365404d301b167d0a79a49b3fd282893409c009d`.
+apksigner : signature debug v2 valide, un signataire. aapt : package
+be.adilbtp.accordia.browserauthpreview, version 0.3.2 code 5, SDK min 24 / cible 36,
+libellé Accordia Accès (test), activité be.adilbtp.accordia.MainActivity. Query
+android.support.customtabs.action.CustomTabsService réellement présente dans le
+manifeste de l’APK. Destination de build ARM64.
+
+Upload réussi et métadonnées appliquées : fichier
+libfile_a194181cf9d081919113de49f6ea07bf. Anciens APK et données conservés.
+Fichiers et preuve synchronisés sur fix/browser-auth-boundary-20261103.
+Aucune publication du site. Connexion réelle, compte du propriétaire, invitation
+A/B sur téléphones et iOS non qualifiés par ces tests. La résolution exacte du
+signalement Chrome reste à confirmer, pas annoncée comme acquise.
