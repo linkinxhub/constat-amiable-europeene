@@ -1,3 +1,11 @@
+## 2026-11-03 — Version 83 publiée sur autorisation
+
+Instruction explicite « Publier ». Version Sites 83, source 195dda237fec433d9c4fc4138e805d2e45f3ad45, archive sha256:3061d33d6c60771993be7bf7258e16030495608abfde228c306e2aef6ceedd3a, déploiement appgdep_6ae9af5654d4819197471608f9ecf5a5 : succeeded le 3 novembre à 10:54:54 Europe/Berlin (09:54:54 UTC), environnement révision 3. Audience custom conservée. URL https://accordia-constat.adil-btp.chatgpt.site/ . Source fonctionnelle déjà poussée GitHub sur feat/web-mobile-settings-20261103, commit 0daa2b89a6708d90cda0a0b41e8a49902468b6f6.
+
+Contrôle hébergé après publication : compte super-administrateur réel ; /admin?lang=fr affiche Administration Accordia et Application mobile ; clic Recharger réussi, champs Accordia, #064cec, Horizon, introduction active 900 ms, son inactif et historique vide lus depuis API. Aucune écriture de réglage, publication de configuration, création de dossier, modification IA, appel fournisseur ou accès supplémentaire. Lecture réussie confirme la disponibilité du schéma mobile hébergé ; aucune recette d’écriture de production revendiquée. Les 314 tests, TypeScript/build et lint ciblé du lot préparatoire ne sont pas relancés pour publier l’archive identique.
+
+Limites : logo et son personnalisés, synchronisation privée Flutter et tests physiques restent ouverts. Contrôle visuel responsive/clavier exhaustif non effectué. Guide vérifié, aucun impact utilisateur pour cette note documentaire ; pas de changement fonctionnel ni de second déploiement.
+
 ## 2026-11-03 — Rubrique Application mobile intégrée à l’administration, non publiée
 
 Base Sites propre b4d11d99 ; restauration checkpoint/before-mobile-admin-20261103. Réutilisation du lot existant de feat/native-shell-review-20261103 (GitHub 06f8d018), jamais présent dans le dépôt web publié. Aucun travail mobile antérieur supprimé. Section Application mobile placée avant Administration IA ; lien direct visible depuis Mon compte vers /admin?lang=fr#mobile-settings. Chargement explicite Recharger ; titre, couleur, Horizon, introduction 0–1500 ms et préférence sonore. Brouillon privé, publication volontaire de la configuration, historique et republication sous nouvelle révision. Les configurations anciennes restent lisibles ; seul Horizon est proposé pour un nouveau choix.
