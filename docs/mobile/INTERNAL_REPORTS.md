@@ -60,7 +60,21 @@ relecture et génération PDF des quatre langues avec 3 900 caractères d’obse
 Extraction pdftotext : fin `_END` présente et partie B inactive absente. Rendu FR
 inspecté. Fixture JSON native acceptée par schéma et `complete()` du serveur web.
 
-Compilation Android et résultat CI à ajouter après exécution distante. Aucun build
+CI GitHub [41618963419](https://github.com/linkinxhub/constat-amiable-europeene/actions/runs/41618963419)
+réussie : dépendances verrouillées, formatage, analyse, 30 tests, compilation APK et
+artefact 13223646161. Source canonique 5de795b ; commit GitHub
+0062b62ed6d3375f29b7ebd6ca9c3eb3b6505284. Sous-arbre mobile strictement identique
+`9d892a7aa743129ca8cc15334daddc0bf96af0c9`. ZIP CRC correct et SHA-256 identique à
+l’empreinte GitHub `cbb47bcf49a1147d75fb041113d9685142d38c4213e1f802f1f8a6341b9a2088`.
+APK extrait : 96 225 138 octets, SHA-256
+`f84a158b0d9959a208642a03adfd56302689affc5cd9d0c75af4ee9d9eff32dd`.
+Signature debug v2 vérifiée par apksigner ; manifeste aapt : package
+be.adilbtp.accordia.nativepreview, version 0.2.0 code 2, SDK min 24 / cible 36,
+libellé Accordia Natif (test), ARM64. Installation sur téléphone non effectuée.
+APK mis à disposition sous Accordia-Natif-test.apk, fichier persistant
+libfile_cefda94d88d481918615173332f5e7c8, sauvegarde réussie et métadonnées appliquées.
+L’ancien APK reste conservé séparément.
+Aucun build
 iOS, test matériel Keystore/Keychain, impression réelle, partage téléphone, test
 perceptuel audio ou recette deux appareils revendiqué. Aucun changement du site
 ni déploiement production. Main canonique 195dda2 observé et préservé ; revue native

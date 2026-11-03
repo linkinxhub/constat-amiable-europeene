@@ -18,7 +18,11 @@ PDF quatre langues extrait sans perte de fin de texte ; page FR rendue/inspecté
 Fichiers : mobile/accordia/lib/reports/*, app/app.dart, app/copy.dart, main.dart,
 assets/copy, assets/fonts, pubspec/lock, tests, configuration Android et exporteur
 scripts/export-mobile-copy.mjs. Détails : docs/mobile/INTERNAL_REPORTS.md.
-Build Android distant à vérifier avant livraison ; aucun résultat APK annoncé ici.
+CI GitHub 41618963419 réussie : 30 tests, analyse et APK Android ARM64 0.2.0+2.
+Signature debug v2/manifeste vérifiés, ZIP intègre et empreinte GitHub concordante.
+APK Accordia-Natif-test.apk mis à disposition ; ancien APK conservé séparément.
+APK 96 225 138 octets, SHA-256 f84a158b0d9959a208642a03adfd56302689affc5cd9d0c75af4ee9d9eff32dd.
+Sous-arbre mobile 9d892a7aa743129ca8cc15334daddc0bf96af0c9 identique GitHub/source.
 iOS et téléphone physique non testés. Production web v82 inchangée ; branche
 isolée, main 195dda2 et son intégration admin préservés. La configuration distante
 reste conditionnée à une API accessible ; aucune synchronisation admin productive
