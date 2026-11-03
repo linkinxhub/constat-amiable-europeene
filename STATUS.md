@@ -1,3 +1,11 @@
+## 2026-11-03 — Version 84 publiée sur autorisation
+
+Accord explicite « Oui » à la publication de la version 84. Archive sauvegardée inchangée, source 7a6586a71e794f7eec6152d93268014affd2d2bc, sha256:507af779ac068e50bef47ae89dbf777e335f4b0ff64d5f9547387eedaf7f35d0. Déploiement appgdep_6ae9b3e9fd888191a6d4449abca746b3 : succeeded le 3 novembre à 11:14:26 Europe/Berlin (10:14:26 UTC), environnement révision 3. Audience custom conservée. URL https://accordia-constat.adil-btp.chatgpt.site/ . Lot fonctionnel déjà poussé GitHub, feat/web-mobile-settings-20261103, 5ac3e7a9215718f4180d6cb8ab0d10a36d373404.
+
+Vérification hébergée : compte administrateur réel ; /admin?lang=fr affiche automatiquement les champs Accordia, #064cec, Horizon, introduction active 900 ms et son désactivé, sans clic Recharger. Historique vide et absence de publication mobile indiqués fidèlement. Bascule Accueil → Introduction : aperçu réel actualisé, intitulé/initiale/durée/préférence affichés. Aucun réglage sauvegardé, aucune configuration mobile publiée, aucun appel fournisseur et aucun droit modifié pendant ce contrôle. Chargement initial et interaction de présentation confirmés, aucune recette d’écriture administrative ou de réception par l’APK revendiquée. Validation préparatoire réutilisée : 326 tests, TypeScript/build et lint ciblé réussis ; pas de reconstruction de l’archive publiée.
+
+Fichiers documentaires seulement : STATUS.md et CHANGELOG.md ; guide vérifié, aucun impact utilisateur pour cette consignation. Synchronisation privée Flutter, médias personnalisés et essais physiques restent ouverts. Aucun second déploiement.
+
 ## 2026-11-03 — Administration mobile améliorée, préparation sans publication
 
 Base propre eecd1f5 (documentation de la publication v83), production v83 inchangée ; point de restauration checkpoint/before-mobile-admin-improvements-20261103. Branche GitHub vérifiée à 68f2a13485f5218f7d96a21b08706496a1c94891 avant travail. Lot limité à l’interface d’administration mobile, sans migration, dépendance, contrat Flutter, endpoint, rôle ou intégration fournisseur nouveau.
