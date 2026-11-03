@@ -18,3 +18,14 @@ test('real showcase keeps all information, localized links, demo opening and mob
  try{for(const lang of ['fr','en','de','nl']){const h=componentHarness('features/marketing/landing.tsx','default',landingDeps),p={signedIn:false,displayName:null,initialLanguage:lang};h.render(p);assert.equal(h.nodes(n=>n.type==='h1').length,1);assert.ok(h.nodes(n=>n.type==='section'&&n.props.id==='features').length);assert.equal(h.nodes(n=>n.type==='a'&&n.props.href==='/join?lang='+lang).length,2);assert.ok(h.nodes(n=>n.type==='a'&&n.props.href==='/guide?lang='+lang).length);const demo=()=>h.nodes(n=>n.type==='details'&&n.props.id==='demo')[0];assert.equal(demo().props.open,false);h.nodes(n=>n.type==='a'&&n.props.className==='hero-demo')[0].props.onClick();h.render(p);assert.equal(demo().props.open,true);const menu=()=>h.nodes(n=>n.type==='button'&&n.props.className==='landing-menu')[0];menu().props.onClick();h.render(p);assert.equal(menu().props['aria-expanded'],true);h.nodes(n=>n.type==='nav'&&n.props.id==='landing-navigation')[0].props.onClick();h.render(p);assert.equal(menu().props['aria-expanded'],false);h.unmount();}}
  finally{for(const [k,v] of Object.entries(old))if(v===undefined)delete globalThis[k];else globalThis[k]=v}
 });
+
+test('untrusted language preferences and select values cannot select inherited object keys',()=>{
+ const old={document:globalThis.document,localStorage:globalThis.localStorage};globalThis.document={documentElement:{lang:''}};
+ try{for(const preferred of ['__proto__','constructor','toString','unknown','de']){
+  globalThis.localStorage={getItem:()=>preferred,setItem(){}};
+  const h=componentHarness('features/marketing/landing.tsx','default',landingDeps),props={signedIn:false,displayName:null};
+  const tree=h.render(props);assert.equal(tree.props.lang,preferred==='de'?'de':'fr');
+  const select=()=>h.nodes(n=>n.type==='select')[0];select().props.onChange({target:{value:'__proto__'}});assert.equal(h.render(props).props.lang,preferred==='de'?'de':'fr');
+  select().props.onChange({target:{value:'nl'}});assert.equal(h.render(props).props.lang,'nl');h.unmount();
+ }}finally{for(const [key,value] of Object.entries(old))if(value===undefined)delete globalThis[key];else globalThis[key]=value}
+});
