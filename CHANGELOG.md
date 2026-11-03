@@ -1,5 +1,12 @@
 ## 3 novembre 2026 — Azur sculpté et navigation interne (0.4.0+6)
 
+Validation de livraison : 44 tests Flutter et 40 tests web ciblés réussis ; analyses,
+TypeScript et build web réussis. CI Android 41669936144 réussie ; APK 0.4.0+6 debug
+signé v2, 117 727 078 octets, SHA-256 f58ce348bdd429b773d2bec4a83645cfb0defdee94bb6029a1ad83de3675f28b.
+Illustration embarquée et sous-arbre mobile identiques aux sources testées. Preview
+navigateur non validée (délai de démarrage), connexion réelle/deux téléphones/iOS non
+qualifiés. Présélection A+B web développée mais non publiée. Détails : AZUR_INTERNAL.md.
+
 Accueil Flutter relief 3D avec illustration accident/constat et accès A/B/A+B réels.
 WebView sans adresse affichée, fournisseurs nommés ; aucun lanceur navigateur raccordé.
 HTTPS tiers dans une vue interne sans capacités natives, autres schémas bloqués.
