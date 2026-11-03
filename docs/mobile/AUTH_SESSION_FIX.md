@@ -56,7 +56,7 @@ paramètre client tiers ; refus d’origines non fiables, récursion et doubles 
 Les tests natifs précédents de navigation, langues, stockage et PDF restent verts.
 La sémantique windowId est celle du plugin, pas une session d’identité simulée.
 La véritable connexion n’est pas qualifiée par ces tests unitaires/widgets.
-Compilation Android distante et livraison à renseigner après résultat.
+Compilation et livraison vérifiées dans la section finale ci-dessous.
 
 Retest requis sur le téléphone : ouvrir la nouvelle application, démarrer puis
 utiliser la méthode habituelle ; si erreur, Recommencer la connexion. Vérifier
@@ -71,3 +71,25 @@ https://help.openai.com/en/articles/7426629-why-cant-i-log-in-to-chatgpt
 (recommande cookies et JavaScript autorisés pour le login) ;
 https://inappwebview.dev/docs/webview/in-app-webview/ (gestion des fenêtres) ;
 code source verrouillé flutter_inappwebview 6.1.5. Aucun nouveau déploiement du site.
+
+## Preuve de compilation et livraison
+
+CI [41647706567](https://github.com/linkinxhub/constat-amiable-europeene/actions/runs/41647706567)
+réussie : dépendances verrouillées, compatibilité Android, formatage, analyse,
+37 tests, build APK et artefact 13235793573. Source canonique 6f2a2da ; commit
+GitHub 2f147e18ba1f95f9edc5eee80e4403e2cf55b3c5. Sous-arbre mobile strictement
+identique `9c4f525ac571f79303f1a6b02aa845521daa7701`, vérifié par les arbres Git.
+ZIP CRC valide ; SHA-256 conforme au digest de l’artefact GitHub :
+`c9bfe8bf30860aed9d7587d4d16054ddfbd604dfcfbbf41ece9bd02a07feba16`.
+APK : 117 471 149 octets, SHA-256
+`57ebb13f291fc29a82ab63791f3276201caf52f8715e93a9bb3456f3bbea5222`.
+apksigner : signature debug v2 valide, un signataire. aapt : package
+be.adilbtp.accordia.webauthpreview, version 0.3.1 code 4, SDK min 24 / cible 36,
+libellé Accordia Connexion (test), activité be.adilbtp.accordia.MainActivity.
+Livraison Accordia-Connexion-test.apk, fichier persistant
+libfile_a73e2b48653c819190b2a7337c443773 ; upload réussi et métadonnées appliquées.
+Anciens APK conservés. Aucun effacement de données ni déploiement du site.
+
+La construction et le correctif client sont vérifiés ; la résolution de l’erreur
+exacte sur le téléphone du propriétaire reste NON confirmée. Ne pas assimiler
+37 tests unitaires/widgets et un APK signé à une connexion fournisseur réelle.

@@ -21,7 +21,12 @@ Fichiers : mobile/accordia/lib/platform/{page,policy,copy}.dart, test/policy,
 pubspec.yaml et configuration Android ; STATUS/CHANGELOG et rapport dédiés.
 Branche fix/webview-auth-session-20261103, main 7a6586a et site conservés. Aucun
 contournement d’identité, changement de droits, audience ou publication. Compilation
-Android distante à constater. La disparition de l’erreur n’est pas prouvée sans
+Android distante réussie : CI 41647706567, 37 tests, analyse, formatage, APK et
+artefact validés. APK 0.3.1+4 livré, signature debug v2 et manifeste contrôlés,
+117 471 149 octets, SHA-256 57ebb13f291fc29a82ab63791f3276201caf52f8715e93a9bb3456f3bbea5222.
+ZIP intègre et digest GitHub concordant, sous-arbre mobile identique
+9c4f525ac571f79303f1a6b02aa845521daa7701. Anciennes installations conservées.
+La disparition de l’erreur n’est pas prouvée sans
 retest du propriétaire ; connexion Chrome externe distincte, Google/autres
 fournisseurs peuvent encore imposer un navigateur système. iOS non compilé.
 Détails : docs/mobile/AUTH_SESSION_FIX.md. Prochaine étape : retest de connexion,
