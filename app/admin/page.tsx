@@ -1,3 +1,4 @@
+import {MobileAdminPanel} from '@/features/mobile/admin-panel';
 import {FeedbackInbox} from '@/features/feedback/inbox';
 import {RetentionAdminPanel} from '@/features/constat/retention-admin-panel';
 import {env} from 'cloudflare:workers';
@@ -11,5 +12,5 @@ export default async function Admin({searchParams}:{searchParams:Promise<{lang?:
  const query=await searchParams,lang:Lang=query?.lang&&Object.hasOwn(adminCopy,query.lang)?query.lang as Lang:'fr',c=adminCopy[lang],user=await getChatGPTUser();
  let initial:AiSettingsView|null=null,unavailable=false;
  if(user){try{if(!env.DB)throw new Error();if(await isSuperAdmin(env.DB,user.userId))initial=await readAiSettings(env.DB,user.userId,env);}catch{unavailable=true;}}
- return <main className="account-page" lang={lang}><a href={'/account?lang='+lang} className="account-back">{c.back}</a><div className="account-card"><h1>{c.title}</h1>{!user?<a className="cloud-signin" href={chatGPTSignInPath('/admin?lang='+lang)} target="_top">{c.signin}</a>:unavailable?<p role="alert">{c.unavailable}</p>:<><AdminPanel lang={lang} initial={initial}/>{initial&&<><RetentionAdminPanel lang={lang}/><FeedbackInbox lang={lang}/></>}</>}</div></main>;
+ return <main className="account-page" lang={lang}><a href={'/account?lang='+lang} className="account-back">{c.back}</a><div className="account-card"><h1>{c.title}</h1>{!user?<a className="cloud-signin" href={chatGPTSignInPath('/admin?lang='+lang)} target="_top">{c.signin}</a>:unavailable?<p role="alert">{c.unavailable}</p>:<><AdminPanel lang={lang} initial={initial}/>{initial&&<><RetentionAdminPanel lang={lang}/><FeedbackInbox lang={lang}/><MobileAdminPanel lang={lang}/></>}</>}</div></main>;
 }

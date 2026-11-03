@@ -1,0 +1,29 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {DatabaseSync} from 'node:sqlite';
+import {readFileSync,readdirSync} from 'node:fs';
+import {readMobileAdmin,readPublishedMobile,saveMobileSettings} from '../server/mobile-settings.ts';
+import {mobileDefaults,mobilePresentationSchema} from '../features/mobile/model.ts';
+import {mobileCopy} from '../features/mobile/copy.ts';
+function fixture(){const sql=new DatabaseSync(':memory:');for(const f of readdirSync(new URL('../drizzle/',import.meta.url)).filter(f=>f.endsWith('.sql')).sort())sql.exec(readFileSync(new URL('../drizzle/'+f,import.meta.url),'utf8'));const db={prepare(q){let args=[];return {bind(...a){args=a;return this},async first(){return sql.prepare(q).get(...args)||null},async all(){return {results:sql.prepare(q).all(...args)}},async run(){return {meta:{changes:Number(sql.prepare(q).run(...args).changes)}}}}}};sql.prepare("INSERT INTO ai_settings(id,admin_id,model,updated_at) VALUES('platform','admin','','today')").run();return {db,sql}}
+const draft=(expectedRevision=0,title='Accordia')=>({action:'draft',expectedRevision,config:{...mobileDefaults,title}});
+test('draft stays private, publication exports only presentation and rollback increases revision',async()=>{const {db}=fixture();assert.equal((await readPublishedMobile(db)).revision,0);await saveMobileSettings(db,'admin',draft());assert.equal((await readPublishedMobile(db)).revision,0);await saveMobileSettings(db,'admin',{action:'publish',expectedRevision:1,sourceRevision:1});assert.equal((await readPublishedMobile(db)).revision,2);await saveMobileSettings(db,'admin',draft(2,'New title'));await saveMobileSettings(db,'admin',{action:'publish',expectedRevision:3,sourceRevision:3});assert.equal((await readPublishedMobile(db)).title,'New title');await saveMobileSettings(db,'admin',{action:'rollback',expectedRevision:4,sourceRevision:2});const publicConfig=await readPublishedMobile(db);assert.equal(publicConfig.revision,5);assert.equal(publicConfig.title,'Accordia');for(const field of ['actor','createdAt','history','sourceRevision','admin_id'])assert.equal(field in publicConfig,false);assert.equal((await readMobileAdmin(db,'admin')).history.length,5)});
+test('server roles, suspension and strict schema prevent privilege or config injection',async()=>{const {db,sql}=fixture();await assert.rejects(()=>readMobileAdmin(db,'user'),e=>e.status===403);await assert.rejects(()=>saveMobileSettings(db,'user',draft()),e=>e.status===403);await assert.rejects(()=>saveMobileSettings(db,'admin',{...draft(),role:'admin'}),e=>e.status===400);for(const config of [{...mobileDefaults,primaryColor:'url(javascript:alert(1))'},{...mobileDefaults,introDurationMs:90000},{...mobileDefaults,designId:'unknown'},{...mobileDefaults,token:'secret'}])assert.equal(mobilePresentationSchema.safeParse(config).success,false);sql.prepare("INSERT INTO accounts(id,status,created_at) VALUES('admin','suspended','today')").run();await assert.rejects(()=>saveMobileSettings(db,'admin',draft()),e=>e.status===403)});
+test('concurrent stale writes conflict, publication requires current draft, rollback requires published source',async()=>{const {db}=fixture();const results=await Promise.allSettled([saveMobileSettings(db,'admin',draft()),saveMobileSettings(db,'admin',draft())]);assert.equal(results.filter(r=>r.status==='fulfilled').length,1);await assert.rejects(()=>saveMobileSettings(db,'admin',{action:'rollback',expectedRevision:1,sourceRevision:1}),e=>e.status===400);await saveMobileSettings(db,'admin',draft(1,'Changed'));await assert.rejects(()=>saveMobileSettings(db,'admin',{action:'publish',expectedRevision:2,sourceRevision:1}),e=>e.status===409);await assert.rejects(()=>saveMobileSettings(db,'admin',{action:'publish',expectedRevision:2,sourceRevision:999}),e=>e.status===404)});
+test('four languages expose the same administrative controls and honest integration limit',()=>{for(const lang of ['fr','en','de','nl']){assert.deepEqual(Object.keys(mobileCopy[lang]),Object.keys(mobileCopy.fr));assert.ok(mobileCopy[lang].help.length>60)}});
+test('real administrative form preserves failed edits and prevents publishing unsaved changes in four languages',async()=>{
+ const {componentHarness}=await import('./lifecycle-harness.mjs'),model=await import('../features/mobile/model.ts'),{z}=await import('zod');const oldFetch=globalThis.fetch;
+ try{for(const lang of ['fr','en','de','nl']){
+  let fail=false;const calls=[];const initial={revision:1,published:{schemaVersion:1,revision:0,...mobileDefaults},history:[{schemaVersion:1,revision:1,...mobileDefaults,state:'draft',actor:'admin',createdAt:'today',sourceRevision:null}]};
+  globalThis.fetch=async(url,init)=>{calls.push({url,init});return {ok:!fail,json:async()=>initial}};
+  const h=componentHarness('features/mobile/admin-panel.tsx','MobileAdminPanel',{'./model':model,'./copy':{mobileCopy},zod:{z}}),props={lang};h.render(props);
+  await h.nodes(n=>n.type==='button'&&n.props.children===mobileCopy[lang].reload)[0].props.onClick();
+  // onClick intentionally launches an async request without awaiting it.
+  await new Promise(resolve=>setImmediate(resolve));h.render(props);
+  const title=h.nodes(n=>n.type==='input'&&n.props.maxLength===80)[0];title.props.onChange({target:{value:'Edited title'}});h.render(props);
+  assert.equal(h.nodes(n=>n.type==='button'&&n.props.children===mobileCopy[lang].publish)[0].props.disabled,true);
+  fail=true;await h.nodes(n=>n.type==='form')[0].props.onSubmit({preventDefault(){}});await new Promise(resolve=>setImmediate(resolve));h.render(props);
+  assert.equal(h.nodes(n=>n.type==='input'&&n.props.maxLength===80)[0].props.value,'Edited title');assert.equal(h.nodes(n=>n.props?.role==='alert').length,1);
+  assert.equal(JSON.parse(calls.at(-1).init.body).action,'draft');h.unmount();
+ }}finally{globalThis.fetch=oldFetch}
+});

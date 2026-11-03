@@ -1,0 +1,14 @@
+name: accordia_mobile
+version: 0.1.0+1
+publish_to: none
+description: Socle de configuration de l’application mobile Accordia.
+environment:
+  sdk: '>=3.4.0 <4.0.0'
+dependencies:
+  flutter:
+    sdk: flutter
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+flutter:
+  uses-material-design: true
