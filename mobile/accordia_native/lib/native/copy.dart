@@ -54,6 +54,12 @@ class NativeCopy {
     'admin': ['Administration', 'Administration', 'Verwaltung', 'Beheer'],
     'settings': ['Réglages', 'Settings', 'Einstellungen', 'Instellingen'],
     'retry': ['Réessayer', 'Retry', 'Erneut versuchen', 'Opnieuw proberen'],
+    'unsaved': [
+      'Quitter et abandonner les modifications non enregistrées ?',
+      'Leave and discard unsaved changes?',
+      'Verlassen und ungespeicherte Änderungen verwerfen?',
+      'Verlaten en niet-opgeslagen wijzigingen verwijderen?',
+    ],
     'cancel': ['Annuler', 'Cancel', 'Abbrechen', 'Annuleren'],
     'continue': ['Continuer', 'Continue', 'Weiter', 'Doorgaan'],
     'save': ['Enregistrer', 'Save', 'Speichern', 'Opslaan'],

@@ -59,14 +59,14 @@ class _NativeParticipantEditorState extends State<NativeParticipantEditor> {
   Widget build(BuildContext context) {
     final vehicle = (report['vehicles'] as List)[side] as Map;
     return PopScope(
-      canPop: allowPop || !dirty,
+      canPop: allowPop || (!dirty && !busy),
       onPopInvokedWithResult: (didPop, _) async {
         if (!didPop &&
             !busy &&
             await confirmNative(
               context,
               widget.copy,
-              detail: widget.copy.t('failure'),
+              detail: widget.copy.t('unsaved'),
             ) &&
             mounted) {
           setState(() => allowPop = true);
@@ -103,7 +103,7 @@ class _NativeParticipantEditorState extends State<NativeParticipantEditor> {
                   maxLines: key == 'observations' ? 4 : 1,
                   onChanged: (value) {
                     vehicle[key] = value;
-                    dirty = true;
+                    if (!dirty) setState(() => dirty = true);
                   },
                 ),
               ),
