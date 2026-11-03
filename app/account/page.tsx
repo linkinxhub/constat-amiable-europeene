@@ -1,3 +1,4 @@
+import {mobileCopy} from '@/features/mobile/copy';
 import {saveChoiceCopy} from '@/features/constat/save-choice-copy';
 import {SiteHeader,SiteFooter} from '@/features/product/site-header';
 import {PlanCards} from '@/features/product/plan-cards';
@@ -23,7 +24,7 @@ export default async function Account({searchParams}:{searchParams:Promise<{lang
    {user?<>
     <section className="account-card account-reports"><strong className="account-name">{user.displayName}</strong><h2>{entryCopy[lang].dossiers}</h2><SharedList lang={lang}/><a className="site-action site-action-secondary" href={"/constat?lang="+lang+"#share-options"}>{entryCopy[lang].resume}</a></section>
     <OfferPanel lang={lang}/>
-    <details className="simple-details account-settings"><summary>{p.settings}</summary><div className="entry-management"><StoragePanel lang={lang}/><a className="cloud-signin" href={'/admin?lang='+lang}>{adminCopy[lang].title}</a></div></details>
+    <a className="cloud-signin" href={'/admin?lang='+lang+'#mobile-settings'}>{mobileCopy[lang].title}</a><details className="simple-details account-settings"><summary>{p.settings}</summary><div className="entry-management"><StoragePanel lang={lang}/><a className="cloud-signin" href={'/admin?lang='+lang}>{adminCopy[lang].title}</a></div></details>
     <a className="account-signout" href={chatGPTSignOutPath('/?lang='+lang)} target="_top">{c.signout}</a>
    </>:<>
     <section className="account-card account-signin" id="offers"><div><h2>{p.signinTitle}</h2><p>{p.signinText}</p></div><a className="site-action" href={chatGPTSignInPath('/account?lang='+lang)} target="_top">{c.signin}</a></section>

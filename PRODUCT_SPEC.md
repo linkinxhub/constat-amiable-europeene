@@ -1,3 +1,7 @@
+## Administration mobile — 3 novembre 2026
+
+Rubrique web reprise du lot mobile existant et intégrée, sans déploiement. Contrat API et limites de synchronisation privée, sécurité, critères et contrôles : docs/mobile/ADMINISTRATION_WEB_2026-11-03.md. Logo/son personnalisés et distribution native restent des lots ultérieurs ; aucun droit métier accordé par cette configuration.
+
 ## 2026-11-02 — Type de véhicule A/B, en aperçu
 
 Choix indépendant voiture, utilitaire, camion sans remorque, camion avec remorque/semi-remorque, voiture/utilitaire avec remorque ou autre. Questionnaire et formulaire orientent vers véhicule moteur et immatriculation de remorque. Plaque de remorque requise pour un type avec remorque, pays optionnel. Aucun permis/assurance inféré, aucune donnée supprimée par changement de type. Compatibilité des anciens dossiers sans type ; la remorque ne compte pas comme un conducteur. Type repris dans relecture et PDF. Critères : indépendance A/B, règles serveur de complétude, persistance/OCR sans perte, quatre langues et mobile. Non publié.
@@ -182,3 +186,10 @@ Illustration discrète d’un accrochage sans constat papier, puis recours à Ac
 
 ## Feedback avec images — 2026-11-02
 Feedback distinct du constat : accès vitrine/menu plateforme/bas de page, connexion, type/message et 3 images optimisées, aperçu/retrait, référence de succès, conservation en mémoire sur erreur. FR/EN/DE/NL. Consultation paginée et statut réservé au super-administrateur existant. Voir docs/FEEDBACK_2026-11-02.md.
+
+## Présentation 57 secondes — 2026-11-02
+La présentation vitrine passe à huit séquences, 56,503 s sans son (badge 57 s), narration française enregistrée 56,5 s. Scénario jusqu’à relecture et téléchargement/transmission manuelle, aucune capacité commerciale ajoutée.
+
+
+## Partage de la présentation — 2026-11-02
+MP4 français autonome de 57 s à partager/télécharger, aucune donnée de dossier incluse. Web Share fichiers quand disponible, téléchargement manuel sinon. Deux clics pour préparer puis choisir l’application, pas de destinataire automatique. Interface et guide FR/EN/DE/NL précisent que la vidéo est en français.

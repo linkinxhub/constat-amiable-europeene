@@ -1,3 +1,7 @@
+## Administration mobile — 3 novembre 2026
+
+Rubrique web reprise du lot mobile existant et intégrée, sans déploiement. Contrat API et limites de synchronisation privée, sécurité, critères et contrôles : docs/mobile/ADMINISTRATION_WEB_2026-11-03.md. Logo/son personnalisés et distribution native restent des lots ultérieurs ; aucun droit métier accordé par cette configuration.
+
 ## 2026-11-02 — Type explicite et remorque conservée
 
 Type facultatif dans les anciens JSON pour préserver leur ouverture et leur validation. Choix proposé au début de chaque fiche ; aucune inférence OCR ni catégorie de permis automatique. Pour un attelage explicitement choisi, la plaque de remorque devient nécessaire à la complétude. Changer de type ne supprime aucune information ; avertissement et correction manuelle pour les anciennes valeurs. Champs de remorque présents une seule fois dans la saisie adaptée, compléments vides non applicables exclus du compteur de relecture. Pas de troisième conducteur créé. Première page du modèle reste française, annexes localisées et version moteur distincte.
@@ -173,3 +177,10 @@ SVG/CSS et horloge bornée de 15 s : pas de média lourd ni de requête externe.
 
 ## Feedback avec images — 2026-11-02
 Feedback en onglet séparé pour ne pas quitter une saisie en cours. Compte requis ; aucune capture automatique ni notification email. Stocker uniquement les images optimisées relues, dans un JSON D1 borné et séparé des dossiers. Pas de nouveau rôle. Aucune conservation automatique ou reprise après fermeture annoncée. Voir docs/FEEDBACK_2026-11-02.md.
+
+## Présentation 57 secondes — 2026-11-02
+Développer le récit plutôt que ralentir la courte piste : une nouvelle prise naturelle, même voix, 157 mots, 56,5 s. Ne pas prétendre à une durée fixe pour les voix natives EN/DE/NL. Garder les anciennes pistes et les contrôles de lecture existants.
+
+
+## Partage de la présentation — 2026-11-02
+Partager un fichier MP4 autonome plutôt qu’un lien Sites restreint. Conserver l’audience du site et les données privées. Préparation et envoi en deux gestes pour préserver l’activation utilisateur malgré le chargement asynchrone ; ne jamais annoncer un message comme envoyé après la simple ouverture du partage. MP4 français clairement indiqué dans toutes les langues.

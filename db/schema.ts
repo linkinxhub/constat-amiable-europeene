@@ -104,8 +104,4 @@ export const feedback=sqliteTable('feedback',{
  id:text('id').primaryKey(),ownerId:text('owner_id').notNull(),category:text('category').notNull(),message:text('message').notNull(),lang:text('lang').notNull(),source:text('source').notNull(),images:text('images').notNull(),digest:text('digest').notNull(),createdAt:integer('created_at').notNull(),resolved:integer('resolved').notNull().default(0)
 },t=>[index('feedback_owner_created').on(t.ownerId,t.createdAt),index('feedback_inbox').on(t.resolved,t.createdAt)]);
 
-// Append-only mobile presentation history; no secrets or report data.
-export const mobileSettings=sqliteTable('mobile_settings',{
- revision:integer('revision').primaryKey(),state:text('state').notNull(),config:text('config').notNull(),
- actor:text('actor').notNull(),createdAt:text('created_at').notNull(),sourceRevision:integer('source_revision')
-});
+export const mobileSettings=sqliteTable('mobile_settings',{revision:integer('revision').primaryKey(),state:text('state').notNull(),config:text('config').notNull(),actor:text('actor').notNull(),createdAt:text('created_at').notNull(),sourceRevision:integer('source_revision')});

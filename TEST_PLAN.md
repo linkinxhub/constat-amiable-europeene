@@ -1,3 +1,7 @@
+## Administration mobile — 3 novembre 2026
+
+Rubrique web reprise du lot mobile existant et intégrée, sans déploiement. Contrat API et limites de synchronisation privée, sécurité, critères et contrôles : docs/mobile/ADMINISTRATION_WEB_2026-11-03.md. Logo/son personnalisés et distribution native restent des lots ultérieurs ; aucun droit métier accordé par cette configuration.
+
 ## 2026-11-02 — Vitrine enrichie
 
 landing-refresh.test.mjs vérifie les composants réels LandingPaths et Landing dans les quatre langues : comparaison consultative des trois modes, intitulés et prérequis partagés, lien vers vrai formulaire sans mode présélectionné caché, liens Rejoindre/Guide avec langue, conservation des rubriques, ouverture effective du volet démonstration, fermeture du menu après navigation. product-consistency conservé pour catalogue/documentation. Recette visuelle bureau/mobile à reprendre : preview géré ne devient pas sain ; aucune capture récente ni validation responsive revendiquée. Contrôler au minimum 360/375/768/1440 px, les quatre langues, menu/clavier/focus, bascules des trois parcours, démo, FAQ, sections, liens, mouvement réduit et contraste avant publication.
@@ -363,3 +367,10 @@ Master v77 corrigé : tests/master-fixes.test.mjs, questionnaire A/B avec saisie
 
 ## Feedback avec images — 2026-11-02
 tests/feedback.test.mjs : persistance image valide, décodage/format/taille, droits et compte bloqué, concurrence/quota, réponse perdue/idempotence, formulaire réel avec échec/retry quatre langues, UUID sans randomUUID, pagination sans images ni identité dans les listes. worker-routes inclut les trois nouvelles méthodes privées. Preview : ajout/retrait image fictive, refus sans connexion et conservation du texte/aperçu ; 360/375/768/1280 sans débordement, quatre langues à 360. Route QA supprimée avant build final. Envoi connecté et consultation admin dans navigateur hébergé restent à confirmer après publication. Voir docs/FEEDBACK_2026-11-02.md.
+
+## Présentation 57 secondes — 2026-11-02
+Huit séquences et fin entre 50 et 60 s, frontière 56,5 s encore active/56,75 s terminée à pas 250 ms ; reprise exacte du média, huit phrases natives et callbacks tardifs, quatre langues. Durée réelle ffprobe 56,502844 s.
+
+
+## Partage de la présentation — 2026-11-02
+tests/story-video-share.test.mjs : URL constante, MIME/HTTP/flux vide/taille maximale, support Web Share, invocation immédiate, annulation, échec, secours et copie quatre langues, faststart, deux clics/anti-doublon. 308 tests réussis. Aperçu mobile quatre langues et lecture réelle MP4 jusqu’à fin ; partage vers application mobile non testé. Décodage complet et mesures audio enregistrés dans le rapport.
