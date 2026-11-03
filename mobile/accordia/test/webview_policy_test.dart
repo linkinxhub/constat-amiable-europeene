@@ -62,4 +62,77 @@ void main() {
       expect(copy.t('help'), contains('#invite='));
     }
   });
+  test('login restart initializes the real site flow without forwarding invitation or foreign parameters', () {
+    final original = Uri.parse(
+      'https://$accordiaHost/session/63f6ad2e-a21e-4494-aed2-ef5bfa3e0c18?lang=de&client_id=FAKE&access_token=SECRET#invite=TEST_ONLY',
+    );
+    final restart = restartAccordiaSignIn(original);
+    expect(restart.host, accordiaHost);
+    expect(restart.path, '/signin-with-chatgpt');
+    expect(
+      restart.queryParameters['return_to'],
+      '/session/63f6ad2e-a21e-4494-aed2-ef5bfa3e0c18?lang=de',
+    );
+    for (final secret in ['TEST_ONLY', 'SECRET', 'FAKE', 'invite='])
+      expect(restart.toString().contains(secret), false);
+    expect(
+      restartAccordiaSignIn(Uri.parse('https://evil.test/callback'))
+          .queryParameters['return_to'],
+      '/constat',
+    );
+  });
+  test('actual child windows are allowed only from trusted contexts, with a bounded depth', () {
+    final parent = Uri.parse('https://$accordiaHost/account');
+    for (final target in [
+      null,
+      Uri.parse('about:blank'),
+      Uri.parse('https://auth.openai.com/authorize'),
+    ]) {
+      expect(
+        canCreateAccordiaWindow(
+          parent: parent,
+          target: target,
+          depth: 0,
+          alreadyOpen: false,
+        ),
+        true,
+      );
+    }
+    expect(
+      canCreateAccordiaWindow(
+        parent: Uri.parse('https://evil.test'),
+        target: null,
+        depth: 0,
+        alreadyOpen: false,
+      ),
+      false,
+    );
+    expect(
+      canCreateAccordiaWindow(
+        parent: parent,
+        target: Uri.parse('https://evil.test'),
+        depth: 0,
+        alreadyOpen: false,
+      ),
+      false,
+    );
+    expect(
+      canCreateAccordiaWindow(
+        parent: parent,
+        target: null,
+        depth: 2,
+        alreadyOpen: false,
+      ),
+      false,
+    );
+    expect(
+      canCreateAccordiaWindow(
+        parent: parent,
+        target: null,
+        depth: 0,
+        alreadyOpen: true,
+      ),
+      false,
+    );
+  });
 }

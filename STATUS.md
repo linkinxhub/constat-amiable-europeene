@@ -1,3 +1,32 @@
+## 3 novembre 2026 — Correction du contexte de connexion WebView (0.3.1+4)
+
+Signalement client_id_not_found_in_session pendant la connexion. Métadonnées Sites :
+site actif, auth_client_id renseigné, audience custom ; aucun événement d’erreur
+Worker retourné sur la fenêtre interrogée. Cela ne confirme pas la cause fournisseur.
+Deux défauts constatés côté wrapper : cookies tiers désactivés pendant le login,
+et onCreateWindow remplacé par loadUrl, perdant la vraie fenêtre/opener/méthode.
+
+Correctif : fenêtre native attachée au windowId du moteur, origines/dépth bornées,
+cookies et fenêtres JS autorisés pendant l’initialisation puis désactivés après
+réponse valide de l’API Accordia dans la même session. Réactivation à l’entrée du
+parcours de connexion. Nouvelle commande Recommencer la connexion depuis l’erreur,
+passant par /signin-with-chatgpt ; aucune reprise d’un lien fournisseur périmé.
+Retour interne sans transmission du fragment d’invitation ni paramètres étrangers
+à l’URL OAuth. Reprendre la page permet de retrouver le lien original sur action
+explicite ; aucun rechargement automatique ni effacement des données/cookies.
+
+37 tests Flutter réussis, analyse sans diagnostic, formatage conforme. Guide natif
+FR/EN/DE/NL actualisé ; guide web inchangé car aucune commande serveur modifiée.
+Fichiers : mobile/accordia/lib/platform/{page,policy,copy}.dart, test/policy,
+pubspec.yaml et configuration Android ; STATUS/CHANGELOG et rapport dédiés.
+Branche fix/webview-auth-session-20261103, main 7a6586a et site conservés. Aucun
+contournement d’identité, changement de droits, audience ou publication. Compilation
+Android distante à constater. La disparition de l’erreur n’est pas prouvée sans
+retest du propriétaire ; connexion Chrome externe distincte, Google/autres
+fournisseurs peuvent encore imposer un navigateur système. iOS non compilé.
+Détails : docs/mobile/AUTH_SESSION_FIX.md. Prochaine étape : retest de connexion,
+puis invitation A/B sur deux téléphones autorisés.
+
 ## 3 novembre 2026 — Horizon conservé, plateforme intégrée en WebView (0.3.0+3)
 
 Choix explicite du propriétaire : garder l’interface actuelle et utiliser la

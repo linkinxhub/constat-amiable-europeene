@@ -8,6 +8,7 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:printing/printing.dart';
 
+import '../config/mobile_config.dart';
 import 'copy.dart';
 import 'policy.dart';
 
@@ -18,8 +19,12 @@ class AccordiaPlatformPage extends StatefulWidget {
     required this.copy,
     required this.openOutside,
     this.onPresentation,
+    this.windowId,
+    this.popupDepth = 0,
   });
   final Uri uri;
+  final int? windowId;
+  final int popupDepth;
   final PlatformCopy copy;
   final Future<bool> Function(Uri) openOutside;
   final Future<void> Function(Map<String, dynamic>)? onPresentation;
@@ -36,6 +41,13 @@ class _AccordiaPlatformPageState extends State<AccordiaPlatformPage>
       _downloadBusy = false,
       _externalBusy = false;
   int _progress = 0;
+  bool _loginRestarted = false, _resumeOriginalLink = false;
+  bool _popupOpen = false,
+      _authCookies = true,
+      _authorizedSite = false,
+      _resumeAvailable = false,
+      _authProblem = false,
+      _restarting = false;
   String _visibleHost = accordiaHost;
   String _errorKey = 'error';
   PlatformCopy get c => widget.copy;
@@ -115,7 +127,11 @@ class _AccordiaPlatformPageState extends State<AccordiaPlatformPage>
         if (!mounted) return;
         setState(() => _allowExit = true);
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          if (mounted) Navigator.pop(context);
+          if (mounted)
+            Navigator.pop(
+              context,
+              widget.windowId == null ? null : _authorizedSite,
+            );
         });
       }
     } finally {
@@ -147,14 +163,101 @@ class _AccordiaPlatformPageState extends State<AccordiaPlatformPage>
   ) async {
     final uri = Uri.tryParse(action.request.url?.toString() ?? '');
     if (action.isForMainFrame == false) return NavigationActionPolicy.ALLOW;
-    if (isAccordia(uri) || isTrustedAuthentication(uri))
+    if (widget.windowId != null && isEmptyPopup(uri))
       return NavigationActionPolicy.ALLOW;
+    if (isAccordia(uri) || isTrustedAuthentication(uri)) {
+      if (isTrustedAuthentication(uri) || uri?.path == '/signin-with-chatgpt') {
+        try {
+          await _authCookieMode(ctl, true);
+        } catch (_) {}
+      }
+      return NavigationActionPolicy.ALLOW;
+    }
     if (isAccordiaBlob(uri)) {
       unawaited(_pdf(uri!));
       return NavigationActionPolicy.CANCEL;
     }
     if (uri != null) unawaited(_external(uri));
     return NavigationActionPolicy.CANCEL;
+  }
+
+  Future<void> _authCookieMode(InAppWebViewController ctl, bool enabled) async {
+    if (_authCookies == enabled) return;
+    final settings = await ctl.getSettings();
+    if (settings == null) return;
+    // Preserve every existing TLS/file/permission setting when changing cookies.
+    settings.thirdPartyCookiesEnabled = enabled;
+    settings.javaScriptCanOpenWindowsAutomatically = enabled;
+    await ctl.setSettings(settings: settings);
+    _authCookies = enabled;
+  }
+
+  Future<void> _restartSignIn() async {
+    if (_restarting || _controller == null) return;
+    _restarting = true;
+    try {
+      if (!await _confirm('loginRetry', 'authHelp', 'continue') || !mounted)
+        return;
+      _loginRestarted = true;
+      await _authCookieMode(_controller!, true);
+      await _controller!.loadUrl(
+        urlRequest: URLRequest(
+          url: WebUri(restartAccordiaSignIn(widget.uri).toString()),
+        ),
+      );
+    } catch (_) {
+      _message('error');
+    } finally {
+      _restarting = false;
+    }
+  }
+
+  Future<void> _resumePage() async {
+    if (!await _confirm('close', 'closeHelp', 'continue') || !mounted) return;
+    setState(() => _resumeAvailable = false);
+    if (_resumeOriginalLink) {
+      _resumeOriginalLink = false;
+      await _controller?.loadUrl(
+        urlRequest: URLRequest(url: WebUri(widget.uri.toString())),
+      );
+    } else {
+      await _controller?.reload();
+    }
+  }
+
+  Future<void> _openChildWindow(int id) async {
+    _popupOpen = true;
+    final wasAuthorized = _authorizedSite;
+    try {
+      await Navigator.push<bool>(
+        context,
+        MaterialPageRoute(
+          builder: (_) => AccordiaPlatformPage(
+            uri: widget.uri,
+            copy: c,
+            openOutside: widget.openOutside,
+            onPresentation: widget.onPresentation,
+            windowId: id,
+            popupDepth: widget.popupDepth + 1,
+          ),
+        ),
+      );
+      if (!mounted) return;
+      await _syncPresentation();
+      // Never reload a form automatically after a popup. Let the user save first.
+      if (mounted && !wasAuthorized && _authorizedSite)
+        setState(() => _resumeAvailable = true);
+    } finally {
+      _popupOpen = false;
+    }
+  }
+
+  void _closeChildWindow() {
+    if (widget.windowId == null || !mounted) return;
+    setState(() => _allowExit = true);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) Navigator.pop(context, _authorizedSite);
+    });
   }
 
   Future<void> _syncPresentation() async {
@@ -176,9 +279,22 @@ class _AccordiaPlatformPageState extends State<AccordiaPlatformPage>
           .timeout(const Duration(seconds: 3));
       if (result?.value is Map &&
           isAccordia(Uri.tryParse((await ctl.getUrl())?.toString() ?? ''))) {
-        await widget.onPresentation!(
-          (result!.value as Map).cast<String, dynamic>(),
-        );
+        final data = (result!.value as Map).cast<String, dynamic>();
+        MobileConfig.fromJson(
+          data,
+        ); // Verify the expected API, not an error page.
+        _authorizedSite = true;
+        if (_loginRestarted &&
+            widget.uri.fragment.startsWith('invite=') &&
+            mounted) {
+          setState(() {
+            _resumeAvailable = true;
+            _resumeOriginalLink = true;
+          });
+          _loginRestarted = false;
+        }
+        await _authCookieMode(ctl, false);
+        await widget.onPresentation!(data);
       }
     } catch (_) {
       /* The last valid presentation and the current form are preserved. */
@@ -302,6 +418,33 @@ class _AccordiaPlatformPageState extends State<AccordiaPlatformPage>
         children: [
           if (_progress < 100) LinearProgressIndicator(value: _progress / 100),
           if (_downloadBusy) const LinearProgressIndicator(),
+          if (_authProblem || (_error && _errorKey == 'access'))
+            Padding(
+              padding: const EdgeInsets.all(12),
+              child: Column(
+                children: [
+                  Text(c.t('authHelp')),
+                  OutlinedButton.icon(
+                    onPressed: _restartSignIn,
+                    icon: const Icon(Icons.lock_reset),
+                    label: Text(c.t('loginRetry')),
+                  ),
+                ],
+              ),
+            ),
+          if (_resumeAvailable)
+            Padding(
+              padding: const EdgeInsets.all(12),
+              child: Column(
+                children: [
+                  Text(c.t('sessionReady')),
+                  OutlinedButton(
+                    onPressed: _resumePage,
+                    child: Text(c.t('resume')),
+                  ),
+                ],
+              ),
+            ),
           if (_error)
             Padding(
               padding: const EdgeInsets.all(16),
@@ -309,18 +452,21 @@ class _AccordiaPlatformPageState extends State<AccordiaPlatformPage>
             ),
           Expanded(
             child: InAppWebView(
-              initialUrlRequest: URLRequest(url: WebUri(widget.uri.toString())),
+              windowId: widget.windowId,
+              initialUrlRequest: widget.windowId == null
+                  ? URLRequest(url: WebUri(widget.uri.toString()))
+                  : null,
               initialSettings: InAppWebViewSettings(
                 javaScriptEnabled: true,
                 domStorageEnabled: true,
                 incognito: false,
                 cacheEnabled: true,
-                thirdPartyCookiesEnabled: false,
+                thirdPartyCookiesEnabled: true,
                 sharedCookiesEnabled: true,
                 useShouldOverrideUrlLoading: true,
                 useOnDownloadStart: true,
                 supportMultipleWindows: true,
-                javaScriptCanOpenWindowsAutomatically: false,
+                javaScriptCanOpenWindowsAutomatically: true,
                 mediaPlaybackRequiresUserGesture: true,
                 allowsInlineMediaPlayback: true,
                 allowFileAccess: false,
@@ -335,6 +481,7 @@ class _AccordiaPlatformPageState extends State<AccordiaPlatformPage>
               shouldOverrideUrlLoading: _navigate,
               onLoadStart: (ctl, url) {
                 final uri = Uri.tryParse(url?.toString() ?? '');
+                if (widget.windowId != null && isEmptyPopup(uri)) return;
                 if (!isAccordia(uri) && !isTrustedAuthentication(uri)) {
                   unawaited(ctl.stopLoading());
                   if (uri != null) unawaited(_external(uri));
@@ -343,6 +490,10 @@ class _AccordiaPlatformPageState extends State<AccordiaPlatformPage>
                 if (mounted)
                   setState(() {
                     _error = false;
+                    _authProblem =
+                        isTrustedAuthentication(uri) &&
+                        (uri!.path.contains('error') ||
+                            uri.queryParameters.containsKey('error'));
                     _progress = 0;
                   });
               },
@@ -377,20 +528,37 @@ class _AccordiaPlatformPageState extends State<AccordiaPlatformPage>
                   });
               },
               onCreateWindow: (ctl, action) async {
-                final uri = Uri.tryParse(action.request.url?.toString() ?? '');
-                if (isAccordia(uri) || isTrustedAuthentication(uri)) {
-                  await ctl.loadUrl(
-                    urlRequest: URLRequest(url: WebUri(uri.toString())),
-                  );
-                } else if (isAccordiaBlob(uri)) {
-                  unawaited(_pdf(uri!));
-                } else if (uri != null) {
-                  unawaited(_external(uri));
+                final target = Uri.tryParse(
+                  action.request.url?.toString() ?? '',
+                );
+                if (isAccordiaBlob(target)) {
+                  unawaited(_pdf(target!));
+                  return false;
+                }
+                final parent = Uri.tryParse(
+                  (await ctl.getUrl())?.toString() ?? '',
+                );
+                if (canCreateAccordiaWindow(
+                  parent: parent,
+                  target: target,
+                  depth: widget.popupDepth,
+                  alreadyOpen: _popupOpen,
+                )) {
+                  // Attach the actual browser window: preserve POST, opener and session.
+                  unawaited(_openChildWindow(action.windowId));
+                  return true;
+                }
+                if (target != null &&
+                    !isAccordia(target) &&
+                    !isTrustedAuthentication(target) &&
+                    !isEmptyPopup(target)) {
+                  unawaited(_external(target));
                 } else {
                   _message('unsupported');
                 }
                 return false;
               },
+              onCloseWindow: (_) => _closeChildWindow(),
               onJsBeforeUnload: (_, _) async => JsBeforeUnloadResponse(
                 handledByClient: true,
                 action: await _confirm('close', 'closeHelp', 'leave')

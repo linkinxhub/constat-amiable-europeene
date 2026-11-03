@@ -3,9 +3,20 @@ import '../design/horizon/copy.dart';
 class PlatformCopy {
   PlatformCopy(this.language);
   final HorizonLanguage language;
-  String t(String key) => values[language]![key]!;
+  String t(String key) {
+    final copy = values[language]!;
+    return key == 'help'
+        ? '${copy[key]}\n\n${copy['loginRetry']} : ${copy['authHelp']}'
+        : copy[key]!;
+  }
+
   static const values = {
     HorizonLanguage.fr: {
+      "loginRetry": "Recommencer la connexion",
+      "authHelp": "La session de connexion peut avoir été interrompue. Recommencez depuis Accordia avec votre méthode de connexion habituelle. Enregistrez votre saisie avant de continuer. Les brouillons ne sont pas effacés.",
+      "sessionReady": "L’accès à Accordia est disponible. Enregistrez toute saisie avant de recharger cette page.",
+      "resume": "Reprendre la page",
+
       'access': 'Connectez-vous avec un compte autorisé pour accéder à cette plateforme privée.',
       'scan': 'Scanner un QR Accordia',
       'paste': 'Coller un lien Accordia',
@@ -36,6 +47,11 @@ class PlatformCopy {
       'linkHint': 'https://…/session/…#invite=…',
     },
     HorizonLanguage.en: {
+      "loginRetry": "Restart sign-in",
+      "authHelp": "The sign-in session may have been interrupted. Restart from Accordia using your usual sign-in method. Save entries before continuing. Drafts are not cleared.",
+      "sessionReady": "Accordia access is available. Save any entries before reloading this page.",
+      "resume": "Resume page",
+
       'access':
           'Sign in with an authorized account to access this private platform.',
       'scan': 'Scan an Accordia QR',
@@ -68,6 +84,12 @@ class PlatformCopy {
       'linkHint': 'https://…/session/…#invite=…',
     },
     HorizonLanguage.de: {
+      "loginRetry": "Anmeldung neu starten",
+      "authHelp": "Die Anmeldung wurde möglicherweise unterbrochen. Starten Sie in Accordia mit Ihrer üblichen Methode neu. Eingaben vorher speichern. Entwürfe werden nicht gelöscht.",
+      "sessionReady":
+          "Accordia ist erreichbar. Eingaben vor dem Neuladen speichern.",
+      "resume": "Seite fortsetzen",
+
       'access': 'Melden Sie sich mit einem zugelassenen Konto für diese private Plattform an.',
       'scan': 'Accordia-QR scannen',
       'paste': 'Accordia-Link einfügen',
@@ -98,6 +120,11 @@ class PlatformCopy {
       'linkHint': 'https://…/session/…#invite=…',
     },
     HorizonLanguage.nl: {
+      "loginRetry": "Aanmelden opnieuw starten",
+      "authHelp": "De aanmeldsessie kan onderbroken zijn. Begin opnieuw vanuit Accordia met uw gebruikelijke aanmeldmethode. Sla invoer vooraf op. Concepten worden niet gewist.",
+      "sessionReady": "Toegang tot Accordia is beschikbaar. Sla invoer op voordat u deze pagina herlaadt.",
+      "resume": "Pagina hervatten",
+
       'access': 'Meld u aan met een toegestaan account voor dit privéplatform.',
       'scan': 'Accordia-QR scannen',
       'paste': 'Accordia-link plakken',

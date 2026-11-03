@@ -35,3 +35,39 @@ bool isTrustedAuthentication(Uri? uri) =>
       'auth.openai.com',
       'auth0.openai.com',
     }.contains(uri.host);
+
+bool isEmptyPopup(Uri? uri) =>
+    uri == null || uri.toString().isEmpty || uri.toString() == 'about:blank';
+bool canCreateAccordiaWindow({
+  required Uri? parent,
+  required Uri? target,
+  required int depth,
+  required bool alreadyOpen,
+}) =>
+    !alreadyOpen &&
+    depth < 2 &&
+    (isAccordia(parent) || isTrustedAuthentication(parent)) &&
+    (isAccordia(target) ||
+        isTrustedAuthentication(target) ||
+        isEmptyPopup(target));
+
+/// Start at the site's actual sign-in entry, never at an expired provider URL.
+/// Invitation fragments remain in the original native/page context, not OAuth.
+Uri restartAccordiaSignIn(Uri original) {
+  final valid = scannedAccordia(original.toString()) != null;
+  final params = <String, String>{};
+  if (valid) {
+    final lang = original.queryParameters['lang'];
+    if (const ['fr', 'en', 'de', 'nl'].contains(lang)) params['lang'] = lang!;
+    final document = original.queryParameters['document'];
+    if (document != null && RegExp(r'^[a-zA-Z0-9-]{1,80}$').hasMatch(document))
+      params['document'] = document;
+  }
+  final relative = Uri(
+    path: valid ? original.path : '/constat',
+    queryParameters: params.isEmpty ? null : params,
+  );
+  return Uri.https(accordiaHost, '/signin-with-chatgpt', {
+    'return_to': relative.toString(),
+  });
+}
