@@ -1,3 +1,9 @@
+## 2026-11-03 — Version 85 publiée sur autorisation
+
+Instruction explicite « publier ». Version 85 déployée depuis l’archive sauvegardée, source 91a07f6b666f4760cfbe72cec7c3d48ad8d0bb56, sha256:452cb262f0d8d7ddd3a3e4a7c52d03ebde6a90d9f62a342e9e369e147456c012. Déploiement appgdep_6aea6219fff081918e3eacb527b8fa61 : succeeded le 3 novembre à 23:37:37 Europe/Brussels (22:37:37 UTC), environnement révision 3. Audience custom conservée. URL https://accordia-constat.adil-btp.chatgpt.site/ . Sources fonctionnelles poussées GitHub, fix/showcase-harmony-20261103, commit 81a3812c8620bbcb2a770b3d20ecf515a6d38427.
+
+Vérification du site publié en français sur ordinateur : navigation position relative, titre trust rgb(255,255,255), séparation de 64 px avec le bloc précédent ; capture inspectée, titre et trois colonnes lisibles, aucune barre superposée. Aucun formulaire, donnée ou réglage modifié. Les 327 tests, build/TypeScript, audits et 24 variantes de présentation du lot préparatoire sont réutilisés, pas relancés pour cette publication de l’archive identique. Réserve modérée Minimatch de développement inchangée ; 0 vulnérabilité connue en dépendances de production lors de l’audit préparatoire. STATUS.md et CHANGELOG.md uniquement actualisés après publication ; guide vérifié, aucun impact utilisateur pour cette note, aucun second déploiement.
+
 ## 2026-11-03 — Vitrine harmonisée et contraste corrigé, sans publication
 
 Demande : corriger les chevauchements et couleurs, notamment Vous gardez le contrôle, et vérifier les vulnérabilités repérées. Base propre 4b56749 (documentation post-v84), source distante ouverte/vérifiée avec le workflow Sites ; production v84. Restauration checkpoint/before-landing-harmony-20261103. Lot limité aux styles .marketing-v2, robustesse de la langue et tests correspondants ; aucune donnée, fonction métier, offre, intégration, permission, vidéo ou configuration mobile retirée.
