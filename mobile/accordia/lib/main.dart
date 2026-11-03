@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -15,6 +16,12 @@ import 'reports/store.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  PlatformInAppWebViewController.debugLoggingSettings.enabled = false;
+  if (Platform.isAndroid) {
+    try {
+      await InAppWebViewController.setWebContentsDebuggingEnabled(false);
+    } catch (_) {}
+  }
   ConfigCache cache = _VolatileConfigCache();
   PreferenceStore preferences = UnavailablePreferenceStore();
   DraftStore drafts = UnavailableDraftStore();

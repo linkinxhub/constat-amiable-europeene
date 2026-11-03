@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'mobile_config.dart';
 
@@ -57,6 +58,18 @@ class ConfigRepository {
     } catch (_) {
       // Offline, unauthorized Sites gateway, malformed and future schemas all
       // preserve the last known valid configuration. No fabricated auth headers.
+      return false;
+    }
+  }
+
+  /// Presentation fetched inside the authenticated WebView, never its cookies.
+  /// Staging is still inert until the native form/WebView has been closed.
+  Future<bool> stageFromWebView(Map<String, dynamic> data) async {
+    try {
+      if (utf8.encode(jsonEncode(data)).length > 4096) return false;
+      await initialize();
+      return _session.stage(data);
+    } catch (_) {
       return false;
     }
   }

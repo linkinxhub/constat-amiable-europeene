@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Scanner un QR Accordia ou joindre une photo à votre constat.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Renseigner le lieu du constat à votre demande.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Choisir une photo ou une pièce pour votre constat.</string>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>

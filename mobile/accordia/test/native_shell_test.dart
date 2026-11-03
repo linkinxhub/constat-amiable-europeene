@@ -107,6 +107,7 @@ void main() {
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.resetPhysicalSize);
       addTearDown(tester.view.resetDevicePixelRatio);
+      final navigated = <Uri>[];
       final config = Config(),
           preferences = Preferences(),
           chime = ChimeRecorder(),
@@ -119,6 +120,13 @@ void main() {
           sound: StartupSound(chime),
           drafts: UnavailableDraftStore(),
           reportData: await ReportCopy.load(),
+          platformBuilder: (uri, copy, outside) {
+            navigated.add(uri);
+            return Scaffold(
+              appBar: AppBar(title: const Text('Platform test surface')),
+              body: Text(uri.path),
+            );
+          },
           openWebsite: (uri) async {
             opened.add(uri);
             return true;
@@ -130,14 +138,32 @@ void main() {
       await tester.tap(find.text('Commencer mon constat'));
       await tester.pumpAndSettle();
       expect(opened, isEmpty);
-      expect(find.byTooltip('Enregistrer le brouillon'), findsOneWidget);
+      expect(find.text('Platform test surface'), findsOneWidget);
+      expect(navigated.last.path, '/constat');
       await tester.tap(find.byType(BackButton));
       await tester.pumpAndSettle();
       await tester.tap(find.text('Rejoindre'));
       await tester.pumpAndSettle();
       expect(opened, isEmpty);
-      expect(find.textContaining('connexion mobile'), findsOneWidget);
-      await tester.tapAt(const Offset(10, 10));
+      expect(find.text('Scanner un QR Accordia'), findsOneWidget);
+      expect(find.text('Coller un lien Accordia'), findsOneWidget);
+      await tester.tap(find.text('Coller un lien Accordia'));
+      await tester.pumpAndSettle();
+      await tester.enterText(
+        find.byType(TextField),
+        'https://evil.test/session/test#invite=bad',
+      );
+      await tester.tap(find.text('Ouvrir dans Accordia'));
+      await tester.pumpAndSettle();
+      expect(find.textContaining('Lien Accordia non reconnu'), findsOneWidget);
+      const invitation =
+          'https://accordia-constat.adil-btp.chatgpt.site/session/63f6ad2e-a21e-4494-aed2-ef5bfa3e0c18#invite=TEST_ONLY_TOKEN';
+      await tester.enterText(find.byType(TextField), invitation);
+      await tester.tap(find.text('Ouvrir dans Accordia'));
+      await tester.pumpAndSettle();
+      expect(navigated.last.toString(), invitation);
+      expect(opened, isEmpty);
+      await tester.tap(find.byType(BackButton));
       await tester.pumpAndSettle();
       await tester.tap(find.byTooltip('Réglages'));
       await tester.pumpAndSettle();

@@ -41,6 +41,29 @@ class Source implements ConfigSource {
 }
 
 void main() {
+  test('WebView presentation stages without exporting session cookies or restyling active input', () async {
+    final cache = MemoryCache();
+    final repo = ConfigRepository(
+      source: Source(() async => throw StateError('offline')),
+      cache: cache,
+    );
+    expect(await repo.stageFromWebView({...value(9), 'role': 'ADMIN'}), true);
+    expect(repo.active.revision, 0);
+    expect(repo.apply(reportInProgress: true), false);
+    expect(repo.apply(reportInProgress: false), true);
+    await repo.pendingWrites;
+    expect(cache.value!['revision'], 9);
+    expect(cache.value!.containsKey('role'), false);
+    expect(
+      await repo.stageFromWebView({...value(10), 'padding': 'X' * 5000}),
+      false,
+    );
+    expect(
+      await repo.stageFromWebView({...value(10), 'primaryColor': 'invalid'}),
+      false,
+    );
+    expect(repo.active.revision, 9);
+  });
   test('valid cached presentation restores offline and invalid remote leaves it intact', () async {
     final cache = MemoryCache()..value = value(2);
     final source = Source(

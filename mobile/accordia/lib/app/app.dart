@@ -16,6 +16,10 @@ import '../reports/copy.dart';
 import '../reports/store.dart';
 import '../reports/editor.dart';
 import '../reports/list.dart';
+import '../platform/page.dart';
+import '../platform/copy.dart';
+import '../platform/policy.dart';
+import '../platform/scanner.dart';
 
 class AccordiaApp extends StatefulWidget {
   const AccordiaApp({
@@ -27,7 +31,10 @@ class AccordiaApp extends StatefulWidget {
     required this.openWebsite,
     required this.drafts,
     required this.reportData,
+    this.platformBuilder,
   });
+  final Widget Function(Uri, PlatformCopy, Future<bool> Function(Uri))?
+  platformBuilder;
   final DraftStore drafts;
   final Map<String, dynamic> reportData;
   final ConfigRepository repository;
@@ -136,6 +143,150 @@ class _AccordiaAppState extends State<AccordiaApp> with WidgetsBindingObserver {
     }
   }
 
+  Future<void> _platform(BuildContext context, Uri uri) async {
+    if (_reportActive || !isAccordia(uri)) return;
+    setState(() => _reportActive = true);
+    final copy = PlatformCopy(_preferences.language);
+    try {
+      await Navigator.push(
+        context,
+        MaterialPageRoute<void>(
+          builder: (_) =>
+              widget.platformBuilder?.call(uri, copy, widget.openWebsite) ??
+              AccordiaPlatformPage(
+                uri: uri,
+                copy: copy,
+                openOutside: widget.openWebsite,
+                onPresentation: (data) async {
+                  await widget.repository.stageFromWebView(data);
+                },
+              ),
+        ),
+      );
+    } finally {
+      if (mounted) setState(() => _reportActive = false);
+    }
+  }
+
+  Future<void> _links(BuildContext context) async {
+    final c = PlatformCopy(_preferences.language);
+    var action = await showModalBottomSheet<int>(
+      context: context,
+      useSafeArea: true,
+      builder: (sheet) => Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              title: Text(c.t('join')),
+              onTap: () => Navigator.pop(sheet, 0),
+            ),
+            ListTile(
+              leading: const Icon(Icons.qr_code_scanner),
+              title: Text(c.t('scan')),
+              onTap: () => Navigator.pop(sheet, 1),
+            ),
+            ListTile(
+              leading: const Icon(Icons.link),
+              title: Text(c.t('paste')),
+              onTap: () => Navigator.pop(sheet, 2),
+            ),
+          ],
+        ),
+      ),
+    );
+    if (action == null || !context.mounted) return;
+    Uri? uri;
+    if (action == 0) {
+      uri = websiteAction(WebAction.join, _preferences.language);
+    } else if (action == 1) {
+      uri = await Navigator.push<Uri>(
+        context,
+        MaterialPageRoute(builder: (_) => AccordiaScanner(copy: c)),
+      );
+      if (uri?.scheme == 'accordia-paste') {
+        uri = null;
+        action = 2;
+      }
+    }
+    if (action == 2 && context.mounted) {
+      final input = TextEditingController();
+      String? error;
+      uri = await showDialog<Uri>(
+        context: context,
+        builder: (dialog) => StatefulBuilder(
+          builder: (dialog, update) => AlertDialog(
+            title: Text(c.t('paste')),
+            content: TextField(
+              controller: input,
+              maxLength: 8192,
+              decoration: InputDecoration(
+                hintText: c.t('linkHint'),
+                errorText: error,
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(dialog),
+                child: Text(c.t('cancel')),
+              ),
+              FilledButton(
+                onPressed: () {
+                  final parsed = scannedAccordia(input.text);
+                  if (parsed == null) {
+                    update(() => error = c.t('invalid'));
+                  } else {
+                    Navigator.pop(dialog, parsed);
+                  }
+                },
+                child: Text(c.t('open')),
+              ),
+            ],
+          ),
+        ),
+      );
+      // The dialog route may still be animating out; dispose after its transition.
+      await Future<void>.delayed(const Duration(milliseconds: 350));
+      input.dispose();
+    }
+    if (uri != null && context.mounted) await _platform(context, uri);
+  }
+
+  Future<void> _draftChoice(BuildContext context) async {
+    final c = PlatformCopy(_preferences.language);
+    final local = await showModalBottomSheet<bool>(
+      context: context,
+      useSafeArea: true,
+      builder: (sheet) => Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(c.t('scope')),
+            ListTile(
+              title: Text(c.t('online')),
+              onTap: () => Navigator.pop(sheet, false),
+            ),
+            ListTile(
+              title: Text(c.t('local')),
+              onTap: () => Navigator.pop(sheet, true),
+            ),
+          ],
+        ),
+      ),
+    );
+    if (local == null || !context.mounted) return;
+    if (local) {
+      await _native(context, 1);
+    } else {
+      await _platform(
+        context,
+        websiteAction(WebAction.drafts, _preferences.language),
+      );
+    }
+  }
+
   Future<void> _native(BuildContext context, int action) async {
     if (_reportActive) return;
     setState(() => _reportActive = true);
@@ -171,7 +322,11 @@ class _AccordiaAppState extends State<AccordiaApp> with WidgetsBindingObserver {
               style: Theme.of(sheet).textTheme.headlineSmall,
             ),
             const SizedBox(height: 16),
-            Text(copy.n(unavailable ? 'account' : 'help')),
+            Text(
+              unavailable
+                  ? copy.n('account')
+                  : PlatformCopy(_preferences.language).t('help'),
+            ),
             if (!unavailable) ...[
               const SizedBox(height: 24),
               Text(copy.n('rescueHelp')),
@@ -223,10 +378,15 @@ class _AccordiaAppState extends State<AccordiaApp> with WidgetsBindingObserver {
                 },
               ),
               const Divider(),
-              Text(
-                ReportCopy(widget.reportData, _preferences.language).n('local'),
-              ),
+              Text(PlatformCopy(_preferences.language).t('scope')),
               const SizedBox(height: 16),
+              OutlinedButton(
+                onPressed: () {
+                  Navigator.pop(sheet);
+                  unawaited(_native(context, 0));
+                },
+                child: Text(PlatformCopy(_preferences.language).t('offline')),
+              ),
             ],
           ),
         ),
@@ -247,11 +407,26 @@ class _AccordiaAppState extends State<AccordiaApp> with WidgetsBindingObserver {
         config: config,
         language: _preferences.language,
         onLanguageChanged: (value) => unawaited(_language(context, value)),
-        onStart: () => unawaited(_native(context, 0)),
-        onJoin: () => _information(context, unavailable: true),
-        onDrafts: () => unawaited(_native(context, 1)),
-        onReports: () => unawaited(_native(context, 1)),
-        onAccount: () => _information(context, unavailable: true),
+        onStart: () => unawaited(
+          _platform(
+            context,
+            websiteAction(WebAction.start, _preferences.language),
+          ),
+        ),
+        onJoin: () => unawaited(_links(context)),
+        onDrafts: () => unawaited(_draftChoice(context)),
+        onReports: () => unawaited(
+          _platform(
+            context,
+            websiteAction(WebAction.reports, _preferences.language),
+          ),
+        ),
+        onAccount: () => unawaited(
+          _platform(
+            context,
+            websiteAction(WebAction.account, _preferences.language),
+          ),
+        ),
         onHelp: () => _information(context),
         onSettings: () => _settings(context, config),
         officialLogo: AccordiaBrand(title: config.title),

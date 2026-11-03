@@ -1,3 +1,34 @@
+## 3 novembre 2026 — Horizon conservé, plateforme intégrée en WebView (0.3.0+3)
+
+Choix explicite du propriétaire : garder l’interface actuelle et utiliser la
+plateforme en WebView, scan/liens et saisie partagée inclus. Accueil Horizon,
+logo/splash/son/réglages conservés ; démarrer, compte et documents ouvrent une
+WebView embarquée. Rejoindre propose ouverture, scan QR ou collage validé. Le
+fragment d’invitation est conservé, les droits A/B restent contrôlés par le serveur.
+Brouillons natifs conservés en source et accessibles séparément, sans conversion
+silencieuse vers les brouillons web. Le package debug .webpreview coexiste avec
+.nativepreview : données des installations précédentes dans ces installations.
+
+Configuration publiée lue dans la session WebView et préparée dans le dépôt natif,
+sans copie de cookies/identité ; application différée au retour à l’accueil.
+Sorties externes sur confirmation, protocoles dangereux refusés, caméra/GPS sur
+origine Accordia et autorisation explicite, retour/fermeture prévenus. PDF blob ou
+HTTPS Accordia extrait sur action de téléchargement et aperçu natif, sans pont JS
+exposé aux pages. Journaux du plugin et inspection WebView désactivés.
+
+35 tests Flutter réussis, analyse sans diagnostic, formatage conforme ; 9 tests
+existants A/B réussis (D1/R2, invitations, droits, CAS, conservation/reprise).
+XML Android et plist valides. Voir docs/mobile/HORIZON_WEBVIEW.md pour fichiers,
+preuves, limites et recette. Compilation Android distante encore à vérifier.
+Aucun nouveau build iOS ni recette caméra/GPS/PDF/connexion sur téléphone réel.
+Accès Sites custom conservé ; requête anonyme à /constat renvoie 401, connexion
+réelle nécessaire et compatibilité de l’authentification intégrée non validée.
+Pas de contournement d’identité, de publication, de changement d’audience ou de
+fusion de main 7a6586a. Version Sites 84 observée, site existant inchangé dans ce lot.
+Guides natifs FR/EN/DE/NL actualisés pour scan/liens/A-B/sessions distinctes ;
+guide/tutoriel web vérifiés, aucun parcours web changé. Prochaine étape : recette
+avec deux comptes et téléphones autorisés, liens système vérifiés/signature durable.
+
 ## 2026-11-03 — Préparation de constat entièrement interne (0.2.0+2)
 
 Création, situation, véhicules A/B, 17 circonstances, brouillons et PDF maintenant

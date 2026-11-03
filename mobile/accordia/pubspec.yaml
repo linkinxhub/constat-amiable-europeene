@@ -1,5 +1,5 @@
 name: accordia_mobile
-version: 0.2.0+2
+version: 0.3.0+3
 publish_to: none
 description: Socle de configuration de l’application mobile Accordia.
 environment:
@@ -10,11 +10,14 @@ dependencies:
   cryptography: ^2.9.0
   flutter:
     sdk: flutter
+  flutter_inappwebview: ^6.1.5
   flutter_localizations:
     sdk: flutter
   flutter_secure_storage: ^11.2.0
+  mobile_scanner: ^7.5.0
   path_provider: ^2.1.6
   pdf: ^3.13.1
+  permission_handler: ^13.0.2
   printing: ^5.15.1
   url_launcher: ^6.3.3
 dev_dependencies:
