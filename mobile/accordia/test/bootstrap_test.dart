@@ -32,7 +32,7 @@ void main() {
         contentBuilder: (_, config) => Scaffold(body: Text(config.title)),
       );
       await tester.pumpWidget(host(true));
-      await tester.pump();
+      await tester.pumpAndSettle();
       expect(find.text('Accordia'), findsOneWidget);
       source.response.complete({
         ...MobileConfig.fallback.toJson(),

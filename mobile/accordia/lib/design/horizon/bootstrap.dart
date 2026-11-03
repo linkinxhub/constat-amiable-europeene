@@ -7,6 +7,7 @@ import '../../config/config_repository.dart';
 import '../../config/mobile_config.dart';
 import 'intro.dart';
 import 'theme.dart';
+import 'copy.dart';
 
 /// Host composition point; production router/authentication remain external.
 /// Remote refresh does not block startup or mutate an active report.
@@ -18,19 +19,23 @@ class HorizonBootstrap extends StatefulWidget {
     required this.contentBuilder,
     required this.locale,
     this.officialLogo,
+    this.startupBuilder,
+    this.onIntroFinished,
   });
   final ConfigRepository repository;
   final bool reportInProgress;
   final Widget Function(BuildContext, MobileConfig) contentBuilder;
   final Locale locale;
   final Widget? officialLogo;
+  final VoidCallback? onIntroFinished;
+  final Widget Function(BuildContext, MobileConfig, Widget)? startupBuilder;
   @override
   State<HorizonBootstrap> createState() => _HorizonBootstrapState();
 }
 
 class _HorizonBootstrapState extends State<HorizonBootstrap>
     with WidgetsBindingObserver {
-  bool _ready = false;
+  bool _ready = false, _initialized = false;
   @override
   void initState() {
     super.initState();
@@ -41,14 +46,14 @@ class _HorizonBootstrapState extends State<HorizonBootstrap>
   Future<void> _start() async {
     await widget.repository.initialize();
     if (!mounted) return;
-    setState(() => _ready = true);
+    setState(() => _initialized = true);
     unawaited(_refresh());
   }
 
   Future<void> _refresh() async {
     await widget.repository.refresh();
     if (!mounted) return;
-    _apply();
+    if (_ready) _apply();
   }
 
   void _apply() {
@@ -89,11 +94,31 @@ class _HorizonBootstrapState extends State<HorizonBootstrap>
       title: config.title,
       locale: widget.locale,
       theme: horizonTheme(config),
-      home: _ready
-          ? Builder(
-              builder: (context) => widget.contentBuilder(context, config),
-            )
-          : HorizonIntro(config: config, officialLogo: widget.officialLogo),
+      home: !_initialized
+          ? const ColoredBox(color: Color(0xff061c4c))
+          : Builder(
+              builder: (context) {
+                final child = _ready
+                    ? widget.contentBuilder(context, config)
+                    : HorizonIntro(
+                        config: config,
+                        officialLogo: widget.officialLogo,
+                        language: HorizonLanguage.values.firstWhere(
+                          (l) => l.name == widget.locale.languageCode,
+                          orElse: () => HorizonLanguage.fr,
+                        ),
+                        onCompleted: () {
+                          if (mounted) {
+                            setState(() => _ready = true);
+                            widget.onIntroFinished?.call();
+                            _apply();
+                          }
+                        },
+                      );
+                return widget.startupBuilder?.call(context, config, child) ??
+                    child;
+              },
+            ),
     );
   }
 }

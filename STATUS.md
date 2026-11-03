@@ -1,3 +1,15 @@
+## 3 novembre 2026 — Splash Sérénité et master audit
+
+Introduction Flutter n° 2 développée : scène accident/constat, lumière et logo relief,
+Passer, mouvement réduit, pause/reprise, son au début si activé. Durée administrable
+existante conservée (0–1500 ms), pas d’attente réseau. Droits/données/WebView préservés.
+Master audit : pipeline TypeScript/lint/build et 328 tests web réussis ; 0 alerte de
+dépendance production, 1 modérée de développement ; réserves de connexion, 112, exploitation,
+administration médias et distribution explicitées. Exclusions des caches générés au lint
+corrigées après échec mémoire. Guides natifs FR/EN/DE/NL actualisés ; guide/tutoriel web
+vérifiés sans nouveau parcours métier. Aucun site publié ni audience modifiée.
+Voir docs/MASTER_AUDIT_2026-11-03.md et docs/mobile/SPLASH_SERENITY.md.
+
 ## 3 novembre 2026 — Azur sculpté et navigation interne (0.4.0+6)
 
 Validation de livraison : 44 tests Flutter et 40 tests web ciblés réussis ; analyses,

@@ -12,6 +12,11 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Runtime caches and generated native output are not application source.
+    ".sites-runtime/**",
+    ".wrangler/**",
+    "mobile/accordia/.dart_tool/**",
+    "mobile/accordia/build/**",
   ]),
   {
     files: ["components/ui/**/*.{ts,tsx}", "hooks/use-mobile.ts"],

@@ -78,10 +78,8 @@ void main() {
         ),
       );
       expect(find.text('TEST OFFICIAL ASSET SLOT'), findsOneWidget);
-      final animation = tester.widget<TweenAnimationBuilder<double>>(
-        find.byType(TweenAnimationBuilder<double>),
-      );
-      expect(animation.duration, Duration.zero);
+      await tester.pump();
+      expect(tester.binding.transientCallbackCount, 0);
       expect(tester.takeException(), isNull);
     },
   );

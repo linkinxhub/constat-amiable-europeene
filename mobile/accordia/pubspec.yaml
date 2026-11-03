@@ -1,5 +1,5 @@
 name: accordia_mobile
-version: 0.4.0+6
+version: 0.4.1+7
 publish_to: none
 description: Socle de configuration de l’application mobile Accordia.
 environment:
@@ -30,5 +30,6 @@ flutter:
     - assets/horizon/azur-accident.webp
     - assets/audio/startup.wav
     - assets/brand/shield-white.png
+    - assets/brand/shield-relief.png
     - assets/copy/constat.json
     - assets/fonts/DejaVuSans.ttf

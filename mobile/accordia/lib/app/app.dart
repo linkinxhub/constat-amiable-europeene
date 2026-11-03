@@ -7,6 +7,7 @@ import '../config/mobile_config.dart';
 import '../design/horizon/bootstrap.dart';
 import '../design/horizon/copy.dart';
 import '../design/horizon/home.dart';
+import '../design/horizon/splash_copy.dart';
 import 'copy.dart';
 import 'brand.dart';
 import 'preferences.dart';
@@ -273,6 +274,8 @@ class _AccordiaAppState extends State<AccordiaApp> with WidgetsBindingObserver {
                   : PlatformCopy(_preferences.language).t('help'),
             ),
             if (!unavailable) ...[
+              const SizedBox(height: 16),
+              Text(SplashCopy.values[_preferences.language]!.guide),
               const SizedBox(height: 24),
               Text(copy.n('rescueHelp')),
               OutlinedButton(
@@ -349,44 +352,46 @@ class _AccordiaAppState extends State<AccordiaApp> with WidgetsBindingObserver {
     repository: widget.repository,
     reportInProgress: _reportActive,
     locale: Locale(_preferences.language.name),
-    contentBuilder: (context, config) => _SoundGate(
+    onIntroFinished: () => unawaited(widget.sound.pause()),
+    startupBuilder: (context, config, child) => _SoundGate(
       sound: widget.sound,
       config: config,
       preference: _preferences.sound,
-      child: HorizonHome(
-        config: config,
-        language: _preferences.language,
-        onLanguageChanged: (value) => unawaited(_language(context, value)),
-        onStart: () => unawaited(
-          _platform(
-            context,
-            websiteAction(WebAction.start, _preferences.language),
-          ),
+      child: child,
+    ),
+    contentBuilder: (context, config) => HorizonHome(
+      config: config,
+      language: _preferences.language,
+      onLanguageChanged: (value) => unawaited(_language(context, value)),
+      onStart: () => unawaited(
+        _platform(
+          context,
+          websiteAction(WebAction.start, _preferences.language),
         ),
-        onJoin: () => unawaited(_links(context)),
-        onTogether: () => unawaited(
-          _platform(
-            context,
-            websiteAction(WebAction.together, _preferences.language),
-          ),
-        ),
-        onDrafts: () => unawaited(_draftChoice(context)),
-        onReports: () => unawaited(
-          _platform(
-            context,
-            websiteAction(WebAction.reports, _preferences.language),
-          ),
-        ),
-        onAccount: () => unawaited(
-          _platform(
-            context,
-            websiteAction(WebAction.account, _preferences.language),
-          ),
-        ),
-        onHelp: () => _information(context),
-        onSettings: () => _settings(context, config),
-        officialLogo: AccordiaBrand(title: config.title, inverted: true),
       ),
+      onJoin: () => unawaited(_links(context)),
+      onTogether: () => unawaited(
+        _platform(
+          context,
+          websiteAction(WebAction.together, _preferences.language),
+        ),
+      ),
+      onDrafts: () => unawaited(_draftChoice(context)),
+      onReports: () => unawaited(
+        _platform(
+          context,
+          websiteAction(WebAction.reports, _preferences.language),
+        ),
+      ),
+      onAccount: () => unawaited(
+        _platform(
+          context,
+          websiteAction(WebAction.account, _preferences.language),
+        ),
+      ),
+      onHelp: () => _information(context),
+      onSettings: () => _settings(context, config),
+      officialLogo: AccordiaBrand(title: config.title, inverted: true),
     ),
   );
 }
