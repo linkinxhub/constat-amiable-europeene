@@ -12,6 +12,10 @@ import 'brand.dart';
 import 'preferences.dart';
 import 'startup_sound.dart';
 import 'web_actions.dart';
+import '../reports/copy.dart';
+import '../reports/store.dart';
+import '../reports/editor.dart';
+import '../reports/list.dart';
 
 class AccordiaApp extends StatefulWidget {
   const AccordiaApp({
@@ -21,7 +25,11 @@ class AccordiaApp extends StatefulWidget {
     required this.initialPreferences,
     required this.sound,
     required this.openWebsite,
+    required this.drafts,
+    required this.reportData,
   });
+  final DraftStore drafts;
+  final Map<String, dynamic> reportData;
   final ConfigRepository repository;
   final PreferenceStore preferences;
   final AppPreferences initialPreferences;
@@ -34,6 +42,7 @@ class AccordiaApp extends StatefulWidget {
 class _AccordiaAppState extends State<AccordiaApp> with WidgetsBindingObserver {
   late AppPreferences _preferences;
   bool _opening = false;
+  bool _reportActive = false;
   @override
   void initState() {
     super.initState();
@@ -127,6 +136,59 @@ class _AccordiaAppState extends State<AccordiaApp> with WidgetsBindingObserver {
     }
   }
 
+  Future<void> _native(BuildContext context, int action) async {
+    if (_reportActive) return;
+    setState(() => _reportActive = true);
+    final copy = ReportCopy(widget.reportData, _preferences.language);
+    try {
+      await Navigator.push(
+        context,
+        MaterialPageRoute<void>(
+          builder: (_) => action == 0
+              ? ReportEditor(copy: copy, store: widget.drafts)
+              : DraftsPage(copy: copy, store: widget.drafts),
+        ),
+      );
+    } finally {
+      if (mounted) setState(() => _reportActive = false);
+    }
+  }
+
+  void _information(BuildContext context, {bool unavailable = false}) {
+    final copy = ReportCopy(widget.reportData, _preferences.language);
+    showModalBottomSheet<void>(
+      context: context,
+      useSafeArea: true,
+      isScrollControlled: true,
+      builder: (sheet) => SingleChildScrollView(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              copy.text(unavailable ? 'perspectives' : 'guideTitle'),
+              style: Theme.of(sheet).textTheme.headlineSmall,
+            ),
+            const SizedBox(height: 16),
+            Text(copy.n(unavailable ? 'account' : 'help')),
+            if (!unavailable) ...[
+              const SizedBox(height: 24),
+              Text(copy.n('rescueHelp')),
+              OutlinedButton(
+                onPressed: () {
+                  Navigator.pop(sheet);
+                  unawaited(_web(context, WebAction.help));
+                },
+                child: Text(copy.n('rescue')),
+              ),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+
   void _settings(BuildContext context, MobileConfig config) {
     final c = AppCopy.values[_preferences.language]!;
     showModalBottomSheet<void>(
@@ -161,7 +223,9 @@ class _AccordiaAppState extends State<AccordiaApp> with WidgetsBindingObserver {
                 },
               ),
               const Divider(),
-              Text(c.scope),
+              Text(
+                ReportCopy(widget.reportData, _preferences.language).n('local'),
+              ),
               const SizedBox(height: 16),
             ],
           ),
@@ -173,7 +237,7 @@ class _AccordiaAppState extends State<AccordiaApp> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) => HorizonBootstrap(
     repository: widget.repository,
-    reportInProgress: false,
+    reportInProgress: _reportActive,
     locale: Locale(_preferences.language.name),
     contentBuilder: (context, config) => _SoundGate(
       sound: widget.sound,
@@ -183,12 +247,12 @@ class _AccordiaAppState extends State<AccordiaApp> with WidgetsBindingObserver {
         config: config,
         language: _preferences.language,
         onLanguageChanged: (value) => unawaited(_language(context, value)),
-        onStart: () => unawaited(_web(context, WebAction.start)),
-        onJoin: () => unawaited(_web(context, WebAction.join)),
-        onDrafts: () => unawaited(_web(context, WebAction.drafts)),
-        onReports: () => unawaited(_web(context, WebAction.reports)),
-        onAccount: () => unawaited(_web(context, WebAction.account)),
-        onHelp: () => unawaited(_web(context, WebAction.help)),
+        onStart: () => unawaited(_native(context, 0)),
+        onJoin: () => _information(context, unavailable: true),
+        onDrafts: () => unawaited(_native(context, 1)),
+        onReports: () => unawaited(_native(context, 1)),
+        onAccount: () => _information(context, unavailable: true),
+        onHelp: () => _information(context),
         onSettings: () => _settings(context, config),
         officialLogo: AccordiaBrand(title: config.title),
       ),

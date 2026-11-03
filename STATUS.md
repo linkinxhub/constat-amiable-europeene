@@ -1,3 +1,135 @@
+## 2026-11-03 — Préparation de constat entièrement interne (0.2.0+2)
+
+Création, situation, véhicules A/B, 17 circonstances, brouillons et PDF maintenant
+natifs : aucun lancement du navigateur dans ces parcours. Seule l’aide propose
+un secours web avec confirmation. Comptes et invitations affichent honnêtement
+leur indisponibilité native ; photos, croquis, signatures et synchronisation des
+dossiers restent à implémenter. Aucun compte simulé ni contournement de Sites.
+
+Brouillons privés AES-GCM 256 avec clé Keystore/Keychain, écritures atomiques,
+révisions concurrentes, conservation des fichiers illisibles et des champs
+inactifs. PDF hors ligne, préparation non signée, texte intégral en annexe.
+FR/EN/DE/NL repris des sources existantes ; 30 tests Flutter réussis, analyse sans
+diagnostic et formatage conformes. Parcours à 320 px dans les quatre langues,
+MAC altéré, conflit de révision et données conservées testés. JSON natif accepté
+par le schéma canonique et ses règles de complétude sur fixture fictive.
+PDF quatre langues extrait sans perte de fin de texte ; page FR rendue/inspectée.
+
+Fichiers : mobile/accordia/lib/reports/*, app/app.dart, app/copy.dart, main.dart,
+assets/copy, assets/fonts, pubspec/lock, tests, configuration Android et exporteur
+scripts/export-mobile-copy.mjs. Détails : docs/mobile/INTERNAL_REPORTS.md.
+Build Android distant à vérifier avant livraison ; aucun résultat APK annoncé ici.
+iOS et téléphone physique non testés. Production web v82 inchangée ; branche
+isolée, main 195dda2 et son intégration admin préservés. La configuration distante
+reste conditionnée à une API accessible ; aucune synchronisation admin productive
+complète revendiquée. Prochaine étape : connexion mobile sécurisée, invitations,
+photos/croquis/signatures, puis recette physique et distribution signée.
+
+## 2026-11-03 — APK Android de test produit et livré
+
+CI GitHub 41610058395 success : analyse, formatage, 21 tests, build APK et
+artefact réussis. APK 0.1.0 be.adilbtp.accordia vérifié (signature v2, manifeste,
+SHA-256) et remis au propriétaire. Sous-arbre mobile identique entre source
+canonique 7a5180f et GitHub b0fa483d. Preuves : docs/mobile/NATIVE_SHELL.md.
+Accueil/réglages/audio natifs ; constats/comptes/invitations restent explicitement
+sur le site sécurisé. Aucune conversion métier complète ou synchronisation
+productive d’administration revendiquée ; iOS non compilé, recette physique
+audio/navigateur encore ouverte. Production web v82 inchangée.
+
+## 2026-11-03 — Point d’entrée et projets Android/iOS
+
+Application Flutter de test exécutable : accueil Horizon, réglages privés
+langue/son, signature sonore originale, icônes et splash natif reprenant le
+bouclier du site. Parcours métier accessibles EXPLICITEMENT par le navigateur
+système après confirmation ; aucun parcours entièrement natif ou compte simulé.
+Détails/fichiers/limites : docs/mobile/NATIVE_SHELL.md. 21 tests Flutter réussis ;
+XML/plist valides. APK local non produit : téléchargement Gradle bloqué dans Java.
+Workflow GitHub étendu pour compilation debug Android et artefact : résultat
+distant à constater séparément. Aucun build iOS ni recette physique audio.
+Production inchangée. Guide web vérifié ; aide mobile FR/EN/DE/NL actualisée.
+
+## 2026-11-03 — Configuration mobile/cache et tests Flutter exécutés
+
+SDK officiel Flutter 3.47.9 / Dart 3.13.7 installé et empreinte vérifiée.
+17 tests Flutter réussis, analyse sans diagnostic et formatage appliqué.
+Correction d’une icône inexistante détectée par compilation Horizon.
+Transport HTTPS borné, cache privé validé, requêtes regroupées et démarrage
+Horizon avec mise à jour hors saisie ajoutés. Localisations natives FR/EN/DE/NL
+et lockfile inclus. Voir docs/mobile/CONFIG_SYNC.md pour fichiers et preuves.
+Aucun parcours natif complet, APK/IPA, connexion réelle ou recette téléphone ;
+son/logo officiel/splash natif restent à intégrer. API non déployée, accès Sites
+préservé. Guide web/tutoriel vérifiés : aucun nouveau parcours web.
+Production inchangée, sources destinées aux branches de revue dédiées.
+Les mentions « SDK absent / tests non exécutés » décrivent leurs lots historiques
+et sont remplacées pour ce lot par les résultats ci-dessus.
+
+## 2026-11-03 — Horizon retenu et composants Flutter ajoutés
+
+Choix explicite du propriétaire : Horizon. Accueil, thème et introduction Flutter
+ajoutés, illustration embarquée, quatre langues et handlers de route obligatoires.
+Horizon devient le défaut des nouvelles configurations, anciennes valeurs
+conservées. Voir docs/mobile/HORIZON.md pour les fichiers, tests et limites.
+Six tests de configuration réussis ; TypeScript/lint ciblé/build web réussis. Tests widgets
+Flutter écrits mais non exécutés (SDK absent). Aucun binaire ni parcours métier
+mobile raccordé ; logo officiel, audio et splash natif restent à intégrer.
+Guide vérifié, aucun impact conducteur web. Production inchangée.
+
+## 2026-11-03 — Administration de la configuration mobile, non publiée
+
+API et section /admin ajoutées : titre/couleur/design/introduction/défaut sonore,
+brouillon/publication/historique/rollback avec révision monotone et permissions
+serveur. Migration 0020 générée, non appliquée en production. Client Flutter
+non raccordé, logo et son personnalisés à intégrer. Documentation :
+docs/mobile/LOT_02_ADMIN.md ; interface et aide administrative FR/EN/DE/NL.
+Guide conducteur vérifié, aucun nouveau parcours conducteur web.
+
+Contrôles : TypeScript et build réussis ; lint ciblé sans erreur, lint complet
+hors magasin local .sites-runtime : 0 erreur/54 avertissements historiques ;
+313 tests réussis après build, zéro échec. La commande verify initiale a épuisé
+la mémoire en parcourant le stockage de dépendances ; contrôles équivalents
+exécutés séparément. Preview indisponible (relay absent) : rendu, responsive et
+recette navigateur non validés. Flutter/Dart absents, pas de binaire mobile.
+Trois propositions visuelles fournies au propriétaire, aucun choix imposé.
+Production v82 inchangée. Branche GitHub de revue basée sur le dernier miroir
+v79 : lot mobile à revoir, pas une preuve de parité complète avec Sites v82 ;
+aucune fusion ni déploiement GitHub.
+
+## 2026-11-03 — Flutter, lot initial isolé
+
+Socle de configuration ajouté sous mobile/accordia : validation versionnée,
+révisions monotones, application hors constat actif et priorité des préférences
+sonores. Quatre tests écrits, non exécutés : SDK Flutter/Dart absent. Aucun écran,
+API de configuration, panneau admin mobile ou binaire livré. Authentification
+native à définir : identité actuelle dépendante du dispatcher Sites.
+Voir docs/mobile/LOT_01.md. Guide vérifié, aucun impact utilisateur.
+Production v82 inchangée ; synchronisation GitHub à vérifier séparément.
+
+## 2026-11-02 — Reprise après chat en lecture seule
+
+Base propre 17a75e164eedeb8b32a6a22ad19b4c43478942df retrouvée et concordante avec la source Sites distante. Vérification relancée : TypeScript, build, 308 tests/0 échec et ESLint sans erreur (54 avertissements historiques). MP4 65,60 s / 1 892 971 octets, décodage intégral FFmpeg sans erreur. Preview gérée retentée : infrastructure refuse le démarrage car un ancien serveur vinext /site PID 14 est signalé actif ; aucun contournement ni validation visuelle récente revendiqué. Publication et miroir GitHub autorisés par la demande antérieure « Publier », confirmée par « Continuer ». Lot limité à la vidéo BD et sa documentation, sans changement métier, de données ou d’audience. Guide FR/EN/DE/NL déjà synchronisé et vérifié. Retour arrière : version publiée 80.
+
+## 2026-11-02 — Publication autorisée, MP4 marketing BD
+
+Base propre a808b1d (v81), restauration backup/pre-video-publish-20261102. MP4 final 65,60 secondes, 1280×720 H.264/AAC, 1 892 971 octets : accroche française parlée en bulles BD, présentation originale et signature logo/slogan. Nouvelle URL versionnée, ancien MP4 conservé. Lecteur natif sans lecture automatique, partage/téléchargement conservés, durée et guide synchronisés FR/EN/DE/NL. Aucun rôle, abonnement, donnée métier ou audience modifié. Source de montage et audio dans scripts/video-marketing. Reprise après interruption : TypeScript, build et 308 tests réussis ; ESLint zéro erreur/54 avertissements historiques ; décodage FFmpeg complet sans erreur, git diff --check réussi. Preview indisponible (ancien serveur vinext actif signalé par le daemon), contrôle visuel navigateur non revendiqué. Publication sur instruction explicite « Publier » déjà reçue. Limites : écoute perceptuelle indépendante et envoi natif sur téléphone non validés.
+
+## 2026-11-02 — MP4 partageable, préparation sans publication
+
+Demande « Rendre la vidéo partageable ». Base propre distante 0565cc5, production v80 conservée, restauration before-story-share-20261102. Export français autonome 1280×720, H.264 yuv420p/25 fps, AAC mono 48 kHz, MP4 faststart 56,52 s, 1 401 720 octets. Réutilise les SVG/texte et piste v2 existants ; voix à vitesse naturelle, gain -3 dB au seul export pour la marge audio. Piste originale conservée. Mesures finales -16,0 LUFS, pic vrai -2,9 dBFS. SHA256 69a3515bc41caca323da6185e748b54632e4aea1bd8b995b95f7c15afe010fd4. Aucun appel fournisseur ni génération payante.
+
+Boutons FR/EN/DE/NL sous la scène : Partager la vidéo prépare explicitement le fichier, puis Choisir l’application déclenche Web Share depuis un nouveau clic conservant l’activation utilisateur. Téléchargement MP4 disponible en permanence, secours explicite sur navigateur incompatible, annulation sans fausse erreur, verrou contre double clic, flux plafonné 20 Mio, délai 30 s et abandon à la fermeture. Aucun constat, jeton, donnée personnelle, destinataire ou accès au site transmis. Pas de partage de lien privé comme substitut. Guide/tutoriel/aide synchronisés par accident-story-copy.guide dans les quatre langues.
+
+Validation : scripts/verify-platform.mjs réussi, TypeScript/build, 308 tests/0 échec, lint 0 erreur/54 avertissements historiques. Cinq tests de partage ciblés repassés. Décodage complet FFmpeg sans erreur et format/streams/durée contrôlés ; frames des huit séquences inspectées, chevauchement du texte corrigé. Lecteur navigateur réel jusqu’à ended=true à 56,52 s, error=null. Secours téléchargement vérifié ; quatre langues à largeur 360 sans débordement (345/345). Envoi natif sur téléphone/WhatsApp et écoute perceptuelle indépendante non validés dans cet environnement. Page QA retirée avant archive finale. Sources de rendu reproductibles : scripts/render-story-video.py ; détails docs/VIDEO_PARTAGE_2026-11-02.md. Version sauvegardée sans déploiement, aucun changement d’audience. Prochaine étape : autorisation explicite de publication du lot puis essai sur téléphone réel.
+
+## 2026-11-02 — Version 80 publiée
+
+Publication autorisée et confirmée par Sites : déploiement appgdep_6ae8b7cf23508191a3e2fabdf37b1f5f, état succeeded, le 2 novembre à 17:18:51 Europe/Amsterdam (16:18:51 UTC), environnement révision 3. Version 80, source b01f3b41a092b5bdddab52523c70e910e600d423, archive sha256:c91ce77c4c6de0ae5539fc32466ae92bd5aa6d15c19ab8459d52b03c1ddc936c. URL https://accordia-constat.adil-btp.chatgpt.site/ . Audience custom et deux visiteurs conservés. Page publiée ouverte et badge 57 s/huit séquences/bouton Écouter confirmés. Présentation et narration française longue désormais en ligne. Autres langues : voix de l’appareil conditionnelle. 303 tests, TypeScript/build et lint validés avant publication ; aucune recette physique ou validation perceptuelle indépendante revendiquée. Cette consignation est documentaire uniquement ; aucun second déploiement nécessaire. Prochaine étape : retour utilisateur sur la voix depuis son téléphone.
+
+## 2026-11-02 — Présentation longue validée, publication autorisée
+
+Autorisation explicite « Terminer et publier ». Base distante vérifiée d02229c, production v79 ; modifications locales du lot conservées et inspectées, point de restauration before-story57-release-20261102. Présentation portée à huit séquences, piste française enregistrée v2 de 56,502844 secondes, empreinte 3ef98c7e458d5881dce70a079f86082212536ec0a49a38e94a849bd84d26fdfa. Fichiers : features/marketing/accident-story.tsx, accident-story-copy.ts, recorded-narration.ts et story-narration-copy.ts, public/audio/accordia-story-fr-v2.mp3 ; tests et documentation associés. Ancienne piste conservée. Guide, tutoriel et aide FR/EN/DE/NL synchronisés par la copie commune. Aucune fonction métier ni migration modifiée.
+
+Validation exécutée : scripts/verify-platform.mjs réussi, TypeScript/build, 303 tests sans échec, lint zéro erreur/54 avertissements historiques. Durée ffprobe et empreinte vérifiées. Aperçu navigateur réel : clic narration, progression des huit séquences jusqu’à fin, retour Écouter/Revoir, pause stable et reprise ; aucune erreur applicative observée (messages d’extension exclus). FR/EN/DE/NL à largeur 360 et FR à 375/768/1280 sans débordement horizontal ; rendu bureau et mobile inspecté. Page temporaire QA retirée avant construction finale. Contrôle perceptuel indépendant de la voix non revendiqué ; autres langues avec voix de l’appareil conditionnelle. Réserves opérationnelles existantes maintenues, aucun nouvel audit de dépendances revendiqué. Publication en cours, succès à consigner après retour natif.
+
 ## 2026-11-02 — Master audit v77, sans correction ni publication
 
 Rapport docs/MASTER_AUDIT_V77_2026-11-02.md ; sondes scripts/audit-v77-probes.mjs. Production v77/code 1076d08, base documentaire locale propre d7831aa. Vérification complète : 289 tests réussis, TypeScript/build, lint 0 erreur/54 avertissements. Audit production 0 vulnérabilité ; complet 1 modérée Minimatch, 0 élevée/critique. Scan ciblé de 538 fichiers suivis sans motif de secret, historique non inspecté. Journaux serveur : zéro événement en erreur retourné sur 180 minutes (échantillon borné).
@@ -721,3 +853,14 @@ Instruction explicite « Publier ». Version 79 publiée avec succès le 2 novem
 
 Feedback avec images vitrine/plateforme désormais publié. Source applicative synchronisée GitHub 06557f1fad9973df879e9250b105ecd7393b667c, arbre identique 915ef9dee0f5ea23a3b223a903da2500f45892c8. Validation préalable 302 tests, TypeScript/build réussis, lint 0 erreur/54 avertissements ; pas de nouvelle suite revendiquée pour ce déploiement. Envoi connecté et consultation administrative sur site hébergé restent à confirmer. Réserves historiques de dépendance de développement, sauvegarde/rétention et recette mobile maintenues. Mise à jour documentaire uniquement, sans nouvelle fonction ni second déploiement.
 
+
+
+## 2026-11-02 — Vidéo BD, sécurité et intégration préparée
+Vidéo française BD 61,005 s : ajout après l’accroche d’une séquence de sécurité animée de 11 s, voix Tanguy/HeyGen Voice à vitesse naturelle. Feux de détresse, gilet, mise à l’abri ; 112 pour blessés/incendie. Logo suivi sur le téléphone, scènes originales et signature finale conservés. Lecteur/partage pointent vers public/video/accordia-bd-securite-fr.mp4 ; durée actualisée FR/EN/DE/NL. Ancien média conservé. Aucun droit, donnée, API ou abonnement modifié.
+Guide et tutoriel vérifiés : consignes déjà présentes et parcours véhicules/circonstances/photos/relecture/PDF cohérents ; aucune nouvelle fonction applicative. Illustrations BD explicatives, pas captures d’écran exactes. Retour arrière : référence Git checkpoint/video-before-safety-20261102 et ancien chemin vidéo conservé. Publication production non effectuée.
+Validation : décodage intégral FFmpeg sans erreur, H264/AAC 1280×720 25 fps, faststart, 12 066 845 octets sous plafond partage 20 Mio ; 5 tests story-video-share réussis. Écoute perceptuelle et partage physique mobile non validés. TypeScript et build Sites réussis. Preview tentée : délai de santé dépassé, statut arrêté ; recette navigateur/mobile non effectuée. Mesure audio intégrée : -16,54 LUFS, true peak -0,42 dBTP. Aucun écrêtage détecté ; écoute perceptuelle non validée. Sources sécurité : Police fédérale (panne/accident, 26.11.2024), 112.be/questions-frequentes.
+
+
+## 2026-11-02 — Master audit v82 après publication
+La v82 (source bb9a44e7958aae9ee80a1a66d192bfdc371543a9) est publiée : déploiement appgdep_6ae8e823416c8191b6386a6bad969076 succeeded. Audit sans correction ni nouveau déploiement : TypeScript/lint/build puis 308 tests réussis, 0 échec ; 54 avertissements lint. Audit production 0, complet 1 modérée Minimatch de développement. Vidéo publiée lue jusqu’à ended=true à 61,005 s ; cadre noir/saut de hauteur et concurrence des commandes audio confirmés. Téléchargement navigateur non validé (deux méthodes échouées). Consignes/modes/champs requis/blessés et conservation date/heure FR/EN/DE/NL testés sur données fictives locales.
+Rapport : docs/MASTER_AUDIT_V82_2026-11-02.md. GitHub reste en retard et CI en échec sur l’audit de développement ; sonde historique interrompue par dépendance de harnais manquante. Réserves : sauvegarde productive, purge planifiée, rétention feedbacks, deux téléphones et PDF final. Guide/tutoriel vérifiés, aucun impact utilisateur car lot documentaire seulement. Aucun changement de données, accès, rôle, abonnement ou intégration.

@@ -1,5 +1,8 @@
 import 'dart:io';
 
+import 'package:accordia_mobile/reports/copy.dart';
+import 'package:accordia_mobile/reports/store.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:accordia_mobile/app/app.dart';
@@ -98,7 +101,7 @@ void main() {
     await expectLater(store.read(), throwsFormatException);
   });
   testWidgets(
-    'native home asks before browser launch and settings persist without replaying sound',
+    'native home keeps core actions internal and settings persist without replaying sound',
     (tester) async {
       tester.view.physicalSize = const Size(375, 850);
       tester.view.devicePixelRatio = 1;
@@ -114,6 +117,8 @@ void main() {
           preferences: preferences,
           initialPreferences: const AppPreferences(),
           sound: StartupSound(chime),
+          drafts: UnavailableDraftStore(),
+          reportData: await ReportCopy.load(),
           openWebsite: (uri) async {
             opened.add(uri);
             return true;
@@ -125,15 +130,15 @@ void main() {
       await tester.tap(find.text('Commencer mon constat'));
       await tester.pumpAndSettle();
       expect(opened, isEmpty);
-      expect(find.text('Continuer sur le site sécurisé'), findsOneWidget);
-      await tester.tap(find.text('Annuler'));
+      expect(find.byTooltip('Enregistrer le brouillon'), findsOneWidget);
+      await tester.tap(find.byType(BackButton));
       await tester.pumpAndSettle();
-      expect(opened, isEmpty);
       await tester.tap(find.text('Rejoindre'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Ouvrir Accordia'));
+      expect(opened, isEmpty);
+      expect(find.textContaining('connexion mobile'), findsOneWidget);
+      await tester.tapAt(const Offset(10, 10));
       await tester.pumpAndSettle();
-      expect(opened.single.path, '/join');
       await tester.tap(find.byTooltip('Réglages'));
       await tester.pumpAndSettle();
       await tester.tap(find.byType(Switch));

@@ -10,17 +10,25 @@ import 'app/preferences.dart';
 import 'app/startup_sound.dart';
 import 'config/config_io.dart';
 import 'config/config_repository.dart';
+import 'reports/copy.dart';
+import 'reports/store.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   ConfigCache cache = _VolatileConfigCache();
   PreferenceStore preferences = UnavailablePreferenceStore();
+  DraftStore drafts = UnavailableDraftStore();
   try {
     final dir = await getApplicationSupportDirectory().timeout(
       const Duration(seconds: 2),
     );
     cache = FileConfigCache(File('${dir.path}/mobile-presentation-v1.json'));
     preferences = FilePreferenceStore(File('${dir.path}/preferences-v1.json'));
+    final draftDirectory = Directory('${dir.path}/local-drafts');
+    drafts = EncryptedDraftStore(
+      draftDirectory,
+      PlatformDraftKey(draftDirectory),
+    );
   } catch (_) {
     /* Native UI remains usable if private storage is unavailable. */
   }
@@ -30,12 +38,15 @@ Future<void> main() async {
       const Duration(milliseconds: 500),
     );
   } catch (_) {}
+  final reportData = await ReportCopy.load();
   runApp(
     AccordiaApp(
       repository: ConfigRepository(source: HttpsConfigSource(), cache: cache),
       preferences: preferences,
       initialPreferences: initial,
       sound: StartupSound(AssetChime()),
+      drafts: drafts,
+      reportData: reportData,
       openWebsite: (uri) =>
           launchUrl(uri, mode: LaunchMode.externalApplication),
     ),

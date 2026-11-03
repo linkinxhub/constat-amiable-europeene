@@ -30,6 +30,9 @@ android {
     }
 
     buildTypes {
+        debug {
+            applicationIdSuffix = ".nativepreview"
+        }
         release {
             // TODO: Add your own signing config for the release build.
             // Production signing must be configured separately before distribution.
