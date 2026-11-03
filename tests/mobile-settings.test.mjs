@@ -12,11 +12,11 @@ test('server roles, suspension and strict schema prevent privilege or config inj
 test('concurrent stale writes conflict, publication requires current draft, rollback requires published source',async()=>{const {db}=fixture();const results=await Promise.allSettled([saveMobileSettings(db,'admin',draft()),saveMobileSettings(db,'admin',draft())]);assert.equal(results.filter(r=>r.status==='fulfilled').length,1);await assert.rejects(()=>saveMobileSettings(db,'admin',{action:'rollback',expectedRevision:1,sourceRevision:1}),e=>e.status===400);await saveMobileSettings(db,'admin',draft(1,'Changed'));await assert.rejects(()=>saveMobileSettings(db,'admin',{action:'publish',expectedRevision:2,sourceRevision:1}),e=>e.status===409);await assert.rejects(()=>saveMobileSettings(db,'admin',{action:'publish',expectedRevision:2,sourceRevision:999}),e=>e.status===404)});
 test('four languages expose the same administrative controls and honest integration limit',()=>{for(const lang of ['fr','en','de','nl']){assert.deepEqual(Object.keys(mobileCopy[lang]),Object.keys(mobileCopy.fr));assert.ok(mobileCopy[lang].help.length>60)}});
 test('real administrative form preserves failed edits and prevents publishing unsaved changes in four languages',async()=>{
- const {componentHarness}=await import('./lifecycle-harness.mjs'),model=await import('../features/mobile/model.ts'),{z}=await import('zod');const oldFetch=globalThis.fetch;
+ const {componentHarness}=await import('./lifecycle-harness.mjs'),model=await import('../features/mobile/model.ts'),adminModel=await import('../features/mobile/admin-model.ts'),{mobileUxCopy}=await import('../features/mobile/admin-ux-copy.ts');const oldFetch=globalThis.fetch,oldWindow=globalThis.window;globalThis.window=new EventTarget();
  try{for(const lang of ['fr','en','de','nl']){
   let fail=false;const calls=[];const initial={revision:1,published:{schemaVersion:1,revision:0,...mobileDefaults},history:[{schemaVersion:1,revision:1,...mobileDefaults,state:'draft',actor:'admin',createdAt:'today',sourceRevision:null}]};
   globalThis.fetch=async(url,init)=>{calls.push({url,init});return {ok:!fail,json:async()=>initial}};
-  const h=componentHarness('features/mobile/admin-panel.tsx','MobileAdminPanel',{'./model':model,'./copy':{mobileCopy},zod:{z}}),props={lang};h.render(props);
+  const h=componentHarness('features/mobile/admin-panel.tsx','MobileAdminPanel',{'./model':model,'./copy':{mobileCopy},'./admin-model':adminModel,'./admin-ux-copy':{mobileUxCopy}}),props={lang,initial};h.render(props);
   await h.nodes(n=>n.type==='button'&&n.props.children===mobileCopy[lang].reload)[0].props.onClick();
   // onClick intentionally launches an async request without awaiting it.
   await new Promise(resolve=>setImmediate(resolve));h.render(props);
@@ -25,7 +25,7 @@ test('real administrative form preserves failed edits and prevents publishing un
   fail=true;await h.nodes(n=>n.type==='form')[0].props.onSubmit({preventDefault(){}});await new Promise(resolve=>setImmediate(resolve));h.render(props);
   assert.equal(h.nodes(n=>n.type==='input'&&n.props.maxLength===80)[0].props.value,'Edited title');assert.equal(h.nodes(n=>n.props?.role==='alert').length,1);
   assert.equal(JSON.parse(calls.at(-1).init.body).action,'draft');h.unmount();
- }}finally{globalThis.fetch=oldFetch}
+ }}finally{globalThis.fetch=oldFetch;globalThis.window=oldWindow}
 });
 test('Horizon is the new default without invalidating previously saved design IDs',async()=>{
  assert.equal(mobileDefaults.designId,'horizon');
