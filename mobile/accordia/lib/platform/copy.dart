@@ -6,6 +6,7 @@ class PlatformCopy {
   String t(String key) => values[language]![key]!;
   static const values = {
     HorizonLanguage.fr: {
+      'access': 'Connectez-vous avec un compte autorisé pour accéder à cette plateforme privée.',
       'scan': 'Scanner un QR Accordia',
       'paste': 'Coller un lien Accordia',
       'open': 'Ouvrir dans Accordia',
@@ -35,6 +36,8 @@ class PlatformCopy {
       'linkHint': 'https://…/session/…#invite=…',
     },
     HorizonLanguage.en: {
+      'access':
+          'Sign in with an authorized account to access this private platform.',
       'scan': 'Scan an Accordia QR',
       'paste': 'Paste an Accordia link',
       'open': 'Open in Accordia',
@@ -65,6 +68,7 @@ class PlatformCopy {
       'linkHint': 'https://…/session/…#invite=…',
     },
     HorizonLanguage.de: {
+      'access': 'Melden Sie sich mit einem zugelassenen Konto für diese private Plattform an.',
       'scan': 'Accordia-QR scannen',
       'paste': 'Accordia-Link einfügen',
       'open': 'In Accordia öffnen',
@@ -94,6 +98,7 @@ class PlatformCopy {
       'linkHint': 'https://…/session/…#invite=…',
     },
     HorizonLanguage.nl: {
+      'access': 'Meld u aan met een toegestaan account voor dit privéplatform.',
       'scan': 'Accordia-QR scannen',
       'paste': 'Accordia-link plakken',
       'open': 'Openen in Accordia',

@@ -36,6 +36,7 @@ class _AccordiaPlatformPageState extends State<AccordiaPlatformPage>
       _externalBusy = false;
   int _progress = 0;
   String _visibleHost = accordiaHost;
+  String _errorKey = 'error';
   PlatformCopy get c => widget.copy;
   @override
   void initState() {
@@ -282,7 +283,7 @@ class _AccordiaPlatformPageState extends State<AccordiaPlatformPage>
           if (_error)
             Padding(
               padding: const EdgeInsets.all(16),
-              child: Text(c.t('error')),
+              child: Text(c.t(_errorKey)),
             ),
           Expanded(
             child: InAppWebView(
@@ -339,11 +340,19 @@ class _AccordiaPlatformPageState extends State<AccordiaPlatformPage>
               },
               onReceivedError: (_, request, _) {
                 if (request.isForMainFrame == true && mounted)
-                  setState(() => _error = true);
+                  setState(() {
+                    _error = true;
+                    _errorKey = 'error';
+                  });
               },
               onReceivedHttpError: (_, request, response) {
                 if (request.isForMainFrame == true && mounted)
-                  setState(() => _error = true);
+                  setState(() {
+                    _error = true;
+                    _errorKey = [401, 403].contains(response.statusCode)
+                        ? 'access'
+                        : 'error';
+                  });
               },
               onCreateWindow: (ctl, action) async {
                 final uri = Uri.tryParse(action.request.url?.toString() ?? '');
