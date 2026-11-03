@@ -59,6 +59,8 @@ Uri restartAccordiaSignIn(Uri original) {
   if (valid) {
     final lang = original.queryParameters['lang'];
     if (const ['fr', 'en', 'de', 'nl'].contains(lang)) params['lang'] = lang!;
+    if (original.queryParameters['entry'] == 'same-device')
+      params['entry'] = 'same-device';
     final document = original.queryParameters['document'];
     if (document != null && RegExp(r'^[a-zA-Z0-9-]{1,80}$').hasMatch(document))
       params['document'] = document;
@@ -92,4 +94,26 @@ Uri externalBrowserDestination(Uri requested, Uri original) {
   return isAuthenticationDestination(requested)
       ? restartAccordiaSignIn(original)
       : requested;
+}
+
+/// Internal navigation only. External content never gets native capabilities.
+bool isSecureWebPage(Uri? uri) =>
+    uri != null &&
+    uri.scheme == 'https' &&
+    uri.port == 443 &&
+    uri.host.isNotEmpty &&
+    uri.userInfo.isEmpty;
+bool canNavigateInside(Uri? uri, {bool externalContent = false}) =>
+    isAccordia(uri) ||
+    (uri != null && isAuthenticationDestination(uri)) ||
+    (externalContent && isSecureWebPage(uri));
+String embeddedService(Uri? uri) {
+  if (uri == null || isAccordia(uri)) return 'Accordia';
+  return switch (uri.host) {
+    'auth.openai.com' || 'auth0.openai.com' || 'chatgpt.com' => 'OpenAI',
+    'accounts.google.com' => 'Google',
+    'login.microsoftonline.com' || 'login.live.com' => 'Microsoft',
+    'appleid.apple.com' => 'Apple',
+    _ => '',
+  };
 }

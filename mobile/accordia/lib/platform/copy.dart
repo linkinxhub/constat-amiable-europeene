@@ -13,7 +13,7 @@ class PlatformCopy {
   static const values = {
     HorizonLanguage.fr: {
       "browserAuthTitle": "Connexion dans le navigateur sécurisé",
-      "browserAuthHelp": "Une nouvelle connexion démarrera depuis Accordia dans le navigateur intégré, ou le navigateur externe si nécessaire. Continuez-y les services connectés pour cette session : la connexion n’est pas transférée à la WebView. Pour une invitation, rouvrez ensuite le lien complet avec son QR ou son message. Les stockages locaux restent séparés.",
+      'browserAuthHelp': 'La connexion reste dans Accordia. Si le fournisseur refuse la connexion embarquée, recommencez depuis Accordia. Aucun navigateur externe ne sera ouvert. Un refus persistant nécessite une intégration de connexion mobile prise en charge.',
       "browserMode": "Mode de secours choisi pour cette session : services connectés dans le navigateur sécurisé. Cela ne confirme pas que vous êtes connecté. Fermer le navigateur revient à Accordia. Les brouillons de la WebView ne sont pas transférés.",
       "retryWebview": "Réessayer la WebView",
 
@@ -48,12 +48,15 @@ class PlatformCopy {
       'download': 'Aperçu PDF',
       'unsupported': 'Ce fichier ou ce lien ne peut pas être ouvert ici. Aucun navigateur n’a été lancé.',
       'blocked': 'Navigation non autorisée.',
-      'help': 'Gardez l’accueil Horizon. Commencer, compte et documents ouvrent la plateforme dans l’application. Pour la saisie à deux, le créateur utilise Inviter l’autre conducteur et partage le lien complet avec #invite=… ; le second conducteur ouvre ou scanne ce lien, se connecte avec son propre compte, puis rejoint. Chaque partie conserve ses droits. Les brouillons natifs restent accessibles séparément. Un QR d’accès PDF n’est pas une invitation. La connexion du navigateur n’est pas automatiquement importée.',
+      'help': 'Accueil Azur : A commence ; B rejoint par QR ou invitation complète (#invite=…) ; A+B présélectionne le choix Sur le même téléphone, à confirmer. Un dossier en cours reste prioritaire : enregistrez avant de le remplacer. Les rôles sont indépendants du véhicule. Compte, saisie, photos, croquis, relecture et PDF restent dans Accordia selon vos droits réels. Internet est nécessaire. Les brouillons natifs et web restent distincts. Caméra et position demandent votre autorisation. Sur votre action, le partage et l’impression peuvent afficher un panneau système. La connexion embarquée dépend du fournisseur.',
       'linkHint': 'https://…/session/…#invite=…',
+      'insideService': 'Service externe intégré',
+      'insideServiceHelp': 'Ce contenu appartient à un autre service. Il reste dans Accordia, sans accès natif à la caméra, à votre position ou au lecteur PDF.',
+      'internalOnly': 'Cette action nécessite une autre application et reste bloquée. Aucun navigateur externe ouvert.',
     },
     HorizonLanguage.en: {
       "browserAuthTitle": "Sign in using the secure browser",
-      "browserAuthHelp": "A fresh sign-in starts from Accordia in the integrated browser, or an external browser if needed. Connected services continue there for this session; sign-in is not transferred to the WebView. For an invitation, reopen the full QR or message link afterwards. Local storage remains separate.",
+      'browserAuthHelp': 'Sign-in stays in Accordia. If the provider refuses embedded sign-in, restart from Accordia. No external browser will open. Persistent refusal requires a supported mobile identity integration.',
       "browserMode": "Fallback selected for this session: connected services use the secure browser. This does not confirm sign-in. Closing it returns to Accordia. WebView drafts are not transferred.",
       "retryWebview": "Try the WebView again",
 
@@ -90,12 +93,15 @@ class PlatformCopy {
       'unsupported':
           'This file or link cannot be opened here. No browser was launched.',
       'blocked': 'Navigation not allowed.',
-      'help': 'Keep the Horizon home. Start, account and documents open the platform inside the app. For A/B collaboration the creator uses Invite the other driver and shares the full #invite=… link; the second driver opens or scans it, signs in with a separate account and joins. Each party retains its permissions. Native drafts remain separately accessible. A PDF access QR is not an invitation. Browser sign-in is not automatically imported.',
+      'help': 'Azur home: A starts; B joins via QR or full invitation (#invite=…); A+B presets the same-phone choice for confirmation. An existing report takes priority: save before replacing it. Roles are independent of vehicle type. Account, entries, photos, sketch, review and PDF stay in Accordia subject to actual permissions. Internet required. Native and web drafts remain separate. Camera and location require permission. On your action, sharing and printing may show a system panel. Embedded sign-in depends on the provider.',
       'linkHint': 'https://…/session/…#invite=…',
+      'insideService': 'Embedded external service',
+      'insideServiceHelp': 'This content belongs to another service. It stays in Accordia without native camera, location or PDF capabilities.',
+      'internalOnly': 'This action requires another app and is blocked. No external browser opened.',
     },
     HorizonLanguage.de: {
       "browserAuthTitle": "Im sicheren Browser anmelden",
-      "browserAuthHelp": "Eine neue Anmeldung startet von Accordia im integrierten, falls nötig externen Browser. Online-Dienste bleiben für diese Sitzung dort; die Anmeldung wird nicht zur WebView übertragen. Einladungslink danach vollständig per QR oder Nachricht erneut öffnen. Lokale Speicher bleiben getrennt.",
+      'browserAuthHelp': 'Die Anmeldung bleibt in Accordia. Lehnt der Anbieter die eingebettete Anmeldung ab, starten Sie von Accordia neu. Kein externer Browser wird geöffnet. Bei anhaltender Ablehnung ist eine unterstützte mobile Anmeldung nötig.',
       "browserMode": "Ausweichmodus gewählt: Online-Dienste im sicheren Browser für diese Sitzung. Dies bestätigt keine Anmeldung. Schließen führt zu Accordia zurück. WebView-Entwürfe werden nicht übertragen.",
       "retryWebview": "WebView erneut versuchen",
 
@@ -131,12 +137,15 @@ class PlatformCopy {
       'download': 'PDF-Vorschau',
       'unsupported': 'Datei oder Link hier nicht unterstützt. Kein Browser wurde geöffnet.',
       'blocked': 'Navigation nicht erlaubt.',
-      'help': 'Horizon bleibt die Startseite. Start, Konto und Dokumente öffnen die Plattform in der App. Für A/B lädt der Ersteller den anderen Fahrer über den vollständigen #invite=… Link ein. Der zweite Fahrer öffnet oder scannt ihn, meldet sich mit eigenem Konto an und tritt bei. Rechte bleiben getrennt. Native Entwürfe sind separat erreichbar. Ein PDF-Zugangs-QR ist keine Einladung. Browser-Anmeldung wird nicht automatisch übernommen.',
+      'help': 'Azur-Start: A beginnt; B tritt per QR oder vollständiger Einladung (#invite=…) bei; A+B wählt dasselbe Telefon zur Bestätigung vor. Ein vorhandener Bericht hat Vorrang: vor dem Ersetzen speichern. Rollen sind unabhängig vom Fahrzeugtyp. Konto, Eingabe, Fotos, Skizze, Prüfung und PDF bleiben in Accordia gemäß Ihren Rechten. Internet erforderlich. Native und Web-Entwürfe bleiben getrennt. Kamera und Standort benötigen Zustimmung. Teilen und Drucken können auf Ihre Aktion einen Systemdialog öffnen. Eingebettete Anmeldung hängt vom Anbieter ab.',
       'linkHint': 'https://…/session/…#invite=…',
+      'insideService': 'Eingebetteter externer Dienst',
+      'insideServiceHelp': 'Dieser Inhalt gehört zu einem anderen Dienst und bleibt in Accordia, ohne native Kamera-, Standort- oder PDF-Rechte.',
+      'internalOnly': 'Diese Aktion benötigt eine andere App und bleibt gesperrt. Kein externer Browser geöffnet.',
     },
     HorizonLanguage.nl: {
       "browserAuthTitle": "Aanmelden in de beveiligde browser",
-      "browserAuthHelp": "Een nieuwe aanmelding begint vanuit Accordia in de geïntegreerde browser, of indien nodig extern. Online diensten blijven daar voor deze sessie; aanmelden wordt niet naar de WebView overgedragen. Open daarna de volledige uitnodigingslink via QR of bericht opnieuw. Lokale opslag blijft apart.",
+      'browserAuthHelp': 'Aanmelden blijft in Accordia. Weigert de aanbieder ingebed aanmelden, begin dan opnieuw vanuit Accordia. Geen externe browser opent. Een aanhoudende weigering vereist ondersteunde mobiele aanmelding.',
       "browserMode": "Noodmodus gekozen: online diensten in de beveiligde browser voor deze sessie. Dit bevestigt geen aanmelding. Sluiten keert terug naar Accordia. WebView-concepten worden niet overgedragen.",
       "retryWebview": "WebView opnieuw proberen",
 
@@ -171,8 +180,11 @@ class PlatformCopy {
       'download': 'PDF-voorbeeld',
       'unsupported': 'Dit bestand of deze link kan hier niet openen. Geen browser gestart.',
       'blocked': 'Navigatie niet toegestaan.',
-      'help': 'Horizon blijft het startscherm. Start, account en documenten openen de platformpagina in de app. Voor A/B deelt de maker via Andere bestuurder uitnodigen de volledige #invite=… link. De tweede bestuurder opent of scant die, meldt zich aan met een eigen account en neemt deel. Rechten blijven gescheiden. Native concepten blijven apart bereikbaar. Een PDF-toegangs-QR is geen uitnodiging. Browseraanmelding wordt niet automatisch overgenomen.',
+      'help': 'Azur-start: A begint; B neemt deel via QR of volledige uitnodiging (#invite=…); A+B selecteert dezelfde telefoon vooraf ter bevestiging. Een bestaand dossier heeft voorrang: opslaan voor vervangen. Rollen staan los van voertuigtype. Account, invoer, foto’s, schets, controle en PDF blijven in Accordia volgens uw rechten. Internet vereist. Native en webconcepten blijven apart. Camera en locatie vereisen toestemming. Delen en afdrukken kunnen op uw actie een systeempaneel openen. Ingebed aanmelden hangt af van de aanbieder.',
       'linkHint': 'https://…/session/…#invite=…',
+      'insideService': 'Ingebedde externe dienst',
+      'insideServiceHelp': 'Deze inhoud hoort bij een andere dienst en blijft in Accordia, zonder native camera-, locatie- of PDF-rechten.',
+      'internalOnly': 'Deze actie vereist een andere app en blijft geblokkeerd. Geen externe browser geopend.',
     },
   };
 }

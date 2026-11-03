@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../config/mobile_config.dart';
 import 'copy.dart';
+import 'azur_copy.dart';
 
 /// Presentation only: every action must be supplied by the real app router.
 /// Does not create sessions, grant rights or claim that a draft is saved.
@@ -13,6 +14,7 @@ class HorizonHome extends StatelessWidget {
     required this.onLanguageChanged,
     required this.onStart,
     required this.onJoin,
+    required this.onTogether,
     required this.onDrafts,
     required this.onReports,
     required this.onAccount,
@@ -23,7 +25,13 @@ class HorizonHome extends StatelessWidget {
   final MobileConfig config;
   final HorizonLanguage language;
   final ValueChanged<HorizonLanguage> onLanguageChanged;
-  final VoidCallback onStart, onJoin, onDrafts, onReports, onAccount, onHelp;
+  final VoidCallback onStart,
+      onJoin,
+      onTogether,
+      onDrafts,
+      onReports,
+      onAccount,
+      onHelp;
   final Widget? officialLogo;
   final VoidCallback? onSettings;
 
@@ -31,8 +39,9 @@ class HorizonHome extends StatelessWidget {
   Widget build(BuildContext context) {
     final copy = HorizonCopy.values[language]!;
     final primary = Color(config.primaryColor);
-    final colors = Theme.of(context).colorScheme;
+    final azur = AzurCopy.values[language]!;
     return Scaffold(
+      backgroundColor: const Color(0xfff6f7fb),
       bottomNavigationBar: NavigationBar(
         selectedIndex: 0,
         onDestinationSelected: (index) {
@@ -58,72 +67,91 @@ class HorizonHome extends StatelessWidget {
       body: SafeArea(
         child: Center(
           child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 560),
+            constraints: const BoxConstraints(maxWidth: 600),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(24, 12, 12, 12),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child:
-                              officialLogo ??
-                              Text(
-                                config.title,
-                                style: const TextStyle(
-                                  fontSize: 28,
-                                  fontWeight: FontWeight.w800,
-                                  color: Color(0xff101e3c),
-                                  letterSpacing: -1,
-                                ),
-                              ),
-                        ),
-                        Semantics(
-                          label: copy.language,
-                          child: DropdownButton<HorizonLanguage>(
-                            value: language,
-                            underline: const SizedBox.shrink(),
-                            onChanged: (value) {
-                              if (value != null) onLanguageChanged(value);
-                            },
-                            items: HorizonLanguage.values
-                                .map(
-                                  (value) => DropdownMenuItem(
-                                    value: value,
-                                    child: Text(value.name.toUpperCase()),
+                  Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [const Color(0xff092452), primary],
+                      ),
+                    ),
+                    padding: const EdgeInsets.fromLTRB(16, 8, 8, 8),
+                    child: IconTheme(
+                      data: const IconThemeData(color: Colors.white),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child:
+                                officialLogo ??
+                                Text(
+                                  config.title,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 26,
+                                    fontWeight: FontWeight.w800,
                                   ),
-                                )
-                                .toList(),
+                                ),
                           ),
-                        ),
-                        IconButton(
-                          onPressed: onHelp,
-                          tooltip: copy.help,
-                          icon: const Icon(Icons.help_outline),
-                        ),
-                        if (onSettings != null)
+                          Semantics(
+                            label: copy.language,
+                            child: DropdownButton<HorizonLanguage>(
+                              value: language,
+                              dropdownColor: const Color(0xff12316a),
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 13,
+                                fontFamily: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.fontFamily,
+                              ),
+                              iconEnabledColor: Colors.white,
+                              underline: const SizedBox.shrink(),
+                              onChanged: (value) {
+                                if (value != null) onLanguageChanged(value);
+                              },
+                              items: HorizonLanguage.values
+                                  .map(
+                                    (value) => DropdownMenuItem(
+                                      value: value,
+                                      child: Text(value.name.toUpperCase()),
+                                    ),
+                                  )
+                                  .toList(),
+                            ),
+                          ),
                           IconButton(
-                            onPressed: onSettings,
-                            tooltip: copy.settings,
-                            icon: const Icon(Icons.settings_outlined),
+                            onPressed: onHelp,
+                            tooltip: copy.help,
+                            icon: const Icon(Icons.help_outline),
                           ),
-                      ],
+                          if (onSettings != null)
+                            IconButton(
+                              onPressed: onSettings,
+                              tooltip: copy.settings,
+                              icon: const Icon(Icons.settings_outlined),
+                            ),
+                        ],
+                      ),
                     ),
                   ),
                   ClipRRect(
-                    borderRadius: BorderRadius.circular(30),
+                    borderRadius: const BorderRadius.vertical(
+                      bottom: Radius.circular(32),
+                    ),
                     child: Stack(
                       children: [
                         Positioned.fill(
                           child: ExcludeSemantics(
                             child: Image.asset(
-                              'assets/horizon/hero.webp',
+                              'assets/horizon/azur-accident.webp',
                               fit: BoxFit.cover,
-                              alignment: Alignment.bottomCenter,
+                              alignment: Alignment.bottomRight,
                               errorBuilder: (_, error, stack) =>
-                                  const ColoredBox(color: Color(0xff064cec)),
+                                  ColoredBox(color: primary),
                             ),
                           ),
                         ),
@@ -131,22 +159,22 @@ class HorizonHome extends StatelessWidget {
                           child: DecoratedBox(
                             decoration: BoxDecoration(
                               gradient: LinearGradient(
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
                                 colors: [
-                                  const Color(0xff052a90)
-                                      .withValues(alpha: .96),
-                                  const Color(0xff052a90)
-                                      .withValues(alpha: .72),
+                                  const Color(0xff06286a)
+                                      .withValues(alpha: .92),
+                                  const Color(0xff06286a)
+                                      .withValues(alpha: .35),
                                   Colors.transparent,
                                 ],
-                                stops: const [0, .43, .82],
+                                stops: const [0, .55, 1],
                               ),
                             ),
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(26, 28, 26, 182),
+                          padding: const EdgeInsets.fromLTRB(20, 20, 20, 105),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -154,18 +182,42 @@ class HorizonHome extends StatelessWidget {
                                 copy.headline,
                                 style: const TextStyle(
                                   color: Colors.white,
-                                  fontSize: 32,
+                                  fontSize: 29,
                                   height: 1.12,
-                                  letterSpacing: -.8,
                                   fontWeight: FontWeight.w800,
+                                  letterSpacing: -.6,
                                 ),
                               ),
                               const SizedBox(height: 12),
-                              Text(
-                                copy.guidance,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 12,
+                                  vertical: 8,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xffd8faf5),
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    const Icon(
+                                      Icons.health_and_safety_outlined,
+                                      color: Color(0xff07505a),
+                                      size: 20,
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Flexible(
+                                      child: Text(
+                                        azur.safety,
+                                        style: const TextStyle(
+                                          color: Color(0xff07505a),
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 13,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],
@@ -175,62 +227,59 @@ class HorizonHome extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(20),
+                    padding: const EdgeInsets.fromLTRB(16, 20, 16, 24),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        FilledButton(
-                          onPressed: onStart,
-                          child: Row(
-                            children: [
-                              const Icon(Icons.directions_car_outlined),
-                              const SizedBox(width: 12),
-                              Expanded(child: Text(copy.start)),
-                              const Icon(Icons.chevron_right),
-                            ],
+                        Text(
+                          azur.question,
+                          style: const TextStyle(
+                            color: Color(0xff101e3c),
+                            fontSize: 23,
+                            fontWeight: FontWeight.w800,
                           ),
                         ),
-                        const SizedBox(height: 14),
-                        LayoutBuilder(
-                          builder: (context, constraints) {
-                            final actions = [
-                              _Action(
-                                label: copy.join,
-                                icon: Icons.qr_code_scanner,
-                                onTap: onJoin,
-                                color: primary,
-                              ),
-                              _Action(
-                                label: copy.drafts,
-                                icon: Icons.drafts_outlined,
-                                onTap: onDrafts,
-                                color: primary,
-                              ),
-                            ];
-                            if (constraints.maxWidth < 300 ||
-                                MediaQuery.textScalerOf(context).scale(16) >
-                                    22) {
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  actions[0],
-                                  const SizedBox(height: 12),
-                                  actions[1],
-                                ],
-                              );
-                            }
-                            return Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Expanded(child: actions[0]),
-                                const SizedBox(width: 12),
-                                Expanded(child: actions[1]),
-                              ],
-                            );
-                          },
-                        ),
                         const SizedBox(height: 16),
-                        Divider(color: colors.outlineVariant),
+                        _ReliefAction(
+                          badge: 'A',
+                          label: copy.start,
+                          hint: azur.create,
+                          icon: Icons.note_add_outlined,
+                          color: primary,
+                          onTap: onStart,
+                        ),
+                        const SizedBox(height: 14),
+                        _ReliefAction(
+                          badge: 'B',
+                          label: copy.join,
+                          hint: azur.joinHint,
+                          icon: Icons.qr_code_scanner,
+                          color: const Color(0xff007c86),
+                          onTap: onJoin,
+                        ),
+                        const SizedBox(height: 14),
+                        _ReliefAction(
+                          badge: 'A+B',
+                          label: azur.together,
+                          hint: azur.togetherHint,
+                          icon: Icons.people_alt_outlined,
+                          color: const Color(0xff123367),
+                          onTap: onTogether,
+                        ),
+                        const SizedBox(height: 20),
+                        _ReliefAction(
+                          label: copy.drafts,
+                          icon: Icons.drafts_outlined,
+                          color: primary,
+                          onTap: onDrafts,
+                        ),
+                        const SizedBox(height: 12),
+                        _ReliefAction(
+                          label: azur.documents,
+                          icon: Icons.folder_outlined,
+                          color: primary,
+                          onTap: onReports,
+                        ),
                       ],
                     ),
                   ),
@@ -244,34 +293,123 @@ class HorizonHome extends StatelessWidget {
   }
 }
 
-class _Action extends StatelessWidget {
-  const _Action({
+class _ReliefAction extends StatelessWidget {
+  const _ReliefAction({
+    this.badge,
     required this.label,
+    this.hint,
     required this.icon,
-    required this.onTap,
     required this.color,
+    required this.onTap,
   });
+  final String? badge, hint;
   final String label;
   final IconData icon;
-  final VoidCallback onTap;
   final Color color;
+  final VoidCallback onTap;
   @override
-  Widget build(BuildContext context) => OutlinedButton(
-    onPressed: onTap,
-    style: OutlinedButton.styleFrom(
-      padding: const EdgeInsets.all(20),
-      foregroundColor: const Color(0xff101e3c),
-      backgroundColor: Colors.white,
-      side: const BorderSide(color: Color(0xffe3eaf6)),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22)),
-    ),
-    child: Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(icon, color: color, size: 28),
-        const SizedBox(height: 10),
-        Text(label, textAlign: TextAlign.center),
+  Widget build(BuildContext context) => DecoratedBox(
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(22),
+      boxShadow: const [
+        BoxShadow(
+          color: Color(0x26304263),
+          blurRadius: 13,
+          offset: Offset(0, 7),
+        ),
+        BoxShadow(color: Colors.white, blurRadius: 5, offset: Offset(-3, -3)),
       ],
+      gradient: const LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [Colors.white, Color(0xffedf0f6)],
+      ),
+      border: Border.all(color: Colors.white, width: 1.5),
+    ),
+    child: Material(
+      color: Colors.transparent,
+      borderRadius: BorderRadius.circular(22),
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 16),
+          child: Row(
+            children: [
+              if (badge != null) ...[
+                Container(
+                  width: 56,
+                  height: 56,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        Color.lerp(color, Colors.white, .2)!,
+                        color,
+                        Color.lerp(color, Colors.black, .22)!,
+                      ],
+                    ),
+                    border: Border.all(
+                      color: Colors.white.withValues(alpha: .5),
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: color.withValues(alpha: .3),
+                        blurRadius: 6,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: Text(
+                    badge!,
+                    style: TextStyle(
+                      color: color.computeLuminance() > .179
+                          ? Colors.black
+                          : Colors.white,
+                      fontSize: badge == 'A+B' ? 20 : 30,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 12),
+              ] else ...[
+                Icon(icon, color: color, size: 27),
+                const SizedBox(width: 12),
+              ],
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      label,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w800,
+                        fontSize: 18,
+                        color: Color(0xff101e3c),
+                      ),
+                    ),
+                    if (hint != null) ...[
+                      const SizedBox(height: 4),
+                      Text(
+                        hint!,
+                        style: const TextStyle(
+                          color: Color(0xff4c5669),
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+              const SizedBox(width: 4),
+              Icon(Icons.chevron_right, color: color),
+            ],
+          ),
+        ),
+      ),
     ),
   );
 }

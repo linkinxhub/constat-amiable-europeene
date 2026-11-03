@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:path_provider/path_provider.dart';
 
-import 'app/site_browser.dart';
-
 import 'app/app.dart';
 import 'app/preferences.dart';
 import 'app/startup_sound.dart';
@@ -55,7 +53,7 @@ Future<void> main() async {
       sound: StartupSound(AssetChime()),
       drafts: drafts,
       reportData: reportData,
-      openWebsite: openSiteBrowser,
+      openWebsite: (_) async => false,
     ),
   );
 }

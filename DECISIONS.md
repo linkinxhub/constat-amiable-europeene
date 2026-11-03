@@ -1,3 +1,14 @@
+## 3 novembre 2026 — Azur sculpté et navigation interne (0.4.0+6)
+
+Accueil Flutter relief 3D avec illustration accident/constat et accès A/B/A+B réels.
+WebView sans adresse affichée, fournisseurs nommés ; aucun lanceur navigateur raccordé.
+HTTPS tiers dans une vue interne sans capacités natives, autres schémas bloqués.
+A+B présélectionné dans la route web, confirmation et dossier existant préservés ;
+modification web non publiée. Droits serveur, stockages et administration canonique conservés.
+Guide natif FR/EN/DE/NL actualisé, guide/tutoriel web vérifiés sans nouvelle étape métier.
+Détails, critères et limites : docs/mobile/AZUR_INTERNAL.md. Connexion fournisseur réelle,
+recette deux téléphones, caméra/GPS et iOS encore à qualifier. Aucun site publié.
+
 ## 3 novembre 2026 — Secours auth dans un contexte navigateur unique
 
 Après échec confirmé à l’écran dans Chrome, les sorties vers un fournisseur de
@@ -23,6 +34,14 @@ Horizon est la direction mobile retenue ; les configurations historiques restent
 ## 2026-11-03 — Configuration mobile administrable
 
 Réutiliser le rôle superadministrateur existant ; configuration de présentation distincte des droits et des constats. Toute restauration crée une nouvelle révision monotone. Trois directions visuelles proposées sans choix imposé. Aucun contournement SIWC pour le natif.
+
+## Administration mobile améliorée — 3 novembre 2026
+
+Lot web préparé sans publication : préchargement administrateur, aperçu indicatif, états et comparaison, protection des saisies, confirmations et historique filtrable. API/configuration Flutter et droits serveur conservés. Validation : 326 tests, TypeScript/build et lint ciblé ; recette CUA des fixtures et limites détaillées dans docs/mobile/ADMINISTRATION_WEB_2026-11-03.md.
+
+## Administration mobile — 3 novembre 2026
+
+Rubrique web reprise du lot mobile existant et intégrée, sans déploiement. Contrat API et limites de synchronisation privée, sécurité, critères et contrôles : docs/mobile/ADMINISTRATION_WEB_2026-11-03.md. Logo/son personnalisés et distribution native restent des lots ultérieurs ; aucun droit métier accordé par cette configuration.
 
 ## 2026-11-02 — Type explicite et remorque conservée
 

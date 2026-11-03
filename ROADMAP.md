@@ -15,6 +15,14 @@ Point d’entrée, plateformes, réglages/audio et pont navigateur explicite : d
 
 Configuration serveur/admin mobile développée hors production. À suivre : choix Signature/Minimal/Premium, logo master, authentification native, SDK Flutter, client réseau/cache et recette Android/iOS. Voir docs/mobile/LOT_02_ADMIN.md.
 
+## Administration mobile améliorée — 3 novembre 2026
+
+Lot web préparé sans publication : préchargement administrateur, aperçu indicatif, états et comparaison, protection des saisies, confirmations et historique filtrable. API/configuration Flutter et droits serveur conservés. Validation : 326 tests, TypeScript/build et lint ciblé ; recette CUA des fixtures et limites détaillées dans docs/mobile/ADMINISTRATION_WEB_2026-11-03.md.
+
+## Administration mobile — 3 novembre 2026
+
+Rubrique web reprise du lot mobile existant et intégrée, sans déploiement. Contrat API et limites de synchronisation privée, sécurité, critères et contrôles : docs/mobile/ADMINISTRATION_WEB_2026-11-03.md. Logo/son personnalisés et distribution native restent des lots ultérieurs ; aucun droit métier accordé par cette configuration.
+
 ## État vérifié — après v74, recette en aperçu du 2 novembre
 
 Production v74. Lot en aperçu : réponses rapides préservées, reduced-motion respecté aux erreurs, guides des choix repliés cohérents FR/EN/DE/NL. 283 tests réussis, dont restauration chiffrée D1/R2 isolée avec historique, droits A/B et PDF signé de test identiques. Parcours solo réel jusqu’à génération et reprise après rechargement confirmés. Téléchargement navigateur non validé (délais des deux méthodes), pas de recette physique à deux comptes ni OCR fournisseur. Pas de sauvegarde/restauration productive ou ordonnanceur de purge mis en place ; accès d’infrastructure requis. Achats Premium fermés. Les entrées historiques ci-dessous décrivent les lots à leur date, et non l’état actuel de publication.

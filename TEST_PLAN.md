@@ -1,3 +1,34 @@
+## 3 novembre 2026 — Azur sculpté et navigation interne (0.4.0+6)
+
+Accueil Flutter relief 3D avec illustration accident/constat et accès A/B/A+B réels.
+WebView sans adresse affichée, fournisseurs nommés ; aucun lanceur navigateur raccordé.
+HTTPS tiers dans une vue interne sans capacités natives, autres schémas bloqués.
+A+B présélectionné dans la route web, confirmation et dossier existant préservés ;
+modification web non publiée. Droits serveur, stockages et administration canonique conservés.
+Guide natif FR/EN/DE/NL actualisé, guide/tutoriel web vérifiés sans nouvelle étape métier.
+Détails, critères et limites : docs/mobile/AZUR_INTERNAL.md. Connexion fournisseur réelle,
+recette deux téléphones, caméra/GPS et iOS encore à qualifier. Aucun site publié.
+
+## 2026-11-03 — Application native de test
+
+Point d’entrée, plateformes, réglages/audio et pont navigateur explicite : docs/mobile/NATIVE_SHELL.md. Parcours entièrement natif à raccorder ; aucun contournement d’identité Sites.
+
+## 2026-11-03 — Configuration native et vérification Flutter
+
+Transport/cache/bootstrap et 17 tests Flutter réels : voir docs/mobile/CONFIG_SYNC.md. Aucun déploiement ni authentification native contournée.
+
+## 2026-11-03 — Configuration mobile administrable
+
+tests/mobile-settings.test.mjs : brouillon non exposé, publication/rollback croissants, refus droits/suspension/injection, concurrence CAS et vrai formulaire FR/EN/DE/NL. worker-routes inclut les refus anonymes GET/PUT. Recette Preview et Dart non exécutables dans cet environnement.
+
+## Administration mobile améliorée — 3 novembre 2026
+
+Lot web préparé sans publication : préchargement administrateur, aperçu indicatif, états et comparaison, protection des saisies, confirmations et historique filtrable. API/configuration Flutter et droits serveur conservés. Validation : 326 tests, TypeScript/build et lint ciblé ; recette CUA des fixtures et limites détaillées dans docs/mobile/ADMINISTRATION_WEB_2026-11-03.md.
+
+## Administration mobile — 3 novembre 2026
+
+Rubrique web reprise du lot mobile existant et intégrée, sans déploiement. Contrat API et limites de synchronisation privée, sécurité, critères et contrôles : docs/mobile/ADMINISTRATION_WEB_2026-11-03.md. Logo/son personnalisés et distribution native restent des lots ultérieurs ; aucun droit métier accordé par cette configuration.
+
 ## 2026-11-02 — Vitrine enrichie
 
 landing-refresh.test.mjs vérifie les composants réels LandingPaths et Landing dans les quatre langues : comparaison consultative des trois modes, intitulés et prérequis partagés, lien vers vrai formulaire sans mode présélectionné caché, liens Rejoindre/Guide avec langue, conservation des rubriques, ouverture effective du volet démonstration, fermeture du menu après navigation. product-consistency conservé pour catalogue/documentation. Recette visuelle bureau/mobile à reprendre : preview géré ne devient pas sain ; aucune capture récente ni validation responsive revendiquée. Contrôler au minimum 360/375/768/1440 px, les quatre langues, menu/clavier/focus, bascules des trois parcours, démo, FAQ, sections, liens, mouvement réduit et contraste avant publication.
@@ -363,3 +394,10 @@ Master v77 corrigé : tests/master-fixes.test.mjs, questionnaire A/B avec saisie
 
 ## Feedback avec images — 2026-11-02
 tests/feedback.test.mjs : persistance image valide, décodage/format/taille, droits et compte bloqué, concurrence/quota, réponse perdue/idempotence, formulaire réel avec échec/retry quatre langues, UUID sans randomUUID, pagination sans images ni identité dans les listes. worker-routes inclut les trois nouvelles méthodes privées. Preview : ajout/retrait image fictive, refus sans connexion et conservation du texte/aperçu ; 360/375/768/1280 sans débordement, quatre langues à 360. Route QA supprimée avant build final. Envoi connecté et consultation admin dans navigateur hébergé restent à confirmer après publication. Voir docs/FEEDBACK_2026-11-02.md.
+
+## Présentation 57 secondes — 2026-11-02
+Huit séquences et fin entre 50 et 60 s, frontière 56,5 s encore active/56,75 s terminée à pas 250 ms ; reprise exacte du média, huit phrases natives et callbacks tardifs, quatre langues. Durée réelle ffprobe 56,502844 s.
+
+
+## Partage de la présentation — 2026-11-02
+tests/story-video-share.test.mjs : URL constante, MIME/HTTP/flux vide/taille maximale, support Web Share, invocation immédiate, annulation, échec, secours et copie quatre langues, faststart, deux clics/anti-doublon. 308 tests réussis. Aperçu mobile quatre langues et lecture réelle MP4 jusqu’à fin ; partage vers application mobile non testé. Décodage complet et mesures audio enregistrés dans le rapport.

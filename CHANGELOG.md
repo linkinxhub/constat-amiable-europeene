@@ -1,3 +1,14 @@
+## 3 novembre 2026 — Azur sculpté et navigation interne (0.4.0+6)
+
+Accueil Flutter relief 3D avec illustration accident/constat et accès A/B/A+B réels.
+WebView sans adresse affichée, fournisseurs nommés ; aucun lanceur navigateur raccordé.
+HTTPS tiers dans une vue interne sans capacités natives, autres schémas bloqués.
+A+B présélectionné dans la route web, confirmation et dossier existant préservés ;
+modification web non publiée. Droits serveur, stockages et administration canonique conservés.
+Guide natif FR/EN/DE/NL actualisé, guide/tutoriel web vérifiés sans nouvelle étape métier.
+Détails, critères et limites : docs/mobile/AZUR_INTERNAL.md. Connexion fournisseur réelle,
+recette deux téléphones, caméra/GPS et iOS encore à qualifier. Aucun site publié.
+
 ## 3 novembre 2026 — Authentification navigateur au bon point d’entrée (0.3.2+5)
 
 Nouvelle capture propriétaire : l’erreur client_id_not_found_in_session est dans
@@ -216,6 +227,38 @@ API de configuration, panneau admin mobile ou binaire livré. Authentification
 native à définir : identité actuelle dépendante du dispatcher Sites.
 Voir docs/mobile/LOT_01.md. Guide vérifié, aucun impact utilisateur.
 Production v82 inchangée ; synchronisation GitHub à vérifier séparément.
+
+## 2026-11-03 — Administration mobile améliorée, préparation sans publication
+
+Base propre eecd1f5 (documentation de la publication v83), production v83 inchangée ; point de restauration checkpoint/before-mobile-admin-improvements-20261103. Branche GitHub vérifiée à 68f2a13485f5218f7d96a21b08706496a1c94891 avant travail. Lot limité à l’interface d’administration mobile, sans migration, dépendance, contrat Flutter, endpoint, rôle ou intégration fournisseur nouveau.
+
+Réglages préchargés côté serveur uniquement après vérification super-administrateur ; si la lecture mobile échoue, l’administration IA reste accessible et le panneau tente un GET annulable. Statut publié/travail/saisie distinct, aperçu indicatif accueil/introduction au format téléphone, code couleur texte et sélecteur, comparaison avec la configuration publiée, historique des 50 révisions filtrable avec date Europe/Brussels et détails. Confirmation avant publier/republier ; annulation locale/rechargement d’une saisie modifiée également confirmés. Valeurs invalides bloquées avant requête, absence de double envoi, erreurs 401/403/409 explicites et conservation de saisie, abandon des réponses tardives et avertissement navigateur à la fermeture. Défaut corrigé : les premières modifications restaient auparavant non marquées lorsque l’historique était vide. Focus initial sur Annuler, boucle Tab/Shift+Tab, fermeture Échap et retour du focus.
+
+Fichiers : app/admin/page.tsx et app/globals.css ; features/mobile/admin-panel.tsx, admin-model.ts, admin-ux-copy.ts ; tests/mobile-settings.test.mjs et mobile-admin-ui.test.mjs. Copie administrative FR/EN/DE/NL ; instructions séparées dans docs/mobile/ADMINISTRATION_WEB_2026-11-03.md. Guide/tutoriel/vitrine vérifiés sans modification : aucun changement conducteur, tarif, fonction métier, données, signature, IA ou abonnement. Aucun contenu d’administration introduit dans le guide public.
+
+Validation finale après retrait de la route QA : TypeScript, lint ciblé sans diagnostic, build réussi, 326 tests réussis / 0 échec (18 tests ciblés mobile/administration inclus). Diff vérifié. Aperçu officiel sites-preview réussi après configuration du profil local managed-linux (ignoré par Git). Browser plugin absent : validation CUA du vrai composant, fixtures synthétiques SSR isolées, API réelle non authentifiée ; aucun bypass d’identité ni service applicatif simulé livré. Chargement initial visible, modification/aperçu/comparaison, annulation de perte, confirmation de publication et refus 401 réel testés ; clavier allemand Shift+Tab/Échap et annulation. FR/EN/DE/NL dans un iframe 375 px : clientWidth=scrollWidth=360, sans débordement horizontal. Captures bureau/mobile inspectées ; bouton Recharger initialement trop étroit corrigé. Console finale, 100 dernières entrées filtrées : aucune entrée applicative restante, erreurs d’extension exclues. Route QA retirée et absente du Worker final ; serveur d’aperçu arrêté.
+
+Limites : fixtures seulement dans l’aperçu, pas de recette d’écriture administrative authentifiée ni de réception physique par l’APK, pas de certification exhaustive d’accessibilité. Synchronisation privée Sites et médias personnalisés toujours à finaliser dans Flutter ; aucun logo ou son téléversé, aucune nouvelle icône ou APK/IPA. L’aperçu web ne prétend pas reproduire exactement Flutter et ne joue aucun son. Sources destinées à la sauvegarde et à GitHub, publication production non autorisée dans ce lot. Prochaine étape : autorisation de publier la version sauvegardée puis recette authentifiée de l’administration, et lot Flutter distinct pour synchronisation/médias.
+
+## 2026-11-03 — Version 83 publiée sur autorisation
+
+Instruction explicite « Publier ». Version Sites 83, source 195dda237fec433d9c4fc4138e805d2e45f3ad45, archive sha256:3061d33d6c60771993be7bf7258e16030495608abfde228c306e2aef6ceedd3a, déploiement appgdep_6ae9af5654d4819197471608f9ecf5a5 : succeeded le 3 novembre à 10:54:54 Europe/Berlin (09:54:54 UTC), environnement révision 3. Audience custom conservée. URL https://accordia-constat.adil-btp.chatgpt.site/ . Source fonctionnelle déjà poussée GitHub sur feat/web-mobile-settings-20261103, commit 0daa2b89a6708d90cda0a0b41e8a49902468b6f6.
+
+Contrôle hébergé après publication : compte super-administrateur réel ; /admin?lang=fr affiche Administration Accordia et Application mobile ; clic Recharger réussi, champs Accordia, #064cec, Horizon, introduction active 900 ms, son inactif et historique vide lus depuis API. Aucune écriture de réglage, publication de configuration, création de dossier, modification IA, appel fournisseur ou accès supplémentaire. Lecture réussie confirme la disponibilité du schéma mobile hébergé ; aucune recette d’écriture de production revendiquée. Les 314 tests, TypeScript/build et lint ciblé du lot préparatoire ne sont pas relancés pour publier l’archive identique.
+
+Limites : logo et son personnalisés, synchronisation privée Flutter et tests physiques restent ouverts. Contrôle visuel responsive/clavier exhaustif non effectué. Guide vérifié, aucun impact utilisateur pour cette note documentaire ; pas de changement fonctionnel ni de second déploiement.
+
+## 2026-11-03 — Rubrique Application mobile intégrée à l’administration, non publiée
+
+Base Sites propre b4d11d99 ; restauration checkpoint/before-mobile-admin-20261103. Réutilisation du lot existant de feat/native-shell-review-20261103 (GitHub 06f8d018), jamais présent dans le dépôt web publié. Aucun travail mobile antérieur supprimé. Section Application mobile placée avant Administration IA ; lien direct visible depuis Mon compte vers /admin?lang=fr#mobile-settings. Chargement explicite Recharger ; titre, couleur, Horizon, introduction 0–1500 ms et préférence sonore. Brouillon privé, publication volontaire de la configuration, historique et republication sous nouvelle révision. Les configurations anciennes restent lisibles ; seul Horizon est proposé pour un nouveau choix.
+
+Services/API et migration additive 0020 repris du lot existant ; identité et statut actif serveur, rôle super-administrateur revérifié au commit, CAS, origine/intention, JSON borné 4 Kio. GET /api/mobile/config expose seulement la présentation publiée, jamais historique/auteur/secrets, sous la passerelle Sites existante. Aucun rôle, abonnement, constat, signature, clé IA, audience ou production modifié.
+
+Fichiers : app/admin/page.tsx, app/account/page.tsx, app/globals.css ; features/mobile/{model,copy,admin-panel}.tsx/ts ; server/mobile-settings.ts ; deux routes API ; db/schema.ts, drizzle/0020 et métadonnées ; tests mobile-settings/lifecycle-harness/worker-routes. Documentation administrative séparée du guide conducteur : guide/tutoriel/vitrine vérifiés, aucun impact conducteur web ni nouvelle capacité publique annoncée. Copies administratives FR/EN/DE/NL et styles bornés pour téléphone.
+
+Validation : TypeScript et lint ciblé sans diagnostic ; build réussi ; suite complète 314 tests / 0 échec, dont six tests mobiles et refus 401 des deux nouvelles méthodes administratives dans le vrai Worker compilé. Dernier ajustement du sélecteur Horizon suivi d’un nouveau build et des six tests mobiles. Aperçu navigateur tenté avec sites-preview : démarrage expiré malgré serveur local déclaré ; status starting/stopping puis arrêt. Pas de recette visuelle/responsive/clavier authentifiée revendiquée.
+
+Limites : le transport Flutter existant appelle cette API sans session Sites et refuse les redirections : synchronisation privée de l’APK non garantie, aucun contournement ajouté. Logo et son personnalisés non gérables à distance par l’APK actuel ; icône, nom installé et splash natif exigent une nouvelle version. Aucun APK/IPA reconstruit dans ce lot. Publication web et migration production restent à autoriser ; recette navigateur et téléphone requise ensuite. Retour arrière : retirer ce lot avant publication, ne jamais supprimer l’historique après migration.
 
 ## 2026-11-02 — Reprise après chat en lecture seule
 

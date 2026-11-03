@@ -1,4 +1,7 @@
+import {readMobileAdmin} from '@/server/mobile-settings';
+import {mobileAdminViewSchema,type MobileAdminView} from '@/features/mobile/admin-model';
 import {MobileAdminPanel} from '@/features/mobile/admin-panel';
+import {mobileCopy} from '@/features/mobile/copy';
 import {FeedbackInbox} from '@/features/feedback/inbox';
 import {RetentionAdminPanel} from '@/features/constat/retention-admin-panel';
 import {env} from 'cloudflare:workers';
@@ -10,7 +13,8 @@ import type {Lang} from '@/features/constat/i18n';
 export const dynamic='force-dynamic';
 export default async function Admin({searchParams}:{searchParams:Promise<{lang?:string}>}){
  const query=await searchParams,lang:Lang=query?.lang&&Object.hasOwn(adminCopy,query.lang)?query.lang as Lang:'fr',c=adminCopy[lang],user=await getChatGPTUser();
- let initial:AiSettingsView|null=null,unavailable=false;
+ let initial:AiSettingsView|null=null,mobileInitial:MobileAdminView|null=null,unavailable=false;
  if(user){try{if(!env.DB)throw new Error();if(await isSuperAdmin(env.DB,user.userId))initial=await readAiSettings(env.DB,user.userId,env);}catch{unavailable=true;}}
- return <main className="account-page" lang={lang}><a href={'/account?lang='+lang} className="account-back">{c.back}</a><div className="account-card"><h1>{c.title}</h1>{!user?<a className="cloud-signin" href={chatGPTSignInPath('/admin?lang='+lang)} target="_top">{c.signin}</a>:unavailable?<p role="alert">{c.unavailable}</p>:<><AdminPanel lang={lang} initial={initial}/>{initial&&<><RetentionAdminPanel lang={lang}/><FeedbackInbox lang={lang}/><MobileAdminPanel lang={lang}/></>}</>}</div></main>;
+ if(initial&&user&&env.DB){try{mobileInitial=mobileAdminViewSchema.parse(await readMobileAdmin(env.DB,user.userId));}catch{/* The mobile panel can retry independently without blocking AI administration. */}}
+ return <main className="account-page" lang={lang}><a href={'/account?lang='+lang} className="account-back">{c.back}</a><div className="account-card"><h1>{mobileCopy[lang].adminTitle}</h1>{!user?<a className="cloud-signin" href={chatGPTSignInPath('/admin?lang='+lang)} target="_top">{c.signin}</a>:unavailable?<p role="alert">{c.unavailable}</p>:<>{initial&&<MobileAdminPanel lang={lang} initial={mobileInitial}/>}<h2>{c.title}</h2><AdminPanel lang={lang} initial={initial}/>{initial&&<><RetentionAdminPanel lang={lang}/><FeedbackInbox lang={lang}/></>}</>}</div></main>;
 }

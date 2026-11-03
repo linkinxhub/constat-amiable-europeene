@@ -11,6 +11,14 @@ Voir docs/mobile/HORIZON_WEBVIEW.md pour critères, données et limites exactes.
 
 Volet mobile : administration de la présentation développée dans les sources, sans publication. Brouillon/publication/rollback ; titre/couleur/design/introduction/défaut sonore. Ni client Flutter raccordé ni médias personnalisés livrés. Voir docs/mobile/LOT_02_ADMIN.md.
 
+## Administration mobile améliorée — 3 novembre 2026
+
+Lot web préparé sans publication : préchargement administrateur, aperçu indicatif, états et comparaison, protection des saisies, confirmations et historique filtrable. API/configuration Flutter et droits serveur conservés. Validation : 326 tests, TypeScript/build et lint ciblé ; recette CUA des fixtures et limites détaillées dans docs/mobile/ADMINISTRATION_WEB_2026-11-03.md.
+
+## Administration mobile — 3 novembre 2026
+
+Rubrique web reprise du lot mobile existant et intégrée, sans déploiement. Contrat API et limites de synchronisation privée, sécurité, critères et contrôles : docs/mobile/ADMINISTRATION_WEB_2026-11-03.md. Logo/son personnalisés et distribution native restent des lots ultérieurs ; aucun droit métier accordé par cette configuration.
+
 ## 2026-11-02 — Type de véhicule A/B, en aperçu
 
 Choix indépendant voiture, utilitaire, camion sans remorque, camion avec remorque/semi-remorque, voiture/utilitaire avec remorque ou autre. Questionnaire et formulaire orientent vers véhicule moteur et immatriculation de remorque. Plaque de remorque requise pour un type avec remorque, pays optionnel. Aucun permis/assurance inféré, aucune donnée supprimée par changement de type. Compatibilité des anciens dossiers sans type ; la remorque ne compte pas comme un conducteur. Type repris dans relecture et PDF. Critères : indépendance A/B, règles serveur de complétude, persistance/OCR sans perte, quatre langues et mobile. Non publié.

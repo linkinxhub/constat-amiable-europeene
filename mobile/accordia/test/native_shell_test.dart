@@ -58,7 +58,10 @@ void main() {
         final uri = websiteAction(action, lang);
         expect(uri.scheme, 'https');
         expect(uri.host, 'accordia-constat.adil-btp.chatgpt.site');
-        expect(uri.queryParameters, {'lang': lang.name});
+        expect(uri.queryParameters, {
+          'lang': lang.name,
+          if (action == WebAction.together) 'entry': 'same-device',
+        });
         expect(uri.fragment, isEmpty);
       }
   });
@@ -138,14 +141,16 @@ void main() {
       );
       await tester.pumpAndSettle();
       expect(chime.plays, 0);
-      await tester.tap(find.text('Commencer mon constat'));
+      await tester.ensureVisible(find.text('Je commence'));
+      await tester.tap(find.text('Je commence'));
       await tester.pumpAndSettle();
       expect(opened, isEmpty);
       expect(find.text('Platform test surface'), findsOneWidget);
       expect(navigated.last.path, '/constat');
       await tester.tap(find.byType(BackButton));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Rejoindre'));
+      await tester.ensureVisible(find.text('Je rejoins'));
+      await tester.tap(find.text('Je rejoins'));
       await tester.pumpAndSettle();
       expect(opened, isEmpty);
       expect(find.text('Scanner un QR Accordia'), findsOneWidget);
@@ -168,6 +173,7 @@ void main() {
       expect(opened, isEmpty);
       await tester.tap(find.byType(BackButton));
       await tester.pumpAndSettle();
+      await tester.ensureVisible(find.byTooltip('Réglages'));
       await tester.tap(find.byTooltip('Réglages'));
       await tester.pumpAndSettle();
       await tester.tap(find.byType(Switch));
@@ -178,7 +184,7 @@ void main() {
     },
   );
   testWidgets(
-    'explicit browser fallback keeps later connected routes in the browser and can be reset',
+    'external callback is disabled and subsequent services stay internal',
     (tester) async {
       tester.view.physicalSize = const Size(375, 850);
       tester.view.devicePixelRatio = 1;
@@ -215,24 +221,17 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Commencer mon constat'));
+      await tester.ensureVisible(find.text('Je commence'));
+      await tester.tap(find.text('Je commence'));
       await tester.pumpAndSettle();
       await tester.tap(find.text('Choose secure browser'));
       await tester.pumpAndSettle();
-      expect(opened.last.path, '/signin-with-chatgpt');
+      expect(opened, isEmpty);
       await tester.tap(find.byType(BackButton));
       await tester.pumpAndSettle();
       await tester.tap(find.byIcon(Icons.person_outline));
       await tester.pumpAndSettle();
-      expect(opened.last.path, '/account');
-      expect(views.every((uri) => uri.path == '/constat'), true);
-      await tester.tap(find.byTooltip('Réglages'));
-      await tester.pumpAndSettle();
-      expect(find.textContaining('Mode de secours choisi'), findsOneWidget);
-      await tester.tap(find.text('Réessayer la WebView'));
-      await tester.pumpAndSettle();
-      await tester.tap(find.byIcon(Icons.person_outline));
-      await tester.pumpAndSettle();
+      expect(opened, isEmpty);
       expect(views.any((uri) => uri.path == '/account'), true);
       expect(tester.takeException(), isNull);
     },

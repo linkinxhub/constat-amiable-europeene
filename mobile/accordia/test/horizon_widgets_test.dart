@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:accordia_mobile/config/mobile_config.dart';
 import 'package:accordia_mobile/design/horizon/copy.dart';
 import 'package:accordia_mobile/design/horizon/home.dart';
+import 'package:accordia_mobile/design/horizon/azur_copy.dart';
 import 'package:accordia_mobile/design/horizon/intro.dart';
 import 'package:accordia_mobile/design/horizon/theme.dart';
 
@@ -28,6 +29,7 @@ void main() {
               onLanguageChanged: (_) => actions.add('language'),
               onStart: () => actions.add('start'),
               onJoin: () => actions.add('join'),
+              onTogether: () => actions.add('together'),
               onDrafts: () => actions.add('drafts'),
               onReports: () => actions.add('reports'),
               onAccount: () => actions.add('account'),
@@ -37,15 +39,27 @@ void main() {
         ),
       );
       expect(find.text(copy.headline), findsOneWidget);
-      for (final label in [copy.start, copy.join, copy.drafts]) {
+      for (final label in [
+        copy.start,
+        copy.join,
+        AzurCopy.values[language]!.together,
+        copy.drafts,
+      ]) {
         await tester.ensureVisible(find.text(label));
         await tester.tap(find.text(label));
         await tester.pump();
       }
-      expect(actions, ['start', 'join', 'drafts']);
+      expect(actions, ['start', 'join', 'together', 'drafts']);
       await tester.tap(find.text(copy.reports));
       await tester.tap(find.text(copy.account));
-      expect(actions, ['start', 'join', 'drafts', 'reports', 'account']);
+      expect(actions, [
+        'start',
+        'join',
+        'together',
+        'drafts',
+        'reports',
+        'account',
+      ]);
       expect(tester.takeException(), isNull);
     });
   }

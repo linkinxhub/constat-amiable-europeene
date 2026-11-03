@@ -25,10 +25,10 @@ class HorizonCopy {
 
   static const values = {
     HorizonLanguage.fr: HorizonCopy(
-      'Un imprévu.\nUne solution.',
+      'Votre constat,\nsimplement.',
       'Guidé, étape par étape',
-      'Commencer mon constat',
-      'Rejoindre',
+      'Je commence',
+      'Je rejoins',
       'Mes brouillons',
       'Accueil',
       'Constats',
@@ -37,7 +37,7 @@ class HorizonCopy {
       'Langue',
     ),
     HorizonLanguage.en: HorizonCopy(
-      'An unexpected turn.\nA clear way forward.',
+      'Your report,\nmade simple.',
       'Guided, step by step',
       'Start my report',
       'Join',
@@ -49,7 +49,7 @@ class HorizonCopy {
       'Language',
     ),
     HorizonLanguage.de: HorizonCopy(
-      'Ein Zwischenfall.\nEine klare Lösung.',
+      'Ihr Unfallbericht,\neinfach.',
       'Schritt für Schritt begleitet',
       'Unfallbericht beginnen',
       'Beitreten',
@@ -61,7 +61,7 @@ class HorizonCopy {
       'Sprache',
     ),
     HorizonLanguage.nl: HorizonCopy(
-      'Een onverwacht moment.\nEen heldere oplossing.',
+      'Uw aangifte,\neenvoudig.',
       'Begeleid, stap voor stap',
       'Mijn aangifte starten',
       'Deelnemen',

@@ -21,8 +21,10 @@ class AccordiaPlatformPage extends StatefulWidget {
     this.onPresentation,
     this.windowId,
     this.popupDepth = 0,
+    this.externalContent = false,
   });
   final Uri uri;
+  final bool externalContent;
   final int? windowId;
   final int popupDepth;
   final PlatformCopy copy;
@@ -48,7 +50,7 @@ class _AccordiaPlatformPageState extends State<AccordiaPlatformPage>
       _resumeAvailable = false,
       _authProblem = false,
       _restarting = false;
-  String _visibleHost = accordiaHost;
+  Uri? _visiblePage;
   String _errorKey = 'error';
   PlatformCopy get c => widget.copy;
   @override
@@ -141,23 +143,26 @@ class _AccordiaPlatformPageState extends State<AccordiaPlatformPage>
 
   Future<void> _external(Uri uri) async {
     if (_externalBusy) return;
-    if (!canOpenOutside(uri)) {
-      _message('blocked');
+    if (!isSecureWebPage(uri)) {
+      _message('internalOnly');
       return;
     }
     _externalBusy = true;
     try {
-      final authentication = isAuthenticationDestination(uri);
-      final destination = externalBrowserDestination(uri, widget.uri);
-      if (await _confirm(
-        authentication ? 'browserAuthTitle' : 'outside',
-        authentication ? 'browserAuthHelp' : 'outsideHelp',
-        'continue',
-      )) {
-        if (!await widget.openOutside(destination)) _message('unsupported');
+      if (await _confirm('insideService', 'insideServiceHelp', 'continue') &&
+          mounted) {
+        await Navigator.push(
+          context,
+          MaterialPageRoute<void>(
+            builder: (_) => AccordiaPlatformPage(
+              uri: uri,
+              copy: c,
+              openOutside: (_) async => false,
+              externalContent: true,
+            ),
+          ),
+        );
       }
-    } catch (_) {
-      _message('unsupported');
     } finally {
       _externalBusy = false;
     }
@@ -171,8 +176,9 @@ class _AccordiaPlatformPageState extends State<AccordiaPlatformPage>
     if (action.isForMainFrame == false) return NavigationActionPolicy.ALLOW;
     if (widget.windowId != null && isEmptyPopup(uri))
       return NavigationActionPolicy.ALLOW;
-    if (isAccordia(uri) || isTrustedAuthentication(uri)) {
-      if (isTrustedAuthentication(uri) || uri?.path == '/signin-with-chatgpt') {
+    if (canNavigateInside(uri, externalContent: widget.externalContent)) {
+      if ((uri != null && isAuthenticationDestination(uri)) ||
+          uri?.path == '/signin-with-chatgpt') {
         try {
           await _authCookieMode(ctl, true);
         } catch (_) {}
@@ -241,7 +247,8 @@ class _AccordiaPlatformPageState extends State<AccordiaPlatformPage>
           builder: (_) => AccordiaPlatformPage(
             uri: widget.uri,
             copy: c,
-            openOutside: widget.openOutside,
+            openOutside: (_) async => false,
+            externalContent: widget.externalContent,
             onPresentation: widget.onPresentation,
             windowId: id,
             popupDepth: widget.popupDepth + 1,
@@ -309,6 +316,10 @@ class _AccordiaPlatformPageState extends State<AccordiaPlatformPage>
 
   Future<void> _pdf(Uri uri) async {
     final ctl = _controller;
+    if (widget.externalContent) {
+      _message('blocked');
+      return;
+    }
     if (_downloadBusy || ctl == null) return;
     if (!(isAccordia(uri) || isAccordiaBlob(uri)) ||
         !isAccordia(Uri.tryParse((await ctl.getUrl())?.toString() ?? ''))) {
@@ -388,21 +399,12 @@ class _AccordiaPlatformPageState extends State<AccordiaPlatformPage>
     child: Scaffold(
       appBar: AppBar(
         leading: BackButton(onPressed: _back),
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Accordia',
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-            Text(
-              _visibleHost,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.labelSmall,
-            ),
-          ],
+        title: Text(
+          embeddedService(_visiblePage ?? widget.uri).isEmpty
+              ? c.t('insideService')
+              : embeddedService(_visiblePage ?? widget.uri),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
         ),
         actions: [
           IconButton(
@@ -488,7 +490,10 @@ class _AccordiaPlatformPageState extends State<AccordiaPlatformPage>
               onLoadStart: (ctl, url) {
                 final uri = Uri.tryParse(url?.toString() ?? '');
                 if (widget.windowId != null && isEmptyPopup(uri)) return;
-                if (!isAccordia(uri) && !isTrustedAuthentication(uri)) {
+                if (!canNavigateInside(
+                  uri,
+                  externalContent: widget.externalContent,
+                )) {
                   unawaited(ctl.stopLoading());
                   if (uri != null) unawaited(_external(uri));
                   return;
@@ -497,8 +502,8 @@ class _AccordiaPlatformPageState extends State<AccordiaPlatformPage>
                   setState(() {
                     _error = false;
                     _authProblem =
-                        isTrustedAuthentication(uri) &&
-                        (uri!.path.contains('error') ||
+                        (uri != null && isAuthenticationDestination(uri)) &&
+                        (uri.path.contains('error') ||
                             uri.queryParameters.containsKey('error'));
                     _progress = 0;
                   });
@@ -506,9 +511,7 @@ class _AccordiaPlatformPageState extends State<AccordiaPlatformPage>
               onUpdateVisitedHistory: (_, url, _) {
                 if (mounted)
                   setState(
-                    () => _visibleHost =
-                        Uri.tryParse(url?.toString() ?? '')?.host ??
-                        accordiaHost,
+                    () => _visiblePage = Uri.tryParse(url?.toString() ?? ''),
                   );
               },
               onLoadStop: (_, _) async {
@@ -544,12 +547,23 @@ class _AccordiaPlatformPageState extends State<AccordiaPlatformPage>
                 final parent = Uri.tryParse(
                   (await ctl.getUrl())?.toString() ?? '',
                 );
-                if (canCreateAccordiaWindow(
-                  parent: parent,
-                  target: target,
-                  depth: widget.popupDepth,
-                  alreadyOpen: _popupOpen,
-                )) {
+                if ((!_popupOpen &&
+                        widget.popupDepth < 2 &&
+                        canNavigateInside(
+                          parent,
+                          externalContent: widget.externalContent,
+                        ) &&
+                        (canNavigateInside(
+                              target,
+                              externalContent: widget.externalContent,
+                            ) ||
+                            isEmptyPopup(target))) ||
+                    canCreateAccordiaWindow(
+                      parent: parent,
+                      target: target,
+                      depth: widget.popupDepth,
+                      alreadyOpen: _popupOpen,
+                    )) {
                   // Attach the actual browser window: preserve POST, opener and session.
                   unawaited(_openChildWindow(action.windowId));
                   return true;
@@ -576,9 +590,12 @@ class _AccordiaPlatformPageState extends State<AccordiaPlatformPage>
                 if (uri != null) unawaited(_pdf(uri));
               },
               onPermissionRequest: (ctl, request) async {
-                final valid = isAccordia(
-                  Uri.tryParse(request.origin.toString()),
-                );
+                final valid =
+                    !widget.externalContent &&
+                    isAccordia(Uri.tryParse(request.origin.toString())) &&
+                    isAccordia(
+                      Uri.tryParse((await ctl.getUrl())?.toString() ?? ''),
+                    );
                 final cameraOnly =
                     request.resources.length == 1 &&
                     request.resources.single == PermissionResourceType.CAMERA;
@@ -595,7 +612,12 @@ class _AccordiaPlatformPageState extends State<AccordiaPlatformPage>
                 );
               },
               onGeolocationPermissionsShowPrompt: (ctl, origin) async {
-                final valid = isAccordia(Uri.tryParse(origin));
+                final valid =
+                    !widget.externalContent &&
+                    isAccordia(Uri.tryParse(origin)) &&
+                    isAccordia(
+                      Uri.tryParse((await ctl.getUrl())?.toString() ?? ''),
+                    );
                 final allow =
                     valid &&
                     await _confirm('location', 'scope', 'continue') &&

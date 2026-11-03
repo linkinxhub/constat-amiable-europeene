@@ -48,9 +48,7 @@ class AccordiaApp extends StatefulWidget {
 
 class _AccordiaAppState extends State<AccordiaApp> with WidgetsBindingObserver {
   late AppPreferences _preferences;
-  bool _opening = false;
   bool _reportActive = false;
-  bool _browserSessionSelected = false;
   @override
   void initState() {
     super.initState();
@@ -90,84 +88,8 @@ class _AccordiaAppState extends State<AccordiaApp> with WidgetsBindingObserver {
       );
   }
 
-  Future<void> _web(BuildContext context, WebAction action) async {
-    if (_opening) return;
-    _opening = true;
-    final c = AppCopy.values[_preferences.language]!;
-    final uri = websiteAction(action, _preferences.language);
-    try {
-      final accepted = await showModalBottomSheet<bool>(
-        context: context,
-        useSafeArea: true,
-        isScrollControlled: true,
-        builder: (sheet) => SingleChildScrollView(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(c.webTitle, style: Theme.of(sheet).textTheme.headlineSmall),
-              const SizedBox(height: 12),
-              Text(c.webHelp),
-              if (action == WebAction.drafts)
-                Padding(
-                  padding: const EdgeInsets.only(top: 12),
-                  child: Text(c.webDrafts),
-                ),
-              const SizedBox(height: 16),
-              SelectableText(uri.host),
-              const SizedBox(height: 16),
-              FilledButton(
-                onPressed: () => Navigator.pop(sheet, true),
-                child: Text(c.continueWeb),
-              ),
-              TextButton(
-                onPressed: () => Navigator.pop(sheet, false),
-                child: Text(c.cancel),
-              ),
-            ],
-          ),
-        ),
-      );
-      if (accepted != true || !mounted) return;
-      bool opened;
-      try {
-        opened = await widget.openWebsite(uri);
-      } catch (_) {
-        opened = false;
-      }
-      if (!opened && context.mounted)
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(c.failure)));
-    } finally {
-      _opening = false;
-    }
-  }
-
-  Future<bool> _openPlatformOutside(Uri uri) async {
-    final opened = await widget.openWebsite(uri);
-    if (opened &&
-        isAccordia(uri) &&
-        uri.path == '/signin-with-chatgpt' &&
-        mounted) {
-      // A selected browser mode is not evidence of successful authentication.
-      setState(() => _browserSessionSelected = true);
-    }
-    return opened;
-  }
-
   Future<void> _platform(BuildContext context, Uri uri) async {
     if (_reportActive || !isAccordia(uri)) return;
-    if (_browserSessionSelected) {
-      final opened = await widget.openWebsite(uri);
-      if (!opened && context.mounted)
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(PlatformCopy(_preferences.language).t('unsupported')),
-          ),
-        );
-      return;
-    }
     setState(() => _reportActive = true);
     final copy = PlatformCopy(_preferences.language);
     try {
@@ -175,11 +97,11 @@ class _AccordiaAppState extends State<AccordiaApp> with WidgetsBindingObserver {
         context,
         MaterialPageRoute<void>(
           builder: (_) =>
-              widget.platformBuilder?.call(uri, copy, _openPlatformOutside) ??
+              widget.platformBuilder?.call(uri, copy, (_) async => false) ??
               AccordiaPlatformPage(
                 uri: uri,
                 copy: copy,
-                openOutside: _openPlatformOutside,
+                openOutside: (_) async => false,
                 onPresentation: (data) async {
                   await widget.repository.stageFromWebView(data);
                 },
@@ -356,7 +278,12 @@ class _AccordiaAppState extends State<AccordiaApp> with WidgetsBindingObserver {
               OutlinedButton(
                 onPressed: () {
                   Navigator.pop(sheet);
-                  unawaited(_web(context, WebAction.help));
+                  unawaited(
+                    _platform(
+                      context,
+                      websiteAction(WebAction.help, _preferences.language),
+                    ),
+                  );
                 },
                 child: Text(copy.n('rescue')),
               ),
@@ -401,18 +328,6 @@ class _AccordiaAppState extends State<AccordiaApp> with WidgetsBindingObserver {
                 },
               ),
               const Divider(),
-              if (_browserSessionSelected) ...[
-                Text(PlatformCopy(_preferences.language).t('browserMode')),
-                TextButton(
-                  onPressed: () {
-                    setState(() => _browserSessionSelected = false);
-                    Navigator.pop(sheet);
-                  },
-                  child: Text(
-                    PlatformCopy(_preferences.language).t('retryWebview'),
-                  ),
-                ),
-              ],
               Text(PlatformCopy(_preferences.language).t('scope')),
               const SizedBox(height: 16),
               OutlinedButton(
@@ -449,6 +364,12 @@ class _AccordiaAppState extends State<AccordiaApp> with WidgetsBindingObserver {
           ),
         ),
         onJoin: () => unawaited(_links(context)),
+        onTogether: () => unawaited(
+          _platform(
+            context,
+            websiteAction(WebAction.together, _preferences.language),
+          ),
+        ),
         onDrafts: () => unawaited(_draftChoice(context)),
         onReports: () => unawaited(
           _platform(
@@ -464,7 +385,7 @@ class _AccordiaAppState extends State<AccordiaApp> with WidgetsBindingObserver {
         ),
         onHelp: () => _information(context),
         onSettings: () => _settings(context, config),
-        officialLogo: AccordiaBrand(title: config.title),
+        officialLogo: AccordiaBrand(title: config.title, inverted: true),
       ),
     ),
   );
