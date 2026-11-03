@@ -256,8 +256,17 @@ class _AccordiaPlatformPageState extends State<AccordiaPlatformPage>
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Accordia'),
-            Text(_visibleHost, style: Theme.of(context).textTheme.labelSmall),
+            const Text(
+              'Accordia',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            Text(
+              _visibleHost,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.labelSmall,
+            ),
           ],
         ),
         actions: [

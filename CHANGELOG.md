@@ -19,7 +19,10 @@ exposé aux pages. Journaux du plugin et inspection WebView désactivés.
 35 tests Flutter réussis, analyse sans diagnostic, formatage conforme ; 9 tests
 existants A/B réussis (D1/R2, invitations, droits, CAS, conservation/reprise).
 XML Android et plist valides. Voir docs/mobile/HORIZON_WEBVIEW.md pour fichiers,
-preuves, limites et recette. Compilation Android distante encore à vérifier.
+preuves, limites et recette. Première compilation Android 41627170206 échouée : défaut Proguard obsolète du
+plugin WebView face à AGP 9.1. Correction de construction minimale et gardée par
+SHA-256 dans tool/prepare_android_plugins.py ; exécution/idempotence et refus de
+source inconnue vérifiés. Étape CI ajoutée ; nouvelle compilation à constater.
 Aucun nouveau build iOS ni recette caméra/GPS/PDF/connexion sur téléphone réel.
 Accès Sites custom conservé ; requête anonyme à /constat renvoie 401, connexion
 réelle nécessaire et compatibilité de l’authentification intégrée non validée.

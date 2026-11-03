@@ -37,6 +37,8 @@ jobs:
           echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
       - name: Resolve locked dependencies
         run: flutter --no-version-check --suppress-analytics pub get --enforce-lockfile
+      - name: Prepare locked WebView Android compatibility
+        run: python3 tool/prepare_android_plugins.py
       - name: Check formatting
         run: dart format --output=none --set-exit-if-changed lib test
       - name: Analyze

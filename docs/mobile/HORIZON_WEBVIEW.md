@@ -115,3 +115,16 @@ natif hors ligne reste une préparation locale séparée.
 Références primaires : https://inappwebview.dev/docs/webview/in-app-webview/ ;
 https://inappwebview.dev/docs/webview/javascript/communication/ ;
 https://pub.dev/packages/mobile_scanner ; code source des versions verrouillées.
+
+## Compatibilité Android constatée pendant la compilation
+
+La première compilation 41627170206 a échoué pendant l’évaluation du plugin
+flutter_inappwebview_android 1.1.3 : AGP 9.1 refuse proguard-android.txt. Analyse et
+35 tests ont réussi. Correctif de construction reproductible, avant chaque build :
+`python3 tool/prepare_android_plugins.py`. Le script localise la dépendance verrouillée
+via package_config, vérifie le SHA-256 exact du fichier d’origine, puis remplace
+uniquement les deux références par proguard-android-optimize.txt. Idempotent ; source
+inattendue => arrêt, aucune substitution permissive. Pas de code Java, de droit,
+de certificat ou de contrôle serveur modifié. Étape ajoutée à la CI. Retrait prévu
+après revue d’une version stable amont compatible. Build release non validé.
+Référence Android : https://developer.android.com/build/releases/agp-9-0-0-release-notes .
