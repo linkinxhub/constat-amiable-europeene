@@ -17,6 +17,8 @@ const eslintConfig = defineConfig([
     ".wrangler/**",
     "mobile/accordia/.dart_tool/**",
     "mobile/accordia/build/**",
+    "mobile/accordia_native/.dart_tool/**",
+    "mobile/accordia_native/build/**",
   ]),
   {
     files: ["components/ui/**/*.{ts,tsx}", "hooks/use-mobile.ts"],

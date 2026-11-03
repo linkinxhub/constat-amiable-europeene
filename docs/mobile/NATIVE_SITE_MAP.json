@@ -1,0 +1,183 @@
+{
+  "source": "6235113",
+  "pages": [
+    "/",
+    "/account",
+    "/admin",
+    "/constat",
+    "/feedback",
+    "/guide",
+    "/join",
+    "/pricing",
+    "/session/[id]"
+  ],
+  "api": [
+    {
+      "path": "/api/account/offer",
+      "methods": [
+        "GET",
+        "PUT"
+      ]
+    },
+    {
+      "path": "/api/account",
+      "methods": [
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "path": "/api/admin/activate",
+      "methods": [
+        "POST"
+      ]
+    },
+    {
+      "path": "/api/admin/ai-settings",
+      "methods": [
+        "GET",
+        "PUT",
+        "POST"
+      ]
+    },
+    {
+      "path": "/api/admin/feedback",
+      "methods": [
+        "GET",
+        "PATCH"
+      ]
+    },
+    {
+      "path": "/api/admin/mobile-settings",
+      "methods": [
+        "GET",
+        "PUT"
+      ]
+    },
+    {
+      "path": "/api/admin/retention",
+      "methods": [
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "path": "/api/billing/test/checkout",
+      "methods": [
+        "POST"
+      ]
+    },
+    {
+      "path": "/api/billing/test/sketch",
+      "methods": [
+        "POST"
+      ]
+    },
+    {
+      "path": "/api/billing/test/translation",
+      "methods": [
+        "POST"
+      ]
+    },
+    {
+      "path": "/api/billing/test/webhook",
+      "methods": [
+        "POST"
+      ]
+    },
+    {
+      "path": "/api/document-extraction",
+      "methods": [
+        "POST",
+        "GET"
+      ]
+    },
+    {
+      "path": "/api/feedback",
+      "methods": [
+        "POST"
+      ]
+    },
+    {
+      "path": "/api/mobile/config",
+      "methods": [
+        "GET"
+      ]
+    },
+    {
+      "path": "/api/reports/[id]/history",
+      "methods": [
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "path": "/api/reports/[id]",
+      "methods": [
+        "GET",
+        "PUT"
+      ]
+    },
+    {
+      "path": "/api/reports",
+      "methods": [
+        "GET"
+      ]
+    },
+    {
+      "path": "/api/sessions/[id]/final/[document]/pdf",
+      "methods": [
+        "GET"
+      ]
+    },
+    {
+      "path": "/api/sessions/[id]/final/[document]",
+      "methods": [
+        "POST",
+        "PUT"
+      ]
+    },
+    {
+      "path": "/api/sessions/[id]/final",
+      "methods": [
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "path": "/api/sessions/[id]/invite",
+      "methods": [
+        "POST",
+        "PUT"
+      ]
+    },
+    {
+      "path": "/api/sessions/[id]",
+      "methods": [
+        "GET",
+        "PUT"
+      ]
+    },
+    {
+      "path": "/api/sessions/[id]/sketch",
+      "methods": [
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "path": "/api/sessions/[id]/translation",
+      "methods": [
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "path": "/api/sessions",
+      "methods": [
+        "POST",
+        "GET"
+      ]
+    }
+  ]
+}

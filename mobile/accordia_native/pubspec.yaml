@@ -1,0 +1,33 @@
+name: accordia_native
+version: 0.5.0+8
+publish_to: none
+description: Socle de configuration de l’application mobile Accordia.
+environment:
+  sdk: '>=3.13.0 <4.0.0'
+  flutter: '>=3.47.9'
+dependencies:
+  audioplayers: ^6.8.1
+  cryptography: ^2.9.0
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  flutter_secure_storage: ^11.2.0
+  mobile_scanner: ^7.5.0
+  path_provider: ^2.1.6
+  pdf: ^3.13.1
+  permission_handler: 12.0.1
+  printing: ^5.15.1
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/horizon/hero.webp
+    - assets/horizon/azur-accident.webp
+    - assets/audio/startup.wav
+    - assets/brand/shield-white.png
+    - assets/brand/shield-relief.png
+    - assets/copy/constat.json
+    - assets/fonts/DejaVuSans.ttf
