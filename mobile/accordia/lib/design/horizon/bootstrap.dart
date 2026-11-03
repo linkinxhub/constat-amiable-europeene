@@ -1,6 +1,8 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+
 import '../../config/config_repository.dart';
 import '../../config/mobile_config.dart';
 import 'intro.dart';
@@ -9,13 +11,14 @@ import 'theme.dart';
 /// Host composition point; production router/authentication remain external.
 /// Remote refresh does not block startup or mutate an active report.
 class HorizonBootstrap extends StatefulWidget {
-  const HorizonBootstrap(
-      {super.key,
-      required this.repository,
-      required this.reportInProgress,
-      required this.contentBuilder,
-      required this.locale,
-      this.officialLogo});
+  const HorizonBootstrap({
+    super.key,
+    required this.repository,
+    required this.reportInProgress,
+    required this.contentBuilder,
+    required this.locale,
+    this.officialLogo,
+  });
   final ConfigRepository repository;
   final bool reportInProgress;
   final Widget Function(BuildContext, MobileConfig) contentBuilder;
@@ -49,8 +52,9 @@ class _HorizonBootstrapState extends State<HorizonBootstrap>
   }
 
   void _apply() {
-    final changed =
-        widget.repository.apply(reportInProgress: widget.reportInProgress);
+    final changed = widget.repository.apply(
+      reportInProgress: widget.reportInProgress,
+    );
     if (mounted && changed) setState(() {});
   }
 
@@ -75,19 +79,21 @@ class _HorizonBootstrapState extends State<HorizonBootstrap>
   Widget build(BuildContext context) {
     final config = widget.repository.active;
     return MaterialApp(
-        supportedLocales: const [
-          Locale('fr'),
-          Locale('en'),
-          Locale('de'),
-          Locale('nl')
-        ],
-        localizationsDelegates: GlobalMaterialLocalizations.delegates,
-        title: config.title,
-        locale: widget.locale,
-        theme: horizonTheme(config),
-        home: _ready
-            ? Builder(
-                builder: (context) => widget.contentBuilder(context, config))
-            : HorizonIntro(config: config, officialLogo: widget.officialLogo));
+      supportedLocales: const [
+        Locale('fr'),
+        Locale('en'),
+        Locale('de'),
+        Locale('nl'),
+      ],
+      localizationsDelegates: GlobalMaterialLocalizations.delegates,
+      title: config.title,
+      locale: widget.locale,
+      theme: horizonTheme(config),
+      home: _ready
+          ? Builder(
+              builder: (context) => widget.contentBuilder(context, config),
+            )
+          : HorizonIntro(config: config, officialLogo: widget.officialLogo),
+    );
   }
 }

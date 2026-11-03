@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'mobile_config.dart';
 
 abstract interface class ConfigSource {
@@ -27,8 +28,9 @@ class ConfigRepository {
 
   Future<void> _initialize() async {
     try {
-      final data =
-          await cache.read().timeout(const Duration(milliseconds: 500));
+      final data = await cache.read().timeout(
+        const Duration(milliseconds: 500),
+      );
       if (data != null)
         _session = ConfigSession(cached: MobileConfig.fromJson(data));
     } catch (_) {

@@ -1,13 +1,14 @@
 /// Public presentation only. Never contains tokens, roles or entitlement grants.
 class MobileConfig {
-  const MobileConfig(
-      {required this.revision,
-      required this.title,
-      required this.primaryColor,
-      this.designId = 'horizon',
-      required this.introEnabled,
-      required this.introDurationMs,
-      required this.soundDefault});
+  const MobileConfig({
+    required this.revision,
+    required this.title,
+    required this.primaryColor,
+    this.designId = 'horizon',
+    required this.introEnabled,
+    required this.introDurationMs,
+    required this.soundDefault,
+  });
 
   final int revision;
   final String title;
@@ -18,24 +19,25 @@ class MobileConfig {
   final bool soundDefault;
 
   static const fallback = MobileConfig(
-      revision: 0,
-      title: 'Accordia',
-      primaryColor: 0xff064cec,
-      introEnabled: true,
-      introDurationMs: 900,
-      soundDefault: false);
+    revision: 0,
+    title: 'Accordia',
+    primaryColor: 0xff064cec,
+    introEnabled: true,
+    introDurationMs: 900,
+    soundDefault: false,
+  );
 
   Map<String, dynamic> toJson() => {
-        'schemaVersion': 1,
-        'revision': revision,
-        'title': title,
-        'primaryColor':
-            '#${(primaryColor & 0xffffff).toRadixString(16).padLeft(6, '0')}',
-        'designId': designId,
-        'introEnabled': introEnabled,
-        'introDurationMs': introDurationMs,
-        'soundDefault': soundDefault,
-      };
+    'schemaVersion': 1,
+    'revision': revision,
+    'title': title,
+    'primaryColor':
+        '#${(primaryColor & 0xffffff).toRadixString(16).padLeft(6, '0')}',
+    'designId': designId,
+    'introEnabled': introEnabled,
+    'introDurationMs': introDurationMs,
+    'soundDefault': soundDefault,
+  };
 
   factory MobileConfig.fromJson(Map<String, dynamic> json) {
     if (json['schemaVersion'] != 1) {
@@ -64,13 +66,14 @@ class MobileConfig {
       throw const FormatException('Invalid presentation configuration');
     }
     return MobileConfig(
-        revision: revision,
-        title: title.trim(),
-        designId: design as String,
-        primaryColor: 0xff000000 | int.parse(color.substring(1), radix: 16),
-        introEnabled: intro,
-        introDurationMs: duration,
-        soundDefault: sound);
+      revision: revision,
+      title: title.trim(),
+      designId: design as String,
+      primaryColor: 0xff000000 | int.parse(color.substring(1), radix: 16),
+      introEnabled: intro,
+      introDurationMs: duration,
+      soundDefault: sound,
+    );
   }
 }
 
@@ -78,7 +81,7 @@ class MobileConfig {
 /// A rollback must be published by the server as a NEW, higher revision.
 class ConfigSession {
   ConfigSession({MobileConfig? cached})
-      : active = cached ?? MobileConfig.fallback;
+    : active = cached ?? MobileConfig.fallback;
   MobileConfig active;
   MobileConfig? _pending;
 
@@ -86,7 +89,8 @@ class ConfigSession {
     try {
       final candidate = MobileConfig.fromJson(json);
       if (candidate.revision <= active.revision ||
-          candidate.revision <= (_pending?.revision ?? 0)) return false;
+          candidate.revision <= (_pending?.revision ?? 0))
+        return false;
       _pending = candidate;
       return true;
     } on FormatException {
@@ -101,11 +105,12 @@ class ConfigSession {
     return true;
   }
 
-  bool shouldPlaySound(
-          {required bool coldStart,
-          required bool systemAllowsAudio,
-          required bool reduceMotion,
-          bool? userSoundPreference}) =>
+  bool shouldPlaySound({
+    required bool coldStart,
+    required bool systemAllowsAudio,
+    required bool reduceMotion,
+    bool? userSoundPreference,
+  }) =>
       coldStart &&
       systemAllowsAudio &&
       !reduceMotion &&

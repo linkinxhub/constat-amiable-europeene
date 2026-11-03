@@ -6,10 +6,13 @@ environment:
   sdk: '>=3.13.0 <4.0.0'
   flutter: '>=3.47.9'
 dependencies:
+  audioplayers: ^6.8.1
   flutter:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
+  path_provider: ^2.1.6
+  url_launcher: ^6.3.3
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -17,3 +20,5 @@ flutter:
   uses-material-design: true
   assets:
     - assets/horizon/hero.webp
+    - assets/audio/startup.wav
+    - assets/brand/shield-white.png

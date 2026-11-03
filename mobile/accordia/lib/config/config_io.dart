@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
+
 import 'config_repository.dart';
 import 'mobile_config.dart';
 
@@ -55,8 +56,9 @@ class HttpsConfigSource implements ConfigSource {
         throw const FormatException('Configuration too large');
       bytes.add(chunk);
     }
-    final value =
-        jsonDecode(utf8.decode(bytes.takeBytes(), allowMalformed: false));
+    final value = jsonDecode(
+      utf8.decode(bytes.takeBytes(), allowMalformed: false),
+    );
     if (value is! Map<String, dynamic>)
       throw const FormatException('Invalid configuration');
     return MobileConfig.fromJson(value).toJson();
@@ -89,8 +91,9 @@ class FileConfigCache implements ConfigCache {
     if (utf8.encode(payload).length > _maxConfigBytes)
       throw const FormatException('Cache too large');
     await file.parent.create(recursive: true);
-    final temp =
-        File('${file.path}.${DateTime.now().microsecondsSinceEpoch}.tmp');
+    final temp = File(
+      '${file.path}.${DateTime.now().microsecondsSinceEpoch}.tmp',
+    );
     try {
       await temp.writeAsString(payload, flush: true);
       await temp.rename(file.path);

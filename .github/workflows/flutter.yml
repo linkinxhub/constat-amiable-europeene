@@ -43,3 +43,12 @@ jobs:
         run: flutter --no-version-check --suppress-analytics analyze
       - name: Test
         run: flutter --no-version-check --suppress-analytics test --reporter expanded
+      - name: Build Android test APK
+        run: flutter --no-version-check --suppress-analytics build apk --debug --target-platform android-arm64
+      - name: Keep Android test APK
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: Accordia-Android-test
+          path: mobile/accordia/build/app/outputs/flutter-apk/app-debug.apk
+          if-no-files-found: error
+          retention-days: 7
