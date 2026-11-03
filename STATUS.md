@@ -1,5 +1,7 @@
 ## 3 novembre 2026 — Splash Sérénité et master audit
 
+Livraison Android vérifiée : APK 0.4.1+7 signé debug v2, CI 41711289831 réussie, 51 tests Flutter. Rapport et preuves : docs/mobile/SPLASH_SERENITY.md.
+
 Introduction Flutter n° 2 développée : scène accident/constat, lumière et logo relief,
 Passer, mouvement réduit, pause/reprise, son au début si activé. Durée administrable
 existante conservée (0–1500 ms), pas d’attente réseau. Droits/données/WebView préservés.

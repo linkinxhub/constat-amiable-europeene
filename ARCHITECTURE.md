@@ -1,3 +1,12 @@
+## 3 novembre 2026 — Introduction Sérénité et qualification globale
+
+Bootstrap sépare cache initialisé et introduction terminée. La scène locale appelle
+une fin unique, sans attente réseau ; configuration publiée appliquée ensuite à une
+frontière sûre. startupBuilder conserve le propriétaire audio à travers intro/accueil ;
+onIntroFinished arrête le carillon. Contrôleur d’animation borné, pause arrière-plan,
+aucun rejeu sur reprise, mouvement réduit et Passer. API métier, droits et schémas
+serveur inchangés. Priorités de qualification : docs/MASTER_AUDIT_2026-11-03.md.
+
 ## 3 novembre 2026 — Azur sculpté et navigation interne (0.4.0+6)
 
 Accueil Flutter relief 3D avec illustration accident/constat et accès A/B/A+B réels.

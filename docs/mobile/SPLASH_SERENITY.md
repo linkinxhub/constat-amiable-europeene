@@ -35,3 +35,20 @@ tests splash/bootstrap/rendu ; eslint.config.mjs pour exclure les caches génér
 Retour arrière : checkpoint/before-splash-master-audit-20261103, sans effacement de données.
 Anciennes installations conservées ; nouvel identifiant debug pour éviter un conflit de
 signature. Pas de publication productive. iOS et fluidité/son physiques à qualifier.
+
+Aperçu visuel : Accordia-Splash-Serenite-preview.mp4, rendu à partir de 25 images du
+vrai widget Flutter, sans son, avec arrêt sur image final (durée vidéo 2,52 s). Ce
+maintien de la dernière image sert à observer le rendu ; ce n’est pas une durée
+imposée au lancement réel. La version installée comporte également le bouton Passer.
+
+## Livraison Android vérifiée
+CI 41711289831, job 126179708732 : 51 tests, analyse/formatage et build réussis.
+Commit GitHub de code d4b392da842bce0bbbb3e42d3cc4044d0b90a682 ; source canonique
+b29b31deeefd491743acd82e7c2131f139ce2a5a. Sous-arbre mobile identique
+b1cb712c85be38cf6fa7665629adcf545c528b73. Artefact 13268366867.
+APK 0.4.1+7, package be.adilbtp.accordia.serenitysplashpreview, libellé Accordia Sérénité (test),
+118 556 220 octets. SHA-256 : 78c740f420882745693407b5f666f50c473af73e5333f169214ba554fcb78885.
+Signature debug v2 valide, un signataire ; CRC conformes et assets PNG/WebP extraits
+identiques aux sources. ZIP GitHub : eafd343df2663c842e66f4b9d0570fa3526f46488088901ce0c92ddf0a678237.
+Moteur Flutter ARM64, min Android 24/cible 36. Aucune recette physique de connexion,
+GPS, caméra, son ou iOS revendiquée. Anciennes installations conservées.

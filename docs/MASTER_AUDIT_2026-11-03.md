@@ -1,7 +1,8 @@
 # Accordia — Master audit du 3 novembre 2026
 
 ## Verdict et périmètre
-Base cohérente pour un pilote encadré, pas une validation d’ouverture commerciale générale.
+Les contrôles de sources passent, mais le pilote mobile connecté reste à qualifier.
+Ce rapport ne valide pas une ouverture commerciale générale.
 Audit du site, du serveur et de l’application Flutter ; intégration du splash n° 2 autorisée.
 Les autres améliorations sont hiérarchisées ci-dessous, sans modification silencieuse de
 l’identité, des abonnements, des droits, de la rétention ou de l’audience.
@@ -24,7 +25,7 @@ Aucun déploiement productif, envoi assureur, paiement ou modification de donné
 | Première exécution du lint global | Échec mémoire vers 2 Gio en parcourant les caches générés ; exclusions de caches natives/runtime ajoutées, pipeline complet relancé avec succès |
 | Dépendances production : pnpm audit --prod | 0 alerte retournée à la date du contrôle ; ne garantit pas l’absence de vulnérabilité inconnue |
 | Dépendances complètes : pnpm audit | 1 modérée de développement, aucune élevée/critique retournée |
-| Scan ciblé de secrets | 674 fichiers texte suivis, 52 binaires/gros fichiers exclus, aucun motif de clé privée/OpenAI/GitHub/AWS retenu ; historique et infrastructure exclus |
+| Scan ciblé de secrets | 679 fichiers texte suivis, 55 binaires/gros fichiers exclus, aucun motif de clé privée/OpenAI/GitHub/AWS retenu ; historique et infrastructure exclus |
 | Logs production, 180 min / max 25 | 9 requêtes GET /products.json retournent 404, outcome ok ; aucune panne 5xx dans cet échantillon. Ne pas créer une route commerciale pour ces sondes ni assimiler ces 404 à la panne de connexion OpenAI |
 | Preview locale | Délai de démarrage dépassé ; aucune modification réseau ni contournement. Recette de la version de travail en navigateur non validée |
 | Navigateur publié | Vitrine française chargée, largeur 1363 px / document 1348 px, aucun bouton sans nom dans l’heuristique ; consignes et choix des trois parcours visibles, Continuer désactivé sans choix ; bascules FR/DE/NL/EN vérifiées sans dossier serveur ni données personnelles |
@@ -49,6 +50,7 @@ validité juridique universelle, ni sauvegarde restaurable en production.
 | MA-07 / P2 | Couleur admin arbitraire autorisée ; l’en-tête natif conserve des commandes blanches sur un dégradé qui finit dans la couleur choisie | Borner le contraste des couleurs claires, tester les couleurs autorisées et le texte agrandi dans les quatre langues. Cobalt par défaut ne dispense pas du cas #ffffff |
 | MA-08 / P2 | Lecteur vidéo HTML et contrôleur de narration restent indépendants dans accident-story.tsx/story-video-actions.tsx | Un seul propriétaire sonore ; démarrer l’un suspend l’autre, dans les deux sens. Constat source ; reproduction perceptuelle et audibilité non validées ici |
 | MA-09 / P2 | Minimatch de développement signalé par GHSA-g3hv-75wg-m249 ; production auditée sans alerte | Mise à jour compatible et lockfile testé, sans désactiver le contrôle d’ancienneté. Avis amont : https://github.com/advisories/GHSA-g3hv-75wg-m249 ; correctif annoncé 11.0.1 |
+| MA-14 / P3 | Les pages HTTPS tierces restent internes et sans capacités natives, mais un service inconnu porte un titre générique | Donner une identité externe vérifiable dans une fiche d’information, sans barre d’adresse permanente ; préférer une liste de services autorisés. Aucun transfert de cookie/permission native |
 | MA-13 / P2 | En production, le formulaire bascule DE/NL/EN, ses liens latéraux changent de langue, mais le bouton flottant « Donner mon avis ↗ » reste français avec lang=fr | Synchroniser sa langue avec la langue active du formulaire, pas seulement la query initiale ; recette des quatre langues et navigation retour |
 | MA-10 / corrigé | Ancien splash supprimé dès la fin du cache ; son déclenché après l’introduction | Nouvelle séquence locale, fin explicite, Passer, mouvement réduit, pause arrière-plan et son au début si activé. Tests dédiés et rendu Flutter |
 | MA-11 / corrigé | Lint global absorbait les caches de développement et dépassait la mémoire | Ignorer seulement caches/output générés, conserver tous les contrôles des sources ; pipeline complet réussi |
@@ -91,3 +93,15 @@ identité du conducteur, rôle administrateur et abonnement commercial.
 
 Pas de refonte globale ni d’activation commerciale suggérée avant les lots 1–4.
 Le splash est un embellissement livré séparément ; il ne résout pas l’authentification.
+
+## Livraison Android vérifiée
+CI 41711289831, job 126179708732 : 51 tests, analyse/formatage et build réussis.
+Commit GitHub de code d4b392da842bce0bbbb3e42d3cc4044d0b90a682 ; source canonique
+b29b31deeefd491743acd82e7c2131f139ce2a5a. Sous-arbre mobile identique
+b1cb712c85be38cf6fa7665629adcf545c528b73. Artefact 13268366867.
+APK 0.4.1+7, package be.adilbtp.accordia.serenitysplashpreview, libellé Accordia Sérénité (test),
+118 556 220 octets. SHA-256 : 78c740f420882745693407b5f666f50c473af73e5333f169214ba554fcb78885.
+Signature debug v2 valide, un signataire ; CRC conformes et assets PNG/WebP extraits
+identiques aux sources. ZIP GitHub : eafd343df2663c842e66f4b9d0570fa3526f46488088901ce0c92ddf0a678237.
+Moteur Flutter ARM64, min Android 24/cible 36. Aucune recette physique de connexion,
+GPS, caméra, son ou iOS revendiquée. Anciennes installations conservées.

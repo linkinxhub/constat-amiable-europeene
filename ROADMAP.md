@@ -1,3 +1,10 @@
+## 3 novembre 2026 — Après master audit
+
+Splash n° 2 développé en Android de test ; la priorité reste connexion réelle à deux
+comptes/appareils, décision secours 112, sauvegarde/restauration productive, médias
+administrables et distribution signée/iOS. Ne pas confondre tests verts et ouverture
+commerciale qualifiée. Voir docs/MASTER_AUDIT_2026-11-03.md pour preuves et ordre des lots.
+
 ## 3 novembre 2026 — WebView intégrée, Android de test livré
 
 APK Horizon + WebView 0.3.0+3 compilé, signature et provenance vérifiées. Scan et
