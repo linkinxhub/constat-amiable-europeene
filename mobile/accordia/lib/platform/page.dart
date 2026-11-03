@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -54,11 +55,23 @@ class _AccordiaPlatformPageState extends State<AccordiaPlatformPage>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     final ctl = _controller;
-    if (ctl == null) return;
-    if (state != AppLifecycleState.resumed) {
-      unawaited(ctl.pause());
-    } else {
-      unawaited(ctl.resume());
+    // pause/resume are Android APIs; WKWebView owns its lifecycle on iOS.
+    if (ctl == null || !Platform.isAndroid) return;
+    unawaited(_androidLifecycle(ctl, state == AppLifecycleState.resumed));
+  }
+
+  Future<void> _androidLifecycle(
+    InAppWebViewController ctl,
+    bool resumed,
+  ) async {
+    try {
+      if (resumed) {
+        await ctl.resume();
+      } else {
+        await ctl.pause();
+      }
+    } catch (_) {
+      /* The native view may have been disposed during the transition. */
     }
   }
 
