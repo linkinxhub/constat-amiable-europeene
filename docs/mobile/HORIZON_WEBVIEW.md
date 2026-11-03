@@ -44,7 +44,7 @@ confirmation ; préparation native existante toujours accessible séparément.
   caméra et position sur demande, caméra facultative, sauvegarde et HTTP désactivés.
 - `ios/Runner/Info.plist` : motifs caméra/photos/position, aucune ouverture ATS.
 - pubspec/lock : flutter_inappwebview 6.1.5, mobile_scanner 7.5.0,
-  permission_handler 13.0.2. Licences par dépendances et écran légal Flutter habituel.
+  permission_handler 12.0.1 (verrouillé), Android 13.0.1. Licences par dépendances et écran légal Flutter habituel.
 - tests/native_shell_test.dart, tests/webview_policy_test.dart,
   tests/config_repository_test.dart : navigation et copie, isolation, liens,
   refus adverses, invitation intacte, configuration différée.
@@ -128,3 +128,10 @@ inattendue => arrêt, aucune substitution permissive. Pas de code Java, de droit
 de certificat ou de contrôle serveur modifié. Étape ajoutée à la CI. Retrait prévu
 après revue d’une version stable amont compatible. Build release non validé.
 Référence Android : https://developer.android.com/build/releases/agp-9-0-0-release-notes .
+
+La seconde compilation 41628666085 a dépassé le défaut Proguard puis échoué sur les
+métadonnées AAR : permission_handler_android 14.1.1 exige SDK 37, hors SDK 36 du
+Flutter/AGP courant. permission_handler est verrouillé à 12.0.1, moteur Android
+13.0.1 (compileSdk 35 vérifié dans la source téléchargée). API caméra/position
+inchangée et SDK/target de l’app conservés. Aucun saut d’AGP/SDK ni suppression de
+permission pour contourner l’erreur ; lockfile résolu et analyse/tests rejoués.

@@ -22,7 +22,10 @@ XML Android et plist valides. Voir docs/mobile/HORIZON_WEBVIEW.md pour fichiers,
 preuves, limites et recette. Première compilation Android 41627170206 échouée : défaut Proguard obsolète du
 plugin WebView face à AGP 9.1. Correction de construction minimale et gardée par
 SHA-256 dans tool/prepare_android_plugins.py ; exécution/idempotence et refus de
-source inconnue vérifiés. Étape CI ajoutée ; nouvelle compilation à constater.
+source inconnue vérifiés. Étape CI ajoutée. Seconde compilation 41628666085 échouée sur le SDK 37 requis
+par permission_handler_android 14.1.1. Verrouillage permission_handler 12.0.1 /
+Android 13.0.1 (compileSdk 35 vérifié), app SDK 36 conservée. Nouvelle analyse et
+35 tests rejoués avec les dépendances compatibles ; nouvelle CI à constater.
 Aucun nouveau build iOS ni recette caméra/GPS/PDF/connexion sur téléphone réel.
 Accès Sites custom conservé ; requête anonyme à /constat renvoie 401, connexion
 réelle nécessaire et compatibilité de l’authentification intégrée non validée.
