@@ -80,33 +80,18 @@ class _NativeParticipantEditorState extends State<NativeParticipantEditor> {
         child: ListView(
           padding: const EdgeInsets.all(24),
           children: [
-            for (final key in [
-              'driver',
-              'policyholder',
-              'plate',
-              'model',
-              'insurer',
-              'policy',
-              'email',
-              'address',
-              'damage',
-              'observations',
-            ])
-              Padding(
-                padding: const EdgeInsets.only(bottom: 14),
-                child: TextFormField(
-                  initialValue: vehicle[key]?.toString() ?? '',
-                  enabled: !busy,
-                  decoration: InputDecoration(
-                    labelText: widget.reportCopy.text(key),
-                  ),
-                  maxLines: key == 'observations' ? 4 : 1,
-                  onChanged: (value) {
-                    vehicle[key] = value;
-                    if (!dirty) setState(() => dirty = true);
-                  },
-                ),
-              ),
+            NativeVehicleFields(
+              vehicle: vehicle.cast<String, dynamic>(),
+              side: side,
+              copy: widget.reportCopy,
+              requireCore: false,
+              onChanged: () => setState(() => dirty = true),
+            ),
+            NativeCircumstances(
+              vehicle: vehicle.cast<String, dynamic>(),
+              copy: widget.reportCopy,
+              onChanged: () => setState(() => dirty = true),
+            ),
             FilledButton(
               onPressed: busy ? null : save,
               child: Text(widget.copy.t('save')),

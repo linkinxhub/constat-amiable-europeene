@@ -8,6 +8,7 @@ import 'copy.dart';
 import 'model.dart';
 import 'pdf.dart';
 import 'store.dart';
+import 'vehicle_fields.dart';
 
 class ReportEditor extends StatefulWidget {
   const ReportEditor({
@@ -229,6 +230,11 @@ class _ReportEditorState extends State<ReportEditor> {
         keyboard: TextInputType.datetime,
       ),
       _text(_report, 'place', c.text('place'), required: true),
+      _text(
+        _report,
+        'city',
+        c.data['formParity']['cityLabel'][c.language.name] as String,
+      ),
       _choice('country', c.text('country'), [
         'BE',
         'FR',
@@ -275,93 +281,12 @@ class _ReportEditorState extends State<ReportEditor> {
       for (var side = 0; side < activeVehicles(_report); side++) _vehicle(side),
     ],
   );
-  Widget _vehicle(int side) {
-    final v = vehiclesOf(_report)[side];
-    final extra = (v['extra'] ??= <String, dynamic>{}) as Map<String, dynamic>;
-    final showTrailer =
-        hasTrailer(v) ||
-        (extra['trailerPlate']?.toString().isNotEmpty ?? false) ||
-        (extra['trailerCountry']?.toString().isNotEmpty ?? false);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Text(
-          '${c.text('vehicle')} ${side == 0 ? 'A' : 'B'}',
-          style: Theme.of(context).textTheme.headlineSmall,
-        ),
-        const SizedBox(height: 16),
-        DropdownButtonFormField<String>(
-          key: ValueKey('kind-$side'),
-          initialValue: vehicleKinds.contains(v['kind'])
-              ? v['kind'] as String
-              : null,
-          isExpanded: true,
-          decoration: InputDecoration(
-            labelText:
-                c.data['vehicleKindCopy'][c.language.name]['title'] as String,
-            border: const OutlineInputBorder(),
-          ),
-          items: [
-            for (final kind in vehicleKinds)
-              DropdownMenuItem(value: kind, child: Text(c.kinds[kind]!)),
-          ],
-          onChanged: (value) => _change(() => v['kind'] = value),
-          validator: (value) => value == null ? c.text('required') : null,
-        ),
-        const SizedBox(height: 14),
-        Text(c.text('distinction')),
-        const SizedBox(height: 14),
-        for (final key in [
-          'driver',
-          'policyholder',
-          'plate',
-          'model',
-          'insurer',
-          'policy',
-          'email',
-          'address',
-          'damage',
-          'observations',
-        ])
-          _text(
-            v,
-            key,
-            c.text(key),
-            required: [
-              'driver',
-              'policyholder',
-              'plate',
-              'model',
-              'insurer',
-              'policy',
-            ].contains(key),
-            lines: ['damage', 'observations', 'address'].contains(key) ? 2 : 1,
-          ),
-        if (showTrailer) ...[
-          _text(
-            extra,
-            'trailerPlate',
-            c.extra('trailerPlate'),
-            required: hasTrailer(v),
-          ),
-          _text(extra, 'trailerCountry', c.extra('trailerCountry')),
-          if (!hasTrailer(v)) Text(c.n('trailerConflict')),
-        ],
-        ExpansionTile(
-          title: Text(c.finalText('details')),
-          children: [
-            for (final key
-                in (c.data['extraLabels'][c.language.name] as Map).keys.where(
-                  (k) => !['trailerPlate', 'trailerCountry'].contains(k),
-                ))
-              _text(extra, key as String, c.extra(key)),
-          ],
-        ),
-        const Divider(height: 32),
-      ],
-    );
-  }
-
+  Widget _vehicle(int side) => NativeVehicleFields(
+    vehicle: vehiclesOf(_report)[side],
+    side: side,
+    copy: c,
+    onChanged: () => _change(() {}),
+  );
   Widget _circumstances() => Column(
     crossAxisAlignment: CrossAxisAlignment.stretch,
     children: [
@@ -370,35 +295,10 @@ class _ReportEditorState extends State<ReportEditor> {
           '${c.text('vehicle')} ${side == 0 ? 'A' : 'B'}',
           style: Theme.of(context).textTheme.headlineSmall,
         ),
-        for (var index = 0; index < c.standard.length; index++)
-          CheckboxListTile(
-            contentPadding: EdgeInsets.zero,
-            title: Text('${index + 1}. ${c.standard[index]}'),
-            value:
-                ((vehiclesOf(_report)[side]['standardCircumstances']
-                            as List?) ??
-                        [])
-                    .contains(index),
-            onChanged: (value) => _change(() {
-              final list =
-                  (vehiclesOf(_report)[side]['standardCircumstances'] ??=
-                          <int>[])
-                      as List;
-              if (value == true) {
-                if (!list.contains(index)) list.add(index);
-              } else {
-                list.remove(index);
-              }
-              vehiclesOf(_report)[side]['standardConfirmed'] = false;
-            }),
-          ),
-        CheckboxListTile(
-          contentPadding: EdgeInsets.zero,
-          title: Text(c.finalText('confirmStandard')),
-          value: vehiclesOf(_report)[side]['standardConfirmed'] == true,
-          onChanged: (v) => _change(
-            () => vehiclesOf(_report)[side]['standardConfirmed'] = v == true,
-          ),
+        NativeCircumstances(
+          vehicle: vehiclesOf(_report)[side],
+          copy: c,
+          onChanged: () => _change(() {}),
         ),
         const Divider(),
       ],

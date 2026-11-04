@@ -177,7 +177,7 @@ void main() {
       final transport = RecordingTransport(),
           c = NativeCopy(HorizonLanguage.fr);
       final reportCopy = ReportCopy(
-        await ReportCopy.load(),
+        (await tester.runAsync(ReportCopy.load))!,
         HorizonLanguage.fr,
       );
       await tester.pumpWidget(

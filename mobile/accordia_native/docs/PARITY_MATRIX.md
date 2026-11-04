@@ -29,3 +29,6 @@
 
 La version WebView actuelle demeure dans mobile/accordia et conserve ses fonctionnalités.
 Elle n’est pas écrasée ou remplacée par cette première variante native.
+
+## Mise à jour 4 novembre 2026
+Fiches A/B : les 34 champs texte du schéma véhicule et leurs listes sont maintenant partagés entre formulaire local et édition du participant, avec quatre sélecteurs de date et la ville locale. Voir FORM_PARITY_2026-11-04.md. La parité des validations, médias, langues personnelles, parcours et fonctions connectées reste ouverte.

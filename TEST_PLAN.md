@@ -32,6 +32,9 @@ Transport/cache/bootstrap et 17 tests Flutter réels : voir docs/mobile/CONFIG_S
 ## 2026-11-03 — Configuration mobile administrable
 
 tests/mobile-settings.test.mjs : brouillon non exposé, publication/rollback croissants, refus droits/suspension/injection, concurrence CAS et vrai formulaire FR/EN/DE/NL. worker-routes inclut les refus anonymes GET/PUT. Recette Preview et Dart non exécutables dans cet environnement.
+## Vitrine harmonisée — 3 novembre 2026
+
+327 tests réussis ; contrôle CUA des 24 combinaisons langue/largeur, contraste trust 1,11→14,06:1, menu tablette et absence de chevauchement/débordement mesuré. Production auditée : 0 vulnérabilité connue ; réserve Minimatch de développement conservée. Détails, périmètre et limites : docs/VITRINE_HARMONISATION_2026-11-03.md.
 
 ## Administration mobile améliorée — 3 novembre 2026
 

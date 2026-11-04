@@ -1,4 +1,4 @@
-# Accordia Native — projet Flutter initial 0.5.0+8
+# Accordia Native — projet Flutter initial 0.5.1+9
 
 Ouvrir CE dossier (celui qui contient pubspec.yaml) dans Android Studio, pas seulement android/.
 Il s’agit d’un **premier portage d’interface 100 % Flutter natif**, sans WebView et sans
@@ -53,3 +53,5 @@ Le client n’envoie aucune identité inventée, n’élève aucun rôle, n’ac
 et n’affiche « enregistré » qu’après réponse réussie. Le transport est injectable pour
 l’authentification future documentée et les tests ; le transport livré est un vrai HttpClient.
 Les doubles de service sont réservés aux tests et ne sont pas montés au démarrage réel.
+
+Fiches A/B : NativeVehicleFields est partagé entre préparation locale et fiche de session. Les listes, groupes et libellés sont exportés du web via scripts/export-native-form.mjs à la racine du dépôt ; tests/native-form-contract.test.mjs vérifie leur correspondance. Cette archive garde les données exportées et les tests Flutter.

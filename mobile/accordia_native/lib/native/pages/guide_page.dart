@@ -26,6 +26,20 @@ class NativeGuidePage extends StatelessWidget {
           Text(copy.t('offline')),
           const SizedBox(height: 12),
           Text(copy.t('limits')),
+          const SizedBox(height: 12),
+          Text(
+            reportCopy.data['formParity']['simpleCopy'][copy
+                    .language
+                    .name]['guide']
+                as String,
+          ),
+          const SizedBox(height: 12),
+          Text(
+            reportCopy.data['formParity']['suggestionsCopy'][copy
+                    .language
+                    .name]['guide']
+                as String,
+          ),
           for (final item in items)
             ListTile(
               leading: const Icon(Icons.check_circle_outline),

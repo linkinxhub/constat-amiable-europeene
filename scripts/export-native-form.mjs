@@ -1,0 +1,18 @@
+import {readFileSync,writeFileSync} from 'node:fs';
+import {dictionaries} from '../features/constat/i18n.ts';
+import {extraLabels,finalCopy} from '../features/constat/final-copy.ts';
+import {standardCircumstances} from '../features/constat/final-model.ts';
+import {vehicleKindCopy} from '../features/constat/vehicle-kind-copy.ts';
+import {fieldPresets,presetCopy} from '../features/constat/presets.ts';
+import {simpleCopy} from '../features/constat/simple-copy.ts';
+import {detailGroups} from '../features/constat/detail-groups.ts';
+import {vehicleKinds} from '../features/constat/vehicle-kind.ts';
+import {damageSuggestions,suggestionsCopy} from '../features/constat/damage-suggestions.ts';
+import {cityLabel} from '../features/constat/geocoding.ts';
+import {repairCopy} from '../features/constat/repair-copy.ts';
+const path=new URL('../mobile/accordia_native/assets/copy/constat.json',import.meta.url);
+const data=JSON.parse(readFileSync(path,'utf8'));
+Object.assign(data,{dictionaries,extraLabels,finalCopy,standardCircumstances,vehicleKindCopy});
+const fields=['driver','policyholder','plate','model','insurer','policy','email','address','damage','observations'];
+data.formParity={cityLabel,fields,detailGroups,dateFields:['insuranceFrom','insuranceUntil','driverBirthDate','licenceUntil'],simpleCopy,presetCopy,damageSuggestions,suggestionsCopy,repairCopy,presets:Object.fromEntries(['fr','en','de','nl'].map(lang=>[lang,Object.fromEntries(vehicleKinds.map(kind=>[kind,Object.fromEntries([...fields,...detailGroups.flat()].map(field=>[field,fieldPresets(field,lang,kind)]))]))]))};
+writeFileSync(path,JSON.stringify(data)+'\n');

@@ -1,5 +1,5 @@
 name: accordia_native
-version: 0.5.0+8
+version: 0.5.1+9
 publish_to: none
 description: Socle de configuration de l’application mobile Accordia.
 environment:
