@@ -1,3 +1,4 @@
+import {ACCOUNT_STORAGE_BYTES} from '../features/constat/storage-limits.ts';
 import {retentionDeadline} from '../features/constat/retention.ts';
 import {checkRetention} from './retention-service.ts';
 import {storeObject} from './object-storage.ts';
@@ -6,7 +7,7 @@ import {sessionCommitGuard,sessionGuardArgs} from './session-guard.ts';
 import {z} from 'zod';
 import {schema,type Report} from '../features/constat/model.ts';
 export const MAX_PAYLOAD=REPORT_BYTES;
-export const BUDGET=128*1024*1024;
+export const BUDGET=ACCOUNT_STORAGE_BYTES;
 export const recordId=z.string().regex(/^[a-zA-Z0-9_-]{16,80}$/);
 export const saveSchema=z.object({report:schema,expectedRevision:z.number().int().min(0).max(1000000)}).strict();
 export class ReportError extends Error{status:number;code:string;constructor(status:number,code:string){super(code);this.status=status;this.code=code;}}

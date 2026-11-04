@@ -1,3 +1,7 @@
+## Fiabilité lot A — 4 novembre 2026
+
+npm run verify : succès, TypeScript/build et 333 tests réussis, lint 0 erreur / 53 avertissements. tests/reliability-lot-a.test.mjs couvre exclusions de caches sans exclure les sources, quotas quatre langues identiques au budget réel, exclusion des médias dans les deux sens et nettoyage, affiche/cadre/absence de lecture automatique. Recette navigateur des composants réels confirme vidéo→arrêt narration et narration→pause vidéo, cadre 518×291. Affiche inspectée, route temporaire retirée avant empaquetage. Guide adapté dans les quatre langues. Matrice responsive complète et audio physique non relancés ; réserves du master audit hors de ce périmètre conservées.
+
 ## Master audit v88 — 4 novembre 2026
 
 329 tests réussis et build/TypeScript validés. verify échoue par épuisement mémoire du lint ; 0 erreur et 53 avertissements après exclusion des états temporaires. Rapport et limites : docs/MASTER_AUDIT_V88_2026-11-04.md ; preuves docs/audits/v88/validation-summary.json. Recette publiée locale, quatre langues, blocage blessés et refus de lien externe exécutés. Deux comptes/téléphones et exploitation productive restent ouverts. Aucun correctif ni déploiement dans ce lot.

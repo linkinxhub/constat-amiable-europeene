@@ -12,6 +12,10 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Generated output and checkout-local caches are not application sources.
+    "dist/",
+    ".sites-runtime/",
+    ".wrangler/",
   ]),
   {
     files: ["components/ui/**/*.{ts,tsx}", "hooks/use-mobile.ts"],

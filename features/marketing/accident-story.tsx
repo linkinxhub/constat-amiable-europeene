@@ -7,11 +7,13 @@ import {accidentStoryCopy} from './accident-story-copy';
 import {useBrowserReady} from '../constat/browser-ready';
 import {createNarration,browserNarration} from './story-narration';
 import {createRecordedNarration,frenchNarration} from './recorded-narration';
+import {StoryVideoShare} from './story-video-actions';
 import {storyNarrationCopy} from './story-narration-copy';
-const duration=15000;
+const cues=frenchNarration.cues.map(t=>Math.round(t*1000)),duration=Math.ceil(frenchNarration.duration*1000);
 export function AccidentStory({lang,paused=false}:{lang:Lang;paused?:boolean}){
  const c=accidentStoryCopy[lang],voice=storyNarrationCopy[lang],reduced=useReducedMotion(),browserReady=useBrowserReady();
  const recorded=lang==='fr',voiceAvailable=browserReady&&typeof window!=='undefined'&&(recorded?typeof Audio!=='undefined':'speechSynthesis' in window&&typeof SpeechSynthesisUtterance!=='undefined');
+ const video=useRef<HTMLVideoElement|null>(null);
  const controller=useRef<ReturnType<typeof createNarration>|null>(null),[narrating,setNarrating]=useState(false),[voiceError,setVoiceError]=useState(false);
  useEffect(()=>()=>controller.current?.stop(),[]);
  const [root,setRoot]=useState<HTMLElement|null>(null),[visible,setVisible]=useState(false),[seen,setSeen]=useState(false),[pageVisible,setPageVisible]=useState(true),[localPaused,setLocalPaused]=useState(false),[elapsed,setElapsed]=useState(0),[cycle,setCycle]=useState(0);
@@ -20,11 +22,11 @@ export function AccidentStory({lang,paused=false}:{lang:Lang;paused?:boolean}){
  const finished=elapsed>=duration,playback=seen&&visible&&pageVisible&&!paused&&!localPaused&&!finished,running=playback&&!reduced;
  useEffect(()=>{if(narrating){if(playback)controller.current?.resume();else controller.current?.pause()}},[narrating,playback]);
  useEffect(()=>{if(!running||narrating)return;const timer=setInterval(()=>setElapsed(t=>Math.min(duration,t+250)),250);return()=>clearInterval(timer)},[running,narrating]);
- const phase=reduced||!seen?3:elapsed<4000?0:elapsed<8000?1:elapsed<11000?2:3;
- function toggleNarration(){if(narrating){controller.current?.stop();setNarrating(false);setLocalPaused(true);return}controller.current?.stop();setVoiceError(false);setElapsed(0);setLocalPaused(false);setCycle(n=>n+1);setNarrating(true);const events={phase:(i:number)=>setElapsed([0,4000,8000,11000][i]),finish:()=>{setElapsed(duration);setNarrating(false)},error:()=>{setNarrating(false);setLocalPaused(true);setVoiceError(true)}};controller.current=recorded?createRecordedNarration(frenchNarration,events):createNarration(browserNarration(),voice.lines.map(text=>({text,lang:voice.locale})),events);controller.current.start()}
+ const beat=reduced||!seen?7:Math.max(0,cues.findLastIndex(t=>elapsed>=t)),phase=Math.min(3,beat);
+ function toggleNarration(){if(narrating){controller.current?.stop();setNarrating(false);setLocalPaused(true);return}video.current?.pause();controller.current?.stop();setVoiceError(false);setElapsed(0);setLocalPaused(false);setCycle(n=>n+1);setNarrating(true);setSeen(true);const events={phase:(i:number)=>setElapsed(cues[i]),finish:()=>{setElapsed(duration);setNarrating(false)},error:()=>{setNarrating(false);setLocalPaused(true);setVoiceError(true)}};controller.current=recorded?createRecordedNarration(frenchNarration,events):createNarration(browserNarration(),voice.lines.map(text=>({text,lang:voice.locale})),events);controller.current.start()}
  function replay(){setVoiceError(false);setElapsed(0);setLocalPaused(false);setCycle(n=>n+1)}
- return <section className="accident-story" aria-label={c.question} data-phase={phase} data-running={running} data-reduced={reduced}>
-  <div className="story-top"><span><ShieldCheck size={15} aria-hidden="true"/>{c.eyebrow}</span><span className="story-duration">{narrating?voice.playing:'15 s'}</span></div>
+ return <section className="accident-story" aria-label={c.question} data-phase={phase} data-beat={beat} data-running={running} data-reduced={reduced}>
+  <div className="story-top"><span><ShieldCheck size={15} aria-hidden="true"/>{c.eyebrow}</span><span className="story-duration">{narrating?voice.playing:'57 s'}</span></div>
   <h2>{c.question}</h2><p className="story-intro">{c.intro} <strong>{c.answer}</strong></p>
   <div ref={setRoot} className="story-art" key={cycle} aria-hidden="true">
    <svg viewBox="0 0 640 320" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -42,11 +44,13 @@ export function AccidentStory({lang,paused=false}:{lang:Lang;paused?:boolean}){
     </g>
     <g className="story-paper"><rect x="227" y="47" width="125" height="100" rx="14" fill="white" stroke="#D0DEE3" strokeWidth="2"/><path d="M247 72H309M247 87H329M247 102H293" stroke="#BCCDD4" strokeWidth="4" strokeLinecap="round"/><circle cx="340" cy="66" r="25" fill="#FCF6E8" stroke="#D8C591"/><text x="331" y="76" fontSize="30" fontWeight="600" fill="#9E7B32">?</text></g>
     <g className="story-phone"><rect x="245" y="19" width="151" height="278" rx="27" fill="#173D4D"/><rect x="253" y="27" width="135" height="262" rx="21" fill="url(#story-screen)"/><path d="M286 28H355V34Q355 42 345 42H296Q286 42 286 34Z" fill="#173D4D"/><path d="M315 57L325 61V70Q320 78 315 79Q307 75 306 69V61Z" stroke="#188979" strokeWidth="2"/><text x="269" y="104" fontSize="21" fontWeight="700" fill="#173D4D">Accordia</text><rect x="267" y="122" width="48" height="47" rx="10" fill="#D7EBF3"/><rect x="325" y="122" width="48" height="47" rx="10" fill="#F4E9B9"/><text x="283" y="152" fontSize="22" fontWeight="700" fill="#24556D">A</text><text x="341" y="152" fontSize="22" fontWeight="700" fill="#72602A">B</text><path d="M271 188H368M271 201H348M271 214H360" stroke="#AEC9CB" strokeWidth="4" strokeLinecap="round"/><rect x="266" y="237" width="108" height="31" rx="9" fill="#167E70"/><path d="M309 253L318 259L332 246" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/></g>
+    {beat>=4&&<g><rect x="264" y="178" width="113" height="47" rx="7" fill="#E5F3EF"/><text x="320" y="205" textAnchor="middle" fontSize="18" fontWeight="700" fill="#173D4D">{beat===4?'▧ + ▧':beat===5?'A + B':beat===6?'✓ ✓ ✓':'PDF ↓'}</text></g>}
    </svg>
   </div>
-  <div className="story-caption"><span className="story-count">0{phase+1}<span>/04</span></span><div><strong>{c.steps[phase]}</strong><p>{c.hints[phase]}</p></div></div>
-  <div className="story-progress" aria-hidden="true">{c.steps.map((s,i)=><span key={s} className={i<=phase?'active':''}/>)}</div>
+  <div className="story-caption"><span className="story-count">0{beat+1}<span>/08</span></span><div><strong>{c.steps[beat]}</strong><p>{c.hints[beat]}</p></div></div>
+  <div className="story-progress" aria-hidden="true">{c.steps.map((s,i)=><span key={s} className={i<=beat?'active':''}/>)}</div>
   <div className="story-actions"><a href={'/constat?lang='+lang}>{c.start}<ArrowUpRight size={17} aria-hidden="true"/></a><a href="#how">{c.how}</a></div>
   <div className="story-audio">{voiceAvailable?<button type="button" disabled={paused} aria-pressed={narrating} onClick={toggleNarration}>{narrating?<VolumeX size={16} aria-hidden="true"/>:<Volume2 size={16} aria-hidden="true"/>}{narrating?voice.stop:voice.start}</button>:<p>{voice.unavailable}</p>}{voiceError&&<p role="alert">{voice.error}</p>}</div><div className="story-bottom"><span>{c.note}</span>{reduced?<span>{c.static}</span>:<button type="button" disabled={paused} onClick={()=>finished?replay():setLocalPaused(p=>!p)}>{finished?<RotateCcw size={14} aria-hidden="true"/>:localPaused?<Play size={14} aria-hidden="true"/>:<Pause size={14} aria-hidden="true"/>}{finished?c.replay:localPaused?c.resume:c.pause}</button>}</div>
+  <StoryVideoShare lang={lang} videoRef={video} onPlaybackStart={()=>{controller.current?.stop();setNarrating(false);setLocalPaused(true)}}/>
  </section>
 }
