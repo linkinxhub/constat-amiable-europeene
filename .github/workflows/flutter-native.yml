@@ -21,8 +21,8 @@ jobs:
     env:
       CI: 'true'
       FLUTTER_SUPPRESS_ANALYTICS: 'true'
-      ACCORDIA_REFERENCE_PDFS: ${{ runner.temp }}/accordia-native-review/pdfs
-      ACCORDIA_INPUT_PREVIEWS: ${{ runner.temp }}/accordia-native-review/previews
+      ACCORDIA_REFERENCE_PDFS: /tmp/accordia-native-review/pdfs
+      ACCORDIA_INPUT_PREVIEWS: /tmp/accordia-native-review/previews
     defaults:
       run:
         working-directory: mobile/accordia_native
@@ -49,7 +49,7 @@ jobs:
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: Accordia-Native-Review
-          path: ${{ runner.temp }}/accordia-native-review/
+          path: /tmp/accordia-native-review/
           if-no-files-found: error
           retention-days: 7
       - name: Build Android test APK
