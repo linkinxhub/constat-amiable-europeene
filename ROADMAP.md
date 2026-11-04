@@ -1,3 +1,7 @@
+## 2026-11-04 — Consolidation après master audit
+
+Corrections A01–A04 : import JSON avec validation binaire, suppression serveur reprenable par reçu minimal, attente privée bornée et tutoriel facultatif différé. Aucun élargissement des droits ou de l’audience. Profils/partage simplifié existent dans la version préparée ; invité sans compte, réouverture complète hors réseau, export intégral, purge planifiée et sauvegardes/restauration restent ouverts. Programme et critères : docs/PROMPT_MAITRE_FIABILITE_2026-11-04.md ; preuves : docs/MASTER_AUDIT_V92_2026-11-04.md.
+
 ## 2026-11-04 — Lot C prêt en aperçu, après version 91 sauvegardée
 
 Profils véhicule/assurance privés, export courant/inventaire serveur, demande de suppression non partagée, partage commun simplifié et récupération d’un JSON local réalisés et testés : 347 tests/TypeScript/build. Rapport et périmètre précis : docs/CONTINUITE_DONNEES_PROFILS_2026-11-04.md. Publication non autorisée, production v90 conservée. L’accès invité sans compte nécessite un point d’entrée séparé respectant le dispatcher actuel ; la vraie réouverture hors réseau un écran local dédié et une stratégie de cache/test. Aucun de ces deux chantiers n’est déclaré terminé. Export intégral de compte, droits d’effacement partagés, purge indépendante des visites et sauvegardes hébergeur restent ouverts.

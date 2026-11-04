@@ -111,3 +111,9 @@ export const vehicleProfiles=sqliteTable('vehicle_profiles',{
  ownerId:text('owner_id').notNull().references(()=>accounts.id),id:text('id').notNull(),
  label:text('label').notNull(),vehicleJson:text('vehicle_json').notNull(),createdAt:text('created_at').notNull()
 },t=>[primaryKey({columns:[t.ownerId,t.id]}),index('vehicle_profiles_owner_created_idx').on(t.ownerId,t.createdAt)]);
+
+// Retain the minimal receipt needed to recover a deletion response lost in transit.
+export const reportDeletionRequests=sqliteTable('report_deletion_requests',{
+ ownerId:text('owner_id').notNull().references(()=>accounts.id),reportId:text('report_id').notNull(),
+ revision:integer('revision').notNull(),requestedAt:text('requested_at').notNull()
+},t=>[primaryKey({columns:[t.ownerId,t.reportId]})]);

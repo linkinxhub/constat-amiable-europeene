@@ -1,3 +1,4 @@
+import {privateRequest} from '../features/constat/private-request.ts';
 import test from 'node:test';import assert from 'node:assert/strict';
 import {z} from 'zod';import {componentHarness} from './lifecycle-harness.mjs';
 import {fresh} from '../features/constat/model.ts';import {dictionaries} from '../features/constat/i18n.ts';import {extraLabels} from '../features/constat/final-copy.ts';import {vehicleKindCopy} from '../features/constat/vehicle-kind-copy.ts';import * as profile from '../features/constat/vehicle-profile.ts';import {continuityCopy} from '../features/constat/continuity-copy.ts';
@@ -12,7 +13,7 @@ test('local recovery accepts only a supported draft, creates a new identity, pre
 test('profiles require explicit save consent and review before applying; a changed side/snapshot cancels pending application',async()=>{
  const old=globalThis.fetch;let calls=0,applied=[];const r=fresh(),p={id:'12345678-1234-4234-8234-123456789012',label:'Synthetic vehicle',vehicle:profile.profileFromVehicle({...r.vehicles[0],plate:'PROFILE',model:'Truck'}),createdAt:'2026-11-04T00:00:00.000Z'};
  globalThis.fetch=async()=>{calls++;return Response.json({profiles:[p]})};
- const deps={zod:{z},'./i18n':{dictionaries},'./final-copy':{extraLabels},'./vehicle-kind-copy':{vehicleKindCopy},'./vehicle-profile':profile,'./continuity-copy':{continuityCopy}};
+ const deps={'./private-request':{privateRequest},zod:{z},'./i18n':{dictionaries},'./final-copy':{extraLabels},'./vehicle-kind-copy':{vehicleKindCopy},'./vehicle-profile':profile,'./continuity-copy':{continuityCopy}};
  try{for(const lang of ['fr','en','de','nl']){const c=continuityCopy[lang],h=componentHarness('features/constat/vehicle-profiles.tsx','VehicleProfiles',deps);let props={lang,vehicle:r.vehicles[0],scope:'report-A',onApply:v=>applied.push(v)};const before=calls;h.render(props);assert.equal(calls,before);assert.equal(button(h,c.save).props.disabled,true);button(h,c.load).props.onClick();await tick();h.render(props);assert.equal(applied.length,0);button(h,c.review).props.onClick();h.render(props);assert.ok(button(h,c.apply));props={...props,scope:'report-B',vehicle:r.vehicles[1]};h.render(props);assert.equal(button(h,c.apply),undefined);button(h,c.review).props.onClick();h.render(props);button(h,c.apply).props.onClick();assert.equal(applied.pop().plate,'PROFILE');assert.equal(r.vehicles[1].plate,'');h.unmount()}}finally{globalThis.fetch=old}
 });
 test('dossier links never accept a foreign host, report query data, unknown path or arbitrary fragment',()=>{

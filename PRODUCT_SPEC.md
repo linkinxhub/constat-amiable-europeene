@@ -1,3 +1,7 @@
+## 2026-11-04 — Consolidation après master audit
+
+Corrections A01–A04 : import JSON avec validation binaire, suppression serveur reprenable par reçu minimal, attente privée bornée et tutoriel facultatif différé. Aucun élargissement des droits ou de l’audience. Profils/partage simplifié existent dans la version préparée ; invité sans compte, réouverture complète hors réseau, export intégral, purge planifiée et sauvegardes/restauration restent ouverts. Programme et critères : docs/PROMPT_MAITRE_FIABILITE_2026-11-04.md ; preuves : docs/MASTER_AUDIT_V92_2026-11-04.md.
+
 ## 2026-11-04 — Profils et continuité, lot C en préparation de publication
 
 Profil privé de compte facultatif : seulement véhicule/remorque/assurance, 20 maximum, consentement de conservation, relecture et application à sa propre fiche, complétion des seuls champs vides par défaut. Aucun conducteur/preneur ni fait d’accident/signature copié. Création limitée avec les sauvegardes à 6 écritures/minute ; pas d’écrasement automatique de profil. Suppression de profil explicite sans modifier les constats déjà remplis.

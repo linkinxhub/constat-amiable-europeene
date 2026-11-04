@@ -1,3 +1,7 @@
+## 2026-11-04 — Master audit v92 : consolidation
+
+Récupération JSON : validation binaire existante chargée avant aperçu/écriture. private-request.ts borne en-têtes et JSON à 20 s, annule au démontage sans répétition automatique. report_deletion_requests (migration additive 0022) conserve un reçu minimal propriétaire/dossier/révision/date indépendamment du report purgé ; insertion et retrait d’accès atomiques. Ce reçu ne certifie pas la fin de la purge ; politique de durée/effacement compte encore ouverte. Tutorial est importé à l’ouverture du panneau avec erreur locale et nouvelle tentative. Rapport : docs/MASTER_AUDIT_V92_2026-11-04.md.
+
 ## Administration mobile améliorée — 3 novembre 2026
 
 Lot web préparé sans publication : préchargement administrateur, aperçu indicatif, états et comparaison, protection des saisies, confirmations et historique filtrable. API/configuration Flutter et droits serveur conservés. Validation : 326 tests, TypeScript/build et lint ciblé ; recette CUA des fixtures et limites détaillées dans docs/mobile/ADMINISTRATION_WEB_2026-11-03.md.

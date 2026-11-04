@@ -1,3 +1,7 @@
+## 2026-11-04 — Master audit v92 : consolidation
+
+Récupération JSON : validation binaire existante chargée avant aperçu/écriture. private-request.ts borne en-têtes et JSON à 20 s, annule au démontage sans répétition automatique. report_deletion_requests (migration additive 0022) conserve un reçu minimal propriétaire/dossier/révision/date indépendamment du report purgé ; insertion et retrait d’accès atomiques. Ce reçu ne certifie pas la fin de la purge ; politique de durée/effacement compte encore ouverte. Tutorial est importé à l’ouverture du panneau avec erreur locale et nouvelle tentative. Rapport : docs/MASTER_AUDIT_V92_2026-11-04.md.
+
 ## 2026-11-04 — Lot C : profils de compte et opérations de continuité
 
 profile-service.ts utilise D1 vehicle_profiles (migration additive 0021) sous clé owner_id/id, avec sélection serveur de l’identité, schémas stricts, quotas et compte actif atomiques. API privées /api/profiles et /api/profiles/[id]. vehicle-profile.ts centralise champs réutilisables et fusion conservatrice ; VehicleProfiles est intégré à EntryMode des trois parcours et à la page compte. Aucun contrôle de fin/signature ne dépend du profil.
