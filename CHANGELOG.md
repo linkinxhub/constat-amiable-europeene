@@ -1,3 +1,9 @@
+## 2026-11-04 — Version 87 publiée, QR d’invitation direct
+
+Autorisation explicite « réparer ça et après publier ». Version 87 publiée avec succès : source a597a83a94bdcac31894bfdd2a49fb82f1798dba, archive sha256:891be7ba6013d40eee2475900462ab4e856eed3f94dbcf3ea990165866fdfb89 ; déploiement appgdep_6aea7bd625bc8191adb5410538cf9b58, succeeded à 00:27:24 UTC (01:27:24 Europe/Brussels), environnement révision 3. Audience custom conservée. URL https://accordia-constat.adil-btp.chatgpt.site/ . Sources et tests poussés GitHub sur fix/invite-qr-direct-20261104, commit 2b6e0313ac3ccd315e5f5d359595914a51b2d409. Inclut l’illustration ordinateur préparée en v86.
+
+Preuve de publication : résultat terminal réussi du service d’hébergement. Validation prépublication : 329 tests, TypeScript/build, aperçu borné ; limites d’authentification et d’essai physique décrites dans l’entrée du correctif. Aucun nouveau dossier réel, invitation envoyée, consentement, abonnement ni donnée modifiés pour cette publication. Guide et aides FR/EN/DE/NL mis à jour dans le lot ; cette entrée documentaire n’exige aucun redéploiement. Prochaine vérification utilisateur : créer le QR depuis le panneau d’invitation, le partager puis ouvrir explicitement sa fiche.
+
 ## 2026-11-04 — QR d’invitation immédiat, correction du parcours
 
 Demande explicite : corriger l’écran de sécurité réaffiché avant le QR, puis publier. Base propre bc288e0 (illustration ordinateur v86 déjà sauvegardée), source distante ouverte et vérifiée ; restauration checkpoint/before-invite-qr-20261104. Publication prévue du lot courant, incluant le décor ordinateur préparé précédemment. Audience custom conservée.
