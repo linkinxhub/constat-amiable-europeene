@@ -9,7 +9,7 @@ import {saveChoiceCopy} from '../features/constat/save-choice-copy.ts';
 function loadTs(path){const exports={};new Function('require','exports',ts.transpileModule(readFileSync(path,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS}}).outputText)(id=>loadTs(new URL(id+(id.endsWith('.ts')?'':'.ts'),new URL(path,'file://'+process.cwd()+'/')).pathname),exports);return exports;}
 const {cloudCopy}=loadTs('features/constat/cloud-copy.ts');
 import {pdfFixture} from './pdf-fixture.mjs';
-const modules={zod:{z}},file=ts.createSourceFile('c.tsx',readFileSync('features/constat/cloud-panel.tsx','utf8'),ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);
+const modules={'./network-notice':{NetworkNotice:'NetworkNotice'},'./share-link-actions':{ShareLinkActions:'ShareLinkActions'},zod:{z}},file=ts.createSourceFile('c.tsx',readFileSync('features/constat/cloud-panel.tsx','utf8'),ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);
 for(const n of file.statements)if(ts.isImportDeclaration(n)&&!['react','zod'].includes(n.moduleSpecifier.text)){const key=n.moduleSpecifier.text,bindings=n.importClause?.namedBindings,exports={};if(bindings&&ts.isNamedImports(bindings))for(const el of bindings.elements)if(!el.isTypeOnly)exports[el.propertyName?.text||el.name.text]=el.name.text;modules[key]=exports;if(key.startsWith('./')&&key!=='./model'&&existsSync('features/constat/'+key.slice(2)+'.ts'))Object.assign(exports,loadTs('features/constat/'+key.slice(2)+'.ts'));}
 // model.ts imports use extensionless production paths; the fixture is validated by existing model tests.
 modules['./model']={schema:z.any()};
@@ -50,7 +50,7 @@ test('creating an invitation keeps the owner on the form and exposes QR, copy an
   assert.deepEqual(navigation,[],'must not redirect through the session safety gate');
   const link='https://accordia.test/session/test_session#invite='+(existing?'renewed_token':'personal_token');
   assert.equal(h.nodes(n=>n.type==='InviteQr')[0].props.link,link);
-  assert.equal(h.nodes(n=>n.type==='input'&&n.props.readOnly)[0].props.value,link);
+  assert.equal(h.nodes(n=>n.type==='ShareLinkActions')[0].props.path,link);
   assert.equal(h.nodes(n=>n.type==='a'&&n.props.href==='/session/test_session').length,1);
   assert.equal(h.nodes(n=>n.props.role==='status'&&n.props.children===modules['./start-copy'].startCopy[lang].inviteReady).length,1);
   assert.equal(create().props.disabled,true);assert.equal(saved,existing?0:1);

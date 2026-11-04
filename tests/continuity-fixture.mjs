@@ -1,0 +1,4 @@
+import {createRequire} from 'node:module';
+import {readFileSync,readdirSync} from 'node:fs';
+const require=createRequire(import.meta.url),wr=createRequire(require.resolve('wrangler/package.json')),{Miniflare}=wr('miniflare');
+export async function continuityFixture(){const mf=new Miniflare({modules:true,script:'export default {fetch(){return new Response("synthetic continuity test")}}',compatibilityDate:'2026-05-15',d1Databases:{DB:'continuity-test'},r2Buckets:['BUCKET'],cf:false});const db=await mf.getD1Database('DB'),bucket=await mf.getR2Bucket('BUCKET');for(const f of readdirSync('drizzle').filter(f=>f.endsWith('.sql')).sort())for(const s of readFileSync('drizzle/'+f,'utf8').split('--> statement-breakpoint'))await db.prepare(s.trim()).run();return {stores:{db,bucket},dispose:()=>mf.dispose()}}

@@ -1,3 +1,5 @@
+import {AccountDataPanel} from '@/features/constat/account-data-panel';
+import {VehicleProfiles} from '@/features/constat/vehicle-profiles';
 import {mobileCopy} from '@/features/mobile/copy';
 import {saveChoiceCopy} from '@/features/constat/save-choice-copy';
 import {SiteHeader,SiteFooter} from '@/features/product/site-header';
@@ -23,7 +25,7 @@ export default async function Account({searchParams}:{searchParams:Promise<{lang
    <header className="site-page-heading"><span className="site-eyebrow">Accordia · {p.account}</span><h1>{c.account}</h1><p>{c.accountText}</p><p className="notice">{saveChoiceCopy[lang].local} {saveChoiceCopy[lang].hint}</p></header>
    {user?<>
     <section className="account-card account-reports"><strong className="account-name">{user.displayName}</strong><h2>{entryCopy[lang].dossiers}</h2><SharedList lang={lang}/><a className="site-action site-action-secondary" href={"/constat?lang="+lang+"#share-options"}>{entryCopy[lang].resume}</a></section>
-    <OfferPanel lang={lang}/>
+    <AccountDataPanel lang={lang}/><section className="account-card"><VehicleProfiles lang={lang}/></section><OfferPanel lang={lang}/>
     <a className="cloud-signin" href={'/admin?lang='+lang+'#mobile-settings'}>{mobileCopy[lang].title}</a><details className="simple-details account-settings"><summary>{p.settings}</summary><div className="entry-management"><StoragePanel lang={lang}/><a className="cloud-signin" href={'/admin?lang='+lang}>{adminCopy[lang].title}</a></div></details>
     <a className="account-signout" href={chatGPTSignOutPath('/?lang='+lang)} target="_top">{c.signout}</a>
    </>:<>

@@ -1,3 +1,11 @@
+## 2026-11-04 — Lot C : profils de compte et opérations de continuité
+
+profile-service.ts utilise D1 vehicle_profiles (migration additive 0021) sous clé owner_id/id, avec sélection serveur de l’identité, schémas stricts, quotas et compte actif atomiques. API privées /api/profiles et /api/profiles/[id]. vehicle-profile.ts centralise champs réutilisables et fusion conservatrice ; VehicleProfiles est intégré à EntryMode des trois parcours et à la page compte. Aucun contrôle de fin/signature ne dépend du profil.
+
+report-data-service.ts et /api/reports/[id]/data exposent contenu courant et inventaire borné, puis demande DELETE avec CAS et exclusion SQL des shared_sessions. Une échéance ancienne (1) bloque même un commit utilisant une horloge SQL arrondie à la seconde. Le nettoyage existant conserve sa file/tombstone et ses réservations ; aucune réponse n’affirme la fin de la purge. listReports expose shared pour masquer l’action inapplicable, sans remplacer le contrôle serveur.
+
+DraftRecovery valide un JSON local borné, crée un nouvel identifiant et conserve la date initiale ; pas de remplacement/session/signature recréée. NetworkNotice lit les indications navigateur, sans interdire les API ou synchroniser. ShareLinkActions valide les liens et unifie invitation/session/liste ; aucune résolution de partage n’est une preuve de réception. Pas de nouveau service worker, identité invitée, secret, rôle ou audience. Rapport : docs/CONTINUITE_DONNEES_PROFILS_2026-11-04.md.
+
 ## 2026-11-04 — Lot B : présentation documentaire et opérations locales
 
 DocumentFacts/documentState centralisent les états dérivés ; DocumentStatus ne modifie aucune donnée et les gardes serveur restent autoritaires. local-pdf/final-panel/same-device utilisent le composant et le dictionnaire commun. Les styles existants restent dans details sans changement des valeurs ou de la génération PDF.

@@ -18,7 +18,7 @@ test('vehicle/trailer conflicts block every completion path without erasing draf
 test('legacy and other vehicle types retain compatibility; only active contradictory sides block local completion',()=>{
  const r=pdfFixture();r.vehicles[1].extra.trailerPlate='TEST-KEEP';assert.equal(complete(r),true);r.vehicles[1].kind='other';assert.equal(complete(r),true);r.vehicles[1].kind='truck';assert.equal(complete(r),false);r.count='1';assert.equal(complete(r),true);assert.equal(r.vehicles[1].extra.trailerPlate,'TEST-KEEP');
 });
-const deps={'./comfort-copy':{comfortCopy},'./document-first-copy':{documentFirstCopy},'./entry-mode-copy':{entryModeCopy},'./entry-mode-model':{expressEntryAllowed,applyOwnEntry},'./document-import':{DocumentImport:'DocumentImport'},'@/components/ui/dialog':Object.fromEntries(['Dialog','DialogContent','DialogTitle','DialogDescription','DialogHeader'].map(k=>[k,k]))};
+const deps={'./vehicle-profiles':{VehicleProfiles:'VehicleProfiles'},'./comfort-copy':{comfortCopy},'./document-first-copy':{documentFirstCopy},'./entry-mode-copy':{entryModeCopy},'./entry-mode-model':{expressEntryAllowed,applyOwnEntry},'./document-import':{DocumentImport:'DocumentImport'},'@/components/ui/dialog':Object.fromEntries(['Dialog','DialogContent','DialogTitle','DialogDescription','DialogHeader'].map(k=>[k,k]))};
 const settle=()=>new Promise(resolve=>setImmediate(resolve));
 test('entry preferences are initially collapsed, make no access call until opened and discard late access on close',async()=>{
  const old=globalThis.fetch;let calls=0,release;globalThis.fetch=()=>{calls++;return new Promise(r=>release=r)};

@@ -3,7 +3,7 @@ import {REPORT_BYTES} from '../features/constat/photo-limits.ts';
 import test from 'node:test';import assert from 'node:assert/strict';import {readFileSync,existsSync} from 'node:fs';import ts from 'typescript';import {z} from 'zod';
 import {componentHarness} from './lifecycle-harness.mjs';import {pdfFixture} from './pdf-fixture.mjs';import {schema} from '../features/constat/model.ts';import {sharingCopy} from '../features/constat/sharing-copy.ts';import {startCopy} from '../features/constat/start-copy.ts';import {sessionCopy} from '../features/constat/session-copy.ts';import * as pending from '../features/constat/pending-invitation.ts';import {revisionGate} from '../features/constat/revision-gate.ts';import {mergeParticipant} from '../features/constat/session-merge.ts';
 const tick=()=>new Promise(r=>setImmediate(r)),id='f3434051-0f14-49e0-be25-67f1e387ca13',token='aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaabbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb';
-const modules={};
+const modules={'./network-notice':{NetworkNotice:'NetworkNotice'},'./share-link-actions':{ShareLinkActions:'ShareLinkActions'},};
 // UI children are boundaries; the actual SessionClient handlers, schemas, storage and revision gate run.
 const file=ts.createSourceFile('session.tsx',readFileSync('features/constat/session-client.tsx','utf8'),ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);
 for(const n of file.statements)if(ts.isImportDeclaration(n)){const key=n.moduleSpecifier.text;if(key==='react')continue;const names=n.importClause?.namedBindings;const exports={};if(n.importClause?.name)exports.default=n.importClause.name.text;if(names&&ts.isNamedImports(names))for(const el of names.elements)if(!el.isTypeOnly)exports[el.propertyName?.text||el.name.text]=el.name.text;modules[key]=exports;
@@ -31,9 +31,9 @@ test('blocked session storage keeps a valid fragment usable until membership is 
  const f=setup(),descriptor=Object.getOwnPropertyDescriptor(globalThis,'sessionStorage');Object.defineProperty(globalThis,'sessionStorage',{configurable:true,get(){throw Error('storage blocked')}});globalThis.fetch=async()=>Response.json(data);let h=componentHarness('features/constat/session-client.tsx','default',modules);
  try{h.render({...props,account:false});h.render({...props,account:false});assert.equal(globalThis.location.hash,'#invite='+token);h.unmount();h=componentHarness('features/constat/session-client.tsx','default',modules);h.render(props);await tick();h.render(props);assert.ok(h.nodes(n=>n.type==='Questionnaire').length);assert.equal(globalThis.location.hash,'')}finally{h.unmount();Object.defineProperty(globalThis,'sessionStorage',descriptor);f.restore()}
 });
-test('owner copy failure offers manual selection instead of a generic error',async()=>{
- const f=setup();f.s.setItem('accordia-share-'+id,'https://accordia.example/session/'+id+'#invite='+token);globalThis.fetch=async()=>Response.json({...data,side:'A',isOwner:true,joined:false});const h=componentHarness('features/constat/session-client.tsx','default',modules);
- try{h.render(props);await tick();h.render(props);button(h,sessionCopy.fr.copy).props.onClick();await tick();h.render(props);assert.ok(h.nodes(n=>n.props.role==='alert'&&n.props.children===sharingCopy.fr.copyFail).length);const input=h.nodes(n=>n.type==='Input'&&n.props.value?.includes('#invite='))[0];let selected=false;input.props.onFocus({currentTarget:{select(){selected=true}}});assert.ok(selected)}finally{h.unmount();f.restore()}
+test('owner invitation delegates copy/share to the same validated manual-fallback component',async()=>{
+ const f=setup(),link='https://accordia.example/session/'+id+'#invite='+token;f.s.setItem('accordia-share-'+id,link);globalThis.fetch=async()=>Response.json({...data,side:'A',isOwner:true,joined:false});const h=componentHarness('features/constat/session-client.tsx','default',modules);
+ try{h.render(props);await tick();h.render(props);assert.equal(h.nodes(n=>n.type==='ShareLinkActions')[0].props.path,link)}finally{h.unmount();f.restore()}
 });
 
 test('review correction opens the complete editor for the own side and rejects another vehicle target',async()=>{

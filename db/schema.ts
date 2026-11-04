@@ -105,3 +105,9 @@ export const feedback=sqliteTable('feedback',{
 },t=>[index('feedback_owner_created').on(t.ownerId,t.createdAt),index('feedback_inbox').on(t.resolved,t.createdAt)]);
 
 export const mobileSettings=sqliteTable('mobile_settings',{revision:integer('revision').primaryKey(),state:text('state').notNull(),config:text('config').notNull(),actor:text('actor').notNull(),createdAt:text('created_at').notNull(),sourceRevision:integer('source_revision')});
+
+// Reusable vehicle/insurance facts only; scoped to the authenticated account.
+export const vehicleProfiles=sqliteTable('vehicle_profiles',{
+ ownerId:text('owner_id').notNull().references(()=>accounts.id),id:text('id').notNull(),
+ label:text('label').notNull(),vehicleJson:text('vehicle_json').notNull(),createdAt:text('created_at').notNull()
+},t=>[primaryKey({columns:[t.ownerId,t.id]}),index('vehicle_profiles_owner_created_idx').on(t.ownerId,t.createdAt)]);

@@ -1,3 +1,11 @@
+## 2026-11-04 — Profils et continuité, lot C en préparation de publication
+
+Profil privé de compte facultatif : seulement véhicule/remorque/assurance, 20 maximum, consentement de conservation, relecture et application à sa propre fiche, complétion des seuls champs vides par défaut. Aucun conducteur/preneur ni fait d’accident/signature copié. Création limitée avec les sauvegardes à 6 écritures/minute ; pas d’écrasement automatique de profil. Suppression de profil explicite sans modifier les constats déjà remplis.
+
+Compte : export JSON du contenu courant d’un dossier et de 100 métadonnées de versions maximum ; PDF/signatures et anciens contenus à récupérer séparément dans les parcours existants. Demande de suppression de son dossier non partagé avec confirmation et contrôle de révision ; perte immédiate d’accès, nettoyage physique différé sur activité, aucune promesse sur sauvegardes hébergeur. Dossiers partagés protégés des suppressions unilatérales.
+
+Partage : composant commun conservant les droits ; annulation et simple ouverture native distinctes d’un envoi. Récupération du seul format JSON local en nouveau brouillon sans réactiver une session distante ; date initiale de rétention conservée et expiration refusée. Avertissement réseau indicatif, sans promesse de réouverture hors réseau ni d’accès anonyme. Origine et rôles serveur inchangés ; détails et tests dans docs/CONTINUITE_DONNEES_PROFILS_2026-11-04.md.
+
 ## 2026-11-04 — Statuts documentaires et maîtrise des brouillons locaux (lot B)
 
 Un statut est une présentation des faits, jamais une autorisation ou une décision de responsabilité. PDF solo non signé distinct du PDF commun signé A/B ; signatures personnelles et vérifications serveur inchangées. Les PDF d’une ancienne révision partagée sont signalés sans retrait d’accès aux archives. Les trois styles restent sous une option d’apparence facultative, clavier par défaut d’un nouveau PDF.
