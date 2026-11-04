@@ -1,3 +1,7 @@
+## Master audit v88 — 4 novembre 2026
+
+329 tests réussis et build/TypeScript validés. verify échoue par épuisement mémoire du lint ; 0 erreur et 53 avertissements après exclusion des états temporaires. Rapport et limites : docs/MASTER_AUDIT_V88_2026-11-04.md ; preuves docs/audits/v88/validation-summary.json. Recette publiée locale, quatre langues, blocage blessés et refus de lien externe exécutés. Deux comptes/téléphones et exploitation productive restent ouverts. Aucun correctif ni déploiement dans ce lot.
+
 ## Vitrine harmonisée — 3 novembre 2026
 
 327 tests réussis ; contrôle CUA des 24 combinaisons langue/largeur, contraste trust 1,11→14,06:1, menu tablette et absence de chevauchement/débordement mesuré. Production auditée : 0 vulnérabilité connue ; réserve Minimatch de développement conservée. Détails, périmètre et limites : docs/VITRINE_HARMONISATION_2026-11-03.md.

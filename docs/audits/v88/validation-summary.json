@@ -1,0 +1,94 @@
+{
+  "date_utc": "2026-11-04",
+  "production_version": 88,
+  "audited_checkout": "8df9c600482b4a283ca67c43fc350ba16d29fa02",
+  "production_source": "b82701ef7cc9e5d381fbe1fea34a69eb8a2e713d",
+  "typescript": "passed",
+  "build": "passed",
+  "tests": {
+    "total": 329,
+    "passed": 329,
+    "failed": 0,
+    "skipped": 0
+  },
+  "default_verify": "fails at ESLint: V8 heap exhaustion, also reproduced with 4096 MiB heap",
+  "source_lint": {
+    "errors": 0,
+    "warnings": 53,
+    "extra_exclusions": [
+      ".sites-runtime",
+      ".wrangler"
+    ]
+  },
+  "dependencies_production": {
+    "vulnerabilities": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 0,
+      "critical": 0
+    },
+    "dependencies": 192,
+    "devDependencies": 0,
+    "optionalDependencies": 88,
+    "totalDependencies": 280
+  },
+  "dependencies_all": {
+    "vulnerabilities": {
+      "info": 0,
+      "low": 0,
+      "moderate": 1,
+      "high": 0,
+      "critical": 0
+    },
+    "dependencies": 245,
+    "devDependencies": 519,
+    "optionalDependencies": 144,
+    "totalDependencies": 799
+  },
+  "advisories": [
+    {
+      "module": "minimatch",
+      "severity": "moderate",
+      "url": "https://github.com/advisories/GHSA-g3hv-75wg-m249",
+      "installed": [
+        "3.1.5",
+        "10.2.5"
+      ],
+      "affected": "<11.0.1",
+      "patched": ">=11.0.1"
+    }
+  ],
+  "secret_scan": {
+    "text_files": 574,
+    "large_excluded": 1,
+    "real_secret_confirmed": 0,
+    "test_fixture_matches": 3,
+    "history_scanned": false
+  },
+  "live_anonymous_http": {
+    "paths": 7,
+    "status": 401,
+    "response": "hosting gate HTML; application security headers cannot be concluded"
+  },
+  "live_browser": [
+    "landing contents available",
+    "personal safety gate",
+    "required mode choice",
+    "local autosave status",
+    "required-field error",
+    "injuries block + 112 link",
+    "four-language switching on questionnaire",
+    "return preserves no-injuries choice",
+    "foreign-origin invitation refused"
+  ],
+  "responsive_evidence": "16 combinations from the unchanged v88 prepublication QA, reused, not rerun during this audit",
+  "limits": [
+    "no second authenticated account",
+    "no physical QR scan",
+    "no real provider call",
+    "no real payment",
+    "no production backup export or restore",
+    "no pentest"
+  ]
+}
