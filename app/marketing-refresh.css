@@ -66,3 +66,11 @@
  .marketing-v2 .marketing-features{gap:24px}
 }
 @media(max-width:480px){.marketing-v2 .feature-cards{grid-template-columns:minmax(0,1fr)}.marketing-v2 .feature-card{padding:24px}.marketing-v2 .feature-card h3{margin-top:16px}}
+
+/* Desktop hero illustration: hidden by default, in normal flow when shown. */
+.marketing-v2 .desktop-hero-art{display:none}
+@media screen and (min-width:1200px){
+ .marketing-v2 .marketing-hero>.hero-copy{align-self:start}
+ .marketing-v2 .desktop-hero-art{display:block;width:100%;max-width:640px;margin:0 0 clamp(24px,2.5vw,40px);pointer-events:none;user-select:none}
+ .marketing-v2 .desktop-hero-art svg{display:block;width:100%;height:auto;aspect-ratio:640/260}
+}
