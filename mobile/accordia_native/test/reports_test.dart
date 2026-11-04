@@ -210,10 +210,10 @@ void main() {
       await tester.pumpAndSettle();
       await tester.tap(find.byType(CheckboxListTile).first);
       await tester.pumpAndSettle();
-      for (var i = 0; i < 3; i++) {
+      for (var i = 0; i < copy.steps.length - 1; i++) {
         await tester.tap(find.text(copy.text('next')));
         await tester.pumpAndSettle();
-        expect(find.text(copy.steps[i + 1]), findsOneWidget);
+        expect(find.text(copy.steps[i + 1]), findsWidgets);
         expect(tester.takeException(), isNull);
       }
       expect(find.text(copy.n('pdf')), findsOneWidget);

@@ -24,7 +24,9 @@ class ReportCopy {
       (data['vehicleKindCopy'][language.name]['types'] as Map)
           .cast<String, String>();
   List<String> get steps => [
-    for (final i in [0, 1, 2, 4]) dict['steps'][i] as String,
+    for (final i in [0, 1, 2]) dict['steps'][i] as String,
+    text('sketch'),
+    dict['steps'][4] as String,
   ];
   String n(String key) => native[language]![key]!;
   static const native = {
@@ -47,7 +49,7 @@ class ReportCopy {
       'stay': 'Rester',
       'leaveYes': 'Quitter',
       'help': 'Dans l’application : confirmez la sécurité, renseignez la situation et les véhicules A/B, vérifiez les circonstances, enregistrez un brouillon ou ouvrez le PDF à relire. Le document est une préparation locale, sans signature ni envoi à un assureur.',
-      'later': 'Photos, croquis et signatures ne sont pas encore disponibles dans ce parcours natif.',
+      'later': 'Le croquis manuel est disponible. Photos et signatures restent à ajouter dans ce parcours natif.',
       'trailerConflict': 'Les données de remorque sont conservées. Vérifiez le type de véhicule choisi.',
       'saved': 'Brouillon enregistré sur cet appareil.',
     },
@@ -70,7 +72,7 @@ class ReportCopy {
       'stay': 'Stay',
       'leaveYes': 'Leave',
       'help': 'In the app: confirm safety, enter the situation and vehicles A/B, review circumstances, save a draft or open the PDF for review. This is a local preparation without signatures or insurer submission.',
-      'later': 'Photos, sketches and signatures are not available in this native flow yet.',
+      'later': 'Manual sketching is available. Photos and signatures are still pending in this native flow.',
       'trailerConflict':
           'Trailer details are retained. Check the chosen vehicle type.',
       'saved': 'Draft saved on this device.',
@@ -94,7 +96,7 @@ class ReportCopy {
       'stay': 'Bleiben',
       'leaveYes': 'Verlassen',
       'help': 'In der App: Sicherheit bestätigen, Situation und Fahrzeuge A/B ausfüllen, Umstände prüfen, Entwurf speichern oder PDF zur Prüfung öffnen. Lokale Vorbereitung ohne Unterschrift oder Versicherungsversand.',
-      'later': 'Fotos, Skizzen und Unterschriften sind in diesem nativen Ablauf noch nicht verfügbar.',
+      'later': 'Manuelles Zeichnen ist verfügbar. Fotos und Unterschriften folgen in diesem nativen Ablauf später.',
       'trailerConflict': 'Anhängerdaten bleiben erhalten. Prüfen Sie die gewählte Fahrzeugart.',
       'saved': 'Entwurf auf diesem Gerät gespeichert.',
     },
@@ -117,7 +119,7 @@ class ReportCopy {
       'stay': 'Blijven',
       'leaveYes': 'Verlaten',
       'help': 'In de app: veiligheid bevestigen, situatie en voertuigen A/B invullen, omstandigheden controleren, concept opslaan of PDF ter controle openen. Lokale voorbereiding zonder handtekeningen of verzending aan een verzekeraar.',
-      'later': 'Foto’s, schetsen en handtekeningen zijn nog niet beschikbaar in deze native werkwijze.',
+      'later': 'Handmatig tekenen is beschikbaar. Foto’s en handtekeningen volgen later in deze native werkwijze.',
       'trailerConflict': 'Aanhangergegevens blijven bewaard. Controleer het gekozen voertuigtype.',
       'saved': 'Concept op dit apparaat opgeslagen.',
     },

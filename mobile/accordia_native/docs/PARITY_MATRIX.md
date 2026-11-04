@@ -17,7 +17,7 @@
 | Compte/dossiers/historique | Pages de lecture API codées ; nécessitent authentification native et recette réelle |
 | Session A/B | Lecture et édition native des champs principaux de son participant ; serveur autoritaire, CAS ; fiche avancée/commun/circonstances/photos/consentements à compléter |
 | Invitations | POST de join et renouvellement réels ; QR d’affichage/partage système et liens OS vérifiés à compléter |
-| Photos, GPS, croquis | À porter ; aucune permission ou acquisition fictive ; données originales inconnues conservées dans les Maps |
+| Photos, GPS, croquis | Croquis manuel local/PDF disponible en 0.6 ; photos/GPS à porter ; aucune permission ou acquisition fictive ; données originales inconnues conservées dans les Maps |
 | OCR/Express, traduction, croquis IA | Inventoriés côté API, pas encore portés dans l’interface ; droits/quota/fournisseur restent serveur |
 | Préparation finale, signatures et PDF final | Contrats serveur inventoriés ; écran natif de liste initial, workflow complet et lecteur binaire serveur à porter |
 | Feedback | Texte/catégorie/envoi réel codés, idempotence conservée ; pièces images à porter |
@@ -32,3 +32,8 @@ Elle n’est pas écrasée ou remplacée par cette première variante native.
 
 ## Mise à jour 4 novembre 2026
 Fiches A/B : les 34 champs texte du schéma véhicule et leurs listes sont maintenant partagés entre formulaire local et édition du participant, avec quatre sélecteurs de date et la ville locale. Voir FORM_PARITY_2026-11-04.md. La parité des validations, médias, langues personnelles, parcours et fonctions connectées reste ouverte.
+
+## Mise à jour design et croquis — 4 novembre
+Cinq étapes natives, cartes relief et rubriques A/B ; croquis manuel au format 800×320, 500 traits/5000 points par trait, annulation et effacement confirmé, sauvegarde chiffrée et export vectoriel en annexe du PDF préparatoire. Photos et croquis IA non portés. Authentification traitée en dernier à la demande du propriétaire ; accès privés et recette connectée toujours nécessaires.
+
+PDF 0.6 : modèle original fourni identique au site sur la première page, styles clavier/bleu/noir et langue des annexes repris ; ressources et placements comparés au web. Le PDF final authentifié/signatures, les photos et la pagination exacte des annexes web restent distincts/non qualifiés. Voir INPUT_DESIGN_2026-11-04.md.

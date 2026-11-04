@@ -35,6 +35,7 @@ class _NativeParticipantEditorState extends State<NativeParticipantEditor> {
   }
 
   Future<void> save() async {
+    FocusScope.of(context).unfocus();
     setState(() => busy = true);
     try {
       await widget.api.updateSession(
@@ -77,26 +78,29 @@ class _NativeParticipantEditorState extends State<NativeParticipantEditor> {
       },
       child: NativePage(
         title: '${widget.copy.t('edit')} · ${side == 0 ? 'A' : 'B'}',
-        child: ListView(
-          padding: const EdgeInsets.all(24),
-          children: [
-            NativeVehicleFields(
-              vehicle: vehicle.cast<String, dynamic>(),
-              side: side,
-              copy: widget.reportCopy,
-              requireCore: false,
-              onChanged: () => setState(() => dirty = true),
-            ),
-            NativeCircumstances(
-              vehicle: vehicle.cast<String, dynamic>(),
-              copy: widget.reportCopy,
-              onChanged: () => setState(() => dirty = true),
-            ),
-            FilledButton(
-              onPressed: busy ? null : save,
-              child: Text(widget.copy.t('save')),
-            ),
-          ],
+        child: AbsorbPointer(
+          absorbing: busy,
+          child: ListView(
+            padding: const EdgeInsets.all(24),
+            children: [
+              NativeVehicleFields(
+                vehicle: vehicle.cast<String, dynamic>(),
+                side: side,
+                copy: widget.reportCopy,
+                requireCore: false,
+                onChanged: () => setState(() => dirty = true),
+              ),
+              NativeCircumstances(
+                vehicle: vehicle.cast<String, dynamic>(),
+                copy: widget.reportCopy,
+                onChanged: () => setState(() => dirty = true),
+              ),
+              FilledButton(
+                onPressed: busy ? null : save,
+                child: Text(widget.copy.t('save')),
+              ),
+            ],
+          ),
         ),
       ),
     );

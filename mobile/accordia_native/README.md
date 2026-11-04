@@ -1,4 +1,4 @@
-# Accordia Native — projet Flutter initial 0.5.1+9
+# Accordia Native — projet Flutter initial 0.6.0+10
 
 Ouvrir CE dossier (celui qui contient pubspec.yaml) dans Android Studio, pas seulement android/.
 Il s’agit d’un **premier portage d’interface 100 % Flutter natif**, sans WebView et sans
@@ -55,3 +55,7 @@ l’authentification future documentée et les tests ; le transport livré est u
 Les doubles de service sont réservés aux tests et ne sont pas montés au démarrage réel.
 
 Fiches A/B : NativeVehicleFields est partagé entre préparation locale et fiche de session. Les listes, groupes et libellés sont exportés du web via scripts/export-native-form.mjs à la racine du dépôt ; tests/native-form-contract.test.mjs vérifie leur correspondance. Cette archive garde les données exportées et les tests Flutter.
+
+Version 0.6 : cartes de saisie en relief, rubriques A/B, cinq étapes et croquis manuel local enregistré dans les brouillons chiffrés. Annuler/effacement confirmé ; dessin vectoriel dans le PDF préparatoire non signé sur le modèle original du site. Photos encore à porter. Authentification reportée en dernier point fonctionnel selon ROADMAP.md.
+
+PDF : clavier, stylo bleu/noir et langue des annexes depuis la relecture. Le fond original reste français comme sur le site. Assets inclus, aucun téléchargement de modèle nécessaire. Boutons/options de saisie harmonisés avec les styles du web ; une couleur administrateur publiée reste prioritaire.

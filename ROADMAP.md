@@ -184,3 +184,5 @@ QR d’accès en ligne ajouté aux nouveaux exports ; ouverture réservée aux c
 
 ## 2026-11-01 — Réparation du partage mobile
 Partage mobile renforcé : invitation conservée, champ de récupération et erreurs utiles. À recetter après publication autorisée sur deux téléphones avec comptes différents et messagerie/connexion réelles. Production v59 conservée, nouvelle version de développement préparée sans publication.
+
+2026-11-04 : le propriétaire demande de traiter l’authentification en dernier point fonctionnel. Avancer sur design, champs, médias, croquis et parcours indépendants ; maintenir les refus d’accès et qualifier les parcours connectés après authentification réelle.

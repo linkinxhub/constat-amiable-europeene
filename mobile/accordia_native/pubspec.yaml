@@ -1,5 +1,5 @@
 name: accordia_native
-version: 0.5.1+9
+version: 0.6.0+10
 publish_to: none
 description: Socle de configuration de l’application mobile Accordia.
 environment:
@@ -23,6 +23,10 @@ dev_dependencies:
     sdk: flutter
 flutter:
   uses-material-design: true
+  fonts:
+    - family: AccordiaHand
+      fonts:
+        - asset: assets/pdf/web-hand.ttf
   assets:
     - assets/horizon/hero.webp
     - assets/horizon/azur-accident.webp
@@ -31,3 +35,6 @@ flutter:
     - assets/brand/shield-relief.png
     - assets/copy/constat.json
     - assets/fonts/DejaVuSans.ttf
+    - assets/pdf/reference.jpg
+    - assets/pdf/web-regular.ttf
+    - assets/pdf/web-hand.ttf

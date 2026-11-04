@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../reports/model.dart';
 import '../reports/copy.dart';
 import '../reports/vehicle_fields.dart';
+import '../reports/form_design.dart';
 import '../platform/scanner.dart';
 import '../platform/copy.dart';
 import '../platform/policy.dart';

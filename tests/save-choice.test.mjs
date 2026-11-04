@@ -35,3 +35,40 @@ test('actual account action saves explicitly and never shows success after confl
  try{const h=componentHarness('features/constat/cloud-panel.tsx','CloudPanel',modules),p={...props(),account:{displayName:'Test'},onSaved(){saved++}};h.render(p);assert.equal(requests,0);h.nodes(n=>n.type==='Button')[0].props.onClick();await settle();assert.equal(requests,1);release({ok:false,json:async()=>({error:'conflict'})});await settle();h.render(p);assert.equal(saved,0);assert.ok(!text(h).includes(saveChoiceCopy.fr.cloudSaved));h.nodes(n=>n.type==='Button')[0].props.onClick();await settle();release({ok:true,json:async()=>({report:p.report,revision:1})});await settle();h.render(p);assert.equal(saved,1);assert.ok(!text(h).includes(cloudCopy.fr.saved));p.context={id:p.report.id,revision:1};p.hasUnsaved=false;h.render(p);assert.ok(text(h).includes(saveChoiceCopy.fr.cloudSaved));p.hasUnsaved=true;h.render(p);assert.ok(!text(h).includes(saveChoiceCopy.fr.cloudSaved));assert.ok(!text(h).includes(cloudCopy.fr.saved));h.unmount();}
  finally{globalThis.fetch=old}
 });
+
+test('creating an invitation keeps the owner on the form and exposes QR, copy and explicit session link in four languages',async()=>{
+ const old={fetch:globalThis.fetch,window:globalThis.window,location:globalThis.location,sessionStorage:globalThis.sessionStorage};
+ try{for(const lang of ['fr','en','de','nl'])for(const existing of [false,true]){
+  const calls=[],navigation=[],stored=new Map();let saved=0;
+  globalThis.location={origin:'https://accordia.test'};globalThis.window={location:{assign:url=>navigation.push(url)}};globalThis.sessionStorage={setItem:(k,v)=>stored.set(k,v)};
+  const p={...props(),lang,compact:false,account:{displayName:'Owner'},participationMode:'two-devices',onSaved(){saved++}};
+  if(existing){p.context={id:p.report.id,revision:2};p.hasUnsaved=false}
+  globalThis.fetch=async(url,options)=>{calls.push({url,options});return {ok:true,json:async()=>url.startsWith('/api/reports/')?{report:p.report,revision:3}:url==='/api/sessions'?{id:'test_session',...(existing?{}:{token:'personal_token'})}:{token:'renewed_token'}}};
+  const h=componentHarness('features/constat/cloud-panel.tsx','CloudPanel',modules);h.render(p);
+  const create=()=>h.nodes(n=>n.type==='Button'&&n.props.children===modules['./start-copy'].startCopy[lang].invite)[0];
+  create().props.onClick();await settle();h.render(p);
+  assert.deepEqual(navigation,[],'must not redirect through the session safety gate');
+  const link='https://accordia.test/session/test_session#invite='+(existing?'renewed_token':'personal_token');
+  assert.equal(h.nodes(n=>n.type==='InviteQr')[0].props.link,link);
+  assert.equal(h.nodes(n=>n.type==='input'&&n.props.readOnly)[0].props.value,link);
+  assert.equal(h.nodes(n=>n.type==='a'&&n.props.href==='/session/test_session').length,1);
+  assert.equal(h.nodes(n=>n.props.role==='status'&&n.props.children===modules['./start-copy'].startCopy[lang].inviteReady).length,1);
+  assert.equal(create().props.disabled,true);assert.equal(saved,existing?0:1);
+  assert.equal(stored.get('accordia-share-test_session'),link);
+  assert.ok(calls.every(c=>c.options.headers['X-Accordia-Request']==='1'));
+  assert.deepEqual(JSON.parse(calls.find(c=>c.url==='/api/sessions').options.body),{reportId:p.report.id});
+  // Changing to a different report must never retain the previous private invitation.
+  h.render({...p,report:{...p.report,id:'another_report'}});assert.equal(h.nodes(n=>n.type==='InviteQr').length,0);h.unmount();
+ }}finally{for(const [k,v] of Object.entries(old))if(v===undefined)delete globalThis[k];else globalThis[k]=v}
+});
+
+test('invitation failures preserve the current page and never display a QR or session link',async()=>{
+ const old={fetch:globalThis.fetch,window:globalThis.window};
+ try{for(const error of ['unauthenticated','origin','conflict','quota']){
+  const navigation=[],calls=[];globalThis.window={location:{assign:url=>navigation.push(url)}};
+  globalThis.fetch=async(url)=>{calls.push(url);return {ok:false,json:async()=>({error})}};
+  const h=componentHarness('features/constat/cloud-panel.tsx','CloudPanel',modules),p={...props(),compact:false,account:{displayName:'Owner'},participationMode:'two-devices'};h.render(p);
+  h.nodes(n=>n.type==='Button'&&n.props.children===modules['./start-copy'].startCopy.fr.invite)[0].props.onClick();await settle();h.render(p);
+  assert.equal(calls.length,1);assert.equal(h.nodes(n=>n.type==='InviteQr').length,0);assert.deepEqual(navigation,[]);assert.ok(text(h).includes(cloudCopy.fr[error]));h.unmount();
+ }}finally{globalThis.fetch=old.fetch;globalThis.window=old.window}
+});

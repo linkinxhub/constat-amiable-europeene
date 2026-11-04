@@ -247,10 +247,10 @@ class NativeCopy {
     ],
     'details': ['Détails', 'Details', 'Details', 'Details'],
     'limits': [
-      'Cette première version native conserve la saisie locale et le PDF de préparation. Photos, GPS, croquis, OCR, signatures et parité complète des formulaires restent à porter. Les services connectés nécessitent une authentification mobile réelle.',
-      'This first native version keeps local entry and preparation PDF. Photos, GPS, sketches, OCR, signatures and full form parity remain to be ported. Connected services require real mobile authentication.',
-      'Diese erste native Version behält lokale Eingabe und Vorbereitungs-PDF. Fotos, GPS, Skizzen, OCR, Unterschriften und vollständige Formularparität müssen noch portiert werden. Online-Dienste benötigen echte mobile Anmeldung.',
-      'Deze eerste native versie behoudt lokale invoer en voorbereidings-PDF. Foto’s, GPS, schetsen, OCR, handtekeningen en volledige formulierpariteit moeten nog worden overgezet. Online diensten vereisen echte mobiele aanmelding.',
+      'Cette première version native conserve la saisie locale et le PDF de préparation. Photos, GPS, croquis IA, OCR, signatures et parité complète des formulaires restent à porter. Les services connectés nécessitent une authentification mobile réelle.',
+      'This first native version keeps local entry and preparation PDF. Photos, GPS, AI sketches, OCR, signatures and full form parity remain to be ported. Connected services require real mobile authentication.',
+      'Diese erste native Version behält lokale Eingabe und Vorbereitungs-PDF. Fotos, GPS, KI-Skizzen, OCR, Unterschriften und vollständige Formularparität müssen noch portiert werden. Online-Dienste benötigen echte mobile Anmeldung.',
+      'Deze eerste native versie behoudt lokale invoer en voorbereidings-PDF. Foto’s, GPS, AI-schetsen, OCR, handtekeningen en volledige formulierpariteit moeten nog worden overgezet. Online diensten vereisen echte mobiele aanmelding.',
     ],
     'native': [
       'Interface native Flutter',

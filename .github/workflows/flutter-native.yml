@@ -21,6 +21,8 @@ jobs:
     env:
       CI: 'true'
       FLUTTER_SUPPRESS_ANALYTICS: 'true'
+      ACCORDIA_REFERENCE_PDFS: ${{ runner.temp }}/accordia-native-review/pdfs
+      ACCORDIA_INPUT_PREVIEWS: ${{ runner.temp }}/accordia-native-review/previews
     defaults:
       run:
         working-directory: mobile/accordia_native
@@ -43,6 +45,13 @@ jobs:
         run: flutter --no-version-check --suppress-analytics analyze
       - name: Test
         run: flutter --no-version-check --suppress-analytics test --reporter expanded
+      - name: Keep native PDF and input review outputs
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: Accordia-Native-Review
+          path: ${{ runner.temp }}/accordia-native-review/
+          if-no-files-found: error
+          retention-days: 7
       - name: Build Android test APK
         run: flutter --no-version-check --suppress-analytics build apk --debug --target-platform android-arm64
       - name: Keep Android test APK
