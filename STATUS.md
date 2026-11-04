@@ -1,3 +1,9 @@
+## 2026-11-04 — Version 90 publiée : fiabilité lot A
+
+Autorisation explicite « publier ». Version 90 déployée depuis l’archive validée de la source 5a49c419433af896caec6ef98ebd6050bee710c8 ; sha256:9f23a76d9df6a991999a3f4ce89a30c749bec988f47eb1c620e711e691691fab. Déploiement appgdep_6aea8811424c8191b77a5e817923de25 : succeeded à 02:19:35 Europe/Brussels, environnement révision 3, audience custom conservée. URL https://accordia-constat.adil-btp.chatgpt.site . Correctifs : contrôle verify, quota 128 Mio, affiche/cadre vidéo et exclusion mutuelle vidéo/narration. Code poussé GitHub sur fix/reliability-lot-a-20261104, commit 38b41862c47977f75057d5e8f27c6b3feb16461e.
+
+Résultat terminal de l’hébergement vérifié ; TypeScript, build, lint 0 erreur/53 avertissements et 333 tests du lot préparatoire réutilisés pour l’archive identique, sans nouvelle recette fonctionnelle productive. Guide quatre langues vérifié et déjà actualisé dans le lot ; aucune nouvelle commande ajoutée par la publication. Réserves de dépendance et de recette physique inchangées. STATUS.md et CHANGELOG.md actualisés uniquement pour la traçabilité, sans second déploiement. Prochaine étape : gestion des données/export et suppression manuelle des brouillons selon le lot à cadrer.
+
 ## 2026-11-04 — Fiabilité, lot A préparé sans publication
 
 Base 7ba1baa (production v89), point de restauration checkpoint/before-reliability-lot-a-20261104. Vérification normale réparée par exclusion ESLint des sorties dist et états .sites-runtime/.wrangler, sans désactivation de règle. Quota affiché dans les quatre langues aligné sur le budget serveur inchangé de 128 Mio via une constante partagée. Vidéo : affiche extraite du MP4 réel à 2 s, dimensions 1280×720 et cadre 16:9 ; narration et vidéo s’arrêtent mutuellement au démarrage. Téléchargement et partage conservés. Explication ajoutée aux quatre langues et aux guides ; durée vidéo corrigée de 66 à 61 s.
