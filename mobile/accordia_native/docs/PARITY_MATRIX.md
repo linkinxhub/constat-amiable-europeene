@@ -10,7 +10,7 @@
 | Formulaire local, véhicule/attelage, circonstances, relecture | Fonctionnel depuis le module natif existant, champs avancés web à compléter |
 | A+B même téléphone | Préparation native avec deux fiches ; ne remplace pas encore les confirmations/signatures du parcours web partagé |
 | Brouillons chiffrés et suppression | Fonctionnels, CAS local, corruption conservée, jamais repli en clair |
-| PDF natif | Préparation non signée existante ; pas encore le PDF final serveur ou une reproduction complète du modèle web |
+| PDF natif | Première page sur le modèle original du site, clavier/bleu/noir, croquis et annexes intégrales ; PDF final serveur signé et pagination exacte des annexes web à qualifier |
 | QR/collage | Scanner natif et validation réelle de l’invitation ; entrée de session bloquée sans identité mobile supportée |
 | Client API | Requêtes HTTPS réelles, origine fixe, garde JSON/CSRF serveur, refus 401/403, conflits 409 et conservation de saisie ; pas de session inventée |
 | Authentification ChatGPT native | Non implémentée : nécessite un contrat serveur/hébergeur supporté ; aucun bearer générique accepté par hypothèse |
