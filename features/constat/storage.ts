@@ -1,9 +1,22 @@
 import {saveQueue} from './save-queue';
+import {draftMatches} from './draft-data';
 import {retentionDeadline} from './retention';
 import {schema,type Report} from './model';
 function db():Promise<IDBDatabase>{return new Promise((resolve,reject)=>{const req=indexedDB.open('accordia-drafts',2);req.onupgradeneeded=()=>{if(!req.result.objectStoreNames.contains('reports'))req.result.createObjectStore('reports',{keyPath:'id'});if(!req.result.objectStoreNames.contains('documents'))req.result.createObjectStore('documents',{keyPath:'id'}).createIndex('reportId','reportId');};req.onsuccess=()=>{const conn=req.result;const tx=conn.transaction(['reports','documents'],'readwrite');const expired=new Set<string>();const r=tx.objectStore('reports').openCursor();r.onsuccess=()=>{const c=r.result;if(c){const created=c.value.localCreatedAt||c.value.updated;if(created&&retentionDeadline(created)<=Date.now()){expired.add(c.value.id);c.delete();}c.continue();}else{const q=tx.objectStore('documents').openCursor();q.onsuccess=()=>{const d=q.result;if(d){if(expired.has(d.value.reportId)||(d.value.expiresAt||retentionDeadline(d.value.createdAt))<=Date.now())d.delete();d.continue();}}}};tx.oncomplete=()=>resolve(conn);tx.onerror=()=>{conn.close();reject(tx.error)};tx.onabort=()=>{conn.close();reject(tx.error)}};req.onerror=()=>reject(req.error);req.onblocked=()=>reject(new Error('blocked'));});}
 async function writeDraft(report:Report){const now=new Date().toISOString();const data=schema.parse({...report,localCreatedAt:report.localCreatedAt||report.updated||now,id:report.id||newLocalId(),updated:now});if(retentionDeadline(data.localCreatedAt!)<=Date.now())throw new Error('retention_expired');const conn=await db();try{await new Promise<void>((resolve,reject)=>{const tx=conn.transaction('reports','readwrite');tx.objectStore('reports').put(data);tx.oncomplete=()=>resolve();tx.onerror=()=>reject(tx.error);tx.onabort=()=>reject(tx.error);});return data;}finally{conn.close();}}
-export const saveDraft=saveQueue(writeDraft);
+const mutateDraft=saveQueue(async(operation:()=>Promise<Report|void>)=>operation());
+export const saveDraft=(report:Report)=>mutateDraft(()=>writeDraft(report)) as Promise<Report>;
+export const deleteDraft=(snapshot:Report)=>mutateDraft(async()=>{
+ const conn=await db();try{await new Promise<void>((resolve,reject)=>{
+  const tx=conn.transaction('reports','readwrite'),store=tx.objectStore('reports');let conflict=false;
+  const req=store.get(snapshot.id);req.onsuccess=()=>{
+   if(!req.result)return;
+   if(!draftMatches(req.result,snapshot)){conflict=true;tx.abort();return}
+   store.delete(snapshot.id);
+  };
+  tx.oncomplete=()=>resolve();tx.onerror=()=>reject(tx.error);tx.onabort=()=>reject(conflict?new Error('conflict'):tx.error||new Error('unavailable'));
+ })}finally{conn.close()}
+}) as Promise<void>;
 export async function listDrafts(){const conn=await db();try{return await new Promise<Report[]>((resolve,reject)=>{const req=conn.transaction('reports').objectStore('reports').getAll();req.onsuccess=()=>{try{resolve(req.result.map(r=>schema.parse(r)).sort((a,b)=>b.updated.localeCompare(a.updated)));}catch(e){reject(e);}};req.onerror=()=>reject(req.error);});}finally{conn.close();}}
 
 export function newLocalId(){return Array.from(crypto.getRandomValues(new Uint8Array(16)),b=>b.toString(16).padStart(2,'0')).join('')}

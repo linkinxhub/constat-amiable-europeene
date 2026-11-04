@@ -1,3 +1,9 @@
+## 2026-11-04 — Lot B : présentation documentaire et opérations locales
+
+DocumentFacts/documentState centralisent les états dérivés ; DocumentStatus ne modifie aucune donnée et les gardes serveur restent autoritaires. local-pdf/final-panel/same-device utilisent le composant et le dictionnaire commun. Les styles existants restent dans details sans changement des valeurs ou de la génération PDF.
+
+storage.ts sérialise saveDraft/deleteDraft dans une même file. deleteDraft lit et compare le snapshot validé dans une transaction readwrite du seul store reports avant effacement ; store documents jamais inclus. Une entrée absente est un succès idempotent, une entrée modifiée provoque abort conflict. DraftDataActions demande une confirmation locale et crée une URL Blob pour un export JSON sans requête réseau ; URL révoquée au changement de snapshot/démontage. Workspace réinitialise son indicateur/pointeur local uniquement si la saisie ouverte correspond encore au snapshot supprimé. Aucun schéma, binding, API serveur, droit ou abonnement changé.
+
 ## Administration mobile améliorée — 3 novembre 2026
 
 Lot web préparé sans publication : préchargement administrateur, aperçu indicatif, états et comparaison, protection des saisies, confirmations et historique filtrable. API/configuration Flutter et droits serveur conservés. Validation : 326 tests, TypeScript/build et lint ciblé ; recette CUA des fixtures et limites détaillées dans docs/mobile/ADMINISTRATION_WEB_2026-11-03.md.

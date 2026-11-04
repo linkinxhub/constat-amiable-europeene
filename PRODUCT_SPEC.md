@@ -1,3 +1,9 @@
+## 2026-11-04 — Statuts documentaires et maîtrise des brouillons locaux (lot B)
+
+Un statut est une présentation des faits, jamais une autorisation ou une décision de responsabilité. PDF solo non signé distinct du PDF commun signé A/B ; signatures personnelles et vérifications serveur inchangées. Les PDF d’une ancienne révision partagée sont signalés sans retrait d’accès aux archives. Les trois styles restent sous une option d’apparence facultative, clavier par défaut d’un nouveau PDF.
+
+Mes brouillons : copie JSON du brouillon enregistré avec originaux/photos/croquis, sans PDF séparés ni import JSON ; suppression locale définitive après confirmation et refus si snapshot différent. Préserver données ouvertes, PDF séparés, autres brouillons et stockage serveur. Cette fonction ne constitue pas une suppression de compte ni un export de toutes les données personnelles. Feuille de route décidée : docs/FEUILLE_ROUTE_MARCHE_2026-11-04.md. Lot validé localement, non publié.
+
 ## Administration mobile améliorée — 3 novembre 2026
 
 Lot web préparé sans publication : préchargement administrateur, aperçu indicatif, états et comparaison, protection des saisies, confirmations et historique filtrable. API/configuration Flutter et droits serveur conservés. Validation : 326 tests, TypeScript/build et lint ciblé ; recette CUA des fixtures et limites détaillées dans docs/mobile/ADMINISTRATION_WEB_2026-11-03.md.

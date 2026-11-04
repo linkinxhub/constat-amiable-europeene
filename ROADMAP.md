@@ -1,3 +1,7 @@
+## Décisions produit — 4 novembre 2026, après version 90
+
+Feuille de route explicitement approuvée par le propriétaire. État détaillé et critères : docs/FEUILLE_ROUTE_MARCHE_2026-11-04.md. Conserver les trois parcours, A/B, quatre langues, conducteur/assuré distincts, photos, croquis manuel, PDF et originaux. Vérification/quota/lecteur livrés en v90. Lot B en préparation : statuts documentaires, export JSON et suppression explicite des seuls brouillons locaux, styles PDF repliés sans retrait. Ensuite : gestion serveur des données, accès invité sécurisé, reprise sans réseau, profils véhicule/assurance, partage simplifié. Simplification des explications et de la place de la vidéo à traiter sans retirer les commandes existantes. Reporter abonnement annuel grand public, nombreuses offres de flotte et langues supplémentaires. Écarter verdict automatique de responsabilité, signature automatique et envoi sans validation explicite. Aucune suppression de fonction/offre existante autorisée par « reporter ».
+
 ## Administration mobile améliorée — 3 novembre 2026
 
 Lot web préparé sans publication : préchargement administrateur, aperçu indicatif, états et comparaison, protection des saisies, confirmations et historique filtrable. API/configuration Flutter et droits serveur conservés. Validation : 326 tests, TypeScript/build et lint ciblé ; recette CUA des fixtures et limites détaillées dans docs/mobile/ADMINISTRATION_WEB_2026-11-03.md.

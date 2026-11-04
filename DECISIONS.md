@@ -188,3 +188,7 @@ Développer le récit plutôt que ralentir la courte piste : une nouvelle prise 
 
 ## Partage de la présentation — 2026-11-02
 Partager un fichier MP4 autonome plutôt qu’un lien Sites restreint. Conserver l’audience du site et les données privées. Préparation et envoi en deux gestes pour préserver l’activation utilisateur malgré le chargement asynchrone ; ne jamais annoncer un message comme envoyé après la simple ouverture du partage. MP4 français clairement indiqué dans toutes les langues.
+
+## 2026-11-04 — Feuille de route de marché et lot B
+
+La demande autorise le développement, pas une nouvelle publication. Préserver toutes les fonctions listées. Reporter les offres/langues signifie arrêter leur extension, pas supprimer une offre existante. Ne pas ouvrir l’audience Sites pour fabriquer un accès invité. Aucun verdict de responsabilité, signature automatique ou transmission sans validation explicite. Statuts basés sur signatures/révision/présence réelle du PDF ; les limites d’identité du parcours appareil commun restent annoncées. Export et suppression sont deux gestes distincts : limiter le lot B au brouillon local et préserver PDF séparés/dossiers serveur. Pas de promesse de portabilité/effacement intégral ni de reprise hors connexion complète. Les trois styles sont repliés, jamais supprimés. Lots suivants et critères consignés dans docs/FEUILLE_ROUTE_MARCHE_2026-11-04.md.
