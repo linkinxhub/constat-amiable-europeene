@@ -16,6 +16,8 @@ Le présent enregistrement ne modifie que la documentation : mêmes sources runt
 
 # STATUS
 
+Vérification du lot : analyse Dart sans diagnostic, 8 tests de contrat Node réussis et contrôle d’exécution Dart réussi sur l’URL, la conservation des octets et les refus HTTP. Les sources web des fiches et du modèle PDF testées correspondent à la révision Sites inspectée. Le contrôle automatisé a rejeté la première commande locale de build en signalant un accès à des métadonnées cloud. Le runner Flutter en isolation réseau a démarré, mais ses processus de test ne peuvent pas se joindre sur 127.0.0.1. Les nouveaux tests de widgets, le build Android/iOS et la recette Preview sur téléphone ne sont donc pas qualifiés pour cette révision.
+
 ## 2026-11-03 — Premier projet Flutter entièrement natif, isolé
 Lot : inventaire réel des 9 pages/25 routes API et création de mobile/accordia_native (0.5.0+8), en conservant mobile/accordia. Accueil Azur en relief, logo et splash Sérénité animés, quatre langues, préparation locale A/B/A+B, brouillons chiffrés, PDF préparatoire et scanner repris. Chaque page possède un fichier Dart et les accès connectés utilisent les API réelles, sans WebView ni identité simulée. CI dédiée et guide Android Studio inclus.
 Critères du lot initial : neuf pages mappées, aucune dépendance navigateur, données existantes préservées, erreurs serveur explicites et projet ouvrable. Analyse Flutter : zéro problème ; 43 tests réussis, dont confirmation de sortie et conservation de saisie participant. Build bundle local non exécuté avec succès : Android SDK absent. Build Android CI à vérifier séparément ; iOS et téléphones physiques non testés.
