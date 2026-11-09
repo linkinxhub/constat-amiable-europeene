@@ -37,3 +37,8 @@ Fiches A/B : les 34 champs texte du schéma véhicule et leurs listes sont maint
 Cinq étapes natives, cartes relief et rubriques A/B ; croquis manuel au format 800×320, 500 traits/5000 points par trait, annulation et effacement confirmé, sauvegarde chiffrée et export vectoriel en annexe du PDF préparatoire. Photos et croquis IA non portés. Authentification traitée en dernier à la demande du propriétaire ; accès privés et recette connectée toujours nécessaires.
 
 PDF 0.6 : modèle original fourni identique au site sur la première page, styles clavier/bleu/noir et langue des annexes repris ; ressources et placements comparés au web. Le PDF final authentifié/signatures, les photos et la pagination exacte des annexes web restent distincts/non qualifiés. Voir INPUT_DESIGN_2026-11-04.md.
+
+
+## Mise à jour du 9 novembre 2026
+
+Dans les sessions auxquelles l’identité a accès, Documents présente la liste serveur et ouvre le PDF de relecture ou signé via le lecteur Flutter. Le fichier provient de l’API existante, sans génération côté client. Création, signatures et recette réelle restent ouvertes. Le site hébergé refuse actuellement les appels natifs sans session, y compris à la configuration. La connexion mobile et la reprise du même dossier entre le web et Android/iOS restent à qualifier.
