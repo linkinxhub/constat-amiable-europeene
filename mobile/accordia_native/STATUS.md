@@ -1,5 +1,10 @@
 # STATUS — Accordia natif 0.6.0+10
 
+## 2026-11-09 — Aperçu des PDF de session dans Flutter
+
+Base native retenue : 0fa8354, dernière révision de la branche native 0.6 repérée sur GitHub. Le site de référence est la révision Sites 424e51b. L’écran Documents utilise les métadonnées réelles de la session, distingue PDF de relecture et PDF signé, puis ouvre les octets de l’API dans le lecteur natif existant, avec partage et impression sur les plateformes compatibles. Le guide mobile couvre le parcours en FR/EN/DE/NL. Les identifiants et le type du fichier sont vérifiés. Un refus d’accès reste visible. Aucun changement serveur, de données ou de déploiement.
+
+Le site a répondu 401 HTML, hors session authentifiée, pour /api/account et /api/mobile/config. Le backend utilise l’identité SIWC fournie par l’hébergement, D1 pour les enregistrements et R2 pour les fichiers. L’application vise les mêmes API, mais le contrat de connexion mobile manque toujours. La recette avec données réelles reste bloquée par cette dépendance, indépendamment de la présence du lecteur. Portage restant : photos/GPS, questionnaire, OCR/IA, signatures, profils, continuité et administration complète. L’ordre produit qui traite l’authentification en dernier est conservé.
 
 ## 2026-11-04 — Livraison 0.6 qualifiée sur installation propre
 GitHub Actions 41749345804 / job 126310243522 : succès complet. Source runtime GitHub 9ee90b4ecec75393e9e0f50a63a191517cb1eb73 ; formatage, analyse (0 problème), 58 tests Flutter et compilation APK réussis. 13 tests Node de contrat/régression web exécutés localement après intégration de canonical/main 8df9c60. La première tentative CI 41749228006 a été rejetée avant les jobs pour contexte runner utilisé dans l’environnement du job ; chemins statiques corrigés, puis vérification complète réussie. Aucune dépendance mise à jour.

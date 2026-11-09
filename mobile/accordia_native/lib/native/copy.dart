@@ -149,6 +149,30 @@ class NativeCopy {
       'Meinen Teil bearbeiten',
       'Mijn deel bewerken',
     ],
+    'noSessionDocuments': [
+      'Aucun PDF dans cette session.',
+      'No PDFs in this session.',
+      'Keine PDFs in dieser Sitzung.',
+      'Geen pdf’s in deze sessie.',
+    ],
+    'reviewPdf': [
+      'PDF de relecture',
+      'Review PDF',
+      'PDF zur Durchsicht',
+      'Pdf ter controle',
+    ],
+    'signedPdf': [
+      'PDF signé',
+      'Signed PDF',
+      'Unterzeichnetes PDF',
+      'Ondertekende pdf',
+    ],
+    'sessionPdfGuide': [
+      'Dans une session partagée accessible, ouvrez Documents puis sélectionnez un PDF pour le consulter, le partager ou l’imprimer.',
+      'In a shared session you can access, open Documents and select a PDF to view, share or print it.',
+      'Öffnen Sie in einer freigegebenen Sitzung mit Zugriff die Dokumente und wählen Sie ein PDF zum Ansehen, Teilen oder Drucken aus.',
+      'Open Documenten in een gedeelde sessie waartoe u toegang hebt en kies een pdf om die te bekijken, te delen of af te drukken.',
+    ],
     'documents': ['Documents', 'Documents', 'Dokumente', 'Documenten'],
     'invite': [
       'Renouveler mon invitation',

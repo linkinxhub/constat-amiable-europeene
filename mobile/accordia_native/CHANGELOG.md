@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 2026-11-09 — Documents de session
+
+- Liste native des PDF de relecture et signés, avec langue et révision fournies par l’API.
+- Aperçu Flutter des octets du PDF d’origine, partage et impression via les commandes du lecteur. Les contrôles de session, d’appartenance et d’accès au dossier restent côté serveur.
+- Guide mobile en quatre langues et cas de test pour les chemins, les refus, le contenu invalide et l’affichage à 320 px. Les parcours web et leur guide sont inchangés.
+
 ## 2026-11-03 — Premier projet Flutter entièrement natif, isolé
 Lot : inventaire réel des 9 pages/25 routes API et création de mobile/accordia_native (0.5.0+8), en conservant mobile/accordia. Accueil Azur en relief, logo et splash Sérénité animés, quatre langues, préparation locale A/B/A+B, brouillons chiffrés, PDF préparatoire et scanner repris. Chaque page possède un fichier Dart et les accès connectés utilisent les API réelles, sans WebView ni identité simulée. CI dédiée et guide Android Studio inclus.
 Critères du lot initial : neuf pages mappées, aucune dépendance navigateur, données existantes préservées, erreurs serveur explicites et projet ouvrable. Analyse Flutter : zéro problème ; 43 tests réussis, dont confirmation de sortie et conservation de saisie participant. Build bundle local non exécuté avec succès : Android SDK absent. Build Android CI à vérifier séparément ; iOS et téléphones physiques non testés.

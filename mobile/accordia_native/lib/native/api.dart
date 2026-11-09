@@ -82,7 +82,12 @@ class NativeApi {
     return value;
   }
 
-  Future<Object?> request(String method, String path, {Object? body}) async {
+  Future<ApiReply> _send(
+    String method,
+    String path, {
+    Object? body,
+    String accept = 'application/json',
+  }) async {
     if (!path.startsWith('/api/') ||
         path.contains('://') ||
         path.contains('#') ||
@@ -102,7 +107,7 @@ class NativeApi {
         : Uint8List.fromList(utf8.encode(jsonEncode(body)));
     if (data != null && data.length > 8 * 1024 * 1024)
       throw const NativeApiError(413, 'too_large');
-    final headers = <String, String>{'Accept': 'application/json'};
+    final headers = <String, String>{'Accept': accept};
     if (data != null)
       headers.addAll({
         'Content-Type': 'application/json',
@@ -112,6 +117,11 @@ class NativeApi {
     final response = await transport.send(method, uri, headers, data);
     if (response.status >= 300 && response.status < 400)
       throw const NativeApiError(401, 'authentication_required');
+    return response;
+  }
+
+  Future<Object?> request(String method, String path, {Object? body}) async {
+    final response = await _send(method, path, body: body);
     Object? decoded;
     if (response.contentType.contains('application/json')) {
       try {
@@ -186,6 +196,32 @@ class NativeApi {
   );
   Future<Map<String, dynamic>> documents(String key) =>
       object('GET', '/api/sessions/${id(key)}/final');
+  Future<Uint8List> documentPdf(String session, String document) async {
+    final response = await _send(
+      'GET',
+      '/api/sessions/${id(session)}/final/${id(document)}/pdf',
+      accept: 'application/pdf',
+    );
+    if (response.status != 200) {
+      throw NativeApiError(response.status, 'request_failed');
+    }
+    if (response.contentType == 'text/html') {
+      throw const NativeApiError(401, 'authentication_required');
+    }
+    final bytes = response.bytes;
+    const signature = [0x25, 0x50, 0x44, 0x46, 0x2d]; // %PDF-
+    if (response.contentType != 'application/pdf' ||
+        bytes.length <= signature.length) {
+      throw const NativeApiError(502, 'invalid_response');
+    }
+    for (var i = 0; i < signature.length; i++) {
+      if (bytes[i] != signature[i]) {
+        throw const NativeApiError(502, 'invalid_response');
+      }
+    }
+    return bytes;
+  }
+
   Future<Map<String, dynamic>> prepareDocument(
     String key,
     int revision,

@@ -51,6 +51,8 @@ class NativeGuidePage extends StatelessWidget {
             ),
           const Divider(),
           Text(copy.t('authHelp')),
+          const SizedBox(height: 12),
+          Text(copy.t('sessionPdfGuide')),
         ],
       ),
     );

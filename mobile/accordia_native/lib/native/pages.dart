@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:printing/printing.dart';
 
 import '../reports/model.dart';
 import '../reports/copy.dart';
@@ -21,6 +23,7 @@ part 'pages/reports_page.dart';
 part 'pages/report_detail_page.dart';
 part 'pages/report_facts.dart';
 part 'pages/session_page.dart';
+part 'pages/session_documents_page.dart';
 part 'pages/participant_editor_page.dart';
 part 'pages/feedback_page.dart';
 part 'pages/admin_page.dart';

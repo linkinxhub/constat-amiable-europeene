@@ -55,14 +55,8 @@ class NativeSessionPage extends StatelessWidget {
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => NativePage(
-                    title: copy.t('documents'),
-                    child: ApiPanel(
-                      copy: copy,
-                      load: () => api.documents(id),
-                      content: (v, r) => _JsonFacts(v),
-                    ),
-                  ),
+                  builder: (_) =>
+                      NativeSessionDocumentsPage(api: api, copy: copy, id: id),
                 ),
               ),
             ),

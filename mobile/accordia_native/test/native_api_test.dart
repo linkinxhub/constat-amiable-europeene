@@ -32,7 +32,11 @@ class RecordingTransport implements ApiTransport {
     return ApiReply(
       status,
       mime,
-      Uint8List.fromList(utf8.encode(jsonEncode(value))),
+      Uint8List.fromList(
+        value is List<int>
+            ? value as List<int>
+            : utf8.encode(jsonEncode(value)),
+      ),
     );
   }
 }
@@ -85,6 +89,99 @@ void main() {
     t.mime = 'text/html';
     await expectLater(api.account(), throwsA(isA<NativeApiError>()));
   });
+  test(
+    'session PDF reads the real endpoint and keeps the response bytes',
+    () async {
+      final bytes = utf8.encode('%PDF-1.7\n');
+      final transport = RecordingTransport()
+        ..status = 200
+        ..mime = 'application/pdf'
+        ..value = bytes;
+      final api = NativeApi(transport: transport);
+      expect(await api.documentPdf('session-id', 'document-id'), bytes);
+      expect(transport.last!.host, nativeApiHost);
+      expect(
+        transport.last!.path,
+        '/api/sessions/session-id/final/document-id/pdf',
+      );
+      expect(transport.headers, {'Accept': 'application/pdf'});
+      await expectLater(
+        api.documentPdf('session-id', '../other'),
+        throwsFormatException,
+      );
+      expect(transport.calls, 1);
+    },
+  );
+
+  test('session PDF rejects access failures and invalid bodies', () async {
+    final transport = RecordingTransport();
+    final api = NativeApi(transport: transport);
+    for (final status in [401, 403, 404, 503]) {
+      transport.status = status;
+      await expectLater(
+        api.documentPdf('session', 'document'),
+        throwsA(
+          isA<NativeApiError>().having((e) => e.status, 'status', status),
+        ),
+      );
+    }
+    for (final (status, mime, expected) in [
+      (302, 'text/html', 401),
+      (200, 'text/html', 401),
+      (200, 'application/json', 502),
+      (200, 'application/pdf', 502),
+      (206, 'application/pdf', 206),
+    ]) {
+      transport.status = status;
+      transport.mime = mime;
+      await expectLater(
+        api.documentPdf('session', 'document'),
+        throwsA(
+          isA<NativeApiError>().having((e) => e.status, 'status', expected),
+        ),
+      );
+    }
+  });
+
+  for (final language in HorizonLanguage.values) {
+    testWidgets('session PDF statuses fit at 320 px in $language', (
+      tester,
+    ) async {
+      tester.view.devicePixelRatio = 1;
+      tester.view.physicalSize = const Size(320, 600);
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      final transport = RecordingTransport()
+        ..status = 200
+        ..value = {
+          'documents': [
+            {'id': 'review', 'revision': 1, 'lang': 'fr', 'ready': false},
+            {'id': 'signed', 'revision': 2, 'lang': 'nl', 'ready': true},
+          ],
+        };
+      final copy = NativeCopy(language);
+      await tester.pumpWidget(
+        MaterialApp(
+          home: NativeSessionDocumentsPage(
+            api: NativeApi(transport: transport),
+            copy: copy,
+            id: 'session',
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      expect(find.text(copy.t('reviewPdf')), findsOneWidget);
+      expect(find.text(copy.t('signedPdf')), findsOneWidget);
+      expect(find.text('NL · v2'), findsOneWidget);
+      transport.status = 403;
+      await tester.tap(find.text(copy.t('signedPdf')));
+      await tester.pumpAndSettle();
+      expect(find.text(copy.t('denied')), findsOneWidget);
+      expect(transport.last!.path, '/api/sessions/session/final/signed/pdf');
+      expect(tester.takeException(), isNull);
+    });
+  }
+
   test('arbitrary destinations and record identifiers cannot redirect native requests', () async {
     final t = RecordingTransport(), api = NativeApi(transport: t);
     await expectLater(
