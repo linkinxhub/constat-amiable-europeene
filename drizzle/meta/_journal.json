@@ -162,6 +162,13 @@
       "when": 1793758741779,
       "tag": "0022_cheerful_champions",
       "breakpoints": true
+    },
+    {
+      "idx": 23,
+      "version": "6",
+      "when": 1794399010451,
+      "tag": "0023_cuddly_captain_stacy",
+      "breakpoints": true
     }
   ]
 }

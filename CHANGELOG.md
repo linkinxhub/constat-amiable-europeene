@@ -1,3 +1,9 @@
+## 2026-11-11 — Préparation Preview de la liaison mobile
+
+Sur la source Sites 424e51b (version 93), intégration de la confirmation web en FR/EN/DE/NL et des routes de session et lecture. Migration additive 0023, avec journal et snapshot Drizzle. Vérification complète : TypeScript, build et 357 tests réussis, lint 0 erreur et 53 avertissements historiques. Test des routes compilées sur D1/R2 isolés avec toutes les migrations et deux identités de test : attribution correcte, refus croisé 404, rejet d'un code rejoué et révocation. Trois tests du relais réussis séparément. Le parcours de confirmation documente le retour manuel dans l’application. Guide public vérifié, aucune fonction connectée annoncée disponible avant validation.
+
+Le build Android de la branche mobile (GitHub Actions 43017363968) a réussi, sans URL de passerelle intégrée. Aucune migration distante, publication ou recette avec de vrais comptes. La mise en service reste conditionnée à un environnement hébergé isolé et à un APK configuré pour son origine HTTPS.
+
 ## 2026-11-04 — Master audit v92 et corrections préparées
 
 Audit initial sur source 63888719c1a3802fad4f1f5ffc16bb6b88ad647c (v92 sauvegardée, production v90). Checkpoint checkpoint/before-master-audit-v92-20261104. Prompt complet rédigé puis lot A01–A04 appliqué : validation binaire de récupération avant aperçu/écriture, reçu minimal de suppression atomique/idempotent même après purge, attente privée de 20 s et annulation, tutoriel importé à l’ouverture avec nouvelle tentative. Migration 0022 additive, exécutée seulement en local. Profils/partage déjà préparés conservés ; aucun invité anonyme ou hors réseau complet annoncé disponible.

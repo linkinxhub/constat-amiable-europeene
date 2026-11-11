@@ -1,0 +1,25 @@
+# Accordia natif 0.6 — saisie et croquis
+
+Demande : poursuivre le portage et soigner les pages de saisie, authentification en dernier.
+
+## Résultat
+- Cartes blanches en relief, en-têtes bleu profond, accents turquoise, médaille A/B et rubriques informations / véhicule-assurance / constatations.
+- Champs homogènes arrondis, saisie libre et suggestions conservées, largeur bornée à 760 px, barre Retour/Continuer/Enregistrer fixe et cinq étapes. Le repère d’étape ne prétend pas valider le dossier.
+- Croquis manuel local natif au format web 800×320, points bornés, 500 traits et 5000 points par trait. Annulation du dernier trait, effacement après confirmation et conservation dans le brouillon chiffré.
+- PDF préparatoire non signé sur le même fond original que le site, coordonnées des cases reprises de reference-page.ts et croquis vectoriel dans la case prévue. Clavier/stylo bleu/stylo noir, police manuscrite identique décompressée en TTF, choix de langue des annexes, valeurs longues intégrales et QR local sans données de constat. Photos toujours refusées explicitement plutôt qu’omises.
+- Guide des commandes FR/EN/DE/NL actualisé. L’accueil, le logo, le splash et les champs du schéma web sont conservés.
+
+## Preuves et limites
+Tests contractuels web/natif, analyse et suite Flutter : résultats dans STATUS.md. Contrôles visuels réels Flutter à 390 px et 320 px/texte 1,6× dans les quatre langues ; captures de situation et véhicule avec données fictives. PDF de contrôle inspecté via Poppler et comparé au rendu web du même dossier fictif : fond, cases et placement de la page 1 concordants. Le rendu n’est pas déclaré identique octet/pixel par pixel : moteurs PDF distincts et mise en page d’annexes native. Tests d’identité des ressources, glyphes/métriques et 33 coordonnées statiques ; contrôle d’exclusion des données B inactives.
+Les premiers tests ont révélé une couche Material nécessaire sous les listes des cartes et une perte possible du premier mouvement du dessin entre deux événements. Corrigés : surface Material et état local de trait synchronisé avant le rendu suivant. Les tests portent sur le geste réel, l’annulation, les confirmations et la reprise chiffrée. Données historiques de croquis invalides conservées et signalées.
+Photos/GPS/annotations, questionnaire, OCR/IA, signatures authentifiées et administration complète restent à porter. L’authentification est différée, sans désactiver les protections serveur ; la recette connectée devra suivre son implémentation. Android CI à consigner, iOS et téléphones physiques non qualifiés. Pas de production publiée.
+
+## Ajustement demandé pendant ce lot
+Boutons et options rapprochés du style web : arrondi 10 px, contours/couleurs des choix sélectionnés, minimum tactile 44 px et champs arrondis 10 px. Couleur des commandes par défaut #1557c0 ; une couleur administrateur publiée reste prioritaire. Oui/non et nombre de véhicules deviennent des boutons comme sur le web, sans réponse implicite. Les styles PDF exposent leur état sélectionné aux lecteurs d’écran. Le fond français du document ne change pas avec la langue des annexes.
+
+
+## 2026-11-04 — Livraison 0.6 qualifiée sur installation propre
+GitHub Actions 41749345804 / job 126310243522 : succès complet. Source runtime GitHub 9ee90b4ecec75393e9e0f50a63a191517cb1eb73 ; formatage, analyse (0 problème), 58 tests Flutter et compilation APK réussis. 13 tests Node de contrat/régression web exécutés localement après intégration de canonical/main 8df9c60. La première tentative CI 41749228006 a été rejetée avant les jobs pour contexte runner utilisé dans l’environnement du job ; chemins statiques corrigés, puis vérification complète réussie. Aucune dépendance mise à jour.
+APK 0.6.0+10 : be.adilbtp.accordia.nativepagespreview, min SDK 24 / cible 36, moteur ARM64, 116 509 095 octets, SHA-256 c409c8bfa0b60353e39bcdaec006c3cf9f2a56458b6d90f9b6084ec7fc79e8ea. Signature debug v2 vérifiée (un signataire) et CRC valide ; fond/polices/copie embarqués identiques aux sources. Distribution de test uniquement, sans publication production. iOS et téléphones physiques non testés.
+Preuves de rendu récupérées depuis l’artefact CI 13285346237 (ZIP SHA-256 bd30fc42fe87b04a9fbab5167db37586b7ac776e522f1d06dfd480e9f786890e) : douze PDF (3 styles × 4 langues), un cas véhicule B inactif et deux aperçus Flutter fictifs. QR du PDF décodé vers /account?lang=fr, sans identifiant de dossier ; absence de PRIVATE_B vérifiée dans la sortie mono-véhicule. Comparaison Poppler page 1 web/native : différence moyenne 0,40/255 après marge QR, non assimilée à une identité de pixels. Le modèle/fond et les placements sont repris ; annexes et moteurs restent différents.
+Le présent enregistrement ne modifie que la documentation : mêmes sources runtime que le build testé. Projet source complet à ouvrir via pubspec.yaml, guide et limites inclus. Prochains lots : photos/GPS/annotations, questionnaire/OCR/IA, signatures et administration complète ; authentification maintenue en dernier point fonctionnel. Aucune promesse de parité globale à 100 %.

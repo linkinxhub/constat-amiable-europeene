@@ -117,3 +117,14 @@ export const reportDeletionRequests=sqliteTable('report_deletion_requests',{
  ownerId:text('owner_id').notNull().references(()=>accounts.id),reportId:text('report_id').notNull(),
  revision:integer('revision').notNull(),requestedAt:text('requested_at').notNull()
 },t=>[primaryKey({columns:[t.ownerId,t.reportId]})]);
+
+export const mobilePairings = sqliteTable('mobile_pairings', {
+  codeHash: text('code_hash').primaryKey().notNull(),
+  ownerId: text('owner_id').notNull().references(() => accounts.id),
+  challenge: text('challenge').notNull(),
+  codeExpiresAt: integer('code_expires_at').notNull(),
+  sessionHash: text('session_hash').unique(),
+  sessionExpiresAt: integer('session_expires_at'),
+}, table => [
+  index('mobile_pairings_owner').on(table.ownerId),
+]);
