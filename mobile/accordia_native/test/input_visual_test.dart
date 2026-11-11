@@ -32,7 +32,10 @@ void main() {
         await (FontLoader(
           'MaterialIcons',
         )..addFont(rootBundle.load('fonts/MaterialIcons-Regular.otf'))).load();
-        final theme = horizonTheme(MobileConfig.fallback);
+        final baseTheme = horizonTheme(MobileConfig.fallback);
+        final theme = baseTheme.copyWith(
+          textTheme: baseTheme.textTheme.apply(fontFamily: 'AccordiaPreview'),
+        );
         final key = GlobalKey();
         final report = newReport(language.name)
           ..['date'] = '2026-01-01'
@@ -70,9 +73,7 @@ void main() {
             key: key,
             child: MaterialApp(
               debugShowCheckedModeBanner: false,
-              theme: theme.copyWith(
-                textTheme: theme.textTheme.apply(fontFamily: 'AccordiaPreview'),
-              ),
+              theme: theme,
               home: ReportEditor(
                 copy: copy,
                 store: store,
@@ -110,7 +111,10 @@ void main() {
         final words = FormWords(language);
         expect(find.text('${words.t('step')} 1 / 5'), findsOneWidget);
         expect(find.text(copy.n('local')), findsOneWidget);
-        await tester.tap(find.byType(CheckboxListTile).first);
+        final safety = find.byType(CheckboxListTile).first;
+        await tester.ensureVisible(safety);
+        await tester.pumpAndSettle();
+        await tester.tap(safety);
         await tester.pump();
         await tester.tap(find.text(copy.text('next')));
         await tester.pumpAndSettle();
@@ -122,6 +126,9 @@ void main() {
         await tester.pumpAndSettle();
         expect(tester.takeException(), isNull);
         expect(find.text('${words.t('step')} 1 / 5'), findsOneWidget);
+        await tester.ensureVisible(safety);
+        await tester.pumpAndSettle();
+        expect(tester.widget<CheckboxListTile>(safety).value, isTrue);
         expect(store.draft.report['place'], 'TEST FICTIF Bruxelles');
       },
     );
