@@ -1,7 +1,5 @@
 // Test identity headers exist only in this isolated worker fixture.
 import assert from 'node:assert/strict';
-import { once } from 'node:events';
-import { createGateway } from '../mobile/gateway/gateway.mjs';
 import { readFileSync, readdirSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { resolve } from 'node:path';
@@ -28,20 +26,6 @@ const worker = new Miniflare({
   r2Buckets: ['BUCKET'],
 });
 
-const relay = createGateway({
-  siteOrigin: 'https://preview.example',
-  siteToken: 'test-service-token',
-  gatewaySecret: secret,
-  fetchUpstream(url, options) {
-    const target = new URL(url);
-    assert.equal(target.origin, 'https://preview.example');
-    return worker.dispatchFetch('http://localhost' + target.pathname, options);
-  },
-});
-relay.listen(0, '127.0.0.1');
-await once(relay, 'listening');
-const mobile = 'http://127.0.0.1:' + relay.address().port;
-
 try {
   const db = await worker.getD1Database('DB');
   const migrations = readdirSync('drizzle').filter(file => file.endsWith('.sql')).sort();
@@ -49,12 +33,8 @@ try {
     const statements = readFileSync(resolve('drizzle', file), 'utf8').split('--> statement-breakpoint');
     for (const sql of statements) if (sql.trim()) await db.prepare(sql.trim()).run();
   }
-  for (const account of ['preview-a', 'preview-b']) {
-    await db.prepare('INSERT INTO accounts(id,created_at) VALUES (?,?)').bind(account,'2026-11-11').run();
-    await db.prepare(`INSERT INTO reports(owner_id,id,revision,object_key,title,accident_date,updated_at)
-      VALUES (?,?,1,?,?,?,?)`).bind(account, account + '-report-00000000', 'fixture', account, '', '2026-11-11').run();
-  }
   const base = 'http://localhost';
+  const gateway = { 'x-accordia-mobile-gateway': secret };
   const web = { 'Content-Type': 'application/json', Origin: base, 'x-accordia-request': '1' };
   const issue = async (id, verifier) => {
     const response = await worker.dispatchFetch(base + '/api/mobile-pairing', {
@@ -65,18 +45,29 @@ try {
     assert.equal(response.status, 200);
     return (await response.json()).code;
   };
-  const exchange = (code, verifier) => fetch(mobile + '/v1/session', {
+  const exchange = (code, verifier) => worker.dispatchFetch(base + '/api/mobile-gateway/session', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { ...gateway, 'Content-Type': 'application/json' },
     body: JSON.stringify({ code, verifier }),
   });
-  const list = token => fetch(mobile + '/v1/reports', {
-    headers: { Authorization: 'Bearer ' + token },
+  const list = token => worker.dispatchFetch(base + '/api/mobile-gateway/reports', {
+    headers: { ...gateway, Authorization: 'Bearer ' + token },
   });
   const first = 'a'.repeat(43);
   const second = 'b'.repeat(43);
+  const unconfirmed = await worker.dispatchFetch(base + '/api/mobile-pairing', {
+    method: 'POST',
+    headers: { ...web, 'oai-authenticated-user-id': 'preview-a', 'oai-authenticated-user-email': 'preview-a@example.invalid' },
+    body: JSON.stringify({ confirm: false, challenge: await digest(first) }),
+  });
+  assert.equal(unconfirmed.status, 400);
+  assert.equal((await db.prepare('SELECT COUNT(*) AS count FROM accounts').first()).count, 0);
   const codeA = await issue('preview-a', first);
   const codeB = await issue('preview-b', second);
+  for (const account of ['preview-a', 'preview-b']) {
+    await db.prepare(`INSERT INTO reports(owner_id,id,revision,object_key,title,accident_date,updated_at)
+      VALUES (?,?,1,?,?,?,?)`).bind(account, account + '-report-00000000', 'fixture', account, '', '2026-11-11').run();
+  }
   assert.equal((await exchange(codeA, second)).status, 401);
   const sessionA = await (await exchange(codeA, first)).json();
   const sessionB = await (await exchange(codeB, second)).json();
@@ -86,8 +77,8 @@ try {
     assert.equal(response.status, 200);
     assert.match(response.headers.get('cache-control'), /no-store/);
     assert.deepEqual((await response.json()).reports.map(r => r.title), [own]);
-    const denied = await fetch(mobile + '/v1/reports/' + foreign + '-report-00000000', {
-      headers: { Authorization: 'Bearer ' + session.token },
+    const denied = await worker.dispatchFetch(base + '/api/mobile-gateway/reports/' + foreign + '-report-00000000', {
+      headers: { ...gateway, Authorization: 'Bearer ' + session.token },
     });
     assert.equal(denied.status, 404);
   }
@@ -95,14 +86,21 @@ try {
     headers: { Authorization: 'Bearer ' + sessionA.token },
   });
   assert.equal(noGateway.status, 401);
-  const revoke = await fetch(mobile + '/v1/session', {
-    method: 'DELETE', headers: { Authorization: 'Bearer ' + sessionA.token },
+  const revoke = await worker.dispatchFetch(base + '/api/mobile-gateway/session', {
+    method: 'DELETE', headers: { ...gateway, Authorization: 'Bearer ' + sessionA.token },
   });
   assert.equal(revoke.status, 200);
   assert.equal((await list(sessionA.token)).status, 401);
   assert.equal((await list(sessionB.token)).status, 200);
+  await db.prepare("UPDATE accounts SET status = 'suspended' WHERE id = 'preview-b'").run();
+  const suspended = await worker.dispatchFetch(base + '/api/mobile-pairing', {
+    method: 'POST',
+    headers: { ...web, 'oai-authenticated-user-id': 'preview-b', 'oai-authenticated-user-email': 'preview-b@example.invalid' },
+    body: JSON.stringify({ confirm: true, challenge: await digest(second) }),
+  });
+  assert.equal(suspended.status, 403);
+  assert.equal((await list(sessionB.token)).status, 401);
   console.log('Compiled routes: migrations, pairing and account isolation verified');
 } finally {
-  await new Promise(resolve => relay.close(resolve));
   await worker.dispose();
 }

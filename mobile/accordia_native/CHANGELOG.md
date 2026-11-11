@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 2026-11-11 — Première liaison sans constat
+
+La confirmation crée la ligne du compte à partir de l’identité Sites vérifiée lorsqu’elle n’existe pas encore. Le test compilé vérifie un compte neuf sans constat et le maintien du refus pour un compte suspendu. Correctif serveur de recette compatible avec l’APK existant.
+
+
 ## 2026-11-11 — APK de la recette hébergée
 
 Accordia Recette v1 est déployée en privé, avec migration 0023. Passerelle Render gratuite à Francfort et déploiement automatique désactivé. Le build de la branche feat/accordia-recette-site reçoit les deux origines HTTPS de recette. Les secrets sont configurés uniquement côté serveur. Guide vérifié, le parcours par code reste identique. Recette complète avec deux comptes réels encore à effectuer.

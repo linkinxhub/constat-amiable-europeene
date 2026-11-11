@@ -17,6 +17,9 @@ export async function POST(request: Request) {
         body.confirm !== true || !validOpaque(body.challenge)) {
       return json({ error: 'invalid' }, 400);
     }
+    // A verified visitor may pair before saving a first web report.
+    await stores.db.prepare('INSERT INTO accounts (id, created_at) VALUES (?, ?) ON CONFLICT(id) DO NOTHING')
+      .bind(owner, new Date().toISOString()).run();
     const pairing = await issuePairing(stores.db, owner, body.challenge);
     return pairing ? json(pairing) : json({ error: 'account_unavailable' }, 403);
   } catch (error) {
