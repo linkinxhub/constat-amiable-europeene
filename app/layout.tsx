@@ -11,7 +11,8 @@ import "./comfort.css";
 import "./accident-story.css";
 
 export const metadata: Metadata = {
-  title: "Accordia — Constat européen",
+  title: "Accordia Recette",
+  robots: { index: false, follow: false },
   description: "Préparez votre constat européen à deux, dans la langue de chacun, avec photos, relecture et PDF.",
   icons: {
     icon: "/favicon.svg",
@@ -26,7 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr">
-      <body className="antialiased">{children}<Suspense fallback={null}><FeedbackEntry/></Suspense></body>
+      <body className="antialiased"><div role="note" style={{padding: "0.5rem 1rem", background: "#102850", color: "white", textAlign: "center"}}>Accordia Recette · Test data only</div>{children}<Suspense fallback={null}><FeedbackEntry/></Suspense></body>
     </html>
   );
 }

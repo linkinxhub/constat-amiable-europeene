@@ -3,7 +3,7 @@ import {z} from 'zod';
 import prices from './billing-test-prices.json' with {type:'json'};
 import {validateTestPrice,billingCatalog} from './billing-catalog.ts';
 
-const origin='https://accordia-constat.adil-btp.chatgpt.site';
+const origin='https://accordia-recette.adil-btp.chatgpt.site';
 const orderSchema=z.object({id:z.string().uuid(),sku:z.literal('report'),locale:z.enum(['fr','en','de','nl'])}).strict();
 export type TestOrder=z.infer<typeof orderSchema>;
 

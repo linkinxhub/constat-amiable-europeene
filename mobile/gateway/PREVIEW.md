@@ -17,3 +17,7 @@ flutter build apk --debug --target-platform android-arm64 \
 4. Avec deux comptes Accordia réels autorisés sur l'instance de recette, créer un dossier de test distinct par compte. Dans l'APK, ouvrir Dossiers sur mon compte, copier le lien, confirmer dans le navigateur, puis coller le code dans Flutter. Vérifier la liste, un détail propre, le refus d'un identifiant appartenant à l'autre compte et la déconnexion. Répéter avec le second compte. Vérifier également un code expiré, une tentative de réutilisation et un compte suspendu. Consigner les résultats sans joindre de code, de jeton ou de données personnelles.
 
 Le test compilé local exécute les migrations sur D1 isolé et fait traverser le relais HTTP réel aux requêtes d'échange, liste, détail étranger et révocation. Le transport entre le relais et le Worker est adapté au processus Miniflare pour le test. Il ne valide pas l'authentification ChatGPT hébergée. Sans les deux origines configurées, le build Flutter ne lance aucun parcours de liaison.
+
+## Instance de recette disponible
+
+Accordia Recette est en ligne en privé à https://accordia-recette.adil-btp.chatgpt.site. La version 1 utilise une base D1 distincte avec la table mobile_pairings. La passerelle et le second compte restent à configurer. Cette branche contient les réglages d’hébergement propres à la recette.
