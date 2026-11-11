@@ -4,7 +4,7 @@
 
 Base vérifiée : les 164 fichiers suivis correspondent à la révision GitHub a13f883c3609fcb964129a93be1d69a730c3f2f1. Point de retour local checkpoint/before-kero-input-design. Le modèle de regroupement et de hiérarchie de Best Flutter UI Templates (écran Design Course) a servi de référence visuelle. Aucun code, image ou paquet tiers ajouté. Le lot concerne le formulaire local et sa navigation. Les écrans partagés, l’authentification et le modèle PDF conservent leur périmètre.
 
-Fichiers : lib/reports/form_design.dart, lib/reports/editor.dart et test/input_visual_test.dart. Le guide a été relu : les étapes et libellés des commandes sont les mêmes. Le formatage des 60 fichiers Dart est validé avec Dart 3.13.7. La validation Flutter et la compilation Android de ce lot sont suivies sur la branche dédiée. Les tests de l’ancienne version ne valent pas validation de ce lot.
+Fichiers : lib/reports/form_design.dart, lib/reports/editor.dart et test/input_visual_test.dart. Le guide a été relu : les étapes et libellés des commandes sont les mêmes. Le formatage des 60 fichiers Dart est validé avec Dart 3.13.7. Sur la révision d5cc219, GitHub Actions 43013354216 confirme une analyse sans diagnostic, 64 tests réussis et un APK debug Android ARM64 compilé (artefact 13852530325). Le premier passage a échoué sur le test à 320 px qui touchait une case hors écran. Le test défile désormais jusqu’à la case et vérifie que la confirmation est conservée au retour. Les captures Situation et Véhicules à 390 px ont été inspectées (artefact 13852190370). iOS et appareils physiques restent à vérifier.
 
 Référence : https://github.com/mitesh77/Best-Flutter-UI-Templates/blob/master/best_flutter_ui_templates/lib/design_course/home_design_course.dart
 
