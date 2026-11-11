@@ -28,7 +28,7 @@ function fail(response, status, error) {
   send(response, status, JSON.stringify({ error }));
 }
 
-export function createGateway({ siteOrigin, siteToken, gatewaySecret, fetchUpstream = fetch }) {
+export function createGateway({ siteOrigin, siteToken, gatewaySecret, androidFingerprint, fetchUpstream = fetch }) {
   let upstream;
   try {
     const url = new URL(siteOrigin);
@@ -50,7 +50,7 @@ export function createGateway({ siteOrigin, siteToken, gatewaySecret, fetchUpstr
   return createServer({ requestTimeout: 10000, headersTimeout: 5000 }, async (request, response) => {
     const path = request.url ?? '';
     if (request.method === 'GET' && path === '/.well-known/assetlinks.json') {
-      const fingerprint = process.env.ACCORDIA_RECETTE_ANDROID_SHA256;
+      const fingerprint = androidFingerprint;
       if (!fingerprint || !/^(?:[A-Fa-f0-9]{2}:){31}[A-Fa-f0-9]{2}$/.test(fingerprint)) {
         return fail(response, 404, 'not_found');
       }
