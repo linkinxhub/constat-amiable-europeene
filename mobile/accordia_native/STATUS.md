@@ -1,5 +1,10 @@
 # STATUS — Accordia natif 0.6.0+10
 
+## 2026-11-11 — Préparation de l’accès aux dossiers mobiles
+
+Relais Node en lecture seule ajouté dans mobile/gateway, trois tests locaux réussis. L’accès au routeur Sites depuis un service a été vérifié. Les routes de session côté Accordia, la liaison au compte et le raccordement Flutter restent à réaliser. Guide vérifié, aucun impact utilisateur à ce stade.
+
+
 ## 2026-11-11 — Aperçu de la saisie locale inspiré de Kero Codes
 
 Base vérifiée : les 164 fichiers suivis correspondent à la révision GitHub a13f883c3609fcb964129a93be1d69a730c3f2f1. Point de retour local checkpoint/before-kero-input-design. Le modèle de regroupement et de hiérarchie de Best Flutter UI Templates (écran Design Course) a servi de référence visuelle. Aucun code, image ou paquet tiers ajouté. Le lot concerne le formulaire local et sa navigation. Les écrans partagés, l’authentification et le modèle PDF conservent leur périmètre.

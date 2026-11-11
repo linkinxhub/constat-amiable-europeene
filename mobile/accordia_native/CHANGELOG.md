@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 2026-11-11 — Préparation de l’accès aux dossiers mobiles
+
+Relais Node en lecture seule ajouté dans mobile/gateway, trois tests locaux réussis. L’accès au routeur Sites depuis un service a été vérifié. Les routes de session côté Accordia, la liaison au compte et le raccordement Flutter restent à réaliser. Guide vérifié, aucun impact utilisateur à ce stade.
+
+
 ## 2026-11-11 — Lisibilité de la saisie locale
 
 - En-tête compact qui rassemble le numéro et le titre de l’étape, le repère visuel et le statut du brouillon.
