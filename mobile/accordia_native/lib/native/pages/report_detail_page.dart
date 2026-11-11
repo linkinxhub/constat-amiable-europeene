@@ -22,23 +22,24 @@ class NativeCloudReportPage extends StatelessWidget {
           ReportFacts(
             report: Map<String, dynamic>.from(data['report'] as Map? ?? {}),
           ),
-          ListTile(
-            leading: const Icon(Icons.history),
-            title: Text(copy.t('history')),
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => NativePage(
-                  title: copy.t('history'),
-                  child: ApiPanel(
-                    copy: copy,
-                    load: () => api.history(id),
-                    content: (v, r) => _JsonFacts(v),
+          if (api.pairing == null)
+            ListTile(
+              leading: const Icon(Icons.history),
+              title: Text(copy.t('history')),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => NativePage(
+                    title: copy.t('history'),
+                    child: ApiPanel(
+                      copy: copy,
+                      load: () => api.history(id),
+                      content: (v, r) => _JsonFacts(v),
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
         ],
       ),
     ),

@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 2026-11-11 — Confirmation web et retour Flutter
+
+Écran de confirmation web FR/EN/DE/NL et retour manuel dans Flutter par code copié. Le vérificateur et le jeton restent en mémoire dans l’application. La passerelle HTTPS se configure via ACCORDIA_MOBILE_GATEWAY_ORIGIN. Le périmètre mobile connecté couvre la liste et la lecture des dossiers ainsi que la révocation. Analyse Flutter sans diagnostic, 65 tests Flutter et six tests serveur/relais réussis. La migration et l’isolation de deux identités fictives ont été vérifiées sur D1 local avec Miniflare. La compilation web complète, le déploiement Preview hébergé, les deux connexions réelles et l’APK de cette révision restent à vérifier.
+
+
 ## 2026-11-11 — Échange de session mobile côté serveur
 
 Ajout d’une création de code depuis la session web et d’un échange à usage unique avec preuve détenue par le mobile. La passerelle possède son propre secret de service et transmet uniquement l’échange, la révocation et la lecture des dossiers. Le propriétaire provient de la session mobile et les contrôles existants de lecture sont réutilisés. Six tests ciblés réussis, dont deux comptes, expiration, révocation et concurrence dans SQLite. Aucun déploiement ou migration productive. Guide vérifié sans modification visible. L’écran de confirmation web, le raccordement Flutter, la migration D1 en Preview et la recette réelle restent à effectuer.

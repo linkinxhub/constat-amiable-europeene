@@ -9,3 +9,5 @@ CREATE TABLE mobile_pairings (
 
 CREATE INDEX mobile_pairings_expiry
   ON mobile_pairings(COALESCE(session_expires_at, code_expires_at));
+
+CREATE INDEX mobile_pairings_owner ON mobile_pairings(owner_id);

@@ -4,6 +4,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import '../config/config_repository.dart';
+import 'mobile_pairing.dart';
 
 const nativeApiHost = 'accordia-constat.adil-btp.chatgpt.site';
 
@@ -76,6 +77,7 @@ class NativeApi {
   NativeApi({ApiTransport? transport})
     : transport = transport ?? HttpsNativeTransport();
   final ApiTransport transport;
+  late final MobilePairing? pairing = MobilePairing.configured(transport);
   static final _id = RegExp(r'^[a-zA-Z0-9-]{1,100}$');
   static String id(String value) {
     if (!_id.hasMatch(value)) throw const FormatException('Invalid record ID');
@@ -152,9 +154,10 @@ class NativeApi {
   }
 
   Future<Map<String, dynamic>> account() => object('GET', '/api/account');
-  Future<Map<String, dynamic>> reports() => object('GET', '/api/reports');
+  Future<Map<String, dynamic>> reports() =>
+      pairing?.reports() ?? object('GET', '/api/reports');
   Future<Map<String, dynamic>> report(String key) =>
-      object('GET', '/api/reports/${id(key)}');
+      pairing?.report(key) ?? object('GET', '/api/reports/${id(key)}');
   Future<Map<String, dynamic>> saveReport(
     String key,
     Map<String, dynamic> report,

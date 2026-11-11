@@ -18,6 +18,13 @@ class NativeReportsPage extends StatelessWidget {
     child: ApiPanel(
       copy: copy,
       load: sessions ? api.sessions : api.reports,
+      onAuthentication: sessions || api.pairing == null
+          ? null
+          : (reload) => MobilePairingPanel(
+              copy: copy,
+              pairing: api.pairing!,
+              onConnected: reload,
+            ),
       content: (data, reload) {
         final rows = (data[sessions ? 'sessions' : 'reports'] as List?) ?? [];
         return RefreshIndicator(
@@ -25,6 +32,18 @@ class NativeReportsPage extends StatelessWidget {
           child: ListView(
             padding: const EdgeInsets.all(20),
             children: [
+              if (!sessions && api.pairing != null)
+                OutlinedButton(
+                  onPressed: () async {
+                    try {
+                      await api.pairing!.disconnect();
+                    } catch (error) {
+                      if (context.mounted) nativeMessage(context, copy, error);
+                    }
+                    if (context.mounted) reload();
+                  },
+                  child: Text(pairingText(copy, 'disconnect')),
+                ),
               if (rows.isEmpty) Text(copy.t('empty')),
               for (final raw in rows)
                 if (raw is Map)

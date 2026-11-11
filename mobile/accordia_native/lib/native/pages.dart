@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:printing/printing.dart';
 
 import '../reports/model.dart';
@@ -13,6 +13,7 @@ import '../platform/copy.dart';
 import '../platform/policy.dart';
 import 'api.dart';
 import 'copy.dart';
+import 'mobile_pairing.dart';
 
 part 'pages/landing_page.dart';
 part 'pages/guide_page.dart';
@@ -20,6 +21,7 @@ part 'pages/pricing_page.dart';
 part 'pages/join_page.dart';
 part 'pages/account_page.dart';
 part 'pages/reports_page.dart';
+part 'pages/mobile_pairing_panel.dart';
 part 'pages/report_detail_page.dart';
 part 'pages/report_facts.dart';
 part 'pages/session_page.dart';
@@ -102,10 +104,12 @@ class ApiPanel extends StatefulWidget {
     required this.load,
     required this.copy,
     required this.content,
+    this.onAuthentication,
   });
   final Future<Map<String, dynamic>> Function() load;
   final NativeCopy copy;
   final Widget Function(Map<String, dynamic>, VoidCallback) content;
+  final Widget Function(VoidCallback)? onAuthentication;
   @override
   State<ApiPanel> createState() => _ApiPanelState();
 }
@@ -123,13 +127,23 @@ class _ApiPanelState extends State<ApiPanel> {
   Widget build(BuildContext context) => FutureBuilder<Map<String, dynamic>>(
     future: future,
     builder: (context, s) {
-      if (s.hasError)
+      if (s.hasError) {
+        final error = s.error;
+        final authenticate = widget.onAuthentication;
+        if (error is NativeApiError &&
+            error.needsAuthentication &&
+            authenticate != null) {
+          return authenticate(reload);
+        }
         return RequestFailure(
           error: s.error!,
           copy: widget.copy,
           retry: reload,
         );
-      if (!s.hasData) return const Center(child: CircularProgressIndicator());
+      }
+      if (s.connectionState != ConnectionState.done || !s.hasData) {
+        return const Center(child: CircularProgressIndicator());
+      }
       return widget.content(s.data!, reload);
     },
   );

@@ -10,7 +10,7 @@ function encode(bytes: Uint8Array) {
 }
 
 export function validOpaque(value: unknown): value is string {
-  return typeof value === 'string' && opaque.test(value);
+  return typeof value === 'string' && value.length === 43 && opaque.test(value);
 }
 
 export async function digest(value: string) {
@@ -31,8 +31,10 @@ export async function issuePairing(db: D1Database, owner: string, challenge: str
   )`).bind(now).run();
   const result = await db.prepare(`INSERT INTO mobile_pairings
     (code_hash, owner_id, challenge, code_expires_at)
-    SELECT ?, id, ?, ? FROM accounts WHERE id = ? AND status = 'active'`)
-    .bind(await digest(code), challenge, expiresAt, owner).run();
+    SELECT ?, id, ?, ? FROM accounts WHERE id = ? AND status = 'active'
+      AND (SELECT COUNT(*) FROM mobile_pairings
+        WHERE owner_id = accounts.id AND COALESCE(session_expires_at, code_expires_at) > ?) < 8`)
+    .bind(await digest(code), challenge, expiresAt, owner, now).run();
   return result.meta.changes === 1 ? { code, expiresAt } : null;
 }
 
