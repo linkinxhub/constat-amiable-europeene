@@ -579,20 +579,11 @@ class _ReportEditorState extends State<ReportEditor> {
                 controller: _scroll,
                 padding: const EdgeInsets.fromLTRB(16, 12, 16, 28),
                 children: [
-                  FormStepHeader(labels: c.steps, current: _step, words: words),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      bottom: 18,
-                      left: 4,
-                      right: 4,
-                    ),
-                    child: Text(
-                      c.n('local'),
-                      style: const TextStyle(
-                        color: Color(0xff52617a),
-                        height: 1.4,
-                      ),
-                    ),
+                  FormStepHeader(
+                    labels: c.steps,
+                    current: _step,
+                    words: words,
+                    status: c.n('local'),
                   ),
                   if (_step == 0)
                     _situation()
@@ -633,7 +624,7 @@ class _ReportEditorState extends State<ReportEditor> {
                   children: [
                     if (_step > 0)
                       Expanded(
-                        child: TextButton(
+                        child: OutlinedButton(
                           onPressed: _busy ? null : () => _go(_step - 1),
                           child: Text(c.text('back')),
                         ),

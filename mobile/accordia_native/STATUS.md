@@ -1,5 +1,13 @@
 # STATUS — Accordia natif 0.6.0+10
 
+## 2026-11-11 — Aperçu de la saisie locale inspiré de Kero Codes
+
+Base vérifiée : les 164 fichiers suivis correspondent à la révision GitHub a13f883c3609fcb964129a93be1d69a730c3f2f1. Point de retour local checkpoint/before-kero-input-design. Le modèle de regroupement et de hiérarchie de Best Flutter UI Templates (écran Design Course) a servi de référence visuelle. Aucun code, image ou paquet tiers ajouté. Le lot concerne le formulaire local et sa navigation. Les écrans partagés, l’authentification et le modèle PDF conservent leur périmètre.
+
+Fichiers : lib/reports/form_design.dart, lib/reports/editor.dart et test/input_visual_test.dart. Le guide a été relu : les étapes et libellés des commandes sont les mêmes. Le formatage des 60 fichiers Dart est validé avec Dart 3.13.7. La validation Flutter et la compilation Android de ce lot sont suivies sur la branche dédiée. Les tests de l’ancienne version ne valent pas validation de ce lot.
+
+Référence : https://github.com/mitesh77/Best-Flutter-UI-Templates/blob/master/best_flutter_ui_templates/lib/design_course/home_design_course.dart
+
 ## 2026-11-09 — Aperçu des PDF de session dans Flutter
 
 Base native retenue : 0fa8354, dernière révision de la branche native 0.6 repérée sur GitHub. Le site de référence est la révision Sites 424e51b. L’écran Documents utilise les métadonnées réelles de la session, distingue PDF de relecture et PDF signé, puis ouvre les octets de l’API dans le lecteur natif existant, avec partage et impression sur les plateformes compatibles. Le guide mobile couvre le parcours en FR/EN/DE/NL. Les identifiants et le type du fichier sont vérifiés. Un refus d’accès reste visible. Aucun changement serveur, de données ou de déploiement.

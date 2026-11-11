@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 2026-11-11 — Lisibilité de la saisie locale
+
+- En-tête compact qui rassemble le numéro et le titre de l’étape, le repère visuel et le statut du brouillon.
+- Commande Précédent en contour, Suivant et Enregistrer en boutons pleins.
+- Le test d’affichage exerce désormais les deux sens de navigation à 320 px et avec un texte agrandi à 160 % en FR/EN/DE/NL.
+
 ## 2026-11-09 — Documents de session
 
 - Liste native des PDF de relecture et signés, avec langue et révision fournies par l’API.

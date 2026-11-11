@@ -1,5 +1,9 @@
 # TEST_PLAN
 
+## 2026-11-11 — En-tête et commandes de saisie
+
+Dans input_visual_test.dart, vérifier le rendu à 390 px puis à 320 px avec texte 160 % en FR/EN/DE/NL. Confirmer le statut local, le compteur d’étapes 1 → 2 → 1, l’absence d’erreur de mise en page et la conservation du brouillon. Exécuter la suite Flutter complète et produire l’APK Android de test avec le workflow existant.
+
 Analyser et formater tous les fichiers Dart. Exécuter la suite reprise : modèles/validation locale, stockage chiffré, suppression, configuration, widgets 320 px/quatre langues, splash/son/réduction de mouvement et captures de rendu. Tests supplémentaires : neuf routes, garde d’origine/identifiants, pas d’en-têtes d’identité, 401/HTML/redirect ≠ compte connecté, contrat CAS, invitation étrangère sans requête, retour conservé après refus. Compiler Android à distance ; iOS et terrain à déclarer non qualifiés tant que non exécutés.
 
 Parité des fiches : exécuter depuis la racine node --experimental-strip-types --test tests/native-form-contract.test.mjs, puis Flutter form_parity_test.dart et suite globale. Tester champs/suggestions libres, non-perte des propriétés inconnues, 4 langues et 320 px. Les validations temps/fuseaux et parcours multimédias restent à comparer.

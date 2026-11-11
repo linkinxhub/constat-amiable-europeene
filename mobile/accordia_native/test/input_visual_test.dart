@@ -10,6 +10,7 @@ import 'package:accordia_native/design/horizon/copy.dart';
 import 'package:accordia_native/design/horizon/theme.dart';
 import 'package:accordia_native/reports/copy.dart';
 import 'package:accordia_native/reports/editor.dart';
+import 'package:accordia_native/reports/form_design.dart';
 import 'package:accordia_native/reports/model.dart';
 import 'package:accordia_native/reports/store.dart';
 
@@ -106,6 +107,21 @@ void main() {
         );
         await tester.pumpAndSettle();
         expect(tester.takeException(), isNull);
+        final words = FormWords(language);
+        expect(find.text('${words.t('step')} 1 / 5'), findsOneWidget);
+        expect(find.text(copy.n('local')), findsOneWidget);
+        await tester.tap(find.byType(CheckboxListTile).first);
+        await tester.pump();
+        await tester.tap(find.text(copy.text('next')));
+        await tester.pumpAndSettle();
+        expect(tester.takeException(), isNull);
+        expect(find.text('${words.t('step')} 2 / 5'), findsOneWidget);
+        await tester.tap(
+          find.widgetWithText(OutlinedButton, copy.text('back')),
+        );
+        await tester.pumpAndSettle();
+        expect(tester.takeException(), isNull);
+        expect(find.text('${words.t('step')} 1 / 5'), findsOneWidget);
         expect(store.draft.report['place'], 'TEST FICTIF Bruxelles');
       },
     );

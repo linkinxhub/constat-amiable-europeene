@@ -30,12 +30,6 @@ class FormWords {
       'Die Fakten, einfach',
       'De feiten, eenvoudig',
     ],
-    'hint': [
-      'Un champ à la fois. Vous pouvez revenir corriger vos réponses.',
-      'One field at a time. You can return to correct your answers.',
-      'Ein Feld nach dem anderen. Sie können Ihre Angaben später korrigieren.',
-      'Eén veld tegelijk. U kunt teruggaan om antwoorden te wijzigen.',
-    ],
     'details': [
       'Vos informations',
       'Your details',
@@ -220,79 +214,77 @@ class FormStepHeader extends StatelessWidget {
     required this.labels,
     required this.current,
     required this.words,
+    required this.status,
   });
   final List<String> labels;
   final int current;
   final FormWords words;
+  final String status;
+
   @override
-  Widget build(BuildContext context) => Semantics(
-    label:
-        '${words.t('step')} ${current + 1} / ${labels.length}. ${words.t('progress')}',
-    child: Container(
-      margin: const EdgeInsets.only(bottom: 22),
-      padding: const EdgeInsets.all(22),
+  Widget build(BuildContext context) {
+    final stepLabel = '${words.t('step')} ${current + 1} / ${labels.length}';
+
+    return Container(
+      margin: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [Color(0xff093c92), Color(0xff122442)],
-        ),
-        borderRadius: BorderRadius.circular(28),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x24124487),
-            blurRadius: 22,
-            offset: Offset(0, 10),
-          ),
-        ],
+        color: Colors.white,
+        border: Border.all(color: const Color(0xffdce5f0)),
+        borderRadius: BorderRadius.circular(18),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            '${words.t('step')} ${current + 1} / ${labels.length}',
-            style: const TextStyle(
-              color: Color(0xffb9d8ff),
-              fontWeight: FontWeight.w600,
+          Semantics(
+            label: '$stepLabel. ${words.t('progress')}',
+            excludeSemantics: true,
+            child: Text(
+              stepLabel,
+              style: const TextStyle(
+                color: Color(0xff173b69),
+                fontWeight: FontWeight.w700,
+              ),
             ),
           ),
-          const SizedBox(height: 10),
-          Text(
-            labels[current],
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 28,
-              fontWeight: FontWeight.w800,
-              height: 1.15,
+          const SizedBox(height: 4),
+          Semantics(
+            header: true,
+            child: Text(
+              labels[current],
+              style: const TextStyle(
+                color: formInk,
+                fontSize: 23,
+                fontWeight: FontWeight.w800,
+                height: 1.2,
+              ),
             ),
           ),
           const SizedBox(height: 12),
-          Text(
-            words.t('hint'),
-            style: const TextStyle(color: Color(0xffe0ebff), height: 1.45),
-          ),
-          const SizedBox(height: 20),
           Row(
+            spacing: 5,
             children: [
               for (var i = 0; i < labels.length; i++)
                 Expanded(
                   child: Container(
                     height: 5,
-                    margin: const EdgeInsets.only(right: 5),
                     decoration: BoxDecoration(
-                      color: i == current
-                          ? const Color(0xff82ede1)
-                          : const Color(0xff42628b),
+                      color: i == current ? formBlue : const Color(0xffdce5f0),
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
                 ),
             ],
           ),
+          const SizedBox(height: 10),
+          Text(
+            status,
+            style: const TextStyle(color: Color(0xff52617a), height: 1.4),
+          ),
         ],
       ),
-    ),
-  );
+    );
+  }
 }
 
 /// Native equivalent of the website's outlined aria-pressed command buttons.
