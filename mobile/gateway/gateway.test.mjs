@@ -6,7 +6,7 @@ import { createGateway } from './gateway.mjs';
 const token = 'm'.repeat(43);
 
 async function withGateway(fetchUpstream, run) {
-  const server = createGateway({ siteToken: 'fixture', fetchUpstream });
+  const server = createGateway({ siteToken: 'fixture', gatewaySecret: 'g'.repeat(43), fetchUpstream });
   server.listen(0, '127.0.0.1');
   await once(server, 'listening');
   try {
@@ -26,14 +26,15 @@ test('rejects private reads without a mobile session and disallows mutations', a
 
 test('routes an authenticated read to the fixed origin with separate credentials', async () => {
   await withGateway(async (url, options) => {
-    assert.equal(url, 'https://accordia-constat.adil-btp.chatgpt.site/api/mobile-gateway/reports/example');
+    assert.equal(url, 'https://accordia-constat.adil-btp.chatgpt.site/api/mobile-gateway/reports/example_report_123');
     assert.equal(options.headers.Authorization, 'Bearer ' + token);
     assert.equal(options.headers['OAI-Sites-Authorization'], 'Bearer fixture');
+    assert.equal(options.headers['x-accordia-mobile-gateway'], 'g'.repeat(43));
     assert.equal(options.redirect, 'error');
     assert.equal(options.headers['oai-authenticated-user-id'], undefined);
     return Response.json({ report: { id: 'example' } });
   }, async origin => {
-    const response = await fetch(origin + '/v1/reports/example', {
+    const response = await fetch(origin + '/v1/reports/example_report_123', {
       headers: { Authorization: 'Bearer ' + token, 'oai-authenticated-user-id': 'ignored' },
     });
     assert.equal(response.headers.get('cache-control'), 'no-store');

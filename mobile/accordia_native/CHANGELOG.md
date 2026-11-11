@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 2026-11-11 — Échange de session mobile côté serveur
+
+Ajout d’une création de code depuis la session web et d’un échange à usage unique avec preuve détenue par le mobile. La passerelle possède son propre secret de service et transmet uniquement l’échange, la révocation et la lecture des dossiers. Le propriétaire provient de la session mobile et les contrôles existants de lecture sont réutilisés. Six tests ciblés réussis, dont deux comptes, expiration, révocation et concurrence dans SQLite. Aucun déploiement ou migration productive. Guide vérifié sans modification visible. L’écran de confirmation web, le raccordement Flutter, la migration D1 en Preview et la recette réelle restent à effectuer.
+
+
 ## 2026-11-11 — Préparation de l’accès aux dossiers mobiles
 
 Relais Node en lecture seule ajouté dans mobile/gateway, trois tests locaux réussis. L’accès au routeur Sites depuis un service a été vérifié. Les routes de session côté Accordia, la liaison au compte et le raccordement Flutter restent à réaliser. Guide vérifié, aucun impact utilisateur à ce stade.

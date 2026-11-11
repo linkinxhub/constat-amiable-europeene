@@ -2,7 +2,7 @@ import { createServer } from 'node:http';
 
 const upstream = 'https://accordia-constat.adil-btp.chatgpt.site';
 const credential = /^[A-Za-z0-9_-]{43}$/;
-const reportPath = /^\/v1\/reports(?:\/[A-Za-z0-9-]{1,100})?$/;
+const reportPath = /^\/v1\/reports(?:\/[A-Za-z0-9_-]{16,80})?$/;
 const maxResponseBytes = 12 * 1024 * 1024;
 
 async function boundedBody(stream, limit) {
@@ -29,10 +29,12 @@ function fail(response, status, error) {
   send(response, status, JSON.stringify({ error }));
 }
 
-export function createGateway({ siteToken, fetchUpstream = fetch }) {
+export function createGateway({ siteToken, gatewaySecret, fetchUpstream = fetch }) {
   if (typeof siteToken !== 'string' || !siteToken || /\s/.test(siteToken)) {
     throw new Error('ACCORDIA_SITE_SERVICE_TOKEN is required');
   }
+
+  if (!credential.test(gatewaySecret ?? '')) throw new Error('ACCORDIA_MOBILE_GATEWAY_SECRET is required');
 
   return createServer({ requestTimeout: 10000, headersTimeout: 5000 }, async (request, response) => {
     const path = request.url ?? '';
@@ -41,10 +43,12 @@ export function createGateway({ siteToken, fetchUpstream = fetch }) {
     }
     const exchange = request.method === 'POST' && path === '/v1/session';
     const read = request.method === 'GET' && reportPath.test(path);
-    if (!exchange && !read) return fail(response, 404, 'not_found');
+    const revoke = request.method === 'DELETE' && path === '/v1/session';
+    if (!exchange && !read && !revoke) return fail(response, 404, 'not_found');
 
     const headers = {
       Accept: 'application/json',
+      'x-accordia-mobile-gateway': gatewaySecret,
       'OAI-Sites-Authorization': 'Bearer ' + siteToken,
     };
     let body;
