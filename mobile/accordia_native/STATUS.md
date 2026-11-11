@@ -1,5 +1,10 @@
 # STATUS — Accordia natif 0.6.0+10
 
+## 2026-11-11 — Compilation Android pour la recette
+
+Le workflow Flutter accepte les deux origines HTTPS d’une instance de recette lors d’un lancement manuel. Le contrôle refuse une origine absente, le site actif Accordia et une passerelle sur la même origine. Les deux valeurs sont publiques et aucun secret n’entre dans l’APK. Quatorze contrôles locaux de configuration réussis. Les builds ordinaires gardent leur comportement. Aucun APK connecté n’a été généré faute d’origines de recette disponibles.
+
+
 ## 2026-11-11 — Isolation de l’environnement de recette
 
 Le relais exige une origine HTTPS Accordia explicite. Flutter exige les origines HTTPS du relais et de la confirmation web au build. Le test local traverse le relais HTTP et les routes Worker compilées, avec deux comptes de test et la migration 0023 appliquée sur D1 isolé. Guide vérifié, commandes conducteur identiques. La version 94 n’a pas d’URL Preview hébergée. Voir mobile/gateway/PREVIEW.md pour la configuration et la recette à deux comptes réels.

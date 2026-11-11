@@ -9,6 +9,15 @@ on:
       - 'mobile/accordia_native/**'
       - '.github/workflows/flutter-native.yml'
   workflow_dispatch:
+    inputs:
+      pairing_site_origin:
+        description: HTTPS origin of the isolated Accordia test site
+        required: false
+        type: string
+      pairing_gateway_origin:
+        description: HTTPS origin of the test gateway
+        required: false
+        type: string
 permissions:
   contents: read
 concurrency:
@@ -53,7 +62,17 @@ jobs:
           if-no-files-found: error
           retention-days: 7
       - name: Build Android test APK
-        run: flutter --no-version-check --suppress-analytics build apk --debug --target-platform android-arm64
+        env:
+          PAIRING_SITE_ORIGIN: ${{ inputs.pairing_site_origin }}
+          PAIRING_GATEWAY_ORIGIN: ${{ inputs.pairing_gateway_origin }}
+        run: |
+          args=()
+          if [[ -n "$PAIRING_SITE_ORIGIN" || -n "$PAIRING_GATEWAY_ORIGIN" ]]; then
+            node ../../mobile/gateway/check-preview-origins.mjs
+            args+=("--dart-define=ACCORDIA_MOBILE_PAIRING_SITE_ORIGIN=$PAIRING_SITE_ORIGIN")
+            args+=("--dart-define=ACCORDIA_MOBILE_GATEWAY_ORIGIN=$PAIRING_GATEWAY_ORIGIN")
+          fi
+          flutter --no-version-check --suppress-analytics build apk --debug --target-platform android-arm64 "${args[@]}"
       - name: Keep Android test APK
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:

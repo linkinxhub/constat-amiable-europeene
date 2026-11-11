@@ -1,5 +1,7 @@
 # Recette hébergée de la liaison mobile
 
+Dans GitHub Actions, lancer manuellement **Accordia native project checks** sur la branche de recette, avec `pairing_site_origin` et `pairing_gateway_origin`. Le workflow refuse l’origine de production. Récupérer ensuite l’artefact APK du run. Les deux adresses doivent être en service avant le test sur téléphone.
+
 La version Sites 94 est une version enregistrée. Son aperçu hébergé n'est pas disponible. Ne pas pointer le relais de test sur l'origine active de production.
 
 1. Préparer une instance Accordia de recette HTTPS autorisant les deux comptes de recette, avec D1 et R2 isolés. Construire la source de la branche et appliquer les migrations jusqu'à 0023 sur cette instance. Configurer un nouveau secret ACCORDIA_MOBILE_GATEWAY_SECRET de 32 octets encodés en base64url.
