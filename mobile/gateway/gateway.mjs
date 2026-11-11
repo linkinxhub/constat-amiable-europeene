@@ -1,6 +1,5 @@
 import { createServer } from 'node:http';
 
-const upstream = 'https://accordia-constat.adil-btp.chatgpt.site';
 const credential = /^[A-Za-z0-9_-]{43}$/;
 const reportPath = /^\/v1\/reports(?:\/[A-Za-z0-9_-]{16,80})?$/;
 const maxResponseBytes = 12 * 1024 * 1024;
@@ -29,7 +28,19 @@ function fail(response, status, error) {
   send(response, status, JSON.stringify({ error }));
 }
 
-export function createGateway({ siteToken, gatewaySecret, fetchUpstream = fetch }) {
+export function createGateway({ siteOrigin, siteToken, gatewaySecret, fetchUpstream = fetch }) {
+  let upstream;
+  try {
+    const url = new URL(siteOrigin);
+    if (url.protocol !== 'https:' || url.username || url.password ||
+        url.pathname !== '/' || url.search || url.hash) {
+      throw new Error();
+    }
+    upstream = url.origin;
+  } catch {
+    throw new Error('ACCORDIA_SITE_ORIGIN must be an HTTPS origin');
+  }
+
   if (typeof siteToken !== 'string' || !siteToken || /\s/.test(siteToken)) {
     throw new Error('ACCORDIA_SITE_SERVICE_TOKEN is required');
   }

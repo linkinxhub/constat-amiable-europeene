@@ -6,7 +6,7 @@ import { createGateway } from './gateway.mjs';
 const token = 'm'.repeat(43);
 
 async function withGateway(fetchUpstream, run) {
-  const server = createGateway({ siteToken: 'fixture', gatewaySecret: 'g'.repeat(43), fetchUpstream });
+  const server = createGateway({ siteOrigin: 'https://preview.example', siteToken: 'fixture', gatewaySecret: 'g'.repeat(43), fetchUpstream });
   server.listen(0, '127.0.0.1');
   await once(server, 'listening');
   try {
@@ -26,7 +26,7 @@ test('rejects private reads without a mobile session and disallows mutations', a
 
 test('routes an authenticated read to the fixed origin with separate credentials', async () => {
   await withGateway(async (url, options) => {
-    assert.equal(url, 'https://accordia-constat.adil-btp.chatgpt.site/api/mobile-gateway/reports/example_report_123');
+    assert.equal(url, 'https://preview.example/api/mobile-gateway/reports/example_report_123');
     assert.equal(options.headers.Authorization, 'Bearer ' + token);
     assert.equal(options.headers['OAI-Sites-Authorization'], 'Bearer fixture');
     assert.equal(options.headers['x-accordia-mobile-gateway'], 'g'.repeat(43));
@@ -57,4 +57,13 @@ test('accepts only the pairing code and verifier and hides HTML failures', async
     assert.equal(response.status, 502);
     assert.deepEqual(await response.json(), { error: 'upstream_unavailable' });
   });
+});
+
+test('startup requires an explicit HTTPS origin with no path or credentials', () => {
+  for (const siteOrigin of [undefined, 'http://example.com', 'https://user@example.com', 'https://example.com/path']) {
+    assert.throws(
+      () => createGateway({ siteOrigin, siteToken: 'fixture', gatewaySecret: 'g'.repeat(43) }),
+      /ACCORDIA_SITE_ORIGIN/,
+    );
+  }
 });

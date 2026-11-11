@@ -7,9 +7,10 @@ import 'package:cryptography/cryptography.dart';
 import 'api.dart';
 
 class MobilePairing {
-  MobilePairing(this.transport, this.origin);
+  MobilePairing(this.transport, this.origin, {required this.siteOrigin});
   final ApiTransport transport;
   final Uri origin;
+  final Uri siteOrigin;
 
   static final _opaque = RegExp(r'^[A-Za-z0-9_-]{43}$');
   static final _reportId = RegExp(r'^[A-Za-z0-9_-]{16,80}$');
@@ -18,7 +19,23 @@ class MobilePairing {
   int _expiresAt = 0;
 
   static MobilePairing? configured(ApiTransport transport) {
-    const value = String.fromEnvironment('ACCORDIA_MOBILE_GATEWAY_ORIGIN');
+    const gateway = String.fromEnvironment('ACCORDIA_MOBILE_GATEWAY_ORIGIN');
+    const site = String.fromEnvironment('ACCORDIA_MOBILE_PAIRING_SITE_ORIGIN');
+    return fromOrigins(transport, gateway: gateway, site: site);
+  }
+
+  static MobilePairing? fromOrigins(
+    ApiTransport transport, {
+    required String gateway,
+    required String site,
+  }) {
+    final gatewayOrigin = _httpsOrigin(gateway);
+    final siteOrigin = _httpsOrigin(site);
+    if (gatewayOrigin == null || siteOrigin == null) return null;
+    return MobilePairing(transport, gatewayOrigin, siteOrigin: siteOrigin);
+  }
+
+  static Uri? _httpsOrigin(String value) {
     final uri = Uri.tryParse(value);
     if (uri == null ||
         uri.scheme != 'https' ||
@@ -29,7 +46,7 @@ class MobilePairing {
         (uri.path.isNotEmpty && uri.path != '/')) {
       return null;
     }
-    return MobilePairing(transport, uri);
+    return uri;
   }
 
   Future<Uri> begin(String language) async {
@@ -39,10 +56,10 @@ class MobilePairing {
     final hash = await Sha256().hash(utf8.encode(verifier));
     final challenge = base64UrlEncode(hash.bytes).replaceAll('=', '');
     _verifier = verifier;
-    return Uri.https(nativeApiHost, '/mobile-pairing', {
-      'challenge': challenge,
-      'lang': language,
-    });
+    return siteOrigin.replace(
+      path: '/mobile-pairing',
+      queryParameters: {'challenge': challenge, 'lang': language},
+    );
   }
 
   Future<void> exchange(String code) async {

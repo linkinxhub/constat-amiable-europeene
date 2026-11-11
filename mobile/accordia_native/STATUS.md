@@ -1,5 +1,10 @@
 # STATUS — Accordia natif 0.6.0+10
 
+## 2026-11-11 — Isolation de l’environnement de recette
+
+Le relais exige une origine HTTPS Accordia explicite. Flutter exige les origines HTTPS du relais et de la confirmation web au build. Le test local traverse le relais HTTP et les routes Worker compilées, avec deux comptes de test et la migration 0023 appliquée sur D1 isolé. Guide vérifié, commandes conducteur identiques. La version 94 n’a pas d’URL Preview hébergée. Voir mobile/gateway/PREVIEW.md pour la configuration et la recette à deux comptes réels.
+
+
 ## 2026-11-11 — Confirmation web et retour Flutter
 
 Écran de confirmation web FR/EN/DE/NL et retour manuel dans Flutter par code copié. Le vérificateur et le jeton restent en mémoire dans l’application. La passerelle HTTPS se configure via ACCORDIA_MOBILE_GATEWAY_ORIGIN. Le périmètre mobile connecté couvre la liste et la lecture des dossiers ainsi que la révocation. Analyse Flutter sans diagnostic, 65 tests Flutter et six tests serveur/relais réussis. La migration et l’isolation de deux identités fictives ont été vérifiées sur D1 local avec Miniflare. La compilation web complète, le déploiement Preview hébergé, les deux connexions réelles et l’APK de cette révision restent à vérifier.

@@ -42,15 +42,38 @@ class PairingTransport implements ApiTransport {
 }
 
 void main() {
+  test(
+    'requires both HTTPS origins and rejects embedded credentials or paths',
+    () {
+      final transport = PairingTransport();
+      for (final site in [
+        '',
+        'http://preview.example',
+        'https://user@preview.example',
+        'https://preview.example/path',
+      ]) {
+        expect(
+          MobilePairing.fromOrigins(
+            transport,
+            gateway: 'https://gateway.example',
+            site: site,
+          ),
+          isNull,
+        );
+      }
+    },
+  );
+
   test('links browser confirmation to the mobile verifier and clears session on exit', () async {
     final transport = PairingTransport();
     final client = MobilePairing(
       transport,
       Uri.parse('https://gateway.example'),
+      siteOrigin: Uri.parse('https://preview.example'),
     );
     await expectLater(client.reports(), throwsA(isA<NativeApiError>()));
     final url = await client.begin('fr');
-    expect(url.host, nativeApiHost);
+    expect(url.host, 'preview.example');
     expect(url.path, '/mobile-pairing');
     await client.exchange(List.filled(43, 'c').join());
     final hash = await Sha256().hash(utf8.encode(transport.verifier!));
