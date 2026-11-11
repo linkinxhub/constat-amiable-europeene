@@ -9,12 +9,15 @@ const copy = {
   nl: ['Mijn dossiers verbinden', 'Bevestig alleen als u deze link in uw Accordia-app hebt aangemaakt.', 'Bevestigen en code ophalen', 'Kopieer de code, keer terug naar Accordia en plak hem. Houd de code voor uzelf.', 'Ongeldige link. Maak een nieuwe link aan in Accordia.', 'Aanmelden niet beschikbaar. Probeer opnieuw of maak een nieuwe link aan.', 'Code kopiëren', 'Code gekopieerd'],
 } as const;
 
-export default function PairingConfirmation({ language, challenge, account }: {
+export default function PairingConfirmation({ language, challenge, account, androidReturn }: {
   language: keyof typeof copy;
   challenge?: string;
   account?: string;
+  androidReturn?: boolean;
 }) {
   const [title, instruction, confirm, paste, invalid, unavailable, copyCode, copiedCode] = copy[language];
+  const returnLabel = { fr: 'Revenir dans Accordia', en: 'Return to Accordia',
+    de: 'Zu Accordia zurückkehren', nl: 'Terug naar Accordia' }[language];
   const [code, setCode] = useState('');
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState('');
@@ -54,6 +57,9 @@ export default function PairingConfirmation({ language, challenge, account }: {
           <p style={{ overflowWrap: 'anywhere' }}><strong>{account}</strong></p>
           {code ? (
             <>
+              {androidReturn && <p><a referrerPolicy="no-referrer" href={
+                'https://accordia-recette-mobile.onrender.com/mobile-pairing/return#' + new URLSearchParams({ code, state: challenge })
+              }>{returnLabel}</a></p>}
               <p>{paste}</p>
               <code style={{ overflowWrap: 'anywhere', userSelect: 'all' }}>{code}</code>
               <p><button type="button" onClick={async () => {

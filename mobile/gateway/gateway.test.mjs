@@ -67,3 +67,12 @@ test('startup requires an explicit HTTPS origin with no path or credentials', ()
     );
   }
 });
+
+test('return page exposes no credentials and association requires a certificate', async () => {
+  await withGateway(async () => assert.fail('upstream must not be called'), async origin => {
+    const fallback = await fetch(origin + '/mobile-pairing/return');
+    assert.equal(fallback.status, 200);
+    assert.equal(fallback.headers.get('referrer-policy'), 'no-referrer');
+    assert.equal((await fetch(origin + '/.well-known/assetlinks.json')).status, 404);
+  });
+});
