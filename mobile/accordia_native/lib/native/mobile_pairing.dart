@@ -15,6 +15,7 @@ class MobilePairing {
   static final _opaque = RegExp(r'^[A-Za-z0-9_-]{43}$');
   static final _reportId = RegExp(r'^[A-Za-z0-9_-]{16,80}$');
   String? _verifier;
+  String? _challenge;
   String? _token;
   int _expiresAt = 0;
 
@@ -49,17 +50,52 @@ class MobilePairing {
     return uri;
   }
 
-  Future<Uri> begin(String language) async {
+  Future<Uri> begin(String language, {bool androidReturn = false}) async {
     final random = Random.secure();
     final bytes = List<int>.generate(32, (_) => random.nextInt(256));
     final verifier = base64UrlEncode(bytes).replaceAll('=', '');
     final hash = await Sha256().hash(utf8.encode(verifier));
     final challenge = base64UrlEncode(hash.bytes).replaceAll('=', '');
     _verifier = verifier;
+    _challenge = challenge;
     return siteOrigin.replace(
       path: '/mobile-pairing',
-      queryParameters: {'challenge': challenge, 'lang': language},
+      queryParameters: {
+        'challenge': challenge,
+        'lang': language,
+        if (androidReturn) 'return': 'android',
+      },
     );
+  }
+
+  String? callbackCode(Uri uri) {
+    if (uri.scheme != 'https' ||
+        !uri.hasAuthority ||
+        uri.host.isEmpty ||
+        uri.userInfo.isNotEmpty ||
+        uri.origin != origin.origin ||
+        uri.path != '/mobile-pairing/return' ||
+        uri.hasQuery ||
+        _challenge == null) {
+      return null;
+    }
+    try {
+      final fields = Uri(query: uri.fragment).queryParametersAll;
+      final code = fields['code'];
+      final state = fields['state'];
+      if (fields.length != 2 ||
+          code?.length != 1 ||
+          state?.length != 1 ||
+          state!.single != _challenge ||
+          !_opaque.hasMatch(code!.single)) {
+        return null;
+      }
+      return code.single;
+    } on FormatException {
+      return null;
+    } on ArgumentError {
+      return null;
+    }
   }
 
   Future<void> exchange(String code) async {
@@ -80,6 +116,7 @@ class MobilePairing {
       throw const NativeApiError(502, 'invalid_response');
     }
     _verifier = null;
+    _challenge = null;
     _token = token;
     _expiresAt = expiresAt;
   }
@@ -98,6 +135,7 @@ class MobilePairing {
     } finally {
       _token = null;
       _verifier = null;
+      _challenge = null;
       _expiresAt = 0;
     }
   }

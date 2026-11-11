@@ -1,5 +1,12 @@
 # STATUS — Accordia natif 0.6.0+10
 
+## 2026-11-11 — Premier lot : retour Android depuis la confirmation
+
+Le build Android de recette déclare le chemin HTTPS /mobile-pairing/return. Le bouton de connexion ouvre le navigateur. Après confirmation, Revenir dans Accordia remet le code court via le fragment et Flutter vérifie le domaine, le chemin et la tentative avant échange. Le code manuel reste disponible. Le nouveau chemin ne transmet aucun jeton de session. Le retour reprend le panneau ouvert si le processus Flutter est resté actif. La restauration après fermeture, le réveil réseau et le raccordement au brouillon restent à traiter.
+
+La vérification sur un téléphone exige assetlinks.json avec l’empreinte du certificat de l’APK effectivement installé. Une clé debug différente lors d’un nouveau build exige une nouvelle association. Ne pas exposer le retour comme validé avant ce contrôle. iOS exige sa propre association et sa signature. Aucun déploiement effectué par ce commit.
+
+
 ## 2026-11-11 — Première liaison sans constat
 
 La confirmation crée la ligne du compte à partir de l’identité Sites vérifiée lorsqu’elle n’existe pas encore. Le test compilé vérifie un compte neuf sans constat et le maintien du refus pour un compte suspendu. Correctif serveur de recette compatible avec l’APK existant.

@@ -72,10 +72,26 @@ void main() {
       siteOrigin: Uri.parse('https://preview.example'),
     );
     await expectLater(client.reports(), throwsA(isA<NativeApiError>()));
-    final url = await client.begin('fr');
+    final url = await client.begin('fr', androidReturn: true);
     expect(url.host, 'preview.example');
     expect(url.path, '/mobile-pairing');
-    await client.exchange(List.filled(43, 'c').join());
+    expect(url.queryParameters['return'], 'android');
+    final state = url.queryParameters['challenge']!;
+    final code = List.filled(43, 'c').join();
+    final callback = Uri.parse(
+      'https://gateway.example/mobile-pairing/return#code=$code&state=$state',
+    );
+    expect(
+      client.callbackCode(callback.replace(host: 'wrong.example')),
+      isNull,
+    );
+    expect(
+      client.callbackCode(callback.replace(fragment: 'code=$code')),
+      isNull,
+    );
+    expect(client.callbackCode(callback), code);
+    await client.exchange(code);
+    expect(client.callbackCode(callback), isNull);
     final hash = await Sha256().hash(utf8.encode(transport.verifier!));
     expect(
       url.queryParameters['challenge'],

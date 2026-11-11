@@ -7,6 +7,18 @@ String pairingText(NativeCopy copy, String key) => const {
     'Kopieren Sie den Anmeldelink in Ihren Browser. Bestätigen Sie mit Ihrem Accordia-Konto und fügen Sie den Code hier ein.',
     'Kopieer de aanmeldlink naar uw browser. Bevestig met uw Accordia-account en plak de code hier.',
   ],
+  'open': [
+    'Ouvrir la connexion',
+    'Open sign-in',
+    'Anmeldung öffnen',
+    'Aanmelding openen',
+  ],
+  'return': [
+    'Confirmez dans le navigateur, puis touchez Revenir dans Accordia.',
+    'Confirm in the browser, then tap Return to Accordia.',
+    'Bestätigen Sie im Browser und tippen Sie auf Zu Accordia zurückkehren.',
+    'Bevestig in de browser en tik op Terug naar Accordia.',
+  ],
   'link': ['Copier le lien', 'Copy link', 'Link kopieren', 'Link kopiëren'],
   'copied': ['Lien copié', 'Link copied', 'Link kopiert', 'Link gekopieerd'],
   'code': ['Code de connexion', 'Sign-in code', 'Anmeldecode', 'Aanmeldcode'],
@@ -46,13 +58,41 @@ class MobilePairingPanel extends StatefulWidget {
 }
 
 class _MobilePairingPanelState extends State<MobilePairingPanel> {
+  static const channel = MethodChannel('accordia/mobile-pairing');
   final code = TextEditingController();
+  bool get androidReturn =>
+      Platform.isAndroid &&
+      widget.pairing.siteOrigin.origin ==
+          'https://accordia-recette.adil-btp.chatgpt.site' &&
+      widget.pairing.origin.origin ==
+          'https://accordia-recette-mobile.onrender.com';
+
+  @override
+  void initState() {
+    super.initState();
+    if (androidReturn) {
+      channel.setMethodCallHandler((call) async {
+        if (call.method != 'callback' || call.arguments is! String) return;
+        final uri = Uri.tryParse(call.arguments as String);
+        final received = uri == null ? null : widget.pairing.callbackCode(uri);
+        if (received == null || !mounted) return;
+        await run(() => connect(received));
+      });
+    }
+  }
+
+  Future<void> connect(String value) async {
+    await widget.pairing.exchange(value);
+    if (mounted) widget.onConnected();
+  }
+
   bool busy = false;
   bool linked = false;
   String? message;
 
   @override
   void dispose() {
+    if (androidReturn) channel.setMethodCallHandler(null);
     code.dispose();
     super.dispose();
   }
@@ -79,6 +119,28 @@ class _MobilePairingPanelState extends State<MobilePairingPanel> {
       padding: const EdgeInsets.all(24),
       children: [
         Text(t('intro')),
+        if (androidReturn) ...[
+          const SizedBox(height: 16),
+          FilledButton(
+            onPressed: busy
+                ? null
+                : () => run(() async {
+                    final url = await widget.pairing.begin(
+                      widget.copy.language.name,
+                      androidReturn: true,
+                    );
+                    await channel.invokeMethod<void>('open', url.toString());
+                    if (mounted) {
+                      code.clear();
+                      setState(() {
+                        linked = true;
+                        message = 'return';
+                      });
+                    }
+                  }),
+            child: Text(t('open')),
+          ),
+        ],
         const SizedBox(height: 16),
         OutlinedButton(
           onPressed: busy
@@ -111,10 +173,7 @@ class _MobilePairingPanelState extends State<MobilePairingPanel> {
         FilledButton(
           onPressed: !linked || busy
               ? null
-              : () => run(() async {
-                  await widget.pairing.exchange(code.text.trim());
-                  if (mounted) widget.onConnected();
-                }),
+              : () => run(() => connect(code.text.trim())),
           child: Text(t('connect')),
         ),
         if (busy) const LinearProgressIndicator(),

@@ -66,7 +66,8 @@ jobs:
           PAIRING_SITE_ORIGIN: ${{ inputs.pairing_site_origin }}
           PAIRING_GATEWAY_ORIGIN: ${{ inputs.pairing_gateway_origin }}
         run: |
-          if [[ "$GITHUB_REF" == "refs/heads/feat/accordia-recette-site" &&
+          if [[ ( "$GITHUB_REF" == "refs/heads/feat/accordia-recette-site" ||
+                  "$GITHUB_REF" == "refs/heads/feat/accordia-recette-android-return" ) &&
                 -z "$PAIRING_SITE_ORIGIN" && -z "$PAIRING_GATEWAY_ORIGIN" ]]; then
             export PAIRING_SITE_ORIGIN="https://accordia-recette.adil-btp.chatgpt.site"
             export PAIRING_GATEWAY_ORIGIN="https://accordia-recette-mobile.onrender.com"

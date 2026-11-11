@@ -49,6 +49,30 @@ export function createGateway({ siteOrigin, siteToken, gatewaySecret, fetchUpstr
 
   return createServer({ requestTimeout: 10000, headersTimeout: 5000 }, async (request, response) => {
     const path = request.url ?? '';
+    if (request.method === 'GET' && path === '/.well-known/assetlinks.json') {
+      const fingerprint = process.env.ACCORDIA_RECETTE_ANDROID_SHA256;
+      if (!fingerprint || !/^(?:[A-Fa-f0-9]{2}:){31}[A-Fa-f0-9]{2}$/.test(fingerprint)) {
+        return fail(response, 404, 'not_found');
+      }
+      return send(response, 200, JSON.stringify([{
+        relation: ['delegate_permission/common.handle_all_urls'],
+        target: {
+          namespace: 'android_app',
+          package_name: 'be.adilbtp.accordia.nativepagespreview',
+          sha256_cert_fingerprints: [fingerprint.toUpperCase()],
+        },
+      }]));
+    }
+    if (request.method === 'GET' && path === '/mobile-pairing/return') {
+      response.writeHead(200, {
+        'Content-Type': 'text/html; charset=utf-8',
+        'Cache-Control': 'no-store',
+        'Referrer-Policy': 'no-referrer',
+        'Content-Security-Policy': "default-src 'none'; frame-ancestors 'none'",
+      });
+      response.end('<!doctype html><meta name="viewport" content="width=device-width, initial-scale=1"><title>Accordia</title><p lang="fr">Si Accordia ne s’ouvre pas, revenez à la page précédente et copiez le code.</p><p lang="en">If Accordia does not open, go back and copy the code.</p><p lang="de">Wenn Accordia nicht geöffnet wird, gehen Sie zurück und kopieren Sie den Code.</p><p lang="nl">Als Accordia niet opent, ga terug en kopieer de code.</p>');
+      return;
+    }
     if (request.method === 'GET' && path === '/health') {
       return send(response, 200, '{"status":"ready"}');
     }
