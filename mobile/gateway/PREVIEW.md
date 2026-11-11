@@ -21,3 +21,5 @@ Le test compilé local exécute les migrations sur D1 isolé et fait traverser l
 ## Instance de recette disponible
 
 Accordia Recette est en ligne en privé à https://accordia-recette.adil-btp.chatgpt.site. La version 1 utilise une base D1 distincte avec la table mobile_pairings. La passerelle et le second compte restent à configurer. Cette branche contient les réglages d’hébergement propres à la recette.
+
+La passerelle de recette est https://accordia-recette-mobile.onrender.com. Le workflow de la branche feat/accordia-recette-site configure les deux origines automatiquement en l’absence d’entrées manuelles. Les deux secrets restent sur les serveurs.

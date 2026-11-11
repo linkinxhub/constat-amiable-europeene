@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 2026-11-11 — APK de la recette hébergée
+
+Accordia Recette v1 est déployée en privé, avec migration 0023. Passerelle Render gratuite à Francfort et déploiement automatique désactivé. Le build de la branche feat/accordia-recette-site reçoit les deux origines HTTPS de recette. Les secrets sont configurés uniquement côté serveur. Guide vérifié, le parcours par code reste identique. Recette complète avec deux comptes réels encore à effectuer.
+
+
 ## 2026-11-11 — Compilation Android pour la recette
 
 Le workflow Flutter accepte les deux origines HTTPS d’une instance de recette lors d’un lancement manuel. Le contrôle refuse une origine absente, le site actif Accordia et une passerelle sur la même origine. Les deux valeurs sont publiques et aucun secret n’entre dans l’APK. Quatorze contrôles locaux de configuration réussis. Les builds ordinaires gardent leur comportement. Aucun APK connecté n’a été généré faute d’origines de recette disponibles.
